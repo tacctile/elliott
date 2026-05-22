@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-22T06:37:39Z",
+  "generated": "2026-05-22T06:51:59Z",
   "item_count": 5,
   "items": {
     "1205720": {
@@ -25,27 +25,27 @@
         "first_article_price": 75,
         "per_label_at_qty_20": 35.0,
         "margin_at_qty_20": "~80%",
-        "pricing_logic": "CUT VINYL BASELINE. AI consensus was $38-42 at qty 20. Nick priced at $35 as Relationship Concession.",
+        "pricing_logic": "CUT VINYL BASELINE. AI consensus was $38-42 at qty 20. Nick priced at $35 as Relationship Concession on ~$140K annual account. Validates within Cut Vinyl Pricing Profile at ~$13.67/sq ft (concession-phase; AI consensus band was $14.84-$16.41/sq ft).",
         "benchmark_item": "None \u2014 CUT VINYL BASELINE",
-        "downstream_items": "P/N 3017435 (sq ft parity)",
+        "downstream_items": "P/N 3017435 (sq ft parity \u2192 $35/ea at qty 20)",
         "process": "Cut/Weed/Mask",
         "lamination_passes": 0,
         "cut_runs": 1,
         "status": "FA Accepted",
         "date_quoted": "2026-04-22",
         "override_type": "Relationship Concession",
-        "notes": "First item quoted to Elliott."
+        "notes": "First item quoted to Elliott. Sean ordered FA next morning without pushback. 3M 180mC-53 Cardinal Red on 24\\\" roll."
       },
       "image": null,
       "sections": {
-        "item_overview": "",
-        "material_spec": "3M Controltac 180mC-53 Cardinal Red, 24\" roll.",
-        "nesting": "~$7.01/label.",
-        "production": "Cut/Weed/Mask, 1 cut run.",
-        "pricing_derivation": "CUT VINYL BASELINE. Relationship Concession.",
-        "margin_analysis": "~80% at qty 20.",
-        "notes": "First item quoted. Establishes cut vinyl per-sq-ft rate.",
-        "production_debrief": "*No production debrief yet.*"
+        "item_overview": "- **Part Number:** 1205720\n- **Description:** \"E190\" Cardinal Red Model Designation\n- **Type:** Vinyl cut lettering (no printing)\n- **Content:** Large \"E190\" model designation text in Cardinal Red. Applied to crane body for model identification.\n- **Dimensions:** 33-9/16\" W \u00d7 11\" H (~2.56 sq ft)\n- **Tolerances:** \u00b11/16\" (assumed account default)\n- **DWG Date:** Original \u2014 no revision history\n- **Status:** FA Accepted\n\n---",
+        "material_spec": "- **Substrate:** 3M Controltac 180mC-53 Cardinal Red\n- **Film Type:** 2-mil calendered vinyl\n- **Adhesive:** Controltac repositionable pressure-sensitive\n- **Roll Size:** 24\" \u00d7 10yd = ~$153.60/roll ($15.36/yard)\n- **Application Tape:** TransferRite Ultra 582U, 30\" \u00d7 100yd = $135.06 ($0.18/sq ft)\n- **Laminate:** N/A\n\n---",
+        "nesting": "- **Nesting on 24\" roll:** 2 labels per row (11\" + 11\" = 22\", fits 24\" roll width). Linear footage per row: ~33.5625\" (~0.93 yards).\n- **Vinyl cost per label:** ~$6.55 (2.56 sq ft \u00d7 $2.56/sq ft for Cardinal Red)\n- **Application tape cost:** ~$0.46/label (2.56 sq ft \u00d7 $0.18/sq ft)\n- **Total material cost per label:** ~$7.01\n\n---",
+        "production": "1. File prep \u2014 import DWG/PDF, set up cut file\n2. Cut \u2014 Roland SG3-300 on 24\" stock\n3. Weed \u2014 remove excess vinyl around cut characters\n4. Mask \u2014 apply TransferRite 582U application tape\n5. Inspect and package\n\n- **Lamination Passes:** 0\n- **Cut Runs:** 1\n- **Constraints:** None \u2014 simple cut/weed/mask process\n\n---",
+        "pricing_derivation": "- **Methodology:** Validated across ~12 AI model responses. Consensus range was $38-42 per label at qty 20.\n- **Benchmark Item:** None \u2014 this establishes the cut vinyl baseline.\n- **Override:** Nick priced at $35, below AI consensus, as a deliberate Relationship Concession on a ~$140K annual account. First item quoted \u2014 set the tone for the relationship.\n- **Strategic:** $35 was competitive, professional, and signaled that Pro Label is serious about the program. Sean ordered FA next morning without pushback.\n- **Profile Validation:** Establishes the Cut Vinyl Pricing Profile at ~$13.67/sq ft (concession-phase). AI consensus would place the band at ~$14.84-$16.41/sq ft. Band expected to shift upward as relationship matures.\n\n---",
+        "margin_analysis": "| Qty Tier | Price | Material Cost | Gross Profit | Margin |\n|----------|-------|---------------|-------------|--------|\n| 1-9 | $45.00 | $7.01 | $37.99 | ~84% |\n| 10-19 | $40.00 | $7.01 | $32.99 | ~82% |\n| 20-49 | $35.00 | $7.01 | $27.99 | ~80% |\n| 50-99 | $30.00 | $7.01 | $22.99 | ~77% |\n| 100-199 | $26.00 | $7.01 | $18.99 | ~73% |\n| 200+ | $22.00 | $7.01 | $14.99 | ~68% |\n\nHits 80% at qty 20. Tier compression 51% ($45 \u2192 $22). Margin floor at 200+ is 68% \u2014 healthy for low-complexity process.\n\n---",
+        "notes": "- **CUT VINYL BASELINE.** First item quoted. Establishes the per-sq-ft rate for the entire cut vinyl category.\n- **Relationship Concession.** $35 vs $38-42 consensus. Non-precedent-setting \u2014 future cut vinyl items should benchmark against the AI consensus band ($14.84-$16.41/sq ft), not the concession price ($13.67/sq ft). Override Type field flags this.\n- **Sean's reaction:** Ordered FA next morning. No pushback. This set the trust level for the entire account.\n- **Cardinal Red material:** Pre-stocked before first PO. $153.60/roll is the known cost.\n\n---",
+        "production_debrief": "*No production debrief yet. Update after first real production run. Capture: actual nesting efficiency on 24\" stock, weeding time for large lettering, whether 2-per-row layout worked as planned.*"
       }
     },
     "1230820": {
@@ -71,7 +71,7 @@
         "first_article_price": 55,
         "per_label_at_qty_20": 20.0,
         "margin_at_qty_20": "~80%",
-        "pricing_logic": "ROOT BENCHMARK. Establishes singles band at ~$15.43/sq ft.",
+        "pricing_logic": "ROOT BENCHMARK. Validated against Printed + Laminated Pricing Profile \u2014 establishes the singles band at ~$15.43/sq ft at qty 20. All kit pricing traces through this item historically (1278930 = 1.5x, 1245130 = 5/3 parity).",
         "benchmark_item": "None \u2014 ROOT BENCHMARK",
         "downstream_items": "1278930 (1.5x), 1245130 (5/3 parity off 1278930)",
         "process": "Print/Lam/Cut (1 pass)",
@@ -80,18 +80,18 @@
         "status": "FA Accepted",
         "date_quoted": "2026-04-22",
         "override_type": "",
-        "notes": "CRITICAL: Foundation of the entire kit pricing chain."
+        "notes": "CRITICAL: Foundation of the entire kit pricing chain. If challenged, defend on value (ANSI compliance, durability, safety-critical accuracy), never cost-plus."
       },
       "image": null,
       "sections": {
-        "item_overview": "",
-        "material_spec": "- **Substrate:** Orajet 3951 cast vinyl, white, adhesive back (~2 mil)\n- **Laminate:** 1-mil clear polyester (Mylar) \u2014 gloss finish\n- **Laminator feed:** 12.44\" dimension feeds through 13.5\" laminator \u2014 single pass",
-        "nesting": "- **Total: ~$4.00/label**",
-        "production": "1. Print \u2014 Roland SG3-300\n2. Laminate \u2014 1 pass\n3. Contour cut \u2014 1 run\n- **Lamination Passes:** 1\n- **Cut Runs:** 1",
-        "pricing_derivation": "ROOT BENCHMARK. Built from scratch.",
-        "margin_analysis": "~80% at qty 20, ~64% at 200+.",
-        "notes": "Foundation of entire kit pricing chain.",
-        "production_debrief": "*No production debrief yet.*"
+        "item_overview": "- **Part Number:** 1230820\n- **Description:** Load Chart Label, Model D105\n- **Type:** Printed/Laminated Label (single)\n- **Content:** Full-color lifting capacity load chart \u2014 rated capacity data tables, boom angle/radius diagrams, ANSI safety color coding, model-specific operating parameters. Safety-critical label.\n- **Dimensions:** 15\" W \u00d7 12.44\" H (1.296 sq ft)\n- **Tolerances:** \u00b11/16\"\n- **DWG Date:** Original \u2014 no revision history\n- **Status:** FA Accepted\n\n---",
+        "material_spec": "- **Substrate:** Orajet 3951 cast vinyl, white, adhesive back (~2 mil)\n- **Adhesive:** Permanent pressure-sensitive\n- **Laminate:** 1-mil clear polyester (Mylar) \u2014 gloss finish\n- **Laminator feed:** 12.44\" dimension feeds through 13.5\" laminator (1.06\" clearance) \u2014 single pass\n- **Application Tape:** N/A\n\n---",
+        "nesting": "- **Laminator Feed:** 12.44\" feeds through 13.5\" laminator \u2014 single pass\n- **Print Layout:** One label per row on Roland SG3-300 (15\" width within 28\" max print width)\n- **Material Cost Breakdown:**\n  - Vinyl (Orajet 3951): 1.296 sq ft \u00d7 $1.21/sq ft = ~$1.57\n  - Laminate (1-mil polyester): ~$1.02\n  - Ink (eco-solvent, medium-high coverage): ~$0.50\n  - Waste/setup: ~$0.91\n  - **Total: ~$4.00/label**\n\n---",
+        "production": "1. File prep \u2014 import PDF, set up print file with registration marks\n2. Print \u2014 Roland SG3-300, full-color eco-solvent on Orajet 3951\n3. Laminate \u2014 1-mil clear polyester, ONE pass (12.44\" feeds through 13.5\")\n4. Contour cut \u2014 Roland, rounded corners per spec\n5. Weed \u2014 remove excess material\n6. Inspect \u2014 print quality, laminate adhesion, cut accuracy, ANSI color fidelity\n7. Package \u2014 flat, individually cut, stacked\n\n- **Lamination Passes:** 1\n- **Cut Runs:** 1\n- **Constraints:** None \u2014 fits all equipment in single passes\n\n---",
+        "pricing_derivation": "- **Methodology:** Built from scratch \u2014 no prior benchmark existed.\n- **Benchmark Item:** None \u2014 this IS the root benchmark.\n- **AI Validation:** ~12 model responses confirmed the tier structure.\n- **Strategic:** Priced to establish the relationship. $20 at qty 20 was set to be competitive and leave room for the kit multiplier structure.\n- **Override:** None.\n- **Profile Validation:** Establishes the Printed + Laminated singles band at ~$15.43/sq ft at qty 20.\n\n---",
+        "margin_analysis": "| Qty Tier | Price | Material Cost | Gross Profit | Margin |\n|----------|-------|---------------|-------------|--------|\n| 1-9 | $30.00 | $4.00 | $26.00 | ~87% |\n| 10-19 | $24.00 | $4.00 | $20.00 | ~83% |\n| 20-49 | $20.00 | $4.00 | $16.00 | ~80% |\n| 50-99 | $17.00 | $4.00 | $13.00 | ~76% |\n| 100-199 | $14.00 | $4.00 | $10.00 | ~71% |\n| 200+ | $11.00 | $4.00 | $7.00 | ~64% |\n\nInternal P&L benchmark: ~79.7%. Hits 80% at qty 20. Compression steeper than cut vinyl due to higher fixed setup cost amortizing at volume.\n\n---",
+        "notes": "- **ROOT BENCHMARK.** The single most important price point on the account. 1278930 = 1.5x this. 1245130 = 5/3 parity off 1278930. If challenged, the entire kit structure is at risk.\n- **Defense:** Value-based \u2014 ANSI compliance, outdoor durability, model-specific safety data accuracy, zero-drama fulfillment.\n- **Per-sq-ft rate:** $15.43/sq ft at qty 20. Every future printed/laminated single will be compared against this.\n- **Equipment fit:** Single passes on all equipment. Cleanest production item on the account.\n\n---",
+        "production_debrief": "*No production debrief yet. Update after first real production run (not FA). Capture: actual material vs estimated, time, scrap, production issues, whether pricing assumptions held.*"
       }
     },
     "1245130": {
@@ -117,16 +117,16 @@
         "first_article_price": "",
         "per_label_at_qty_20": 10.0,
         "margin_at_qty_20": "~88%",
-        "pricing_logic": "5/3 parity with P/N 1278930.",
+        "pricing_logic": "5/3 parity with P/N 1278930. Per-label = $10.00 at qty 20, identical to 3-label kit. Validated across 30 model runs / 4 rounds. 1.8x was rejected \u2014 buyer psychology won over cost modeling. Validates within Printed + Laminated kit Pricing Profile band.",
         "benchmark_item": "P/N 1278930 (5/3 parity)",
-        "downstream_items": "None yet.",
+        "downstream_items": "None yet. End of current chain.",
         "process": "Print/Lam/Cut (2 pass)",
         "lamination_passes": 2,
         "cut_runs": 2,
         "status": "Quoted",
         "date_quoted": "2026-05-21",
         "override_type": "",
-        "notes": "2 lam passes due to 13.5\\\" laminator constraint."
+        "notes": "2 lam passes due to 13.5\\\" laminator constraint. Parity boundary is tied to lamination passes (\u22642), not label count."
       },
       "image": [
         {
@@ -135,14 +135,14 @@
         }
       ],
       "sections": {
-        "item_overview": "",
-        "material_spec": "Orajet 3951 + 1-mil polyester lam.",
-        "nesting": "~$6.03/kit.",
-        "production": "2 lam passes, 2 cut runs.",
-        "pricing_derivation": "5/3 parity with 3-label kit.",
-        "margin_analysis": "~88% at qty 20.",
-        "notes": "Parity boundary is production-based.",
-        "production_debrief": "*No production debrief yet.*"
+        "item_overview": "- **Part Number:** 1245130\n- **Description:** Lifting Capacity Chart, Model E160\n- **Type:** Printed full-color kit (5 labels: A through E)\n- **Dimensions:** All 11.13\" \u00d7 7.88\" each (0.609 sq ft/label, ~3.045 sq ft total/kit)\n- **Corners:** Rounded (R.13)\n- **Tolerance:** \u00b1.063\"\n- **Material Note (from drawing):** Cast 2-mil vinyl (5-7 yr), adhesive back, peel-off backing slit at middle, 1-mil clear Mylar overlay\n- **DWG Date:** 05/24/19, Rev A (02/02/21 \u2014 changed 50,000 to 34,000)\n- **Status:** Quoted May 2026\n\n---",
+        "material_spec": "- **Substrate:** Orajet 3951 cast vinyl, white, adhesive back (~2 mil)\n- **Adhesive:** Permanent pressure-sensitive\n- **Laminate:** 1-mil clear polyester (Mylar) overlaminate \u2014 gloss finish\n- **Ink:** Eco-solvent, ANSI Z535.1 safety colors, Helvetica Bold lettering\n- **Layout:** ANSI Z535.4 compliant\n\n---",
+        "nesting": "- **Laminator Feed:** 7.88\" feeds through 13.5\" laminator. Cannot fit all 5 in one pass \u2014 **2 lamination passes** (3 in pass 1, 2 in pass 2).\n- **Print Layout:** All 5 fit in one print run on Roland SG3-300 (28\" max). Three at 7.88\" wide, two rotated to 11.13\" wide.\n- **Material Cost Breakdown (per kit):**\n  - Vinyl (Orajet 3951): 5 \u00d7 0.609 sq ft \u00d7 $1.21/sq ft = ~$3.68\n  - Laminate (1-mil polyester): ~$1.15 (across 2 passes)\n  - Ink (eco-solvent): 5 \u00d7 ~$0.27 = ~$1.35\n  - Waste/setup allowance: included\n  - **Total material cost per kit: ~$6.03** (per frontmatter canonical value)\n  - **Per-label material cost: ~$1.21**\n\n---",
+        "production": "1. File prep \u2014 import 5 engineering drawing pages, set up print layout\n2. Print \u2014 1 run, all 5 labels on Roland SG3-300\n3. Laminate \u2014 **2 passes** (13.5\" max width constraint)\n4. Contour cut \u2014 **2 runs** (matching the 2 lam groups)\n5. Weed, inspect, package as matched set (A through E)\n\n- **Lamination Passes:** 2\n- **Cut Runs:** 2\n- **Key constraint:** Double lam pass is the sole production inefficiency. Wider laminator collapses to single-pass.\n\n---",
+        "pricing_derivation": "",
+        "margin_analysis": "| Qty Tier | Kit Price | Per Label | Material Cost | Gross Profit | Margin |\n|----------|-----------|-----------|---------------|-------------|--------|\n| 1-9 | $75.00 | $15.00 | $6.03 | $68.97 | ~92% |\n| 10-19 | $60.00 | $12.00 | $6.03 | $53.97 | ~90% |\n| 20-49 | $50.00 | $10.00 | $6.03 | $43.97 | ~88% |\n| 50-99 | $43.00 | $8.60 | $6.03 | $36.97 | ~86% |\n| 100-199 | $35.00 | $7.00 | $6.03 | $28.97 | ~83% |\n| 200+ | $30.00 | $6.00 | $6.03 | $23.97 | ~80% |\n\nExceeds internal P&L benchmark at every tier. Dollar profit at qty 20 ($43.97) is higher than the 3-label kit ($26.37). Margin curve mirrors 3-label kit exactly \u2014 confirms parity logic holds structurally.\n\n---",
+        "notes": "- **Parity boundary is production-based.** Per-label parity applies at \u22642 lam passes, same dimensions, same material. Beyond 2 passes or mixed dimensions \u2192 cost-build.\n- **Dollar profit per kit is the metric that matters.** $43.97 at qty 20 is excellent despite absorbing the double-pass.\n- **Wider laminator upgrade** collapses to single-pass and improves margins without pricing change.\n\n---",
+        "production_debrief": "*No production debrief yet. Update after first production run. Capture: actual material usage, time per kit, whether 2-pass lamination worked as planned, actual scrap on double-pass, and critically \u2014 does the 2-pass add meaningful time or is it negligible?*"
       }
     },
     "1278930": {
@@ -168,27 +168,27 @@
         "first_article_price": 65,
         "per_label_at_qty_20": 10.0,
         "margin_at_qty_20": "~88%",
-        "pricing_logic": "1.5x multiplier off P/N 1230820 (root benchmark).",
+        "pricing_logic": "1.5x multiplier off P/N 1230820 (root benchmark). Validated across 25 model runs / 6 rounds. Validates within Printed + Laminated kit Pricing Profile at $10.00/label ($16.42/sq ft). Frame as 'three separately finished safety labels supplied as one controlled matched set.",
         "benchmark_item": "P/N 1230820 (1.5x)",
-        "downstream_items": "P/N 1245130 (5/3 parity).",
+        "downstream_items": "P/N 1245130 (5/3 parity). Bridge item between single-label benchmark and all future kits.",
         "process": "Print/Lam/Cut (1 pass)",
         "lamination_passes": 1,
         "cut_runs": 1,
         "status": "FA Accepted",
         "date_quoted": "2026-04-28",
         "override_type": "Relationship Concession",
-        "notes": "All 3 labels fit in one lamination pass."
+        "notes": "All 3 labels fit in one lamination pass (3 \u00d7 7.88\\\" = 23.64\\\"). Most efficient kit configuration on current equipment."
       },
       "image": null,
       "sections": {
-        "item_overview": "",
-        "material_spec": "Orajet 3951 + 1-mil polyester lam.",
-        "nesting": "~$3.63/kit.",
-        "production": "1 lam pass, 1 cut run.",
-        "pricing_derivation": "1.5x off root benchmark.",
-        "margin_analysis": "~88% at qty 20.",
-        "notes": "Bridge item between singles and kits.",
-        "production_debrief": "*No production debrief yet.*"
+        "item_overview": "- **Part Number:** 1278930\n- **Description:** CHRT-E190 V3, Integrated Platform Lifting Capacity Chart\n- **Type:** Printed/Laminated Kit (3 labels: A, B, C)\n- **Content:** Three separate lifting capacity charts for the E190 crane model. Each label contains rated capacity data, boom angle/radius diagrams, ANSI safety color coding, and model-specific operating parameters. Supplied as a matched set.\n- **Dimensions:** All 11.13\" \u00d7 7.88\" each (0.609 sq ft/label, ~1.83 sq ft total/kit)\n- **Corners:** Rounded, R.25 (4 corners)\n- **Tolerances:** \u00b11/16\" (assumed account default)\n- **DWG Date:** V3 revision\n- **Status:** FA Accepted\n\n---",
+        "material_spec": "- **Substrate:** Orajet 3951 cast vinyl, white, adhesive back (~2 mil)\n- **Adhesive:** Permanent pressure-sensitive\n- **Laminate:** 1-mil clear polyester (Mylar) overlaminate \u2014 gloss finish\n- **Laminate Max Width:** 13.5\" on current equipment \u2014 all 3 labels fit in one pass (7.88\" feeds through)\n- **Application Tape:** N/A\n- **Ink:** Eco-solvent (Roland TR2), ANSI Z535.1 safety colors + full-color diagrams\n\n---",
+        "nesting": "- **Laminator Feed:** 7.88\" feeds through 13.5\" laminator. 3 \u00d7 7.88\" = 23.64\" \u2014 all 3 fit in ONE pass.\n- **Print Layout:** All 3 labels in one print run on Roland SG3-300.\n- **Material Cost Breakdown (per kit):**\n  - Vinyl (Orajet 3951): 3 \u00d7 0.609 sq ft \u00d7 $1.21/sq ft = ~$2.21\n  - Laminate (1-mil polyester): ~$0.85 (3 labels across 13.5\" pass)\n  - Ink (eco-solvent): 3 \u00d7 ~$0.27 = ~$0.81\n  - Waste/setup allowance: included\n  - **Total material cost per kit: ~$3.63** (per frontmatter canonical value)\n  - **Per-label material cost: ~$1.21**\n\n---",
+        "production": "1. File prep \u2014 import 3 engineering drawing pages, tile on one layout with registration marks\n2. Print \u2014 Roland SG3-300, full-color eco-solvent on Orajet 3951. All 3 in one run.\n3. Laminate \u2014 1-mil polyester. **ONE pass \u2014 all 3 fit.**\n4. Contour cut \u2014 **ONE run** following registration marks. R.25 corners.\n5. Weed \u2014 remove excess around all 3 labels\n6. Inspect \u2014 print quality, lam adhesion, cut accuracy, label-to-label consistency\n7. Package \u2014 collate A, B, C as matched set\n\n- **Lamination Passes:** 1\n- **Cut Runs:** 1\n- **Constraints:** None \u2014 most efficient kit configuration on current equipment.\n\n---",
+        "pricing_derivation": "- **Methodology:** Full multi-round AI model validation \u2014 25 independent model runs across 6 rounds.\n- **Benchmark Item:** P/N 1230820 (root benchmark, single label at $20 qty 20). This kit is 1.5x.\n- **Multiplier Logic:** 1.5x consensus from Round 1. Reflects three separately finished labels produced, inspected, and packaged as a controlled matched set.\n- **FA Pricing:** Debated $55-$90 across models. Consensus ~$75. Nick set $65 as trust-building move. Override: Relationship Concession on FA only. Production tiers are engine-validated.\n- **200+ Tier:** Debated $17 vs $18. Destruction round tipped to $18 \u2014 permanent anchor risk + laminate upgrade absorption margin.\n- **Profile Validation:** $10.00/label at qty 20 = $16.42/sq ft. Within the Printed + Laminated kit Pricing Profile band.\n\n---",
+        "margin_analysis": "| Qty Tier | Kit Price | Per Label | Material Cost | Gross Profit | Margin |\n|----------|-----------|-----------|---------------|-------------|--------|\n| 1-9 | $45.00 | $15.00 | $3.63 | $41.37 | ~92% |\n| 10-19 | $36.00 | $12.00 | $3.63 | $32.37 | ~90% |\n| 20-49 | $30.00 | $10.00 | $3.63 | $26.37 | ~88% |\n| 50-99 | $26.00 | $8.67 | $3.63 | $22.37 | ~86% |\n| 100-199 | $21.00 | $7.00 | $3.63 | $17.37 | ~83% |\n| 200+ | $18.00 | $6.00 | $3.63 | $14.37 | ~80% |\n\nExceeds internal P&L benchmark (~79.7%) at every tier including 200+. Margin compression 92% \u2192 80%. 200+ floor at 80% is strong.\n\n---",
+        "notes": "- **BRIDGE ITEM.** Links root benchmark (1230820) to all future kit pricing. The 1.5x multiplier established here is the basis for 5/3 parity on 1245130.\n- **Single-pass efficiency.** Most efficient kit configuration possible on current equipment. Any kit exceeding 13.5\" lam capacity in one pass is less efficient.\n- **Per-label parity.** $10.00/label at qty 20 matches the 5-label kit. Intentional and documented.\n- **Defense:** Frame as process value (matched-set collation, multi-label inspection, controlled packaging), never as multiplier math.\n- **Parity boundary:** Per-label parity applies when \u22642 lamination passes, same dimensions, same material. Beyond that, cost-build from scratch.\n\n---",
+        "production_debrief": "*No production debrief yet. Update after first real production run (not FA). Capture: actual material usage vs estimated, time per kit, whether single-pass nesting worked as planned, scrap rate, whether pricing assumptions held.*"
       }
     },
     "3017435": {
@@ -214,7 +214,7 @@
         "first_article_price": "",
         "per_label_at_qty_20": 35.0,
         "margin_at_qty_20": "~76% (24\\\" roll) / ~81% (48\\\" roll)",
-        "pricing_logic": "Sq ft parity with P/N 1205720.",
+        "pricing_logic": "Sq ft parity with P/N 1205720. Same ~2.56 sq ft, same process. Validates within Cut Vinyl Pricing Profile at ~$13.67/sq ft (concession-phase band). Material cost varies by roll width: $8.46 on 24\\\", $6.74 on 48\\\".",
         "benchmark_item": "P/N 1205720 (sq ft parity)",
         "downstream_items": "None yet.",
         "process": "Cut/Weed/Mask",
@@ -223,7 +223,7 @@
         "status": "Quoted",
         "date_quoted": "2026-05-21",
         "override_type": "",
-        "notes": "48\\\" roll dramatically better yield."
+        "notes": "LBL-ELLIOTT 8.38 WHT. 48\\\" roll dramatically better yield (5 across vs 2). Material cost drops from $8.46 to $6.74 on 48\\\" stock."
       },
       "image": [
         {
@@ -232,14 +232,14 @@
         }
       ],
       "sections": {
-        "item_overview": "",
-        "material_spec": "3M Controltac 180mC-10 White. 24\" or 48\" rolls.",
-        "nesting": "$8.46 on 24\" roll, $6.74 on 48\" roll.",
-        "production": "Cut/Weed/Mask, 1 cut run.",
-        "pricing_derivation": "Sq ft parity with 1205720.",
-        "margin_analysis": "~76% (24\") / ~81% (48\") at qty 20.",
-        "notes": "Roll width is a margin lever.",
-        "production_debrief": "*No production debrief yet.*"
+        "item_overview": "- **Part Number:** 3017435\n- **Description:** LBL-ELLIOTT 8.38 WHT \u2014 \"ELLIOTT\" brand lettering in white vinyl\n- **Type:** Vinyl cut lettering (no printing)\n- **Content:** Large \"ELLIOTT\" brand name. Applied to crane body for brand identification. Used across multiple models.\n- **Dimensions:** 43.91\" W \u00d7 8.38\" H (~2.56 sq ft)\n- **Tolerances:** \u00b11/16\" (assumed account default)\n- **DWG Date:** Original \u2014 no revision history\n- **Status:** Quoted May 2026\n\n---",
+        "material_spec": "- **Substrate:** 3M Controltac 180mC-10 White\n- **Film Type:** 2-mil calendered vinyl\n- **Adhesive:** Controltac repositionable pressure-sensitive\n- **Roll Options:**\n  - 24\" \u00d7 10yd = $131.16/roll ($13.116/yard, ~$2.19/sq ft)\n  - 48\" \u00d7 10yd = $257.44/roll ($25.744/yard, ~$2.15/sq ft)\n- **Application Tape:** TransferRite Ultra 582U, 30\" \u00d7 100yd = $135.06 ($0.18/sq ft)\n- **Laminate:** N/A\n\n---",
+        "nesting": "### On 24\" Roll\n- 2 labels per row (8.38\" + 8.38\" = 16.76\", fits 24\" width)\n- Linear footage per row: ~43.91\" (~1.22 yards)\n- Vinyl cost per label: ~$8.00 (1.22 yards \u00d7 $13.116/yard \u00f7 2)\n- Tape: ~$0.46\n- **Total: ~$8.46/label**\n\n### On 48\" Roll (dramatically better yield)\n- 5 labels across (8.38\" \u00d7 5 = 41.9\", fits 48\" width)\n- Linear footage per row: ~43.91\" (~1.22 yards)\n- Vinyl cost per label: ~$6.28 (1.22 yards \u00d7 $25.744/yard \u00f7 5)\n- Tape: ~$0.46\n- **Total: ~$6.74/label**\n\n### Recommendation\n48\" roll for any order of qty 10+. The per-label savings ($1.72) justify the larger roll purchase. 24\" roll for small or one-off orders where stocking 48\" isn't warranted.\n\n---",
+        "production": "1. File prep \u2014 import DWG/PDF, set up cut file\n2. Cut \u2014 Roland SG3-300 on 24\" stock, OR 54\" plotter on 48\" stock\n3. Weed \u2014 remove excess vinyl around cut characters\n4. Mask \u2014 apply TransferRite 582U application tape\n5. Inspect and package\n\n- **Lamination Passes:** 0\n- **Cut Runs:** 1\n- **Note:** 48\" stock goes on the 54\" plotter, not the Roland.\n\n---",
+        "pricing_derivation": "- **Methodology:** Sq ft parity with P/N 1205720. Same ~2.56 sq ft, same cut/weed/mask process, same material family. Identical tier structure.\n- **Benchmark Item:** P/N 1205720 (sq ft parity)\n- **AI Validation:** Not separately validated \u2014 direct parity with an accepted item at the same sq ft. No ambiguity.\n- **Override:** None. Engine output matched the parity logic.\n- **Profile Validation:** $35 / 2.56 sq ft = $13.67/sq ft at qty 20. Within the Cut Vinyl Pricing Profile band (concession-phase).\n\n---",
+        "margin_analysis": "### On 24\" Roll ($8.46/label material cost)\n\n| Qty Tier | Price | Material Cost | Gross Profit | Margin |\n|----------|-------|---------------|-------------|--------|\n| 1-9 | $45.00 | $8.46 | $36.54 | ~81% |\n| 10-19 | $40.00 | $8.46 | $31.54 | ~79% |\n| 20-49 | $35.00 | $8.46 | $26.54 | ~76% |\n| 50-99 | $30.00 | $8.46 | $21.54 | ~72% |\n| 100-199 | $26.00 | $8.46 | $17.54 | ~68% |\n| 200+ | $22.00 | $8.46 | $13.54 | ~62% |\n\n### On 48\" Roll ($6.74/label material cost)\n\n| Qty Tier | Price | Material Cost | Gross Profit | Margin |\n|----------|-------|---------------|-------------|--------|\n| 1-9 | $45.00 | $6.74 | $38.26 | ~85% |\n| 10-19 | $40.00 | $6.74 | $33.26 | ~83% |\n| 20-49 | $35.00 | $6.74 | $28.26 | ~81% |\n| 50-99 | $30.00 | $6.74 | $23.26 | ~78% |\n| 100-199 | $26.00 | $6.74 | $19.26 | ~74% |\n| 200+ | $22.00 | $6.74 | $15.26 | ~69% |\n\n48\" roll hits 81% at qty 20 \u2014 above the internal benchmark. 24\" roll dips to 76% \u2014 still acceptable but the 48\" is the clear operational choice once volume justifies it.\n\n---",
+        "notes": "- **Roll width is a margin lever.** 48\" stock improves margin by 5 points at qty 20. Internal efficiency gain \u2014 don't pass savings to buyer.\n- **Brand lettering across multiple models.** This item may have higher volume than model-specific labels since \"ELLIOTT\" goes on every unit.\n- **54\" plotter required for 48\" stock.** Different equipment than the Roland SG3-300.\n- **Quoted same day as 1245130.** Both items in a single email to Sean. No response yet.\n\n---",
+        "production_debrief": "*No production debrief yet. Update after first production run. Capture: which roll width was used, actual nesting yield, weeding time for large brand lettering, whether 48\" stock on 54\" plotter worked cleanly.*"
       }
     }
   }
