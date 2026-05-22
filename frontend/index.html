@@ -639,6 +639,37 @@
   }
   .copy-hint.show { opacity: 1; }
 
+  /* === FILTER PILLS === */
+  .filter-wrap {
+    padding: 8px 16px 12px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .filter-pill {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border-medium);
+    background: transparent;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    transition: all 0.12s;
+    white-space: nowrap;
+  }
+  .filter-pill:hover {
+    border-color: var(--text-secondary);
+    color: var(--text-secondary);
+  }
+  .filter-pill.active {
+    background: var(--accent-dim);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
   /* === SCROLLBAR === */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
@@ -664,6 +695,7 @@
       <div class="search-wrap">
         <input type="text" id="search" placeholder="Search P/N, description…" autocomplete="off" spellcheck="false" />
       </div>
+      <div class="filter-wrap" id="filterWrap"></div>
       <div class="item-list" id="itemList"></div>
     </div>
 
@@ -714,6 +746,7 @@ let DATA = null;
 let items = {};
 let sortedPNs = [];
 let selectedPN = null;
+let activeFilter = null;
 
 async function init() {
   try {
@@ -722,12 +755,43 @@ async function init() {
     items = DATA.items;
     sortedPNs = Object.keys(items).sort();
     document.getElementById('itemCount').textContent = DATA.item_count + ' items';
+    buildFilters();
     renderList('');
     bindEvents();
   } catch(e) {
     document.getElementById('emptyState').querySelector('p').textContent =
       'Failed to load data.json — run build_frontend.py';
   }
+}
+
+function buildFilters() {
+  const families = new Set();
+  sortedPNs.forEach(pn => families.add(items[pn].frontmatter.material_family));
+  const wrap = document.getElementById('filterWrap');
+  
+  const allBtn = document.createElement('button');
+  allBtn.className = 'filter-pill active';
+  allBtn.textContent = 'All';
+  allBtn.onclick = () => setFilter(null, allBtn);
+  wrap.appendChild(allBtn);
+
+  families.forEach(family => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-pill';
+    // Short label — strip redundant words
+    const short = family.replace('Orajet 3951 Cast + Polyester Lam', 'Printed + Laminated')
+                        .replace('3M 180mC Cut Vinyl', 'Cut Vinyl');
+    btn.textContent = short;
+    btn.onclick = () => setFilter(family, btn);
+    wrap.appendChild(btn);
+  });
+}
+
+function setFilter(family, btn) {
+  activeFilter = family;
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  renderList(document.getElementById('search').value);
 }
 
 function bindEvents() {
@@ -741,6 +805,7 @@ function renderList(query) {
   const el = document.getElementById('itemList');
   const matches = sortedPNs.filter(pn => {
     const fm = items[pn].frontmatter;
+    if (activeFilter && fm.material_family !== activeFilter) return false;
     return pn.includes(q)
       || fm.description.toLowerCase().includes(q)
       || fm.model.toLowerCase().includes(q)
