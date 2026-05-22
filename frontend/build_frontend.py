@@ -2,8 +2,10 @@
 """
 Elliott Equipment Pricing Engine — Frontend Data Builder
 
-Reads all item YAML frontmatter and exports a single JSON file
-for the static HTML frontend. Run after any item change.
+Reads all item YAML frontmatter, detects all files in items/images/,
+copies them into frontend/images/, and writes frontend/data.json.
+
+Run after any item or file change. Also runs via GitHub Action on push.
 
 Usage:
     python scripts/build_frontend.py
@@ -12,13 +14,78 @@ Usage:
 import json
 import re
 import os
+import shutil
 from pathlib import Path
-from collections import OrderedDict
 
 REPO_ROOT = Path(__file__).parent.parent
 ITEMS_DIR = REPO_ROOT / "items"
-IMAGES_DIR = REPO_ROOT / "items" / "images"
-OUTPUT_FILE = REPO_ROOT / "frontend" / "data.json"
+SOURCE_IMAGES = REPO_ROOT / "items" / "images"
+FRONTEND_DIR = REPO_ROOT / "frontend"
+FRONTEND_IMAGES = FRONTEND_DIR / "images"
+OUTPUT_FILE = FRONTEND_DIR / "data.json"
+
+IMAGE_EXTS = {'.png', '.jpg', '.jpeg', '.webp', '.svg', '.gif', '.bmp', '.tiff'}
+DOC_EXTS = {'.pdf'}
+ALL_EXTS = IMAGE_EXTS | DOC_EXTS
+
+
+def sync_images():
+    """Mirror items/images/ → frontend/images/. Copies new/changed, removes deleted."""
+    FRONTEND_IMAGES.mkdir(parents=True, exist_ok=True)
+
+    source_files = {}
+    if SOURCE_IMAGES.exists():
+        for f in SOURCE_IMAGES.iterdir():
+            if f.is_file() and f.suffix.lower() in ALL_EXTS:
+                source_files[f.name] = f
+
+    # Copy new or updated files
+    copied = 0
+    for name, src in source_files.items():
+        dest = FRONTEND_IMAGES / name
+        src_mtime = src.stat().st_mtime
+        if not dest.exists() or dest.stat().st_mtime < src_mtime:
+            shutil.copy2(src, dest)
+            copied += 1
+
+    # Remove files in frontend/images/ that no longer exist in source
+    removed = 0
+    for f in FRONTEND_IMAGES.iterdir():
+        if f.is_file() and f.name not in source_files and f.name != '.gitkeep':
+            f.unlink()
+            removed += 1
+
+    return len(source_files), copied, removed
+
+
+def find_files_for_item(part_number):
+    """Find all files in frontend/images/ matching a part number.
+    
+    Matches:
+      {PN}.pdf, {PN}.png, etc.         — exact match
+      {PN}_1.png, {PN}_2.png, etc.     — multi-page
+    
+    Returns list of {type, path} relative to frontend/.
+    """
+    files = []
+
+    if not FRONTEND_IMAGES.exists():
+        return None
+
+    for f in sorted(FRONTEND_IMAGES.iterdir()):
+        if not f.is_file():
+            continue
+        stem = f.stem
+        ext = f.suffix.lower()
+
+        # Match exact PN or PN_N pattern
+        if stem == part_number or (stem.startswith(part_number + '_') and stem[len(part_number)+1:].isdigit()):
+            if ext == '.pdf':
+                files.append({"type": "pdf", "path": f"images/{f.name}"})
+            elif ext in IMAGE_EXTS:
+                files.append({"type": "image", "path": f"images/{f.name}"})
+
+    return files if files else None
 
 
 def parse_frontmatter(filepath):
@@ -39,56 +106,18 @@ def parse_frontmatter(filepath):
 def extract_sections(filepath):
     """Extract key prose sections from the markdown body."""
     content = filepath.read_text()
-    # Strip frontmatter
     body = re.sub(r'^---\s*\n.*?\n---\s*\n', '', content, flags=re.DOTALL)
-
     sections = {}
-    # Extract each H1 section
     parts = re.split(r'\n# ', body)
-    for part in parts[1:]:  # skip content before first heading
+    for part in parts[1:]:
         lines = part.split('\n', 1)
         heading = lines[0].strip()
         body_text = lines[1].strip() if len(lines) > 1 else ''
         sections[heading] = body_text
-
     return sections
 
 
-def check_files(part_number):
-    """Find all images and PDFs for a part number.
-    
-    Naming convention:
-      {PN}.pdf          — single PDF spec sheet
-      {PN}.png/jpg/...  — single image
-      {PN}_1.png, {PN}_2.png, ... — multi-page images
-    
-    Returns a list of file paths relative to repo root.
-    """
-    files = []
-    
-    # Check for PDF
-    pdf_path = IMAGES_DIR / f"{part_number}.pdf"
-    if pdf_path.exists():
-        files.append({"type": "pdf", "path": f"items/images/{part_number}.pdf"})
-    
-    # Check for single image (no underscore page number)
-    for ext in ['png', 'jpg', 'jpeg', 'webp', 'svg', 'gif']:
-        img_path = IMAGES_DIR / f"{part_number}.{ext}"
-        if img_path.exists():
-            files.append({"type": "image", "path": f"items/images/{part_number}.{ext}"})
-    
-    # Check for multi-page images: {PN}_1.ext, {PN}_2.ext, etc.
-    import glob as g
-    for match in sorted(IMAGES_DIR.glob(f"{part_number}_*")):
-        ext = match.suffix.lower().lstrip('.')
-        if ext in ['png', 'jpg', 'jpeg', 'webp', 'svg', 'gif']:
-            files.append({"type": "image", "path": f"items/images/{match.name}"})
-    
-    return files if files else None
-
-
 def coerce_numeric(val):
-    """Try to convert string to int or float."""
     try:
         if '.' in val:
             return float(val)
@@ -106,7 +135,6 @@ NUMERIC_FIELDS = {
 
 
 def build_item(filepath):
-    """Build a complete item data object."""
     fm = parse_frontmatter(filepath)
     if fm is None:
         return None
@@ -114,14 +142,13 @@ def build_item(filepath):
     pn = fm.get('part_number', filepath.stem)
     sections = extract_sections(filepath)
 
-    # Coerce numeric fields
     for key in NUMERIC_FIELDS:
         if key in fm and fm[key] != '':
             fm[key] = coerce_numeric(fm[key])
 
     item = {
         'frontmatter': fm,
-        'image': check_files(pn),
+        'image': find_files_for_item(pn),
         'sections': {
             'item_overview': sections.get('Item Overview', ''),
             'material_spec': sections.get('Material Specification', ''),
@@ -137,6 +164,11 @@ def build_item(filepath):
 
 
 def main():
+    # Step 1: Sync files from items/images/ → frontend/images/
+    total_files, copied, removed = sync_images()
+    print(f"✓ Synced images: {total_files} files ({copied} copied, {removed} removed)")
+
+    # Step 2: Build data.json
     item_files = sorted(ITEMS_DIR.glob("*.md"))
     items = {}
 
