@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elliott Equipment — Item Viewer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Roboto+Slab:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --surface-0: #0a0a0b;
+    --surface-1: #111214;
+    --surface-2: #18191c;
+    --surface-3: #1f2124;
+    --surface-4: #26282c;
+    --border-subtle: rgba(255,255,255,0.06);
+    --border-medium: rgba(255,255,255,0.10);
+    --border-strong: rgba(255,255,255,0.16);
+    --text-primary: #f0f0f2;
+    --text-secondary: #a0a3ae;
+    --text-tertiary: #5e616e;
+    --text-inverse: #0a0a0b;
+    --accent: #e8c547;
+    --accent-dim: rgba(232, 197, 71, 0.15);
+    --accent-glow: rgba(232, 197, 71, 0.06);
+    --green: #4ade80;
+    --green-dim: rgba(74, 222, 128, 0.12);
+    --amber: #fbbf24;
+    --amber-dim: rgba(251, 191, 36, 0.12);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96, 165, 250, 0.12);
+    --red-dim: rgba(248, 113, 113, 0.12);
+    --red: #f87171;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--surface-0);
+    color: var(--text-primary);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* === NOISE TEXTURE === */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .app { position: relative; z-index: 1; }
+
+  /* === TOP BAR === */
+  .topbar {
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0 32px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface-1);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(12px);
+  }
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .topbar .brand {
+    font-family: 'Roboto Slab', serif;
+    font-size: 16px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #e52527;
+  }
+  .topbar .divider {
+    width: 1px;
+    height: 20px;
+    background: var(--border-medium);
+  }
+  .topbar .subtitle {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-tertiary);
+    letter-spacing: 0.3px;
+  }
+  .topbar .item-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--text-tertiary);
+    background: var(--surface-3);
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+
+  /* === LAYOUT === */
+  .layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    min-height: calc(100vh - 56px);
+  }
+  @media (max-width: 860px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { border-right: none; border-bottom: 1px solid var(--border-subtle); max-height: 50vh; }
+  }
+
+  /* === SIDEBAR === */
+  .sidebar {
+    background: var(--surface-1);
+    border-right: 1px solid var(--border-subtle);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .search-wrap {
+    padding: 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    position: sticky;
+    top: 0;
+    background: var(--surface-1);
+    z-index: 10;
+  }
+  .search-wrap input {
+    width: 100%;
+    padding: 10px 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    background: var(--surface-0);
+    border: 1px solid var(--border-medium);
+    border-radius: 6px;
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .search-wrap input::placeholder { color: var(--text-tertiary); }
+  .search-wrap input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+  }
+
+  .item-list { flex: 1; overflow-y: auto; }
+
+  .list-item {
+    padding: 14px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-subtle);
+    transition: background 0.12s;
+    position: relative;
+  }
+  .list-item:hover { background: var(--surface-2); }
+  .list-item.selected {
+    background: var(--surface-2);
+  }
+  .list-item.selected::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--accent);
+  }
+  .list-item .li-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  .list-item .li-pn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.3px;
+  }
+  .list-item .li-status {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 2px 7px;
+    border-radius: 3px;
+  }
+  .li-status-accepted { background: var(--green-dim); color: var(--green); }
+  .li-status-quoted { background: var(--amber-dim); color: var(--amber); }
+  .li-status-ordered { background: var(--blue-dim); color: var(--blue); }
+  .list-item .li-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+  .list-item .li-meta {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-top: 4px;
+    display: flex;
+    gap: 12px;
+  }
+  .list-item .li-price {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* === MAIN CONTENT === */
+  .main {
+    overflow-y: auto;
+    padding: 32px;
+    max-height: calc(100vh - 56px);
+  }
+  @media (max-width: 860px) { .main { max-height: none; } }
+
+  .empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    color: var(--text-tertiary);
+    gap: 12px;
+  }
+  .empty svg { opacity: 0.2; }
+  .empty p { font-size: 14px; }
+
+  .detail { display: none; }
+  .detail.visible {
+    display: block;
+    animation: fadeUp 0.25s ease-out;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* === DETAIL HEADER === */
+  .detail-header {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .detail-header .dh-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .detail-header .dh-pn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .dh-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .dh-badge-accepted { background: var(--green-dim); color: var(--green); }
+  .dh-badge-quoted { background: var(--amber-dim); color: var(--amber); }
+  .dh-badge-ordered { background: var(--blue-dim); color: var(--blue); }
+
+  .dh-override {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 3px;
+    background: var(--red-dim);
+    color: var(--red);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .detail-header .dh-desc {
+    font-size: 16px;
+    color: var(--text-secondary);
+    font-weight: 400;
+  }
+  .detail-header .dh-crumbs {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 6px;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .dh-crumbs .sep { color: var(--text-tertiary); opacity: 0.4; }
+
+  /* === IMAGE SECTION === */
+  .image-section {
+    margin-bottom: 28px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-2);
+    display: none;
+  }
+  .image-section.visible { display: block; }
+  .image-section img {
+    width: 100%;
+    max-height: 480px;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* === STAT BLOCKS (big numbers row) === */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .stat-block {
+    background: var(--surface-2);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 16px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-block::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .stat-block:hover::after { opacity: 1; }
+  .stat-block .stat-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-tertiary);
+    margin-bottom: 6px;
+  }
+  .stat-block .stat-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .stat-block .stat-value.highlight { color: var(--accent); }
+  .stat-block .stat-sub {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-top: 2px;
+  }
+
+  /* === PRICING TABLE === */
+  .section {
+    margin-bottom: 28px;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-tertiary);
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .ptable {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--surface-2);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .ptable thead th {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-tertiary);
+    text-align: left;
+    padding: 12px 16px;
+    background: var(--surface-3);
+    border-bottom: 1px solid var(--border-medium);
+  }
+  .ptable thead th:not(:first-child) { text-align: right; }
+  .ptable tbody td {
+    padding: 12px 16px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .ptable tbody tr:last-child td { border-bottom: none; }
+  .ptable tbody td:not(:first-child) {
+    text-align: right;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: 13px;
+  }
+  .ptable tbody td:first-child {
+    color: var(--text-secondary);
+    font-size: 13px;
+  }
+  .ptable tbody tr.row-highlight {
+    background: var(--accent-dim);
+  }
+  .ptable tbody tr.row-highlight td {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+  .ptable tbody tr.row-highlight td:first-child {
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .ptable .col-margin {
+    color: var(--text-tertiary) !important;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+  }
+  .ptable .col-profit {
+    color: var(--green) !important;
+  }
+
+  /* === DETAIL GRID === */
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  @media (max-width: 700px) { .detail-grid { grid-template-columns: 1fr; } }
+
+  .info-card {
+    background: var(--surface-2);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 18px;
+  }
+  .info-card.full { grid-column: 1 / -1; }
+  .info-card h4 {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-tertiary);
+    margin-bottom: 12px;
+  }
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 7px 0;
+  }
+  .info-row + .info-row { border-top: 1px solid var(--border-subtle); }
+  .info-row .ir-k {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    font-weight: 400;
+  }
+  .info-row .ir-v {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    text-align: right;
+    max-width: 60%;
+    word-break: break-word;
+  }
+  .ir-v.mono {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+  }
+  .ir-v.accent { color: var(--accent); }
+
+  /* === LOGIC / NOTES TEXT === */
+  .prose {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+
+  /* === COPY BUTTON === */
+  .copy-wrap {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .copy-btn {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: 1px solid var(--accent);
+    background: transparent;
+    color: var(--accent);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.3px;
+  }
+  .copy-btn:hover {
+    background: var(--accent);
+    color: var(--text-inverse);
+  }
+  .copy-btn.copied {
+    background: var(--green-dim);
+    border-color: var(--green);
+    color: var(--green);
+    pointer-events: none;
+  }
+  .copy-hint {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .copy-hint.show { opacity: 1; }
+
+  /* === SCROLLBAR === */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--surface-4); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="brand">Elliott</span>
+      <span class="divider"></span>
+      <span class="subtitle">Pro Label Pricing Engine</span>
+    </div>
+    <span class="item-count" id="itemCount">—</span>
+  </div>
+
+  <div class="layout">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="search-wrap">
+        <input type="text" id="search" placeholder="Search P/N, description…" autocomplete="off" spellcheck="false" />
+      </div>
+      <div class="item-list" id="itemList"></div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+      <div class="empty" id="emptyState">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+        </svg>
+        <p>Select an item from the list</p>
+      </div>
+
+      <div class="detail" id="detail">
+        <div class="detail-header" id="detailHeader"></div>
+        <div class="image-section" id="imageSection">
+          <img id="itemImage" src="" alt="" />
+        </div>
+        <div class="stat-row" id="statRow"></div>
+        <div class="section" id="pricingSection">
+          <div class="section-title">Volume Pricing</div>
+          <div id="pricingTable"></div>
+          <div class="copy-wrap">
+            <button class="copy-btn" id="copyBtn" onclick="copyForEmail()">Copy for Email</button>
+            <span class="copy-hint" id="copyHint">Copied to clipboard</span>
+          </div>
+        </div>
+        <div class="detail-grid" id="detailGrid"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let DATA = null;
+let items = {};
+let sortedPNs = [];
+let selectedPN = null;
+
+async function init() {
+  try {
+    const r = await fetch('data.json');
+    DATA = await r.json();
+    items = DATA.items;
+    sortedPNs = Object.keys(items).sort();
+    document.getElementById('itemCount').textContent = DATA.item_count + ' items';
+    renderList('');
+    bindEvents();
+  } catch(e) {
+    document.getElementById('emptyState').querySelector('p').textContent =
+      'Failed to load data.json — run build_frontend.py';
+  }
+}
+
+function bindEvents() {
+  document.getElementById('search').addEventListener('input', e => {
+    renderList(e.target.value);
+  });
+}
+
+function renderList(query) {
+  const q = query.toLowerCase().trim();
+  const el = document.getElementById('itemList');
+  const matches = sortedPNs.filter(pn => {
+    const fm = items[pn].frontmatter;
+    return pn.includes(q)
+      || fm.description.toLowerCase().includes(q)
+      || fm.model.toLowerCase().includes(q)
+      || fm.item_type.toLowerCase().includes(q)
+      || fm.material_family.toLowerCase().includes(q);
+  });
+
+  el.innerHTML = matches.map(pn => {
+    const fm = items[pn].frontmatter;
+    const sc = statusClass(fm.status);
+    const sel = pn === selectedPN ? ' selected' : '';
+    return `<div class="list-item${sel}" data-pn="${pn}" onclick="selectItem('${pn}')">
+      <div class="li-top">
+        <span class="li-pn">${pn}</span>
+        <span class="li-status ${sc}">${fm.status}</span>
+      </div>
+      <div class="li-desc">${fm.description}</div>
+      <div class="li-meta">
+        <span>${fm.model}</span>
+        <span>${fm.item_type}</span>
+        <span class="li-price">$${num(fm.price_20_49)}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function statusClass(s) {
+  if (s === 'FA Accepted') return 'li-status-accepted';
+  if (s === 'Quoted') return 'li-status-quoted';
+  if (s === 'FA Ordered') return 'li-status-ordered';
+  if (s === 'In Production') return 'li-status-accepted';
+  if (s === 'Active Reorder') return 'li-status-accepted';
+  return 'li-status-quoted';
+}
+
+function badgeClass(s) {
+  if (s === 'FA Accepted') return 'dh-badge-accepted';
+  if (s === 'Quoted') return 'dh-badge-quoted';
+  if (s === 'FA Ordered') return 'dh-badge-ordered';
+  return 'dh-badge-accepted';
+}
+
+function selectItem(pn) {
+  selectedPN = pn;
+  const item = items[pn];
+  const fm = item.frontmatter;
+
+  document.getElementById('emptyState').style.display = 'none';
+  const detail = document.getElementById('detail');
+  detail.classList.remove('visible');
+  void detail.offsetWidth; // reflow for animation restart
+  detail.classList.add('visible');
+
+  renderList(document.getElementById('search').value);
+  renderHeader(fm);
+  renderImage(item);
+  renderStats(fm);
+  renderPricing(fm);
+  renderDetails(fm);
+}
+
+function renderHeader(fm) {
+  const el = document.getElementById('detailHeader');
+  const override = fm.override_type
+    ? `<span class="dh-override">${fm.override_type}</span>` : '';
+  el.innerHTML = `
+    <div class="dh-top">
+      <span class="dh-pn">${fm.part_number}</span>
+      <span class="dh-badge ${badgeClass(fm.status)}">${fm.status}</span>
+      ${override}
+    </div>
+    <div class="dh-desc">${fm.description}</div>
+    <div class="dh-crumbs">
+      <span>${fm.model}</span><span class="sep">·</span>
+      <span>${fm.item_type}</span><span class="sep">·</span>
+      <span>${fm.material_family}</span>
+    </div>
+  `;
+}
+
+function renderImage(item) {
+  const section = document.getElementById('imageSection');
+  const img = document.getElementById('itemImage');
+  if (item.image) {
+    img.src = '../' + item.image;
+    img.alt = item.frontmatter.description;
+    section.classList.add('visible');
+  } else {
+    section.classList.remove('visible');
+  }
+}
+
+function renderStats(fm) {
+  const el = document.getElementById('statRow');
+  const isKit = fm.label_count > 1;
+  const mc = fm.material_cost_per_unit;
+  const p20 = fm.price_20_49;
+  const margin = ((p20 - mc) / p20 * 100).toFixed(0);
+  const sqft = fm.sq_ft_per_kit;
+  const ppsf = (p20 / sqft).toFixed(2);
+
+  let html = `
+    <div class="stat-block">
+      <div class="stat-label">Price @ Qty 20</div>
+      <div class="stat-value highlight">$${num(p20)}</div>
+      ${isKit ? `<div class="stat-sub">$${num(fm.per_label_at_qty_20)} per label</div>` : ''}
+    </div>
+    <div class="stat-block">
+      <div class="stat-label">Material Cost</div>
+      <div class="stat-value">$${num(mc)}</div>
+      <div class="stat-sub">as of ${fm.cost_version_date}</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-label">Margin @ 20</div>
+      <div class="stat-value">${margin}%</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-label">$/Sq Ft @ 20</div>
+      <div class="stat-value">$${ppsf}</div>
+      <div class="stat-sub">${sqft.toFixed(3)} sq ft</div>
+    </div>
+  `;
+  if (isKit) {
+    html += `
+    <div class="stat-block">
+      <div class="stat-label">Labels / Kit</div>
+      <div class="stat-value">${fm.label_count}</div>
+      <div class="stat-sub">${fm.sq_ft_per_label} sq ft each</div>
+    </div>`;
+  }
+  el.innerHTML = html;
+}
+
+function renderPricing(fm) {
+  const mc = fm.material_cost_per_unit;
+  const isKit = fm.label_count > 1;
+
+  const tiers = [
+    { label: 'First Article', price: fm.first_article_price },
+    { label: '1–9', price: fm.price_1_9 },
+    { label: '10–19', price: fm.price_10_19 },
+    { label: '20–49', price: fm.price_20_49 },
+    { label: '50–99', price: fm.price_50_99 },
+    { label: '100–199', price: fm.price_100_199 },
+    { label: '200+', price: fm.price_200_plus },
+  ].filter(t => t.price !== '' && t.price != null);
+
+  let html = `<table class="ptable"><thead><tr>
+    <th>Quantity</th><th>Unit Price</th>
+    ${isKit ? '<th>Per Label</th>' : ''}
+    <th>Gross Profit</th><th>Margin</th>
+  </tr></thead><tbody>`;
+
+  tiers.forEach(t => {
+    const p = typeof t.price === 'string' ? parseFloat(t.price) : t.price;
+    if (isNaN(p)) return;
+    const perLabel = isKit ? p / fm.label_count : null;
+    const profit = p - mc;
+    const margin = (profit / p * 100).toFixed(0);
+    html += `<tr>
+      <td>${t.label}</td>
+      <td>$${num(p)}</td>
+      ${isKit ? `<td>$${num(perLabel)}</td>` : ''}
+      <td class="col-profit">$${num(profit)}</td>
+      <td class="col-margin">${margin}%</td>
+    </tr>`;
+  });
+
+  html += '</tbody></table>';
+  document.getElementById('pricingTable').innerHTML = html;
+}
+
+function renderDetails(fm) {
+  const el = document.getElementById('detailGrid');
+  el.innerHTML = `
+    <div class="info-card">
+      <h4>Specifications</h4>
+      ${row('Dimensions', `${fm.width_in}" × ${fm.height_in}"`)}
+      ${row('Sq Ft / Label', fm.sq_ft_per_label.toFixed(3))}
+      ${fm.label_count > 1 ? row('Sq Ft / Kit', fm.sq_ft_per_kit.toFixed(3)) : ''}
+      ${row('Material Family', fm.material_family)}
+      ${row('Process', fm.process)}
+      ${row('Lam Passes', fm.lamination_passes)}
+      ${row('Cut Runs', fm.cut_runs)}
+    </div>
+    <div class="info-card">
+      <h4>Lineage</h4>
+      ${row('Benchmark', fm.benchmark_item)}
+      ${row('Downstream', fm.downstream_items || 'None')}
+      ${row('Date Quoted', fm.date_quoted)}
+      ${fm.override_type ? row('Override', fm.override_type) : ''}
+    </div>
+    <div class="info-card full">
+      <h4>Pricing Logic</h4>
+      <div class="prose">${fm.pricing_logic}</div>
+    </div>
+    ${fm.notes ? `<div class="info-card full">
+      <h4>Notes</h4>
+      <div class="prose">${fm.notes}</div>
+    </div>` : ''}
+  `;
+}
+
+function row(k, v) {
+  return `<div class="info-row"><span class="ir-k">${k}</span><span class="ir-v">${v}</span></div>`;
+}
+
+function num(n) {
+  const v = typeof n === 'string' ? parseFloat(n) : n;
+  return isNaN(v) ? n : v.toFixed(2);
+}
+
+function copyForEmail() {
+  if (!selectedPN) return;
+  const fm = items[selectedPN].frontmatter;
+  const isKit = fm.label_count > 1;
+  const unit = isKit ? 'per kit' : 'ea';
+
+  let lines = [`P/N ${fm.part_number} — ${fm.description}`];
+  if (isKit) lines.push(`Kit of ${fm.label_count} labels`);
+  lines.push(fm.material_family);
+  lines.push('');
+
+  const tiers = [
+    { label: '1-9', price: fm.price_1_9 },
+    { label: '10-19', price: fm.price_10_19 },
+    { label: '20-49', price: fm.price_20_49 },
+    { label: '50-99', price: fm.price_50_99 },
+    { label: '100-199', price: fm.price_100_199 },
+    { label: '200+', price: fm.price_200_plus },
+  ].filter(t => t.price !== '' && t.price != null);
+
+  tiers.forEach(t => {
+    const p = typeof t.price === 'string' ? parseFloat(t.price) : t.price;
+    if (isNaN(p)) return;
+    const padLabel = t.label.padEnd(8);
+    lines.push(`${padLabel}$${num(p)} ${unit}`);
+  });
+
+  navigator.clipboard.writeText(lines.join('\n')).then(() => {
+    const btn = document.getElementById('copyBtn');
+    const hint = document.getElementById('copyHint');
+    btn.classList.add('copied');
+    btn.textContent = 'Copied';
+    hint.classList.add('show');
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.textContent = 'Copy for Email';
+      hint.classList.remove('show');
+    }, 2000);
+  });
+}
+
+init();
+</script>
+</body>
+</html>
