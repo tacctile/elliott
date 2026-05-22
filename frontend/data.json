@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-22T06:27:42Z",
+  "generated": "2026-05-22T06:37:39Z",
   "item_count": 5,
   "items": {
     "1205720": {
@@ -128,7 +128,12 @@
         "override_type": "",
         "notes": "2 lam passes due to 13.5\\\" laminator constraint."
       },
-      "image": null,
+      "image": [
+        {
+          "type": "pdf",
+          "path": "images/1245130.pdf"
+        }
+      ],
       "sections": {
         "item_overview": "",
         "material_spec": "Orajet 3951 + 1-mil polyester lam.",
@@ -220,7 +225,12 @@
         "override_type": "",
         "notes": "48\\\" roll dramatically better yield."
       },
-      "image": null,
+      "image": [
+        {
+          "type": "pdf",
+          "path": "images/3017435.pdf"
+        }
+      ],
       "sections": {
         "item_overview": "",
         "material_spec": "3M Controltac 180mC-10 White. 24\" or 48\" rolls.",
