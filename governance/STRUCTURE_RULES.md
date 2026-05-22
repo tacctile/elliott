@@ -23,6 +23,10 @@ height_in: 12.44                          # Per-label height from engineering dr
 sq_ft_per_label: 1.296                    # width × height / 144 — calculated, never estimated
 sq_ft_per_kit: 1.296                      # sq_ft_per_label × label_count
 material_cost_per_unit: 4.00              # Total material cost per sellable unit (vinyl + lam + ink + tape)
+# When multiple roll sizes exist for the same material, populate material_cost_per_unit
+# with the HIGHER cost scenario (smaller roll). This ensures margins are conservative.
+# Document the lower-cost scenario (larger roll) in the Nesting and Material Cost prose
+# section as an operational improvement, not in the canonical frontmatter field.
 cost_version_date: "2026-04-22"           # Date of the material cost data used
 price_1_9: 30
 price_10_19: 24
