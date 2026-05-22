@@ -6,6 +6,47 @@
 
 ---
 
+### 2026-05-22 — Audit Remediation: Full System Audit — 3 Critical, 10 Warnings, 9 Info
+
+**What:** Completed remediation of all findings from the full system audit. Documentation accuracy corrections, tooling improvements, and sync fixes. No prices changed, no items changed status.
+
+**Items Affected:**
+- 1205720 — Material cost corrected from $7.01 (area method) to $7.62 (length-based method). Margin updated ~80% → ~78%. Price unchanged.
+- 1278930 — override_type made more specific; laminator feed notation corrected.
+- 1245130 — Added FA note, nesting causality, rounding note for $43 tier.
+- 3017435 — Added FA note; Rule 14 deviation formally documented in Pricing Derivation.
+- 3018378 — Rule 14 deviation formally documented in Pricing Derivation.
+
+**Files Modified:**
+- `.claude/MASTER_CONTEXT.md` — File map updated (3018378, images/, frontend/, build_frontend.py)
+- `.claude/COMPLETION_TEMPLATES.md` — Added build_frontend.py triggers; added Drawing revision and Item discontinued trigger rows
+- `.claude/ARCHITECTURE.md` — Corrected descriptions (3018378, 1230820); 1205720 margin ~80%→~78%; added Discontinued status
+- `scripts/validate.py` — Added check_category_registry(), check_state_item_count(); fixed Pricing section detection; added Discontinued to valid statuses
+- `scripts/profile.py` — Band summaries now split by item_type within each material family
+- `scripts/build_frontend.py` — Added STRIP_FIELDS; replaced os.popen with datetime.now()
+- `categories/cut-vinyl-3m-180mc.md` — Margin floor corrected ~64–68%→~62–65%; margin at qty 20 ~76–80%→~76–78%; $13.94→$13.93; Cardinal Red material cost note updated; Rule 14 status note added
+- `categories/printed-laminated-orajet.md` — Added step 2a (laminator width check) to singles decision tree
+- `items/1205720.md` — Material cost, margin table, nesting section corrected; correction note added
+- `items/1278930.md` — override_type specificity; laminator feed notation corrected in notes and Nesting section
+- `items/1245130.md` — FA note, nesting causality, rounding note
+- `items/3017435.md` — FA note; Rule 14 deviation note
+- `items/3018378.md` — Rule 14 deviation note
+- `governance/SPEC_EXTRACTION.md` — Added Engineer/Drafter field to Identity and output format
+- `governance/PRICING_VALIDATION.md` — Clarified "materially identical" for color variants
+- `governance/PRICING_RULES.md` — Rule 14: clarified range → use midpoint as benchmark
+- `governance/PRODUCTION.md` — Material cost tables: added Verified dates; 1278930 laminator description corrected; Cardinal Red cost updated to $7.62 (length-based)
+- `frontend/index.html` — copyForEmail now includes first article price
+- `frontend/data.json` — Rebuilt; internal fields stripped (pricing_logic, benchmark_item, downstream_items, material_cost_per_unit, cost_version_date, override_type, margin_at_qty_20)
+
+**Key Decisions:**
+- Cut vinyl margin floor band corrected to ~62–65% (floor driven by 3017435/24" roll at 61.5%; ceiling driven by corrected 1205720 at 65.4%)
+- 1205720 material cost correction is documentation-only — price unchanged, relationship concession remains in effect
+- validate.py now uses prefix-match for section headings (allows "(Reconstructed)" subtitles), exact-match only for "Pricing" to prevent false match on "Pricing Derivation"
+
+**Status:** Complete. All 3 critical, 10 warning, and 9 info findings resolved. validate.py passes 0 errors, 0 warnings.
+
+---
+
 ### 2026-05-22 — New Item: P/N 3018378 — D115 Olympic Blue Model Designation
 
 **What:** Priced and documented P/N 3018378 — cut vinyl model designation label for the D115 model. Olympic Blue, 32.88" × 11.00", single color block lettering ("D115").

@@ -115,10 +115,17 @@ elliott/
 │   ├── 1278930.md
 │   ├── 1245130.md
 │   ├── 1205720.md
-│   └── 3017435.md
+│   ├── 3017435.md
+│   ├── 3018378.md
+│   └── images/                    # Spec sheet PDFs and reference images
 ├── scripts/
 │   ├── validate.py                # Structure compliance + math verification
-│   └── profile.py                 # Recompute pricing profiles from item data
+│   ├── profile.py                 # Recompute pricing profiles from item data
+│   └── build_frontend.py          # Build frontend/data.json from item frontmatter
+├── frontend/
+│   ├── index.html
+│   ├── data.json
+│   └── images/
 ├── .gitignore
 └── README.md
 ```

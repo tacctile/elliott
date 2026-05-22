@@ -23,7 +23,7 @@ The single most important production constraint on this account.
 **Pass count rule:** The number of lamination passes equals the number of distinct label orientations in the print layout. Labels that share an orientation (same dimension feeding across the 13.5" width) laminate together in one pass regardless of quantity.
 
 **Current items:**
-- **3-label kits (1278930):** All 3 labels printed at 7.88" wide orientation. 7.88" sits across the 13.5" laminator width (5.62" clearance). All 3 feed end-to-end = **1 pass.**
+- **3-label kits (1278930):** 3 labels feed end-to-end (11.13" each = 33.39" total feed length); 7.88" feeds across the 13.5" width — **1 pass.**
 - **5-label kits (1245130):** Print layout requires mixed orientations to fit the Roland's 28" print width — 3 labels at 7.88" wide, 2 rotated to 11.13" wide. Two orientation groups = **2 passes.**
 - **Single labels (1230820):** 12.44" feeds across 13.5" width (1.06" clearance) = **1 pass.**
 
@@ -45,26 +45,26 @@ The single most important production constraint on this account.
 
 ### Cut Vinyl — 3M Controltac 180mC
 
-| Color | Code | Roll Size | Cost/Roll | Cost/Yard | Cost/Sq Ft |
-|-------|------|-----------|-----------|-----------|------------|
-| Cardinal Red | 53 | 24" × 10yd | ~$153.60 | $15.36 | $2.56 |
-| Olympic Blue | 57 | 24" × 10yd | $162.78 | $16.278 | $2.71 |
-| White | 10 | 24" × 10yd | $131.16 | $13.116 | $2.19 |
-| White | 10 | 48" × 10yd | $257.44 | $25.744 | $2.15 |
+| Color | Code | Roll Size | Cost/Roll | Cost/Yard | Cost/Sq Ft | Verified |
+|-------|------|-----------|-----------|-----------|------------|----------|
+| Cardinal Red | 53 | 24" × 10yd | ~$153.60 | $15.36 | $2.56 | 2026-04-22 |
+| Olympic Blue | 57 | 24" × 10yd | $162.78 | $16.278 | $2.71 | 2026-05-22 |
+| White | 10 | 24" × 10yd | $131.16 | $13.116 | $2.19 | 2026-05-21 |
+| White | 10 | 48" × 10yd | $257.44 | $25.744 | $2.15 | 2026-05-21 |
 
 ### Application Tape
 
-| Product | Roll Size | Cost/Roll | Cost/Sq Ft |
-|---------|-----------|-----------|------------|
-| TransferRite Ultra 582U | 30" × 100yd | $135.06 | $0.18 |
+| Product | Roll Size | Cost/Roll | Cost/Sq Ft | Verified |
+|---------|-----------|-----------|------------|----------|
+| TransferRite Ultra 582U | 30" × 100yd | $135.06 | $0.18 | 2026-04-22 |
 
 ### Printed Labels — Orajet 3951 + Polyester Lam
 
-| Component | Cost | Notes |
-|-----------|------|-------|
-| Orajet 3951 cast vinyl | ~$1.21/sq ft | White cast, adhesive back |
-| 1-mil polyester overlaminate | ~$1.41/MSI (1,000 sq in) = ~$0.98/sq ft | 13.5" max width on current laminator |
-| Eco-solvent ink (Roland TR2) | ~$0.25-0.30/label | At 11.13" × 7.88" size |
+| Component | Cost | Notes | Verified |
+|-----------|------|-------|----------|
+| Orajet 3951 cast vinyl | ~$1.21/sq ft | White cast, adhesive back | 2026-04-22 |
+| 1-mil polyester overlaminate | ~$1.41/MSI (1,000 sq in) = ~$0.98/sq ft | 13.5" max width on current laminator | 2026-04-22 |
+| Eco-solvent ink (Roland TR2) | ~$0.25-0.30/label | At 11.13" × 7.88" size | 2026-04-22 |
 
 ---
 
@@ -130,7 +130,7 @@ The single most important production constraint on this account.
 
 ### Cut Vinyl at ~2.51–2.56 sq ft
 
-- Cardinal Red, 24" roll: ~$6.55 vinyl + $0.46 tape = **~$7.01/label total** *(at 2.56 sq ft, P/N 1205720 — label-area method)*
+- Cardinal Red, 24" roll: ~$7.16 vinyl + $0.46 tape = **~$7.62/label total** *(at 2.56 sq ft, P/N 1205720 — length-based method)*
 - Olympic Blue, 24" roll: ~$7.43 vinyl + $0.45 tape = **~$7.88/label total** *(at 2.512 sq ft, P/N 3018378 — length-based method)*
 - White, 24" roll: ~$8.00 vinyl + $0.46 tape = **~$8.46/label total** *(at 2.56 sq ft, P/N 3017435 — length-based method)*
 - White, 48" roll: ~$6.28 vinyl + $0.46 tape = **~$6.74/label total** *(at 2.56 sq ft, P/N 3017435)*

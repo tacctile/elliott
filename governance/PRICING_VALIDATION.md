@@ -16,6 +16,8 @@
 
 **When NOT to use it:** Items dimensionally and materially identical to something already quoted. Match the existing structure and move on. Note: this exempts multi-round AI validation only — Rule 15 (validate against category Pricing Profile band) still applies to every new item regardless.
 
+Color variants within the same material family (e.g., different 3M 180mC colors) qualify as "materially identical" for exemption purposes. The margin impact of the different roll cost must be documented even when validation is waived.
+
 ---
 
 ## The Process

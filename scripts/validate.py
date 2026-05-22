@@ -19,6 +19,12 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).parent.parent
 ITEMS_DIR = REPO_ROOT / "items"
 ARCH_FILE = REPO_ROOT / ".claude" / "ARCHITECTURE.md"
+STATE_FILE = REPO_ROOT / ".claude" / "STATE.yml"
+
+CATEGORY_MAP = {
+    "3M 180mC Cut Vinyl": "categories/cut-vinyl-3m-180mc.md",
+    "Orajet 3951 Cast + Polyester Lam": "categories/printed-laminated-orajet.md",
+}
 
 REQUIRED_FRONTMATTER = [
     "part_number", "description", "model", "item_type", "material_family",
@@ -41,7 +47,7 @@ REQUIRED_SECTIONS = [
     "Pricing Derivation",
     "Margin Analysis",
     "Notes and Warnings",
-    "Production Debrief"
+    "Production Debrief",
 ]
 
 errors = []
@@ -114,10 +120,22 @@ def check_math(filepath, fm):
 
 
 def check_sections(filepath, content):
-    """Verify all required sections exist in the markdown body."""
+    """Verify all required sections exist as standalone headings.
+
+    Most sections allow a subtitle suffix (e.g. 'Spec Extraction (Reconstructed)').
+    'Pricing' must be an exact heading to avoid matching 'Pricing Derivation'.
+    """
     pn = filepath.stem
+    # Prepend \n so the regex can match headings at the very start of the body
+    padded = '\n' + content
     for section in REQUIRED_SECTIONS:
-        if section not in content:
+        if section == "Pricing":
+            # Exact match: disallow any non-whitespace after 'Pricing' on the same line
+            pattern = r'\n# Pricing[ \t]*\n'
+        else:
+            # Prefix match: allows subtitles like '(Reconstructed)' or '— The Full Story'
+            pattern = r'\n# ' + re.escape(section)
+        if not re.search(pattern, padded):
             errors.append(f"[{pn}] Missing section: {section}")
 
 
@@ -145,10 +163,54 @@ def check_architecture_registry():
 def check_status_values(fm, filepath):
     """Verify status is a valid lifecycle value."""
     pn = filepath.stem
-    valid = ["Quoted", "FA Ordered", "FA Accepted", "In Production", "Active Reorder"]
+    valid = ["Quoted", "FA Ordered", "FA Accepted", "In Production", "Active Reorder", "Discontinued"]
     status = fm.get("status", "")
     if status not in valid:
         errors.append(f"[{pn}] Invalid status: '{status}'. Must be one of: {valid}")
+
+
+def check_category_registry():
+    """Verify each item appears in its expected category file."""
+    item_files = list(ITEMS_DIR.glob("*.md"))
+    for filepath in item_files:
+        fm, _ = parse_frontmatter(filepath)
+        if fm is None:
+            continue
+        pn = filepath.stem
+        family = fm.get("material_family", "")
+        if family not in CATEGORY_MAP:
+            # Unknown family — no category file expected yet
+            warnings.append(f"[{pn}] No category file mapped for material_family: '{family}'")
+            continue
+        cat_path = REPO_ROOT / CATEGORY_MAP[family]
+        if not cat_path.exists():
+            warnings.append(
+                f"[{pn}] Category file missing for family '{family}': {CATEGORY_MAP[family]}"
+            )
+            continue
+        cat_content = cat_path.read_text()
+        if pn not in cat_content:
+            errors.append(
+                f"[{pn}] Item P/N not found in category file: {CATEGORY_MAP[family]}"
+            )
+
+
+def check_state_item_count():
+    """Verify STATE.yml item_count matches actual item file count."""
+    if not STATE_FILE.exists():
+        warnings.append("STATE.yml not found — cannot check item_count")
+        return
+    state_text = STATE_FILE.read_text()
+    match = re.search(r'^item_count:\s*(\d+)', state_text, re.MULTILINE)
+    if not match:
+        warnings.append("STATE.yml missing item_count field")
+        return
+    stated = int(match.group(1))
+    actual = len(list(ITEMS_DIR.glob("*.md")))
+    if stated != actual:
+        warnings.append(
+            f"STATE.yml item_count is {stated} but {actual} item files exist"
+        )
 
 
 def main():
@@ -176,6 +238,8 @@ def main():
         check_status_values(fm, filepath)
 
     check_architecture_registry()
+    check_category_registry()
+    check_state_item_count()
 
     # Print results
     print()

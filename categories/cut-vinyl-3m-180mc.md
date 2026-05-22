@@ -24,16 +24,18 @@ Derived from accepted pricing on real items. Tightens with every new item. New i
 
 | Metric | Current Band | Notes |
 |--------|-------------|-------|
-| Material cost / label | $6.74–$8.46 | Range: 48" roll ($6.74 best nesting) to 24" roll ($7.01, $7.88, $8.46 by color/roll) |
+| Material cost / label | $6.74–$8.46 | Range: 48" roll ($6.74 best nesting) to 24" roll ($7.62, $7.88, $8.46 by color/roll) |
 | Material cost / sq ft | ~$2.63–$3.37 | Vinyl ($2.15–$2.71) + tape ($0.18) + waste |
-| Selling price / sq ft at qty 20 | ~$13.67–$13.94/sq ft | $35 / sq ft — consistent across all 3 items |
-| Margin at qty 20 | ~76–80% | Range driven by material cost, not price variation |
+| Selling price / sq ft at qty 20 | ~$13.67–$13.93/sq ft | $35 / sq ft — consistent across all 3 items |
+| Margin at qty 20 | ~76–78% | Range driven by material cost, not price variation |
 | Tier compression (1-9 → 200+) | 51% discount | $45 → $22 |
-| Margin floor (200+) | ~64–68% | Healthy for a low-complexity process |
+| Margin floor (200+) | ~62–65% | Healthy for a low-complexity process |
 
-**Band width:** Narrowing — 3 data points at 2.51-2.56 sq ft all at the same $35 price. Per-sq-ft rate range is $13.67-$13.94 (consistent). Items at significantly different sq ft (sub-1 or 5+) will still need validation.
+**Band width:** Narrowing — 3 data points at 2.51-2.56 sq ft all at the same $35 price. Per-sq-ft rate range is $13.67-$13.93 (consistent). Items at significantly different sq ft (sub-1 or 5+) will still need validation.
 
-**Override note:** P/N 1205720 was priced as a Relationship Concession ($35 vs AI consensus of $38-42). The current per-sq-ft band ($13.67-$13.94) reflects concession-phase pricing. AI consensus range would place the band at ~$14.84-$16.41/sq ft. As the relationship matures, the band is expected to shift upward. Until then, $13.67-$13.94 is the accepted market-validated rate.
+**Override note:** P/N 1205720 was priced as a Relationship Concession ($35 vs AI consensus of $38-42). The current per-sq-ft band ($13.67-$13.93) reflects concession-phase pricing. AI consensus range would place the band at ~$14.84-$16.41/sq ft. As the relationship matures, the band is expected to shift upward. Until then, $13.67-$13.93 is the accepted market-validated rate.
+
+The concession-phase band ($13.67–$13.93/sq ft) is the current operative pricing level. Items priced within this band are not violations of Rule 14 — they are strategic extensions of the concession-phase decision. When the relationship matures enough to normalize pricing, the operative band shifts to the AI consensus range ($14.84–$16.41/sq ft).
 
 **Key variables:**
 - **Sq ft:** Primary driver. Same sq ft = same price.

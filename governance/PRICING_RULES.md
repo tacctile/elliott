@@ -30,7 +30,7 @@
 
 12. **Every override is logged** with the type, the engine's original recommendation, and Nick's final number.
 13. **Overrides typed as Relationship Concession or One-Time Exception are non-precedent-setting.** Future items should NOT benchmark against an overridden price unless the override type is Strategic Anchor.
-14. **When encountering an overridden item as a potential benchmark:** check the Override Type. If concession or exception, use the engine's original recommendation as the benchmark, not the overridden price.
+14. **When encountering an overridden item as a potential benchmark:** check the Override Type. If concession or exception, use the engine's original recommendation as the benchmark, not the overridden price. If the engine's recommendation was a range, use the midpoint as the reference benchmark.
 
 ## Profile Rules
 

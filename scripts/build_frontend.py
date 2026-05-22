@@ -13,8 +13,8 @@ Usage:
 
 import json
 import re
-import os
 import shutil
+from datetime import datetime, timezone
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).parent.parent
@@ -27,6 +27,17 @@ OUTPUT_FILE = FRONTEND_DIR / "data.json"
 IMAGE_EXTS = {'.png', '.jpg', '.jpeg', '.webp', '.svg', '.gif', '.bmp', '.tiff'}
 DOC_EXTS = {'.pdf'}
 ALL_EXTS = IMAGE_EXTS | DOC_EXTS
+
+# Internal fields that must never be exposed in the public data.json
+STRIP_FIELDS = {
+    'pricing_logic',
+    'benchmark_item',
+    'downstream_items',
+    'material_cost_per_unit',
+    'cost_version_date',
+    'override_type',
+    'margin_at_qty_20',
+}
 
 
 def sync_images():
@@ -146,6 +157,9 @@ def build_item(filepath):
         if key in fm and fm[key] != '':
             fm[key] = coerce_numeric(fm[key])
 
+    for field in STRIP_FIELDS:
+        fm.pop(field, None)
+
     item = {
         'frontmatter': fm,
         'image': find_files_for_item(pn),
@@ -179,7 +193,7 @@ def main():
             items[pn] = item
 
     output = {
-        'generated': str(Path(os.popen('date -u +%Y-%m-%dT%H:%M:%SZ').read().strip())),
+        'generated': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
         'item_count': len(items),
         'items': items
     }
