@@ -17,7 +17,7 @@
 - Full `.claude/` context system (MASTER_CONTEXT, ARCHITECTURE, CHAT_CONTEXT, COMPLETION_TEMPLATES, STATE, PROGRESS, settings.json)
 - Full `governance/` doc set (SPEC_EXTRACTION, STRUCTURE_RULES, PRICING_VALIDATION, PRICING_RULES, PRODUCTION)
 - 2 category files with Pricing Profiles
-- 5 item files with complete frontmatter + all 9 required sections
+- 5 item files with complete frontmatter + all 10 required sections
 - Validation and profile scripts
 - README, .gitignore
 
