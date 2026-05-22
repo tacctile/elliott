@@ -18,7 +18,7 @@
 
 | P/N | Description | Labels | Dimensions (each) | Sq Ft/Kit | Price (qty 20) | Per Label | Lam Passes | Status |
 |-----|-------------|--------|-------------------|-----------|-----------------|-----------|------------|--------|
-| 1278930 | Capacity Chart Kit, E190 | 3 | 11.13" × 7.88" | 1.83 | $30 | $10.00 | 1 | FA Accepted |
+| 1278930 | Capacity Chart Kit, E190 | 3 | 11.13" × 7.88" | 1.827 | $30 | $10.00 | 1 | FA Accepted |
 | 1245130 | Capacity Chart Kit, E160 | 5 | 11.13" × 7.88" | 3.045 | $50 | $10.00 | 2 | Quoted |
 
 ---
@@ -47,7 +47,7 @@ Derived from accepted pricing on real items. Tightens with every new item.
 
 | Metric | Current Band | Notes |
 |--------|-------------|-------|
-| Per-label material cost | ~$1.48/label | At the 11.13" × 7.88" size |
+| Per-label material cost | ~$1.21/label | Canonical: $3.63/3 (1278930) and $6.03/5 (1245130). Component-level estimates ($0.74+$0.47+$0.27=$1.48) overstate due to per-label laminate rounding — use kit totals. |
 | Per-label selling price at qty 20 | $10.00/label | Parity across both kits |
 | Kit margin at qty 20 | ~87-88% | Higher than singles — lower per-label material cost relative to price |
 | Per-label price / sq ft at qty 20 | ~$16.42/sq ft | Higher than singles — intentional (see below) |
