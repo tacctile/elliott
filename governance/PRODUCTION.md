@@ -49,7 +49,7 @@ The single most important production constraint on this account.
 | Component | Cost | Notes |
 |-----------|------|-------|
 | Orajet 3951 cast vinyl | ~$1.21/sq ft | White cast, adhesive back |
-| 1-mil polyester overlaminate | ~$1.41/MSI | 13.5" max width on current laminator |
+| 1-mil polyester overlaminate | ~$1.41/MSI (1,000 sq in) = ~$0.98/sq ft | 13.5" max width on current laminator |
 | Eco-solvent ink (Roland TR2) | ~$0.25-0.30/label | At 11.13" × 7.88" size |
 
 ---
@@ -98,12 +98,14 @@ The single most important production constraint on this account.
 
 ### At 11.13" × 7.88" (standard capacity chart label)
 
-- Vinyl: 0.609 sq ft × $1.21 = $0.74
-- Laminate: ~$0.47
+- Vinyl: 0.609 sq ft × $1.21/sq ft = ~$0.74
+- Laminate (1-mil polyester): amortized across the full lamination pass — not a per-label charge
 - Ink: ~$0.27
-- **Total per label: ~$1.48**
-- 3-label kit: ~$3.50-3.75
-- 5-label kit: ~$5.80-6.25
+- **Per-label material cost: ~$1.21** (canonical)
+- **3-label kit (1278930): ~$3.63** (1 lamination pass — all 3 labels fit across 13.5")
+- **5-label kit (1245130): ~$6.03** (2 lamination passes required)
+
+> **Note:** A per-label laminate estimate of ~$0.47 produces a component total of ~$1.48/label. This overstates the actual cost because the laminate roll covers the full 13.5" pass width — the cost is amortized across all labels in the pass, not charged per label. Always use the kit-level totals ($3.63 and $6.03) as canonical material costs. These derive from frontmatter `material_cost_per_unit` values, which are ground truth.
 
 ### At 15" × 12.44" (single load chart label)
 
