@@ -48,6 +48,7 @@ The single most important production constraint on this account.
 | Color | Code | Roll Size | Cost/Roll | Cost/Yard | Cost/Sq Ft |
 |-------|------|-----------|-----------|-----------|------------|
 | Cardinal Red | 53 | 24" × 10yd | ~$153.60 | $15.36 | $2.56 |
+| Olympic Blue | 57 | 24" × 10yd | $162.78 | $16.278 | $2.71 |
 | White | 10 | 24" × 10yd | $131.16 | $13.116 | $2.19 |
 | White | 10 | 48" × 10yd | $257.44 | $25.744 | $2.15 |
 
@@ -127,8 +128,9 @@ The single most important production constraint on this account.
 - Ink: ~$0.50
 - **Total per label: ~$3.09-4.00**
 
-### Cut Vinyl at ~2.56 sq ft
+### Cut Vinyl at ~2.51–2.56 sq ft
 
-- Cardinal Red, 24" roll: ~$6.55 vinyl + $0.46 tape = **~$7.01/label total**
-- White, 24" roll: ~$8.00 vinyl + $0.46 tape = **~$8.46/label total**
-- White, 48" roll: ~$6.28 vinyl + $0.46 tape = **~$6.74/label total**
+- Cardinal Red, 24" roll: ~$6.55 vinyl + $0.46 tape = **~$7.01/label total** *(at 2.56 sq ft, P/N 1205720 — label-area method)*
+- Olympic Blue, 24" roll: ~$7.43 vinyl + $0.45 tape = **~$7.88/label total** *(at 2.512 sq ft, P/N 3018378 — length-based method)*
+- White, 24" roll: ~$8.00 vinyl + $0.46 tape = **~$8.46/label total** *(at 2.56 sq ft, P/N 3017435 — length-based method)*
+- White, 48" roll: ~$6.28 vinyl + $0.46 tape = **~$6.74/label total** *(at 2.56 sq ft, P/N 3017435)*

@@ -3,10 +3,10 @@
 
 last_session:
   date: "2026-05-22"
-  type: "system_build"
-  summary: "Initial repo build — migrated from Notion workspace after 3-round audit."
+  type: "new_item"
+  summary: "Created P/N 3018378 — D115 Olympic Blue cut vinyl model designation. Sq ft parity with P/N 1205720. $35 at qty 20, ~78% margin. PMS caveat documented."
 
-next_action: "System ready. Next session is the first new item RFQ from Sean."
+next_action: "Send P/N 3018378 quote to Sean. Await response on pending quotes 1245130, 3017435."
 blockers: "none"
-item_count: 5
-pending_quotes: "1245130, 3017435 — quoted May 2026, awaiting Sean response"
+item_count: 6
+pending_quotes: "1245130, 3017435, 3018378 — quoted May 2026, awaiting Sean response"

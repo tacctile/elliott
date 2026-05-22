@@ -17,6 +17,7 @@ All quoted items. Updated when items are added, repriced, or status changes.
 | 1245130 | 5-Label Lifting Capacity Chart Kit, E160 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Kit | 5 | 0.609 | $50 | $10.00 | ~88% | Quoted | `items/1245130.md` |
 | 1205720 | E190 Cardinal Red Model Designation | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.56 | $35 | $35.00 | ~80% | FA Accepted | `items/1205720.md` |
 | 3017435 | ELLIOTT White Vinyl Cut Lettering | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.56 | $35 | $35.00 | ~76% (24" roll) / ~81% (48" roll) | Quoted | `items/3017435.md` |
+| 3018378 | D115 Olympic Blue Model Designation | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.512 | $35 | $35.00 | ~78% | Quoted | `items/3018378.md` |
 
 ---
 
@@ -24,7 +25,7 @@ All quoted items. Updated when items are added, repriced, or status changes.
 
 | Category | Material Family | Category File | Item Count | Profile Status |
 |----------|-----------------|---------------|------------|----------------|
-| Cut Vinyl Lettering | 3M 180mC Cut Vinyl | `categories/cut-vinyl-3m-180mc.md` | 2 | Moderate — 2 data points at same sq ft |
+| Cut Vinyl Lettering | 3M 180mC Cut Vinyl | `categories/cut-vinyl-3m-180mc.md` | 3 | Narrowing — 3 data points at 2.51–2.56 sq ft, all at $35/qty 20 |
 | Printed + Laminated | Orajet 3951 Cast + Polyester Lam | `categories/printed-laminated-orajet.md` | 3 | Singles: Wide (1 data point). Kits: Moderate (2 data points) |
 | Panel Decals | Convex High Bond + Poly Lam | Not yet created | 0 | No profile — first item establishes it |
 | Polycarbonate | Lexan/Polycarbonate | Not yet created | 0 | No profile — first item establishes it |
@@ -43,6 +44,7 @@ P/N 1230820 (ROOT BENCHMARK — $20/ea at qty 20)
 
 P/N 1205720 (CUT VINYL BASELINE — $35/ea at qty 20, Override: Relationship Concession)
 ├── P/N 3017435 (sq ft parity → $35/ea at qty 20)
+├── P/N 3018378 (sq ft parity → $35/ea at qty 20; new color Olympic Blue)
 └── [future cut vinyl items validate against Pricing Profile band]
 ```
 

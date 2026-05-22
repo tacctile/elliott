@@ -12,6 +12,7 @@
 |-----|-------------|------------|-------|-----------------|--------|
 | 1205720 | E190 Cardinal Red | 33-9/16" × 11" | 2.56 | $35 | FA Accepted |
 | 3017435 | ELLIOTT White | 43.91" × 8.38" | 2.56 | $35 | Quoted |
+| 3018378 | D115 Olympic Blue | 32.88" × 11.00" | 2.512 | $35 | Quoted |
 
 ---
 
@@ -19,20 +20,20 @@
 
 Derived from accepted pricing on real items. Tightens with every new item. New items validate against these bands.
 
-**Data points:** 2 items at ~2.56 sq ft
+**Data points:** 3 items at ~2.51-2.56 sq ft
 
 | Metric | Current Band | Notes |
 |--------|-------------|-------|
-| Material cost / label | $6.74–$8.46 | Range: 48" roll ($6.74 best nesting) to 24" roll ($7.01–$8.46 by color) |
-| Material cost / sq ft | ~$2.63–$3.30 | Vinyl ($2.15–$2.56) + tape ($0.18) + waste |
-| Selling price / sq ft at qty 20 | ~$13.67/sq ft | $35 / 2.56 sq ft — consistent across both items |
-| Margin at qty 20 | ~80% | Both items hit this target |
+| Material cost / label | $6.74–$8.46 | Range: 48" roll ($6.74 best nesting) to 24" roll ($7.01, $7.88, $8.46 by color/roll) |
+| Material cost / sq ft | ~$2.63–$3.37 | Vinyl ($2.15–$2.71) + tape ($0.18) + waste |
+| Selling price / sq ft at qty 20 | ~$13.67–$13.94/sq ft | $35 / sq ft — consistent across all 3 items |
+| Margin at qty 20 | ~76–80% | Range driven by material cost, not price variation |
 | Tier compression (1-9 → 200+) | 51% discount | $45 → $22 |
-| Margin floor (200+) | ~68% | Healthy for a low-complexity process |
+| Margin floor (200+) | ~64–68% | Healthy for a low-complexity process |
 
-**Band width:** Moderate — 2 data points at the same sq ft. Items at significantly different sq ft (sub-1 or 5+) will need validation — per-sq-ft rate may shift due to nesting efficiency.
+**Band width:** Narrowing — 3 data points at 2.51-2.56 sq ft all at the same $35 price. Per-sq-ft rate range is $13.67-$13.94 (consistent). Items at significantly different sq ft (sub-1 or 5+) will still need validation.
 
-**Override note:** P/N 1205720 was priced as a Relationship Concession ($35 vs AI consensus of $38-42). The current per-sq-ft band ($13.67) reflects concession-phase pricing. AI consensus range would place the band at ~$14.84-$16.41/sq ft. As the relationship matures, the band is expected to shift upward. Until then, $13.67 is the accepted market-validated rate.
+**Override note:** P/N 1205720 was priced as a Relationship Concession ($35 vs AI consensus of $38-42). The current per-sq-ft band ($13.67-$13.94) reflects concession-phase pricing. AI consensus range would place the band at ~$14.84-$16.41/sq ft. As the relationship matures, the band is expected to shift upward. Until then, $13.67-$13.94 is the accepted market-validated rate.
 
 **Key variables:**
 - **Sq ft:** Primary driver. Same sq ft = same price.
