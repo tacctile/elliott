@@ -11,10 +11,10 @@
 All quoted items. Updated when items are added, repriced, or status changes.
 
 | P/N | Description | Material Family | Item Type | Label Count | Sq Ft/Label | Price (qty 20) | Per Label (qty 20) | Margin (qty 20) | Status | Item File |
-|-----|-------------|-----------------|-----------|-------------|-------------|-----------------|---------------------|------------------|--------|-----------|
+|-----|-------------|-----------------|-----------|-------------|-------------|-----------------|---------------------|------------------|--------|-----------| 
 | 1230820 | Load Chart Label, D105 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 1.296 | $20 | $20.00 | ~80% | FA Accepted | `items/1230820.md` |
-| 1278930 | 3-Label Capacity Chart Kit, E190 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Kit | 3 | 0.609 | $30 | $10.00 | ~88% | FA Accepted | `items/1278930.md` |
-| 1245130 | 5-Label Capacity Chart Kit, E160 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Kit | 5 | 0.609 | $50 | $10.00 | ~88% | Quoted | `items/1245130.md` |
+| 1278930 | 3-Label Lifting Capacity Chart Kit, E190 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Kit | 3 | 0.609 | $30 | $10.00 | ~88% | FA Accepted | `items/1278930.md` |
+| 1245130 | 5-Label Lifting Capacity Chart Kit, E160 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Kit | 5 | 0.609 | $50 | $10.00 | ~88% | Quoted | `items/1245130.md` |
 | 1205720 | E190 Cardinal Red Model Designation | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.56 | $35 | $35.00 | ~80% | FA Accepted | `items/1205720.md` |
 | 3017435 | ELLIOTT White Vinyl Cut Lettering | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.56 | $35 | $35.00 | ~76% (24" roll) / ~81% (48" roll) | Quoted | `items/3017435.md` |
 
@@ -65,7 +65,7 @@ Every item moves through these stages in order:
 When Nick overrides the pricing engine's recommendation:
 
 | Type | Description | Precedent-Setting? |
-|------|-------------|--------------------|
+|------|-------------|-------------------|
 | Relationship Concession | Priced below engine output to build trust | No |
 | Competitive Defense | Priced to match or beat a known competitor | Yes |
 | Strategic Anchor | Priced to set a precedent for future items | Yes |
