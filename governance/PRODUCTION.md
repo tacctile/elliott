@@ -18,13 +18,26 @@
 
 The single most important production constraint on this account.
 
-- Labels with a dimension ≤13.5" can feed through on that dimension.
-- The number of labels fitting in one lamination pass depends on the label's narrow dimension vs 13.5".
-- Current impact:
-  - 3-label kits (7.88" per label): 3 × 7.88" = 23.64" — all 3 fit in ONE pass
-  - 5-label kits (7.88" per label): cannot fit 5 across — requires TWO passes
-- **Future:** Wider laminator purchase planned after 18 months of locked-in orders. Target: ≥20" width. Cost: a few thousand dollars. This collapses multi-pass items to single-pass and improves margins without touching customer pricing.
-- **Pricing rule:** The constraint is our problem. Absorb the extra labor during the trust-building phase. Never pass it to the buyer.
+**How it works:** Labels feed through the laminator with one dimension in the feed direction (length) and the other across the laminator width. The across-width dimension must be ≤13.5". Multiple labels can feed end-to-end in a single continuous pass as long as they share the same orientation.
+
+**Pass count rule:** The number of lamination passes equals the number of distinct label orientations in the print layout. Labels that share an orientation (same dimension feeding across the 13.5" width) laminate together in one pass regardless of quantity.
+
+**Current items:**
+- **3-label kits (1278930):** All 3 labels printed at 7.88" wide orientation. 7.88" sits across the 13.5" laminator width (5.62" clearance). All 3 feed end-to-end = **1 pass.**
+- **5-label kits (1245130):** Print layout requires mixed orientations to fit the Roland's 28" print width — 3 labels at 7.88" wide, 2 rotated to 11.13" wide. Two orientation groups = **2 passes.**
+- **Single labels (1230820):** 12.44" feeds across 13.5" width (1.06" clearance) = **1 pass.**
+
+**How to determine pass count for a new kit:**
+1. Lay out all labels on the Roland SG3-300 (28" max print width).
+2. Count how many distinct orientations are required to fit the layout.
+3. Each orientation group that has its across-width dimension ≤13.5" = 1 lamination pass.
+4. Sum the passes.
+
+**Example — hypothetical 4-label kit at 11.13" × 7.88":** All 4 at 7.88" wide = 4 × 7.88" = 31.56" total feed length, 7.88" across the 13.5" width. Exceeds 28" print width, so print layout would split into two rows — but both rows share the same orientation. **1 lamination pass.** (If layout forced a mixed orientation, it would be 2 passes.)
+
+**Future:** Wider laminator purchase planned after 18 months of locked-in orders. Target: ≥20" width. Cost: a few thousand dollars. This collapses multi-orientation items to single-pass and improves margins without touching customer pricing.
+
+**Pricing rule:** The constraint is our problem. Absorb the extra labor during the trust-building phase. Never pass it to the buyer.
 
 ---
 
@@ -116,7 +129,6 @@ The single most important production constraint on this account.
 
 ### Cut Vinyl at ~2.56 sq ft
 
-- Vinyl (Cardinal Red, 24" roll): ~$7.01/label
-- Vinyl (White, 24" roll): ~$8.46/label
-- Vinyl (White, 48" roll): ~$6.74/label
-- Application tape: $0.46/label
+- Cardinal Red, 24" roll: ~$6.55 vinyl + $0.46 tape = **~$7.01/label total**
+- White, 24" roll: ~$8.00 vinyl + $0.46 tape = **~$8.46/label total**
+- White, 48" roll: ~$6.28 vinyl + $0.46 tape = **~$6.74/label total**
