@@ -844,7 +844,7 @@ function renderFiles(item) {
     if (file.type === 'pdf') {
       renderPdfThumbs(file.path, grid, idx);
     } else {
-      const src = '../' + file.path;
+      const src = file.path;
       lightboxFiles.push({ type: 'image', src });
       const thumb = document.createElement('div');
       thumb.className = 'thumb';
@@ -863,7 +863,7 @@ function renderFiles(item) {
 }
 
 async function renderPdfThumbs(path, grid, fileIdx) {
-  const src = '../' + path;
+  const src = path;
   try {
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     const pdf = await pdfjsLib.getDocument(src).promise;
