@@ -75,6 +75,9 @@ def main():
         print(f"Data points: {len(items)}")
         print("=" * 60)
 
+        # Collect items by type for per-type band summaries
+        items_by_type = defaultdict(list)
+
         for item in items:
             pn = item.get("part_number", "???")
             label_count = safe_int(item.get("label_count"), 1)
@@ -106,33 +109,37 @@ def main():
             print(f"    Tier compression (1-9 → 200+): {compression:.0f}%")
             print(f"    Lam passes: {lam_passes}")
 
-        # Summary bands
-        prices_per_sqft = []
-        margins_20 = []
-        margins_200 = []
-        compressions = []
+            items_by_type[item_type].append(item)
 
-        for item in items:
-            sq_ft_kit = safe_float(item.get("sq_ft_per_kit"))
-            price_20 = safe_float(item.get("price_20_49"))
-            price_200 = safe_float(item.get("price_200_plus"))
-            price_1_9 = safe_float(item.get("price_1_9"))
-            material = safe_float(item.get("material_cost_per_unit"))
+        # Band summaries split by item_type
+        for itype in sorted(items_by_type.keys()):
+            type_items = items_by_type[itype]
+            prices_per_sqft = []
+            margins_20 = []
+            margins_200 = []
+            compressions = []
 
-            if sq_ft_kit > 0 and price_20 > 0:
-                prices_per_sqft.append(price_20 / sq_ft_kit)
-                margins_20.append((price_20 - material) / price_20 * 100)
-            if price_200 > 0:
-                margins_200.append((price_200 - material) / price_200 * 100)
-            if price_1_9 > 0 and price_200 > 0:
-                compressions.append((1 - price_200 / price_1_9) * 100)
+            for item in type_items:
+                sq_ft_kit = safe_float(item.get("sq_ft_per_kit"))
+                price_20 = safe_float(item.get("price_20_49"))
+                price_200 = safe_float(item.get("price_200_plus"))
+                price_1_9 = safe_float(item.get("price_1_9"))
+                material = safe_float(item.get("material_cost_per_unit"))
 
-        if prices_per_sqft:
-            print(f"\n  --- BAND SUMMARY ---")
-            print(f"  $/sq ft @ qty 20: ${min(prices_per_sqft):.2f} – ${max(prices_per_sqft):.2f}")
-            print(f"  Margin @ qty 20:  {min(margins_20):.1f}% – {max(margins_20):.1f}%")
-            print(f"  Margin @ 200+:    {min(margins_200):.1f}% – {max(margins_200):.1f}%")
-            print(f"  Tier compression: {min(compressions):.0f}% – {max(compressions):.0f}%")
+                if sq_ft_kit > 0 and price_20 > 0:
+                    prices_per_sqft.append(price_20 / sq_ft_kit)
+                    margins_20.append((price_20 - material) / price_20 * 100)
+                if price_200 > 0:
+                    margins_200.append((price_200 - material) / price_200 * 100)
+                if price_1_9 > 0 and price_200 > 0:
+                    compressions.append((1 - price_200 / price_1_9) * 100)
+
+            if prices_per_sqft:
+                print(f"\n  --- BAND SUMMARY: {itype} ---")
+                print(f"  $/sq ft @ qty 20: ${min(prices_per_sqft):.2f} – ${max(prices_per_sqft):.2f}")
+                print(f"  Margin @ qty 20:  {min(margins_20):.1f}% – {max(margins_20):.1f}%")
+                print(f"  Margin @ 200+:    {min(margins_200):.1f}% – {max(margins_200):.1f}%")
+                print(f"  Tier compression: {min(compressions):.0f}% – {max(compressions):.0f}%")
         print()
 
 

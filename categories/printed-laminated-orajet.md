@@ -79,6 +79,7 @@ Beyond 2 lam passes or mixed dimensions → cost-build from scratch. Boundary is
 
 1. Extract dimensions, calculate sq ft.
 2. Pull this Pricing Profile (singles section).
+2a. Check label dimensions: the narrow dimension must be ≤13.5" to laminate in one pass. If both dimensions exceed 13.5", flag immediately — special handling required.
 3. Scale proportionally by sq ft against the $15.43/sq ft band.
 4. Validate margins against ~80% target at qty 20.
 5. If significantly different complexity (data density, color count, tolerance), adjust.

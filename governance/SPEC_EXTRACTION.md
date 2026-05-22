@@ -28,6 +28,7 @@ If any field is tagged Blocked, pricing does not proceed. Period.
 | Drawing Revision / Date | Title block or revision block | Assumed: Rev A / current date |
 | Model | Title block or callout | **Blocked** if not inferable from P/N or drawing context |
 | Description | Title block | Confirmed from drawing title. If missing, write one from content. Tag as Assumed. |
+| Engineer / Drafter | Title block | Assumed: not captured (informational only, does not affect pricing) |
 
 ### Dimensions
 
@@ -115,6 +116,7 @@ Identity:
   Revision: [value] — Confirmed / Assumed (Rev A)
   Model: [value] — Confirmed
   Description: [value] — Confirmed
+  Engineer/Drafter: [value] — Confirmed / Assumed (not captured)
 
 Dimensions:
   Width: [value] — Confirmed

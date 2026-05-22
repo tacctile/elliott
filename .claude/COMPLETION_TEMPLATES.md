@@ -16,15 +16,17 @@ This repo is a living, interconnected set of documents. When anything changes, *
 
 | Change Type | Files That Must Be Updated |
 |-------------|---------------------------|
-| New item quoted | `items/[PN].md` (all sections), `.claude/ARCHITECTURE.md` (item catalog row), `categories/[relevant].md` (items table + Pricing Profile), `.claude/PROGRESS.md` (session entry), `.claude/STATE.yml` |
-| Price change on existing item | `items/[PN].md` (pricing + margin sections), `.claude/ARCHITECTURE.md` (price/margin columns), `categories/[relevant].md` (items table + Pricing Profile if band shifts), `.claude/PROGRESS.md`, check all downstream items in the precedent chain |
-| Material cost change | `governance/PRODUCTION.md` (material costs), `categories/[relevant].md` (Pricing Profile material cost band), every `items/*.md` in the affected material family (recalculate margins), `.claude/ARCHITECTURE.md` (margin columns), `.claude/PROGRESS.md`, `.claude/STATE.yml` |
-| Status change | `items/[PN].md` (frontmatter status + Item Overview), `.claude/ARCHITECTURE.md` (status column), `.claude/PROGRESS.md` |
+| New item quoted | `items/[PN].md` (all sections), `.claude/ARCHITECTURE.md` (item catalog row), `categories/[relevant].md` (items table + Pricing Profile), `.claude/PROGRESS.md` (session entry), `.claude/STATE.yml`, `frontend/data.json` (run `python scripts/build_frontend.py` — rebuild `frontend/data.json`) |
+| Price change on existing item | `items/[PN].md` (pricing + margin sections), `.claude/ARCHITECTURE.md` (price/margin columns), `categories/[relevant].md` (items table + Pricing Profile if band shifts), `.claude/PROGRESS.md`, check all downstream items in the precedent chain, `frontend/data.json` (run `python scripts/build_frontend.py` — rebuild `frontend/data.json`) |
+| Material cost change | `governance/PRODUCTION.md` (material costs), `categories/[relevant].md` (Pricing Profile material cost band), every `items/*.md` in the affected material family (recalculate margins), `.claude/ARCHITECTURE.md` (margin columns), `.claude/PROGRESS.md`, `.claude/STATE.yml`, `frontend/data.json` (run `python scripts/build_frontend.py` — rebuild `frontend/data.json`) |
+| Status change | `items/[PN].md` (frontmatter status + Item Overview), `.claude/ARCHITECTURE.md` (status column), `.claude/PROGRESS.md`, `frontend/data.json` (run `python scripts/build_frontend.py` — rebuild `frontend/data.json`) |
 | Sean feedback received | `.claude/PROGRESS.md`, relevant `items/[PN].md` (Notes section if item-specific) |
 | New material family introduced | `.claude/MASTER_CONTEXT.md` (material families table), `.claude/ARCHITECTURE.md` (category registry), new `categories/[name].md`, `governance/STRUCTURE_RULES.md` (material family definitions) |
 | Equipment change | `governance/PRODUCTION.md`, every `categories/*.md` affected (lamination pass calculations, nesting rules), every `items/*.md` affected (production process, margin analysis if passes change) |
 | Override applied | `items/[PN].md` (frontmatter override_type + Pricing Derivation), `.claude/PROGRESS.md` |
 | Production debrief logged | `items/[PN].md` (Production Debrief section) |
+| Drawing revision received | `items/[PN].md` (Spec Extraction, Item Overview, dimensions, sq ft, material cost if changed), `.claude/ARCHITECTURE.md`, `categories/[relevant].md`, `.claude/PROGRESS.md`, `frontend/data.json` (via build_frontend.py) |
+| Item discontinued | `items/[PN].md` (status → Discontinued), `.claude/ARCHITECTURE.md` (status column), `.claude/PROGRESS.md`, `frontend/data.json` (via build_frontend.py) |
 
 ---
 

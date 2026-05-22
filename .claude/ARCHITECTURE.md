@@ -12,12 +12,12 @@ All quoted items. Updated when items are added, repriced, or status changes.
 
 | P/N | Description | Material Family | Item Type | Label Count | Sq Ft/Label | Price (qty 20) | Per Label (qty 20) | Margin (qty 20) | Status | Item File |
 |-----|-------------|-----------------|-----------|-------------|-------------|-----------------|---------------------|------------------|--------|-----------| 
-| 1230820 | Load Chart Label, D105 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 1.296 | $20 | $20.00 | ~80% | FA Accepted | `items/1230820.md` |
+| 1230820 | Load Chart Label, Model D105 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 1.296 | $20 | $20.00 | ~80% | FA Accepted | `items/1230820.md` |
 | 1278930 | 3-Label Lifting Capacity Chart Kit, E190 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Kit | 3 | 0.609 | $30 | $10.00 | ~88% | FA Accepted | `items/1278930.md` |
 | 1245130 | 5-Label Lifting Capacity Chart Kit, E160 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Kit | 5 | 0.609 | $50 | $10.00 | ~88% | Quoted | `items/1245130.md` |
-| 1205720 | E190 Cardinal Red Model Designation | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.56 | $35 | $35.00 | ~80% | FA Accepted | `items/1205720.md` |
+| 1205720 | E190 Cardinal Red Model Designation | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.56 | $35 | $35.00 | ~78% | FA Accepted | `items/1205720.md` |
 | 3017435 | ELLIOTT White Vinyl Cut Lettering | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.56 | $35 | $35.00 | ~76% (24" roll) / ~81% (48" roll) | Quoted | `items/3017435.md` |
-| 3018378 | D115 Olympic Blue Model Designation | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.512 | $35 | $35.00 | ~78% | Quoted | `items/3018378.md` |
+| 3018378 | Label D115 Blue — Model Designation | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.512 | $35 | $35.00 | ~78% | Quoted | `items/3018378.md` |
 
 ---
 
@@ -59,6 +59,7 @@ Every item moves through these stages in order:
 3. **FA Accepted** — First article approved, production pricing is live
 4. **In Production** — First production order placed
 5. **Active Reorder** — Item has been reordered at least once
+6. **Discontinued** — Item no longer ordered, removed from active quoting
 
 ---
 
