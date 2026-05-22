@@ -54,13 +54,37 @@ def extract_sections(filepath):
     return sections
 
 
-def check_image(part_number):
-    """Check if an image exists for this part number."""
-    for ext in ['png', 'jpg', 'jpeg', 'webp', 'svg']:
+def check_files(part_number):
+    """Find all images and PDFs for a part number.
+    
+    Naming convention:
+      {PN}.pdf          — single PDF spec sheet
+      {PN}.png/jpg/...  — single image
+      {PN}_1.png, {PN}_2.png, ... — multi-page images
+    
+    Returns a list of file paths relative to repo root.
+    """
+    files = []
+    
+    # Check for PDF
+    pdf_path = IMAGES_DIR / f"{part_number}.pdf"
+    if pdf_path.exists():
+        files.append({"type": "pdf", "path": f"items/images/{part_number}.pdf"})
+    
+    # Check for single image (no underscore page number)
+    for ext in ['png', 'jpg', 'jpeg', 'webp', 'svg', 'gif']:
         img_path = IMAGES_DIR / f"{part_number}.{ext}"
         if img_path.exists():
-            return f"items/images/{part_number}.{ext}"
-    return None
+            files.append({"type": "image", "path": f"items/images/{part_number}.{ext}"})
+    
+    # Check for multi-page images: {PN}_1.ext, {PN}_2.ext, etc.
+    import glob as g
+    for match in sorted(IMAGES_DIR.glob(f"{part_number}_*")):
+        ext = match.suffix.lower().lstrip('.')
+        if ext in ['png', 'jpg', 'jpeg', 'webp', 'svg', 'gif']:
+            files.append({"type": "image", "path": f"items/images/{match.name}"})
+    
+    return files if files else None
 
 
 def coerce_numeric(val):
@@ -97,7 +121,7 @@ def build_item(filepath):
 
     item = {
         'frontmatter': fm,
-        'image': check_image(pn),
+        'image': check_files(pn),
         'sections': {
             'item_overview': sections.get('Item Overview', ''),
             'material_spec': sections.get('Material Specification', ''),
