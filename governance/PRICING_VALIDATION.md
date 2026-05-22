@@ -14,7 +14,7 @@
 - Any time gut instinct says something feels off
 - When the pricing decision sets a precedent future items will be measured against
 
-**When NOT to use it:** Items dimensionally and materially identical to something already quoted. Match the existing structure and move on.
+**When NOT to use it:** Items dimensionally and materially identical to something already quoted. Match the existing structure and move on. Note: this exempts multi-round AI validation only — Rule 15 (validate against category Pricing Profile band) still applies to every new item regardless.
 
 ---
 
