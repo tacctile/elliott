@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-22T19:43:46Z",
+  "generated": "2026-05-22T19:45:06Z",
   "item_count": 6,
   "items": {
     "1205720": {
@@ -276,7 +276,12 @@
         "override_type": "",
         "notes": "Olympic Blue (3M 180mC-57) is a visual approximation of PMS 2386 C \u2014 NOT a certified Pantone match. Drawing calls for PMS 2386 C. Quote must disclose this. D115 model designation. Drawing revision: Dash (initial release), dated 03/12/26, engineer DAW / drafter DJS."
       },
-      "image": null,
+      "image": [
+        {
+          "type": "pdf",
+          "path": "images/3018378.pdf"
+        }
+      ],
       "sections": {
         "item_overview": "- **Part Number:** 3018378\n- **Description:** Label \"D115\" Blue \u2014 Model Designation\n- **Drawing:** 3018378.dwg\n- **Revision:** Dash (initial release)\n- **Drawing Date:** 03/12/26 (Engineer: DAW / Drafter: DJS)\n- **Type:** Vinyl cut lettering (no printing)\n- **Content:** \"D115\" \u2014 four large block letters, single color Olympic Blue. Applied to crane body for model identification on the D115 model.\n- **Dimensions:** 32.88\" W \u00d7 11.00\" H (2.512 sq ft)\n- **Tolerances:** \u00b11/16\" fractional (confirmed on drawing)\n- **Status:** Quoted 2026-05-22\n\n---",
         "material_spec": "- **Substrate:** 3M Controltac 180mC-57 Olympic Blue\n- **Film Type:** 2-mil cast vinyl\n- **Adhesive:** Comply repositionable pressure-sensitive\n- **Rated Durability:** 10-year (exceeds drawing spec of 5-7 year)\n- **Roll Size Available:** 24\" \u00d7 10yd ($162.78/roll)\n- **Application Tape:** TransferRite Ultra 582U \u2014 30\" \u00d7 100yd ($135.06/roll, $0.18/sq ft)\n- **Laminate:** N/A\n\n**PMS Color Note:** Drawing calls for PMS 2386 C (\"Primary Blue\"). Olympic Blue (3M 180mC-57) is the closest stock color in the 3M 180mC line. This is a visual approximation only \u2014 not a certified Pantone match. Quote must disclose this. If Elliott requires an exact PMS 2386 C match, a custom color program or printed vinyl approach is required.\n\n---",
