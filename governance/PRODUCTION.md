@@ -2,7 +2,7 @@
 
 > **Equipment specs, material costs, nesting rules, and process details.**
 >
-> Last Updated: 2026-05-22
+> Last Updated: 2026-05-26
 
 ---
 
@@ -45,12 +45,13 @@ The single most important production constraint on this account.
 
 ### Cut Vinyl — 3M Controltac 180mC
 
-| Color | Code | Roll Size | Cost/Roll | Cost/Yard | Cost/Sq Ft | Verified |
-|-------|------|-----------|-----------|-----------|------------|----------|
-| Cardinal Red | 53 | 24" × 10yd | ~$153.60 | $15.36 | $2.56 | 2026-04-22 |
-| Olympic Blue | 57 | 24" × 10yd | $162.78 | $16.278 | $2.71 | 2026-05-22 |
-| White | 10 | 24" × 10yd | $131.16 | $13.116 | $2.19 | 2026-05-21 |
-| White | 10 | 48" × 10yd | $257.44 | $25.744 | $2.15 | 2026-05-21 |
+| Color | Code | Roll Size | Cost/Roll | Cost/Yard | Cost/Sq Ft | Verified | Notes |
+|-------|------|-----------|-----------|-----------|------------|----------|-------|
+| Cardinal Red | 53 | 24" × 10yd | $162.78 | $16.28 | $2.71 | 2026-05-26 | Backup / low-volume option. Price increased from $153.60 on 2026-05-26. |
+| Cardinal Red | 53 | 24" × 50yd | $775.10 | $15.50 | $2.58 | 2026-05-26 | **Preferred roll** for Cardinal Red given current production volume (E190 + E160 combined). |
+| Olympic Blue | 57 | 24" × 10yd | $162.78 | $16.278 | $2.71 | 2026-05-26 | Price reverified 2026-05-26 — unchanged. |
+| White | 10 | 24" × 10yd | $131.16 | $13.116 | $2.19 | 2026-05-21 | |
+| White | 10 | 48" × 10yd | $257.44 | $25.744 | $2.15 | 2026-05-21 | |
 
 ### Application Tape
 
@@ -130,7 +131,13 @@ The single most important production constraint on this account.
 
 ### Cut Vinyl at ~2.51–2.56 sq ft
 
-- Cardinal Red, 24" roll: ~$7.16 vinyl + $0.46 tape = **~$7.62/label total** *(at 2.56 sq ft, P/N 1205720 — length-based method)*
-- Olympic Blue, 24" roll: ~$7.43 vinyl + $0.45 tape = **~$7.88/label total** *(at 2.512 sq ft, P/N 3018378 — length-based method)*
-- White, 24" roll: ~$8.00 vinyl + $0.46 tape = **~$8.46/label total** *(at 2.56 sq ft, P/N 3017435 — length-based method)*
-- White, 48" roll: ~$6.28 vinyl + $0.46 tape = **~$6.74/label total** *(at 2.56 sq ft, P/N 3017435)*
+- Cardinal Red, 24" × 10yd roll (single-nest, conservative): ~$15.40 vinyl + $0.46 tape = **~$15.86/label total** *(at 2.56 sq ft, P/N 1205720 — single-nest length-based, no confirmed production run)*
+- Cardinal Red, 24" × 10yd roll (2-wide, confirmed in production): ~$7.70 vinyl + $0.46 tape = **~$8.16/label total** *(at 2.564 sq ft, P/N 1186310 — 2-wide canonical, production-confirmed)*
+- Cardinal Red, 24" × 50yd roll (preferred, 2-wide): ~$7.33 vinyl + $0.46 tape = **~$7.79/label total** *(projected at $15.50/yd × 0.9460 yd ÷ 2; operational improvement over 10yd roll)*
+- Olympic Blue, 24" × 10yd roll (2-wide): ~$7.43 vinyl + $0.45 tape = **~$7.88/label total** *(at 2.512 sq ft, P/N 3018378 — length-based method)*
+- White, 24" × 10yd roll (2-wide): ~$8.00 vinyl + $0.46 tape = **~$8.46/label total** *(at 2.56 sq ft, P/N 3017435 — length-based method)*
+- White, 48" × 10yd roll (2-wide): ~$6.28 vinyl + $0.46 tape = **~$6.74/label total** *(at 2.56 sq ft, P/N 3017435)*
+
+> **Methodology note:** P/N 1205720 uses single-nest length-based (1 label per row across the 24" roll) as a conservative figure pending its first production run. P/N 1186310 has been confirmed in production at 2-wide nesting and uses that as its canonical method. When 1205720 enters production and 2-wide is confirmed, its material cost will be recalculated using the 2-wide method (expected to align with 1186310's ~$8.16/label).
+>
+> **50yd roll improvement:** Cardinal Red 24" × 50yd at $775.10 ($15.50/yd) replaces the 24" × 10yd ($16.28/yd) as the preferred roll for current production volume. ~4.8% yield improvement on vinyl cost. Document as an operational improvement; canonical material_cost_per_unit fields use the conservative 10yd figure per Structure Rules.

@@ -33,11 +33,12 @@ STRIP_FIELDS = {
     'pricing_logic',
     'benchmark_item',
     'downstream_items',
-    'material_cost_per_unit',
     'cost_version_date',
     'override_type',
-    'margin_at_qty_20',
 }
+# Note: material_cost_per_unit and margin_at_qty_20 are NOT stripped — they flow
+# through to the internal dashboard so Nick and Shannon can see margin reality at a
+# glance. Public-facing exposure is gated at the deployment layer, not in this script.
 
 
 def sync_images():

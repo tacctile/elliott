@@ -670,6 +670,83 @@
     color: var(--accent);
   }
 
+  /* === TOOLTIP HELPERS === */
+  [data-tip] {
+    cursor: help;
+    border-bottom: 1px dotted var(--text-tertiary);
+  }
+  .stat-label[data-tip],
+  .info-row .ir-k[data-tip],
+  .ptable thead th[data-tip] {
+    /* keep native title tooltip; visual cue is the dotted underline */
+  }
+
+  /* === LEGEND PANEL === */
+  .legend-toggle {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    background: transparent;
+    border: 1px solid var(--border-medium);
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.12s;
+    letter-spacing: 0.3px;
+  }
+  .legend-toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .legend-toggle.open {
+    background: var(--accent-dim);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .legend-panel {
+    display: none;
+    background: var(--surface-2);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin-bottom: 24px;
+  }
+  .legend-panel.open { display: block; }
+  .legend-panel h4 {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-tertiary);
+    margin-bottom: 12px;
+  }
+  .legend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 8px 18px;
+  }
+  .legend-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 10px;
+    align-items: baseline;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .legend-row:last-child { border-bottom: none; }
+  .legend-row .lg-k {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .legend-row .lg-v {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
   /* === SCROLLBAR === */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
@@ -686,7 +763,10 @@
       <span class="divider"></span>
       <span class="subtitle">Pro Label Pricing Engine</span>
     </div>
-    <span class="item-count" id="itemCount">—</span>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <button class="legend-toggle" id="legendToggle" onclick="toggleLegend()" title="Show field definitions">Legend</button>
+      <span class="item-count" id="itemCount">—</span>
+    </div>
   </div>
 
   <div class="layout">
@@ -701,6 +781,30 @@
 
     <!-- MAIN -->
     <div class="main">
+      <div class="legend-panel" id="legendPanel">
+        <h4>Field Legend — internal dashboard reference</h4>
+        <div class="legend-grid">
+          <div class="legend-row"><span class="lg-k">P/N</span><span class="lg-v">Elliott's engineering part number.</span></div>
+          <div class="legend-row"><span class="lg-k">Description</span><span class="lg-v">Short name from the engineering drawing.</span></div>
+          <div class="legend-row"><span class="lg-k">Model</span><span class="lg-v">Elliott equipment model this label belongs to.</span></div>
+          <div class="legend-row"><span class="lg-k">Type</span><span class="lg-v">How this item is produced (cut vinyl, printed/laminated, etc.).</span></div>
+          <div class="legend-row"><span class="lg-k">Material</span><span class="lg-v">The material system used to produce this item.</span></div>
+          <div class="legend-row"><span class="lg-k">Labels/Kit</span><span class="lg-v">Number of individual labels in this sellable unit.</span></div>
+          <div class="legend-row"><span class="lg-k">Sq Ft/Label</span><span class="lg-v">Square footage of one label (width × height ÷ 144).</span></div>
+          <div class="legend-row"><span class="lg-k">Sq Ft/Unit</span><span class="lg-v">Total square footage of the sellable unit.</span></div>
+          <div class="legend-row"><span class="lg-k">Material Cost</span><span class="lg-v">Total material cost per sellable unit (vinyl + laminate + ink + tape).</span></div>
+          <div class="legend-row"><span class="lg-k">Margin @ Qty 20</span><span class="lg-v">Gross margin at the qty 20–49 price tier. Target: 75%+.</span></div>
+          <div class="legend-row"><span class="lg-k">Pricing Tiers</span><span class="lg-v">Customer price per unit at each quantity break.</span></div>
+          <div class="legend-row"><span class="lg-k">Per Label @ 20</span><span class="lg-v">Price per individual label at the qty 20 tier.</span></div>
+          <div class="legend-row"><span class="lg-k">First Article</span><span class="lg-v">One-time price for a proof/sample before full production.</span></div>
+          <div class="legend-row"><span class="lg-k">Process</span><span class="lg-v">Production method (Cut/Weed/Mask or Print/Lam/Cut).</span></div>
+          <div class="legend-row"><span class="lg-k">Lam Passes</span><span class="lg-v">Number of laminator passes required. Affects production cost.</span></div>
+          <div class="legend-row"><span class="lg-k">Status</span><span class="lg-v">Current lifecycle stage (Quoted → FA Ordered → FA Accepted → In Production → Active Reorder).</span></div>
+          <div class="legend-row"><span class="lg-k">Date Quoted</span><span class="lg-v">Date the quote was sent to Sean.</span></div>
+          <div class="legend-row"><span class="lg-k">$/Sq Ft @ 20</span><span class="lg-v">Customer price per square foot at the qty 20 tier — useful for cross-item comparison.</span></div>
+          <div class="legend-row"><span class="lg-k">Gross Profit</span><span class="lg-v">Unit price minus material cost at each tier.</span></div>
+        </div>
+      </div>
       <div class="empty" id="emptyState">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
@@ -747,6 +851,41 @@ let items = {};
 let sortedPNs = [];
 let selectedPN = null;
 let activeFilter = null;
+
+// === FIELD TOOLTIPS — keep in sync with the Legend panel ===
+const TIPS = {
+  part_number: "Elliott's engineering part number",
+  description: "Short name from the engineering drawing",
+  model: "Elliott equipment model this label belongs to",
+  item_type: "How this item is produced (cut vinyl, printed/laminated, etc.)",
+  material_family: "The material system used to produce this item",
+  label_count: "Number of individual labels in this sellable unit",
+  sq_ft_per_label: "Square footage of one label (width × height ÷ 144)",
+  sq_ft_per_kit: "Total square footage of the sellable unit",
+  material_cost_per_unit: "Total material cost per sellable unit (vinyl + laminate + ink + tape)",
+  margin_at_qty_20: "Gross margin at the qty 20–49 price tier. Target: 75%+",
+  price_tier: "Customer price per unit at this quantity break",
+  per_label_at_qty_20: "Price per individual label at the qty 20 tier",
+  first_article_price: "One-time price for a proof/sample before full production",
+  process: "Production method (Cut/Weed/Mask or Print/Lam/Cut)",
+  lamination_passes: "Number of laminator passes required. Affects production cost.",
+  status: "Current lifecycle stage (Quoted → FA Ordered → FA Accepted → In Production → Active Reorder)",
+  date_quoted: "Date the quote was sent to Sean",
+  price_per_sq_ft: "Customer price per square foot at the qty 20 tier — useful for cross-item comparison",
+  gross_profit: "Unit price minus material cost at this tier",
+  dimensions: "Per-label width × height from the engineering drawing",
+  cut_runs: "Number of cut passes required to produce one unit",
+  benchmark: "The P/N this item's pricing was derived from, or 'None' if it's a baseline",
+  downstream: "Items that have been priced from this one as a benchmark",
+  override: "Set when Nick deliberately priced outside the engine's recommendation"
+};
+
+function toggleLegend() {
+  const panel = document.getElementById('legendPanel');
+  const btn = document.getElementById('legendToggle');
+  panel.classList.toggle('open');
+  btn.classList.toggle('open');
+}
 
 async function init() {
   try {
@@ -870,18 +1009,18 @@ function selectItem(pn) {
 function renderHeader(fm) {
   const el = document.getElementById('detailHeader');
   const override = fm.override_type
-    ? `<span class="dh-override">${fm.override_type}</span>` : '';
+    ? `<span class="dh-override" title="${TIPS.override}">${fm.override_type}</span>` : '';
   el.innerHTML = `
     <div class="dh-top">
-      <span class="dh-pn">${fm.part_number}</span>
-      <span class="dh-badge ${badgeClass(fm.status)}">${fm.status}</span>
+      <span class="dh-pn" title="${TIPS.part_number}">${fm.part_number}</span>
+      <span class="dh-badge ${badgeClass(fm.status)}" title="${TIPS.status}">${fm.status}</span>
       ${override}
     </div>
-    <div class="dh-desc">${fm.description}</div>
+    <div class="dh-desc" title="${TIPS.description}">${fm.description}</div>
     <div class="dh-crumbs">
-      <span>${fm.model}</span><span class="sep">·</span>
-      <span>${fm.item_type}</span><span class="sep">·</span>
-      <span>${fm.material_family}</span>
+      <span title="${TIPS.model}">${fm.model}</span><span class="sep">·</span>
+      <span title="${TIPS.item_type}">${fm.item_type}</span><span class="sep">·</span>
+      <span title="${TIPS.material_family}">${fm.material_family}</span>
     </div>
   `;
 }
@@ -1045,74 +1184,79 @@ function renderStats(fm) {
   const isKit = fm.label_count > 1;
   const mc = fm.material_cost_per_unit;
   const p20 = fm.price_20_49;
-  const margin = ((p20 - mc) / p20 * 100).toFixed(0);
+  const hasMC = mc != null && !isNaN(parseFloat(mc));
+  const mcNum = hasMC ? parseFloat(mc) : null;
+  const margin = hasMC ? ((p20 - mcNum) / p20 * 100).toFixed(0) : null;
   const sqft = fm.sq_ft_per_kit;
   const ppsf = (p20 / sqft).toFixed(2);
 
   let html = `
     <div class="stat-block">
-      <div class="stat-label">Price @ Qty 20</div>
+      <div class="stat-label" data-tip title="${TIPS.price_tier}">Price @ Qty 20</div>
       <div class="stat-value highlight">$${num(p20)}</div>
-      ${isKit ? `<div class="stat-sub">$${num(fm.per_label_at_qty_20)} per label</div>` : ''}
+      ${isKit ? `<div class="stat-sub" title="${TIPS.per_label_at_qty_20}">$${num(fm.per_label_at_qty_20)} per label</div>` : ''}
     </div>
-    <div class="stat-block">
-      <div class="stat-label">Material Cost</div>
-      <div class="stat-value">$${num(mc)}</div>
-      <div class="stat-sub">as of ${fm.cost_version_date}</div>
-    </div>
-    <div class="stat-block">
-      <div class="stat-label">Margin @ 20</div>
+    ${hasMC ? `<div class="stat-block">
+      <div class="stat-label" data-tip title="${TIPS.material_cost_per_unit}">Material Cost</div>
+      <div class="stat-value">$${num(mcNum)}</div>
+    </div>` : ''}
+    ${margin !== null ? `<div class="stat-block">
+      <div class="stat-label" data-tip title="${TIPS.margin_at_qty_20}">Margin @ 20</div>
       <div class="stat-value">${margin}%</div>
-    </div>
+    </div>` : ''}
     <div class="stat-block">
-      <div class="stat-label">$/Sq Ft @ 20</div>
+      <div class="stat-label" data-tip title="${TIPS.price_per_sq_ft}">$/Sq Ft @ 20</div>
       <div class="stat-value">$${ppsf}</div>
-      <div class="stat-sub">${sqft.toFixed(3)} sq ft</div>
+      <div class="stat-sub" title="${TIPS.sq_ft_per_kit}">${sqft.toFixed(3)} sq ft</div>
     </div>
   `;
   if (isKit) {
     html += `
     <div class="stat-block">
-      <div class="stat-label">Labels / Kit</div>
+      <div class="stat-label" data-tip title="${TIPS.label_count}">Labels / Kit</div>
       <div class="stat-value">${fm.label_count}</div>
-      <div class="stat-sub">${fm.sq_ft_per_label} sq ft each</div>
+      <div class="stat-sub" title="${TIPS.sq_ft_per_label}">${fm.sq_ft_per_label} sq ft each</div>
     </div>`;
   }
   el.innerHTML = html;
 }
 
 function renderPricing(fm) {
-  const mc = fm.material_cost_per_unit;
+  const mcRaw = fm.material_cost_per_unit;
+  const hasMC = mcRaw != null && !isNaN(parseFloat(mcRaw));
+  const mc = hasMC ? parseFloat(mcRaw) : null;
   const isKit = fm.label_count > 1;
 
   const tiers = [
-    { label: 'First Article', price: fm.first_article_price },
-    { label: '1–9', price: fm.price_1_9 },
-    { label: '10–19', price: fm.price_10_19 },
-    { label: '20–49', price: fm.price_20_49 },
-    { label: '50–99', price: fm.price_50_99 },
-    { label: '100–199', price: fm.price_100_199 },
-    { label: '200+', price: fm.price_200_plus },
+    { label: 'First Article', price: fm.first_article_price, tip: TIPS.first_article_price },
+    { label: '1–9', price: fm.price_1_9, tip: TIPS.price_tier },
+    { label: '10–19', price: fm.price_10_19, tip: TIPS.price_tier },
+    { label: '20–49', price: fm.price_20_49, tip: TIPS.price_tier },
+    { label: '50–99', price: fm.price_50_99, tip: TIPS.price_tier },
+    { label: '100–199', price: fm.price_100_199, tip: TIPS.price_tier },
+    { label: '200+', price: fm.price_200_plus, tip: TIPS.price_tier },
   ].filter(t => t.price !== '' && t.price != null);
 
   let html = `<table class="ptable"><thead><tr>
-    <th>Quantity</th><th>Unit Price</th>
-    ${isKit ? '<th>Per Label</th>' : ''}
-    <th>Gross Profit</th><th>Margin</th>
+    <th title="Quantity tier">Quantity</th>
+    <th title="${TIPS.price_tier}">Unit Price</th>
+    ${isKit ? `<th title="${TIPS.per_label_at_qty_20}">Per Label</th>` : ''}
+    ${hasMC ? `<th title="${TIPS.gross_profit}">Gross Profit</th>` : ''}
+    ${hasMC ? `<th title="${TIPS.margin_at_qty_20}">Margin</th>` : ''}
   </tr></thead><tbody>`;
 
   tiers.forEach(t => {
     const p = typeof t.price === 'string' ? parseFloat(t.price) : t.price;
     if (isNaN(p)) return;
     const perLabel = isKit ? p / fm.label_count : null;
-    const profit = p - mc;
-    const margin = (profit / p * 100).toFixed(0);
+    const profit = hasMC ? p - mc : null;
+    const margin = hasMC ? (profit / p * 100).toFixed(0) : null;
     html += `<tr>
-      <td>${t.label}</td>
+      <td title="${t.tip}">${t.label}</td>
       <td>$${num(p)}</td>
       ${isKit ? `<td>$${num(perLabel)}</td>` : ''}
-      <td class="col-profit">$${num(profit)}</td>
-      <td class="col-margin">${margin}%</td>
+      ${hasMC ? `<td class="col-profit">$${num(profit)}</td>` : ''}
+      ${hasMC ? `<td class="col-margin">${margin}%</td>` : ''}
     </tr>`;
   });
 
@@ -1122,28 +1266,30 @@ function renderPricing(fm) {
 
 function renderDetails(fm) {
   const el = document.getElementById('detailGrid');
+  const hasLogic = fm.pricing_logic != null && fm.pricing_logic !== '';
+  const hasBenchmark = fm.benchmark_item != null && fm.benchmark_item !== '';
   el.innerHTML = `
     <div class="info-card">
       <h4>Specifications</h4>
-      ${row('Dimensions', `${fm.width_in}" × ${fm.height_in}"`)}
-      ${row('Sq Ft / Label', fm.sq_ft_per_label.toFixed(3))}
-      ${fm.label_count > 1 ? row('Sq Ft / Kit', fm.sq_ft_per_kit.toFixed(3)) : ''}
-      ${row('Material Family', fm.material_family)}
-      ${row('Process', fm.process)}
-      ${row('Lam Passes', fm.lamination_passes)}
-      ${row('Cut Runs', fm.cut_runs)}
+      ${row('Dimensions', `${fm.width_in}" × ${fm.height_in}"`, TIPS.dimensions)}
+      ${row('Sq Ft / Label', fm.sq_ft_per_label.toFixed(3), TIPS.sq_ft_per_label)}
+      ${fm.label_count > 1 ? row('Sq Ft / Kit', fm.sq_ft_per_kit.toFixed(3), TIPS.sq_ft_per_kit) : ''}
+      ${row('Material Family', fm.material_family, TIPS.material_family)}
+      ${row('Process', fm.process, TIPS.process)}
+      ${row('Lam Passes', fm.lamination_passes, TIPS.lamination_passes)}
+      ${row('Cut Runs', fm.cut_runs, TIPS.cut_runs)}
     </div>
     <div class="info-card">
       <h4>Lineage</h4>
-      ${row('Benchmark', fm.benchmark_item)}
-      ${row('Downstream', fm.downstream_items || 'None')}
-      ${row('Date Quoted', fm.date_quoted)}
-      ${fm.override_type ? row('Override', fm.override_type) : ''}
+      ${hasBenchmark ? row('Benchmark', fm.benchmark_item, TIPS.benchmark) : ''}
+      ${fm.downstream_items !== undefined ? row('Downstream', fm.downstream_items || 'None', TIPS.downstream) : ''}
+      ${row('Date Quoted', fm.date_quoted, TIPS.date_quoted)}
+      ${fm.override_type ? row('Override', fm.override_type, TIPS.override) : ''}
     </div>
-    <div class="info-card full">
+    ${hasLogic ? `<div class="info-card full">
       <h4>Pricing Logic</h4>
       <div class="prose">${fm.pricing_logic}</div>
-    </div>
+    </div>` : ''}
     ${fm.notes ? `<div class="info-card full">
       <h4>Notes</h4>
       <div class="prose">${fm.notes}</div>
@@ -1151,8 +1297,9 @@ function renderDetails(fm) {
   `;
 }
 
-function row(k, v) {
-  return `<div class="info-row"><span class="ir-k">${k}</span><span class="ir-v">${v}</span></div>`;
+function row(k, v, tip) {
+  const tipAttr = tip ? ` data-tip title="${tip.replace(/"/g, '&quot;')}"` : '';
+  return `<div class="info-row"><span class="ir-k"${tipAttr}>${k}</span><span class="ir-v">${v}</span></div>`;
 }
 
 function num(n) {

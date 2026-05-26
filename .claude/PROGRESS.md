@@ -6,6 +6,37 @@
 
 ---
 
+### 2026-05-26 — Material Cost Update + Status Change + Frontend Enhancement
+
+**What:** Three coordinated updates: (1) Cardinal Red 24" × 10yd price increased $153.60 → $162.78 and 24" × 50yd added at $775.10 as the preferred roll for current volume; (2) P/N 1186310 moved Quoted → In Production after first PO (qty 20, $700.00) — nesting method updated to 2-wide canonical reflecting production reality; (3) frontend dashboard exposed `material_cost_per_unit` and `margin_at_qty_20` for internal margin visibility and added a tooltip/legend system so every field is self-documenting.
+
+**Items Affected:**
+- 1205720 — Material cost recalculated using single-nest length-based method at new Cardinal Red price: $7.62 → $15.86. Margin @ qty 20: ~78% → ~55%. Conservative figure pending E190's first production run; expected to converge to ~$8.16 once 2-wide nesting is confirmed in production. Methodology divergence from 1186310 documented.
+- 1186310 — Status Quoted → In Production (first PO: qty 20, $700.00). Nesting corrected to 2-wide canonical (actual production reality). Material cost: $7.62 → $8.16 (combines Cardinal Red price increase + methodology). Margin @ qty 20: ~78% → ~77%.
+- 3018378 — Olympic Blue price reverified 2026-05-26 at $162.78/roll — unchanged. No material cost change. Verification note added.
+
+**Files Modified:**
+- `governance/PRODUCTION.md` — Cardinal Red 10yd updated to $162.78; 50yd added at $775.10 as preferred roll; Verified dates → 2026-05-26 for both Cardinal Red rows and Olympic Blue (reverification); Cut Vinyl quick reference rewritten to reflect single-nest (1205720), 2-wide canonical (1186310), and 50yd improvement
+- `items/1205720.md` — frontmatter material_cost_per_unit 7.62 → 15.86, margin_at_qty_20 ~78% → ~55%, cost_version_date → 2026-05-26; Material Spec roll sizes updated; Nesting and Material Cost section rewritten with single-nest methodology; Margin Analysis split into conservative (single-nest) and projected (2-wide) tables; methodology divergence note added in Notes and Warnings
+- `items/1186310.md` — frontmatter status Quoted → In Production, material_cost_per_unit 7.62 → 8.16, margin_at_qty_20 ~78% → ~77%, cost_version_date → 2026-05-26, date_in_production added; Item Overview status updated; Material Spec roll sizes updated; Nesting and Material Cost section rewritten with 2-wide canonical methodology and explicit divergence from 1205720; Margin Analysis updated with first-production-order detail; notes updated
+- `items/3018378.md` — Material Spec roll-size verification note; Notes and Warnings reverification confirmation
+- `categories/cut-vinyl-3m-180mc.md` — Items table status for 1186310 → In Production; Pricing Profile bands updated to reflect new material costs and methodology split; Key variables section expanded with roll-length and nesting-confirmation guidance
+- `.claude/ARCHITECTURE.md` — 1205720 margin column updated to reflect dual figures (conservative/projected); 1186310 margin → ~77%, status → In Production; Last Updated → 2026-05-26
+- `scripts/build_frontend.py` — removed `material_cost_per_unit` and `margin_at_qty_20` from STRIP_FIELDS; added explanatory comment
+- `frontend/index.html` — added Legend panel with full field-definition table; added title-attribute tooltips throughout (header, stat row, pricing table, info cards); rendering functions made null-safe for items where `material_cost_per_unit` is missing
+- `frontend/data.json` — rebuilt; material_cost_per_unit and margin_at_qty_20 now present in item output (item_count = 7)
+- `.claude/STATE.yml` — session state updated; 1186310 removed from pending_quotes (now In Production)
+
+**Key Decisions:**
+- 1205720 (no production run yet) carries the conservative single-nest figure ($15.86) until E190 confirms 2-wide in production. 1186310 (production-confirmed) uses 2-wide canonical ($8.16). Documentation discipline, not a real production difference — same drawing, same dimensions.
+- Cardinal Red 24" × 50yd preferred for current volume but canonical material cost retains 10yd figure per Structure Rules ("higher cost scenario / smaller roll"). 50yd improvement (~4.8%) documented in prose, not frontmatter.
+- Frontend: kept tooltips minimal and consistent with existing UI (title attributes + dotted-underline visual cue). Added a collapsible Legend panel as the canonical field reference. No UI redesign.
+- Build script: `cost_version_date` and `override_type` remain stripped (per explicit task constraint: only material_cost_per_unit and margin_at_qty_20 unstripped). Stat row's "as of {cost_version_date}" subtitle dropped because the field is no longer in data.json.
+
+**Status:** Complete. validate.py 0 errors, 0 warnings.
+
+---
+
 ### 2026-05-26 — New Item: P/N 1186310 — E160 Cardinal Red Model Designation
 
 **What:** Priced and documented P/N 1186310 — cut vinyl model designation label for the E160 model. Cardinal Red, 33-9/16" × 11". Direct dimensional and material clone of FA-accepted P/N 1205720 (E190 Cardinal Red) — only the model number content differs ("E160" vs "E190").
