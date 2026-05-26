@@ -1,7 +1,51 @@
 {
-  "generated": "2026-05-26T17:45:25Z",
-  "item_count": 6,
+  "generated": "2026-05-26T17:53:45Z",
+  "item_count": 7,
   "items": {
+    "1186310": {
+      "frontmatter": {
+        "part_number": "1186310",
+        "description": "E160 Cardinal Red Model Designation",
+        "model": "E160",
+        "item_type": "Vinyl Cut Lettering",
+        "material_family": "3M 180mC Cut Vinyl",
+        "label_count": 1,
+        "width_in": 33.5625,
+        "height_in": 11,
+        "sq_ft_per_label": 2.564,
+        "sq_ft_per_kit": 2.564,
+        "price_1_9": 45,
+        "price_10_19": 40,
+        "price_20_49": 35,
+        "price_50_99": 30,
+        "price_100_199": 26,
+        "price_200_plus": 22,
+        "first_article_price": "",
+        "per_label_at_qty_20": 35.0,
+        "process": "Cut/Weed/Mask",
+        "lamination_passes": 0,
+        "cut_runs": 1,
+        "status": "Quoted",
+        "date_quoted": "2026-05-26",
+        "notes": "E160 model designation in Cardinal Red. Drawing P/N 1186310 (LNW). No revision noted \u2014 assumed Rev A. Dimensionally and materially identical to FA-accepted P/N 1205720 (E190 Cardinal Red), differing only in model number content (E160 vs E190). Rule 14 deviation acknowledged: 1205720 is a Relationship Concession \u2014 this item prices within the concession-phase band by deliberate strategic choice."
+      },
+      "image": [
+        {
+          "type": "pdf",
+          "path": "images/1186310.pdf"
+        }
+      ],
+      "sections": {
+        "item_overview": "- **Part Number:** 1186310\n- **Description:** \"E160\" Cardinal Red Model Designation\n- **Drafter:** LNW\n- **Revision:** Assumed Rev A (no revision noted on drawing)\n- **Type:** Vinyl cut lettering (no printing)\n- **Content:** Large \"E160\" block lettering in Cardinal Red. Applied to crane body for E160 model identification.\n- **Dimensions:** 33-9/16\" W \u00d7 11\" H (2.564 sq ft)\n- **Tolerances:** \u00b11/16\" (confirmed in general notes)\n- **Status:** Quoted 2026-05-26\n\n---",
+        "material_spec": "- **Substrate:** 3M Controltac 180mC-53 Cardinal Red\n- **Drawing Callout:** \"2-Mill, 3M 180-53 Cardinal Red, 5-7 Year Vinyl, Adhesive Back\" (Elliott's \"180-53\" is shorthand for 180mC-53, established by P/N 1205720)\n- **Film Type:** 2-mil calendered vinyl\n- **Adhesive:** Controltac repositionable pressure-sensitive\n- **Rated Durability:** 10-year (exceeds drawing spec of 5-7 year)\n- **Roll Size:** 24\" \u00d7 10yd ($153.60/roll, $15.36/yd, $2.56/sq ft) \u2014 verified 2026-04-22\n- **Application Tape:** TransferRite Ultra 582U \u2014 30\" \u00d7 100yd ($135.06/roll, $0.18/sq ft)\n- **Laminate:** N/A \u2014 cut vinyl\n\n---",
+        "nesting": "## Roll Specs\n\n| Spec | Value |\n|------|-------|\n| Roll | 3M Controltac 180mC-53 Cardinal Red, 24\" \u00d7 10yd |\n| Roll cost | $153.60 |\n| Cost per yard | $15.36 |\n| Cost per sq ft | $2.56 |\n\n## Nesting Layout on 24\" Roll\n\n| Dimension | Value |\n|-----------|-------|\n| Label width (across roll) | 11.00\" |\n| Labels across 24\" roll | 2 (2 \u00d7 11\" = 22\", leaves 2\" waste strip) |\n| Label length (down roll) | 33.5625\" = 0.9323 yd |\n| Positions along 360\" roll | 10 (360 \u00f7 33.5625 = 10.73 \u2192 10 complete) |\n| **Labels per roll** | **20 (2 across \u00d7 10 positions)** |\n\n## Material Cost per Label\n\n**Vinyl (length-based, includes blade path allocation):**\n\n| Step | Value |\n|------|-------|\n| Roll width allocated per label | 24\" \u00f7 2 = 12\" (2-across layout) |\n| Label length | 33.5625\" = 0.9323 yd |\n| Cost per row of 2 labels | 0.9323 yd \u00d7 $15.36/yd = $14.32 |\n| Vinyl cost per label | $14.32 \u00f7 2 = **$7.16** |\n\n**Application Tape:**\n\n| Step | Value |\n|------|-------|\n| Label area | 33.5625\" \u00d7 11.00\" / 144 = 2.564 sq ft |\n| Tape cost | 2.564 sq ft \u00d7 $0.18/sq ft = **$0.46** |\n\n**Total Material Cost per Label:**\n\n| Component | Cost |\n|-----------|------|\n| Vinyl (3M 180mC-53 Cardinal Red) | $7.16 |\n| Application tape (TransferRite 582U) | $0.46 |\n| **Total material cost per label** | **$7.62** |\n\n> Same calculation as P/N 1205720 \u2014 dimensions and material are identical. Cardinal Red is currently stocked only at 24\" \u00d7 10yd; no 48\" roll quote available.\n\n---",
+        "production": "## Process Steps\n\n1. **File prep** \u2014 import 1186310 cut file, verify dimensions, set up tool path. Estimated: 15-20 min (one-time setup).\n2. **Cut** \u2014 Roland SG3-300 on 24\" Cardinal Red stock. 2 labels across, cut in rows.\n3. **Weed** \u2014 remove excess vinyl around \"E160\" block letters. 4 large characters, no fine interior detail, open geometry.\n4. **Mask** \u2014 apply TransferRite 582U transfer tape over weeded characters.\n5. **Inspect** \u2014 verify cut accuracy, no lifted edges, character legibility.\n6. **Package** \u2014 flat, masked with transfer tape carrier, ready for hand-application.\n\n## Production Notes\n\n- **Lamination passes:** 0 (cut vinyl, no print)\n- **Cut runs:** 1\n- **Equipment:** Roland SG3-300 (24\" Cardinal Red stock)\n- **Weeding complexity:** Low. \"E160\" is 4 large block characters at generous scale. Direct analog to P/N 1205720 (\"E190\") \u2014 same dimensions, same color, same character count, same letter forms (E, digit, digit, digit).\n\n---",
+        "pricing_derivation": "**Methodology:** Direct sq ft parity with P/N 1205720 (cut vinyl baseline, FA Accepted).\n\n**Sq ft comparison:**\n\n| Item | Dimensions | Sq Ft | Price (qty 20) | $/sq ft |\n|------|-----------|-------|----------------|---------|\n| P/N 1205720 (benchmark) | 33-9/16\" \u00d7 11\" | 2.56 | $35 | $13.67 |\n| P/N 3017435 (parity) | 43.91\" \u00d7 8.38\" | 2.56 | $35 | $13.67 |\n| P/N 3018378 (parity) | 32.88\" \u00d7 11.00\" | 2.512 | $35 | $13.94 |\n| **P/N 1186310 (this item)** | **33-9/16\" \u00d7 11\"** | **2.564** | **$35** | **$13.65** |\n\nDimensions are identical to P/N 1205720 to the 1/16\". Material (3M 180mC-53 Cardinal Red), process (Cut/Weed/Mask), and weeding profile are also identical \u2014 only the model number content differs (\"E160\" vs \"E190\"). Same tier structure applied.\n\n**Per sq ft at qty 20:** $35 \u00f7 2.564 = **$13.65/sq ft**\n\n**Profile Validation:** Within the Cut Vinyl Pricing Profile band ($13.67\u2013$13.93/sq ft at qty 20). The $0.02/sq ft variance from the band's lower bound is a rounding artifact: the band's $13.67/sq ft lower bound was computed from P/N 1205720's 2-decimal sq ft figure (2.56); at 3-decimal precision (2.564, same dimensions), the same $35 price yields $13.65/sq ft. Functionally identical to the cut vinyl baseline. No band adjustment warranted.\n\n**AI Validation:** Not separately run. Per PRICING_VALIDATION.md, multi-round validation is exempt for items dimensionally and materially identical to an already-quoted item \u2014 this item is a direct dimensional and material clone of an FA-accepted item. Profile band validation still applies and was performed.\n\n**Override:** None. Engine output.\n\n**Rule 14 deviation acknowledged:** P/N 1205720 is a Relationship Concession. This item prices within the concession-phase band by deliberate strategic choice, not oversight. If/when relationship pricing normalizes, recalibrate against the AI consensus range ($14.84\u2013$16.41/sq ft).\n\n---",
+        "margin_analysis": "| Qty Tier | Price | Material Cost | Gross Profit | Margin |\n|----------|-------|---------------|-------------|--------|\n| 1-9 | $45.00 | $7.62 | $37.38 | ~83% |\n| 10-19 | $40.00 | $7.62 | $32.38 | ~81% |\n| 20-49 | $35.00 | $7.62 | $27.38 | ~78% |\n| 50-99 | $30.00 | $7.62 | $22.38 | ~75% |\n| 100-199 | $26.00 | $7.62 | $18.38 | ~71% |\n| 200+ | $22.00 | $7.62 | $14.38 | ~65% |\n\n**Margin at qty 20: ~78%.** Identical to P/N 1205720 \u2014 same material cost, same price.\n**Margin floor at 200+: ~65%.** Healthy for a low-complexity cut/weed/mask process.\n\n**Comparison to category:**\n\n| Item | Margin (qty 20) | Material Cost |\n|------|-----------------|---------------|\n| P/N 1205720 (Cardinal Red, 24\" roll) | ~78% | $7.62 |\n| **P/N 1186310 (Cardinal Red, 24\" roll)** | **~78%** | **$7.62** |\n| P/N 3018378 (Olympic Blue, 24\" roll) | ~78% | $7.88 |\n| P/N 3017435 (White, 24\" roll) | ~76% | $8.46 |\n| P/N 3017435 (White, 48\" roll) | ~81% | $6.74 |\n\nThis item is the cleanest possible parity case \u2014 identical dimensions, identical material, identical process to the cut vinyl baseline.\n\n---",
+        "notes": "- **Direct dimensional and material clone of P/N 1205720.** Same drawing-level dimensions (33-9/16\" \u00d7 11\"), same color (3M 180mC-53 Cardinal Red), same process (Cut/Weed/Mask), same character count (4-character model designation). Only the content differs (\"E160\" vs \"E190\"). Sean should recognize this as identical pricing to the FA-accepted E190.\n- **Cardinal Red already stocked.** Material was pre-purchased before P/N 1205720's first PO. No new material acquisition needed.\n- **No first article offered.** Not requested. Process and tooling are proven from P/N 1205720 \u2014 no production risk.\n- **Sq ft precision:** This item uses 3-decimal sq ft (2.564), while P/N 1205720 uses 2-decimal sq ft (2.56). The underlying dimensions are identical. The minor $/sq ft difference ($13.65 vs $13.67) is rounding only, not a real pricing variance.\n- **Rule 14 status:** Prices within the concession-phase band ($13.67\u2013$13.93/sq ft). When the relationship matures and the band shifts to the AI consensus range ($14.84\u2013$16.41/sq ft), this item and its peers will reprice together.\n- **No 48\" roll available for Cardinal Red.** Cannot replicate the margin improvement seen on P/N 3017435 (White 48\"). Watch for volume patterns \u2014 if Cardinal Red orders are frequent across E160 + E190, request 48\" roll pricing from 3M supplier.\n\n---",
+        "production_debrief": "*No production debrief yet. Update after first production run.*\n\n*Capture: actual nesting efficiency on 24\" Cardinal Red stock, weeding time for \"E160\" relative to \"E190\", whether the 2-per-row layout ran cleanly, and any difference in feel from the established E190 production cadence.*"
+      }
+    },
     "1205720": {
       "frontmatter": {
         "part_number": "1205720",
