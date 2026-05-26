@@ -6,6 +6,33 @@
 
 ---
 
+### 2026-05-26 — Cleanup: P/N 1205720 Material Cost Correction ($15.86 → $8.16)
+
+**What:** Corrected a methodological error from earlier in the day. The previous session interpreted "length-based single-nest" as 1-label-per-row on the 24" Cardinal Red roll, producing a $15.86/label figure for P/N 1205720. That methodology was inconsistent with the actual production layout — dimensionally identical sister P/N 1186310 runs 2-wide on the same roll and produces $8.16/label. There is no production scenario in which the same drawing runs 1-wide on 1205720 and 2-wide on 1186310; the single-nest figure was a documentation error, not a real cost difference. Corrected 1205720 to use the 2-wide canonical method, matching 1186310.
+
+**Items Affected:**
+- 1205720 — material_cost_per_unit $15.86 → $8.16. margin_at_qty_20 ~55% → ~77%. Nesting section rewritten to use 2-wide canonical (matches 1186310). Margin Analysis simplified to single canonical table. Notes updated to remove the methodology-divergence narrative.
+
+**Files Modified:**
+- `items/1205720.md` — frontmatter (material_cost_per_unit, margin_at_qty_20, notes); Nesting and Material Cost section (2-wide methodology, full calculation shown); Margin Analysis section (single canonical table at $8.16); Notes and Warnings (material cost history, methodology aligned with 1186310; correction note)
+- `categories/cut-vinyl-3m-180mc.md` — Pricing Profile bands consolidated (single 2-wide band $6.74–$8.46; "conservative no-production-yet" row removed); margin band unified at ~76–78%; Key variables nesting-confirmation language simplified
+- `governance/PRODUCTION.md` — Cut Vinyl quick reference: 1205720 and 1186310 now share one row at $8.16/label (2-wide canonical); methodology note rewritten — 2-wide is the default for the size class, not "pending production confirmation"
+- `.claude/ARCHITECTURE.md` — 1205720 margin column ~55%/~77% (dual) → ~77% (single canonical)
+
+**Math reconciliation:**
+- 1186310 (verified $8.16): 33.5625" × 11" labels, 2 across 24" roll (22" used, 2" waste), 0.5" length-direction bleed → 34.0625" pitch → 2.838 ft/row → 28.38 ft for 20 labels → (28.38/30) × $162.78 = $153.99 → $7.70 vinyl per label + $0.46 tape = $8.16.
+- 1205720 corrected to $8.16: identical drawing dimensions, identical material, identical roll, identical 2-wide layout → identical $8.16.
+- Trajectory: $7.01 (area method, pre-audit) → $7.62 (2-wide @ $153.60, May 22 audit) → $8.16 (2-wide @ $162.78, this correction). The ~7% rise matches the ~6% Cardinal Red roll price increase plus inclusion of the 0.5" length-direction bleed.
+
+**Key Decisions:**
+- Same drawing dimensions = same nesting method = same canonical material cost. The "no production run yet" rationale for picking a different methodology was incorrect — production reality is established by the drawing physics (33.5625" × 11" labels on a 24" roll), not by which P/N gets its first PO first.
+- Removed the dual-table (conservative + projected) margin analysis from 1205720. Single canonical table reduces confusion and matches the rest of the catalog.
+- No price changed. No status changed. No other items touched.
+
+**Status:** Complete. validate.py 0 errors, 0 warnings. data.json rebuilt clean (item_count 7; 1205720 and 1186310 both at $8.16 / ~77%).
+
+---
+
 ### 2026-05-26 — Material Cost Update + Status Change + Frontend Enhancement
 
 **What:** Three coordinated updates: (1) Cardinal Red 24" × 10yd price increased $153.60 → $162.78 and 24" × 50yd added at $775.10 as the preferred roll for current volume; (2) P/N 1186310 moved Quoted → In Production after first PO (qty 20, $700.00) — nesting method updated to 2-wide canonical reflecting production reality; (3) frontend dashboard exposed `material_cost_per_unit` and `margin_at_qty_20` for internal margin visibility and added a tooltip/legend system so every field is self-documenting.

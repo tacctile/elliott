@@ -25,13 +25,12 @@ Derived from accepted pricing on real items. Tightens with every new item. New i
 
 | Metric | Current Band | Notes |
 |--------|-------------|-------|
-| Material cost / label (production-confirmed items) | $6.74–$8.46 | Range: 48" roll ($6.74 best nesting) to 24" roll ($8.16, $7.88, $8.46 by color/roll); 2-wide nesting confirmed |
-| Material cost / label (conservative, no production yet) | $15.86 | P/N 1205720 only — single-nest pending E190's first production run; expected to converge to ~$8.16 |
+| Material cost / label | $6.74–$8.46 | Range: 48" roll ($6.74 best nesting) to 24" roll ($8.16 Cardinal Red — 1205720 + 1186310, $7.88 Olympic Blue, $8.46 White); all items 2-wide nested |
 | Material cost / sq ft | ~$2.63–$3.37 | Vinyl ($2.15–$2.71) + tape ($0.18) + waste — 2-wide method |
 | Selling price / sq ft at qty 20 | ~$13.65–$13.94/sq ft | $35 / sq ft — consistent across all 4 items |
-| Margin at qty 20 (production-confirmed) | ~76–78% | 2-wide nesting; P/N 1205720 at ~55% pending production confirmation |
+| Margin at qty 20 | ~76–78% | 2-wide nesting across all items; Cardinal Red items at ~77% post 2026-05-26 roll price increase |
 | Tier compression (1-9 → 200+) | 51% discount | $45 → $22 |
-| Margin floor (200+, production-confirmed) | ~62–65% | Healthy for a low-complexity process |
+| Margin floor (200+) | ~62–65% | Healthy for a low-complexity process |
 
 **Band width:** Narrowing — 4 data points at 2.51-2.564 sq ft all at the same $35 price. Per-sq-ft rate range is $13.65-$13.94 (consistent; lower bound reflects 3-decimal sq ft precision on Cardinal Red E160/E190 dimensions, equivalent to $13.67 at 2-decimal precision). Items at significantly different sq ft (sub-1 or 5+) will still need validation.
 
@@ -45,7 +44,7 @@ The concession-phase band ($13.67–$13.93/sq ft) is the current operative prici
 - **Roll length:** Cardinal Red now stocked at 24" × 50yd ($775.10, $15.50/yd) as the **preferred roll** for current production volume — ~4.8% yield improvement over 24" × 10yd ($162.78, $16.28/yd). Operational reality; canonical material cost figures continue to use the 10yd roll per Structure Rules.
 - **Color:** Different 3M 180mC colors have different roll prices. Cardinal Red 24" × 10yd increased $153.60 → $162.78 on 2026-05-26.
 - **Weeding complexity:** Large simple characters are fast. Intricate small text takes more labor.
-- **Nesting confirmation:** Production-confirmed 2-wide nesting drives the canonical material cost (~$7.70–$8.00 vinyl per label at 24" Cardinal Red/Olympic Blue/White). Pre-production items carry conservative single-nest figures (~$15.40 vinyl) until first PO confirms layout — see P/N 1205720 vs P/N 1186310 for the documented divergence.
+- **Nesting:** All current cut vinyl items at this sq-ft range run 2-wide on the 24" roll (or 4-wide on the 48" roll for White). Per-label vinyl cost lands at ~$7.70–$8.00 (24" rolls) or ~$6.28 (48" White roll). 2-wide is the canonical method for any new item at this size class on a 24" roll unless production proves otherwise.
 
 ---
 

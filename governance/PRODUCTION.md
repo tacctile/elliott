@@ -131,13 +131,12 @@ The single most important production constraint on this account.
 
 ### Cut Vinyl at ~2.51–2.56 sq ft
 
-- Cardinal Red, 24" × 10yd roll (single-nest, conservative): ~$15.40 vinyl + $0.46 tape = **~$15.86/label total** *(at 2.56 sq ft, P/N 1205720 — single-nest length-based, no confirmed production run)*
-- Cardinal Red, 24" × 10yd roll (2-wide, confirmed in production): ~$7.70 vinyl + $0.46 tape = **~$8.16/label total** *(at 2.564 sq ft, P/N 1186310 — 2-wide canonical, production-confirmed)*
-- Cardinal Red, 24" × 50yd roll (preferred, 2-wide): ~$7.33 vinyl + $0.46 tape = **~$7.79/label total** *(projected at $15.50/yd × 0.9460 yd ÷ 2; operational improvement over 10yd roll)*
+- Cardinal Red, 24" × 10yd roll (2-wide, canonical): ~$7.70 vinyl + $0.46 tape = **~$8.16/label total** *(P/N 1205720 at 2.56 sq ft and P/N 1186310 at 2.564 sq ft — same drawing dimensions, same 2-wide method)*
+- Cardinal Red, 24" × 50yd roll (preferred, 2-wide): ~$7.33 vinyl + $0.46 tape = **~$7.79/label total** *(projected at $15.50/yd; operational improvement over 10yd roll)*
 - Olympic Blue, 24" × 10yd roll (2-wide): ~$7.43 vinyl + $0.45 tape = **~$7.88/label total** *(at 2.512 sq ft, P/N 3018378 — length-based method)*
 - White, 24" × 10yd roll (2-wide): ~$8.00 vinyl + $0.46 tape = **~$8.46/label total** *(at 2.56 sq ft, P/N 3017435 — length-based method)*
-- White, 48" × 10yd roll (2-wide): ~$6.28 vinyl + $0.46 tape = **~$6.74/label total** *(at 2.56 sq ft, P/N 3017435)*
+- White, 48" × 10yd roll (4-wide): ~$6.28 vinyl + $0.46 tape = **~$6.74/label total** *(at 2.56 sq ft, P/N 3017435)*
 
-> **Methodology note:** P/N 1205720 uses single-nest length-based (1 label per row across the 24" roll) as a conservative figure pending its first production run. P/N 1186310 has been confirmed in production at 2-wide nesting and uses that as its canonical method. When 1205720 enters production and 2-wide is confirmed, its material cost will be recalculated using the 2-wide method (expected to align with 1186310's ~$8.16/label).
+> **Methodology note:** All cut vinyl items at this size class use 2-wide length-based nesting on the 24" roll (or 4-wide on the 48" roll for White). 1186310 is production-confirmed at 2-wide; 1205720 (same drawing dimensions) uses the same canonical method. 2-wide is the default for new items at this sq-ft range on a 24" roll unless production proves otherwise.
 >
-> **50yd roll improvement:** Cardinal Red 24" × 50yd at $775.10 ($15.50/yd) replaces the 24" × 10yd ($16.28/yd) as the preferred roll for current production volume. ~4.8% yield improvement on vinyl cost. Document as an operational improvement; canonical material_cost_per_unit fields use the conservative 10yd figure per Structure Rules.
+> **50yd roll improvement:** Cardinal Red 24" × 50yd at $775.10 ($15.50/yd) replaces the 24" × 10yd ($16.28/yd) as the preferred roll for current production volume. ~4.5% yield improvement on vinyl cost. Document as an operational improvement; canonical material_cost_per_unit fields use the conservative 10yd figure per Structure Rules.

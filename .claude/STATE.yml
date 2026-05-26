@@ -4,9 +4,9 @@
 last_session:
   date: "2026-05-26"
   type: "material_update"
-  summary: "Cardinal Red price update $153.60 → $162.78; 24\" × 50yd added at $775.10 (preferred roll). P/N 1186310 moved Quoted → In Production (first PO: qty 20, $700.00) with 2-wide canonical nesting. P/N 1205720 recalculated using single-nest length-based method ($15.86, conservative pending production). Frontend exposes material_cost_per_unit and margin_at_qty_20 for internal margin visibility; tooltip + legend system added so every field is self-documenting."
+  summary: "Cleanup: P/N 1205720 material cost corrected $15.86 → $8.16. Prior session misinterpreted 'length-based single-nest' as 1-label-per-row; the item shares dimensions with P/N 1186310 (production-confirmed 2-wide) and uses the same canonical 2-wide method. Margin @ qty 20: ~55% → ~77%. No price changes. No other items touched."
 
-next_action: "Watch for E190 (P/N 1205720) production run — once confirmed at 2-wide, recalculate material_cost_per_unit to ~$8.16 to match P/N 1186310. Await Sean response on remaining pending quotes: 1245130, 3017435, 3018378."
+next_action: "Await Sean response on pending quotes: 1245130, 3017435, 3018378. Watch P/N 1186310 first production run for any actuals that should feed back into the Production Debrief section."
 blockers: "none"
 item_count: 7
-pending_quotes: "1245130, 3017435, 3018378 — quoted May 2026, awaiting Sean response. (1186310 moved to In Production 2026-05-26.)"
+pending_quotes: "1245130, 3017435, 3018378 — quoted May 2026, awaiting Sean response. (1186310 In Production since 2026-05-26.)"
