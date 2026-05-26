@@ -2,7 +2,31 @@
 
 > **Newest entries at the top. Updated every session.**
 >
-> Last Updated: 2026-05-22
+> Last Updated: 2026-05-26
+
+---
+
+### 2026-05-26 — New Item: P/N 1186310 — E160 Cardinal Red Model Designation
+
+**What:** Priced and documented P/N 1186310 — cut vinyl model designation label for the E160 model. Cardinal Red, 33-9/16" × 11". Direct dimensional and material clone of FA-accepted P/N 1205720 (E190 Cardinal Red) — only the model number content differs ("E160" vs "E190").
+
+**Item Created:** `items/1186310.md`
+
+**Files Updated:**
+- `categories/cut-vinyl-3m-180mc.md` — added 1186310 to catalog table, updated Pricing Profile to 4 data points
+- `.claude/ARCHITECTURE.md` — added 1186310 to item catalog and precedent chain; category registry count 3 → 4
+- `.claude/STATE.yml` — incremented item_count 6 → 7
+
+**Pricing:** $35 at qty 20 (sq ft parity with P/N 1205720). Material cost $7.62 (length-based Cardinal Red, 24" roll). Margin ~78% at qty 20, ~65% floor at 200+.
+
+**Key Decisions:**
+- Direct parity case — dimensionally identical to P/N 1205720 (33-9/16" × 11"), same material (3M 180mC-53 Cardinal Red), same process (Cut/Weed/Mask).
+- 3-decimal sq ft precision (2.564) used; 1205720 uses 2-decimal (2.56). Documented the rounding artifact: $13.65/sq ft at 3-decimal vs $13.67/sq ft at 2-decimal — same underlying item.
+- No first article offered — not requested; process and tooling proven from 1205720.
+- No AI model validation — direct parity exemption per PRICING_VALIDATION.md.
+- Rule 14 deviation explicitly acknowledged (1205720 is a Relationship Concession; this prices within the concession-phase band by deliberate strategic choice).
+
+**Status:** Quoted. Ready to send to Sean.
 
 ---
 

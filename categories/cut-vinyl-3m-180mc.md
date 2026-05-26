@@ -11,6 +11,7 @@
 | P/N | Description | Dimensions | Sq Ft | Price (qty 20) | Status |
 |-----|-------------|------------|-------|-----------------|--------|
 | 1205720 | E190 Cardinal Red | 33-9/16" × 11" | 2.56 | $35 | FA Accepted |
+| 1186310 | E160 Cardinal Red | 33-9/16" × 11" | 2.564 | $35 | Quoted |
 | 3017435 | ELLIOTT White | 43.91" × 8.38" | 2.56 | $35 | Quoted |
 | 3018378 | D115 Olympic Blue | 32.88" × 11.00" | 2.512 | $35 | Quoted |
 
@@ -20,7 +21,7 @@
 
 Derived from accepted pricing on real items. Tightens with every new item. New items validate against these bands.
 
-**Data points:** 3 items at ~2.51-2.56 sq ft
+**Data points:** 4 items at ~2.51-2.56 sq ft
 
 | Metric | Current Band | Notes |
 |--------|-------------|-------|
@@ -31,7 +32,7 @@ Derived from accepted pricing on real items. Tightens with every new item. New i
 | Tier compression (1-9 → 200+) | 51% discount | $45 → $22 |
 | Margin floor (200+) | ~62–65% | Healthy for a low-complexity process |
 
-**Band width:** Narrowing — 3 data points at 2.51-2.56 sq ft all at the same $35 price. Per-sq-ft rate range is $13.67-$13.93 (consistent). Items at significantly different sq ft (sub-1 or 5+) will still need validation.
+**Band width:** Narrowing — 4 data points at 2.51-2.564 sq ft all at the same $35 price. Per-sq-ft rate range is $13.65-$13.94 (consistent; lower bound reflects 3-decimal sq ft precision on Cardinal Red E160/E190 dimensions, equivalent to $13.67 at 2-decimal precision). Items at significantly different sq ft (sub-1 or 5+) will still need validation.
 
 **Override note:** P/N 1205720 was priced as a Relationship Concession ($35 vs AI consensus of $38-42). The current per-sq-ft band ($13.67-$13.93) reflects concession-phase pricing. AI consensus range would place the band at ~$14.84-$16.41/sq ft. As the relationship matures, the band is expected to shift upward. Until then, $13.67-$13.93 is the accepted market-validated rate.
 
