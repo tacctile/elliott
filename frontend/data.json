@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-26T17:48:01Z",
+  "generated": "2026-05-26T17:53:45Z",
   "item_count": 7,
   "items": {
     "1186310": {
@@ -29,7 +29,12 @@
         "date_quoted": "2026-05-26",
         "notes": "E160 model designation in Cardinal Red. Drawing P/N 1186310 (LNW). No revision noted \u2014 assumed Rev A. Dimensionally and materially identical to FA-accepted P/N 1205720 (E190 Cardinal Red), differing only in model number content (E160 vs E190). Rule 14 deviation acknowledged: 1205720 is a Relationship Concession \u2014 this item prices within the concession-phase band by deliberate strategic choice."
       },
-      "image": null,
+      "image": [
+        {
+          "type": "pdf",
+          "path": "images/1186310.pdf"
+        }
+      ],
       "sections": {
         "item_overview": "- **Part Number:** 1186310\n- **Description:** \"E160\" Cardinal Red Model Designation\n- **Drafter:** LNW\n- **Revision:** Assumed Rev A (no revision noted on drawing)\n- **Type:** Vinyl cut lettering (no printing)\n- **Content:** Large \"E160\" block lettering in Cardinal Red. Applied to crane body for E160 model identification.\n- **Dimensions:** 33-9/16\" W \u00d7 11\" H (2.564 sq ft)\n- **Tolerances:** \u00b11/16\" (confirmed in general notes)\n- **Status:** Quoted 2026-05-26\n\n---",
         "material_spec": "- **Substrate:** 3M Controltac 180mC-53 Cardinal Red\n- **Drawing Callout:** \"2-Mill, 3M 180-53 Cardinal Red, 5-7 Year Vinyl, Adhesive Back\" (Elliott's \"180-53\" is shorthand for 180mC-53, established by P/N 1205720)\n- **Film Type:** 2-mil calendered vinyl\n- **Adhesive:** Controltac repositionable pressure-sensitive\n- **Rated Durability:** 10-year (exceeds drawing spec of 5-7 year)\n- **Roll Size:** 24\" \u00d7 10yd ($153.60/roll, $15.36/yd, $2.56/sq ft) \u2014 verified 2026-04-22\n- **Application Tape:** TransferRite Ultra 582U \u2014 30\" \u00d7 100yd ($135.06/roll, $0.18/sq ft)\n- **Laminate:** N/A \u2014 cut vinyl\n\n---",
