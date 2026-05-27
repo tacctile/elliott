@@ -5,7 +5,9 @@ on:
     branches: [main]
     paths:
       - 'items/**'
+      - 'materials/**'
       - 'scripts/build_frontend.py'
+      - 'scripts/build_materials.py'
 
 jobs:
   build:
@@ -20,10 +22,13 @@ jobs:
       - name: Build data.json and sync images
         run: python scripts/build_frontend.py
 
+      - name: Build materials.json
+        run: python scripts/build_materials.py
+
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add frontend/data.json frontend/images/
+          git add frontend/data.json frontend/materials.json frontend/images/
           git diff --cached --quiet || git commit -m "system: auto-rebuild frontend data + sync images"
           git push
