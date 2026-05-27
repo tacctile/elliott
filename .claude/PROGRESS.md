@@ -6,6 +6,55 @@
 
 ---
 
+### 2026-05-27 — Price Lock + System Audit: P/N 1277970, 1277980, 1277990, 1278000 — Final $55 Program Locked, Full Repo Audit Clean
+
+**What:** Two-part session.
+
+**Part 1 — Price Lock.** Locked the validated $55 program pricing for the 4-label outrigger switch program into all four item files with full documentation of the 4-round, 6-model AI validation process (24 total model runs).
+
+- Round 1 (Build): **Unanimous $55** across all 6 models — each independently anchored to the account FA floor (P/N 1230820 FA at $55).
+- Round 2 (Destruction): **5 of 6 Yes / Yes with modifications**. One outlier proposed $38 program total on cost-plus reasoning. Outlier rejected — reason: cost-plus logic ignores account floor and relationship context; the $17 spread is below buyer sensitivity threshold; $38 would undercut the account's own price structure for future one-offs.
+- Round 3 (Buyer Simulation): **All 6 models approved without questions.** Instant-approval threshold confirmed at $75 or under; $55 lands comfortably inside it. No buyer pushback predicted.
+- Round 4 (Final Synthesis): **All 6 unanimous — yes, send as shown.** No tier-level concerns, no precedent concerns, no discomfort flags.
+
+Validated quote language captured verbatim in P/N 1277970 Pricing Derivation; program peers reference it. The quote frames the price as a single "one-time minimum program charge for custom build support: $55.00 total" and explicitly disclaims any catalog/reorder rate, floating an expected $0.35–$0.55/label range at qty 250+ for any future repeat-production request.
+
+**Notes and Warnings restructured** on all four item files into six discrete, non-negotiable warning blocks: (1) ONE-OFF PROGRAM, (2) DO NOT BENCHMARK, (3) DO NOT SURFACE PER-LABEL MATH, (4) REORDER PRICING, (5) ACCOUNT FLOOR, (6) ARTWORK PREP.
+
+**Part 2 — Full System Audit.** Audited every file in the repo for sync after today's heavy activity (artwork prep purge, multiple reprice cycles, new governance rules).
+
+| Audit Check | Result |
+|-------------|--------|
+| Zero file-prep / artwork-prep cost references in repo | 7 stale Process-Step entries in existing items (1230820, 1278930, 1245130, 1205720, 3017435, 3018378, 1186310) had "File prep" as step 1; rewrote each to "File import/setup — ~5 min mechanical, NOT billable labor (see PRICING_RULES.md §22)." 3018378 production-time table had a 20-min "File prep" row; rewrote to match the account rule and recomputed per-unit billable total. All remaining file-prep references in the repo are rule-reinforcing language (e.g., "$0 file prep — Elliott provides production-ready DWG"), not cost inputs. |
+| PRICING_RULES.md §22-24 present and correctly numbered | Confirmed. §22-24 under "Account-Level Cost Inputs" heading. No conflict with existing rules. |
+| categories/printed-laminated-orajet.md integrity | Singles band, Kit band, and Tiny Printed Labels subsection all intact. Pricing Profile band is NOT contaminated by tiny-label pricing — tiny labels carry their own callout box and are explicitly excluded from the singles band by scope note. All 7 Orajet items present. |
+| ARCHITECTURE.md integrity | All 11 items present with correct status, pricing, and margin. Precedent chain correctly separates the tiny label program (one-off, do-NOT-benchmark) from the main printed/laminated chain (1230820 → 1278930 → 1245130). |
+| Item file consistency (11 items) | All required frontmatter fields present; sq_ft math correct; per_label_at_qty_20 = price_20_49 / label_count for all 11; all status values valid; no item references file prep as a cost input. |
+| STATE.yml | item_count = 11, last_session and next_action updated. |
+| validate.py | **0 errors, 0 warnings** across all 11 items. |
+
+**Items Affected:**
+- 1277970, 1277980, 1277990, 1278000 — Pricing Derivation rewritten with 4-round/6-model validation table, rejected $38 alternative, verbatim validated quote language. Notes and Warnings restructured into the six required warning blocks.
+- 1230820, 1278930, 1245130, 1205720, 3017435, 3018378, 1186310 — Process Steps step 1 relabeled from "File prep" to "File import/setup — ~5 min mechanical, NOT billable labor." Documentation-only; no pricing changes.
+
+**Files Modified:**
+- `items/1277970.md` — Pricing Derivation (AI Validation section), Notes and Warnings (rewritten with six warning blocks)
+- `items/1277980.md`, `items/1277990.md`, `items/1278000.md` — Pricing Derivation (AI Validation section now inherits 4-round validation from 1277970), Notes and Warnings (rewritten with six warning blocks)
+- `items/1230820.md`, `items/1278930.md`, `items/1245130.md`, `items/1205720.md`, `items/3017435.md`, `items/1186310.md` — Process Steps step 1 relabeled
+- `items/3018378.md` — Process Steps step 1 relabeled; per-unit time table file-prep row rewritten to match account rule
+- `.claude/PROGRESS.md` — this entry
+- `.claude/STATE.yml` — last_session and next_action updated
+
+**Key Decisions:**
+- Price stays at $55 program total ($2.75/label). 4-round validation closed; no further reprice cycle warranted.
+- Six warning blocks in Notes and Warnings are non-negotiable structure. Future sessions touching these items must preserve all six.
+- Verbatim validated quote language lives in P/N 1277970's Pricing Derivation only (program peers reference it). Single source of truth prevents drift.
+- Process Steps relabel on the 7 existing catalog items is documentation-only and does not change any price, margin, or band. The pricing on those items did not use file-prep as a stated cost driver, so no margin reasoning is affected.
+
+**Status:** Complete. Ready to send the $55 quote to Sean. validate.py passes 0 errors, 0 warnings.
+
+---
+
 ### 2026-05-27 — Reprice: P/N 1277970, 1277980, 1277990, 1278000 — $55 Program Total (Post Artwork-Prep Purge)
 
 **What:** Repriced the 4-label outrigger switch program from $15/label = $300 program total down to **$2.75/label = $55 program total**. The previous $15/label reprice was built on a labor-heavy reconstruction that used "file prep × 4 unique designs" as a major cost driver — an assumption now purged account-wide (see entry below). With file prep at $0, the true job inputs are ~$6.94 material + ~25 min production time. The worthwhile-charge floor is the account's lowest first article price ($55, P/N 1230820 FA), treated as a program-level minimum-worthwhile-charge floor — NOT as a per-label comparable.
