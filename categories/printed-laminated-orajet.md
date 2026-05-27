@@ -16,16 +16,31 @@
 
 ### Tiny Printed Labels — Sub-0.1 Sq Ft Size Class (Job Economics, Not Sq Ft)
 
-> **Outside the singles per-sq-ft band by design.** These items price on minimum run / job economics — at 0.008 sq ft, applying the $15.43/sq ft band yields $0.12/label, which does not cover setup. Material cost is effectively zero relative to the job floor. Founding data point: P/N 1277970. Do NOT feed these prices into the singles Pricing Profile band — they are not comparable data points.
+> **Outside the singles per-sq-ft band by design.** These items price on minimum run / job economics — at 0.008 sq ft, applying the $15.43/sq ft band yields $0.12/label, which does not cover setup. The job's actual material cost is built from the production footprint (vinyl + laminate consumed), not per-label area. Founding data point: P/N 1277970. Do NOT feed these prices into the singles Pricing Profile band — they are not comparable data points.
 
 | P/N | Description | Dimensions | Sq Ft | Price (qty 1-9) | Status |
 |-----|-------------|------------|-------|------------------|--------|
-| 1277970 | Outrigger Switch — Horizontal Front (18T) | Ø1-3/16" circle | 0.008 | $7 | Quoted |
-| 1277980 | Outrigger Switch — Vertical Front (18T) | Ø1-3/16" circle | 0.008 | $7 | Quoted |
-| 1277990 | Outrigger Switch — Horizontal Rear (18T) | Ø1-3/16" circle | 0.008 | $7 | Quoted |
-| 1278000 | Outrigger Switch — Vertical Rear (18T) | Ø1-3/16" circle | 0.008 | $7 | Quoted |
+| 1277970 | Outrigger Switch — Horizontal Front (18T) | Ø1-3/16" circle | 0.008 | $15 | Quoted |
+| 1277980 | Outrigger Switch — Vertical Front (18T) | Ø1-3/16" circle | 0.008 | $15 | Quoted |
+| 1277990 | Outrigger Switch — Horizontal Rear (18T) | Ø1-3/16" circle | 0.008 | $15 | Quoted |
+| 1278000 | Outrigger Switch — Vertical Rear (18T) | Ø1-3/16" circle | 0.008 | $15 | Quoted |
 
-*One-off custom build — 4-label outrigger switch program ordered together by Sean for a single 18T crane build. Qty 5 each; no reorder expectation. Tier listed is qty 1-9 (operationally relevant tier for this program). Full tier table populated in each item file for structural completeness.*
+**4-label outrigger switch program — Nick-verified production economics (2026-05-27):**
+
+| Metric | Value |
+|--------|-------|
+| Production footprint | 3.125 sq ft vinyl + 2.8125 sq ft laminate (1 pass, 1 print run) |
+| Material cost (full 20-label job) | $6.94 |
+| Material cost per label | $0.35 |
+| Material cost per P/N (qty 5) | $1.74 |
+| **Recommended price per label (qty 1-9)** | **$15** |
+| **Per P/N (qty 5)** | **$75** |
+| **Program total (4 P/Ns × qty 5)** | **$300** |
+| Job-level fully-loaded margin (program revenue $300 vs ~$182 cost) | ~39% |
+
+*One-off custom build for a single 18T crane build. Qty 5 each; no reorder expectation. Tier listed is qty 1-9 (operationally relevant tier for this program). Full tier table populated in each item file for structural completeness.*
+
+*Repricing note (2026-05-27): initial $7/label was a job-floor estimate that did not account for actual production footprint and labor. Repriced to $15/label after Nick provided the verified footprint. Original price would have produced ~$42 loss across the program.*
 
 ### Multi-Label Kits
 

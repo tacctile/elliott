@@ -19,10 +19,10 @@ All quoted items. Updated when items are added, repriced, or status changes.
 | 3017435 | ELLIOTT White Vinyl Cut Lettering | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.56 | $35 | $35.00 | ~76% (24" roll) / ~81% (48" roll) | Quoted | `items/3017435.md` |
 | 3018378 | Label D115 Blue — Model Designation | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.512 | $35 | $35.00 | ~78% | Quoted | `items/3018378.md` |
 | 1186310 | E160 Cardinal Red Model Designation | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.564 | $35 | $35.00 | ~78% | Quoted | `items/1186310.md` |
-| 1277970 | Outrigger Switch — Horizontal Front (18T) | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.008 | $3.50 (qty 1-9: $7) | $3.50 | ~99% gross | Quoted | `items/1277970.md` |
-| 1277980 | Outrigger Switch — Vertical Front (18T) | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.008 | $3.50 (qty 1-9: $7) | $3.50 | ~99% gross | Quoted | `items/1277980.md` |
-| 1277990 | Outrigger Switch — Horizontal Rear (18T) | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.008 | $3.50 (qty 1-9: $7) | $3.50 | ~99% gross | Quoted | `items/1277990.md` |
-| 1278000 | Outrigger Switch — Vertical Rear (18T) | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.008 | $3.50 (qty 1-9: $7) | $3.50 | ~99% gross | Quoted | `items/1278000.md` |
+| 1277970 | Outrigger Switch — Horizontal Front (18T) | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.008 | $8 (qty 1-9: $15) | $8.00 | ~96% gross / ~39% loaded | Quoted | `items/1277970.md` |
+| 1277980 | Outrigger Switch — Vertical Front (18T) | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.008 | $8 (qty 1-9: $15) | $8.00 | ~96% gross / ~39% loaded | Quoted | `items/1277980.md` |
+| 1277990 | Outrigger Switch — Horizontal Rear (18T) | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.008 | $8 (qty 1-9: $15) | $8.00 | ~96% gross / ~39% loaded | Quoted | `items/1277990.md` |
+| 1278000 | Outrigger Switch — Vertical Rear (18T) | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.008 | $8 (qty 1-9: $15) | $8.00 | ~96% gross / ~39% loaded | Quoted | `items/1278000.md` |
 
 ---
 
@@ -47,10 +47,10 @@ P/N 1230820 (ROOT BENCHMARK — $20/ea at qty 20)
 │   └── P/N 1245130 (5/3 parity → $50/kit at qty 20)
 └── [future printed/laminated items validate against Pricing Profile band]
 
-P/N 1277970 (TINY PRINTED LABEL FOUNDING DATA POINT — $7 at qty 1-9; sub-0.1 sq ft size class, job economics)
-├── P/N 1277980 (program peer — identical specs, $7 at qty 1-9)
-├── P/N 1277990 (program peer — identical specs, $7 at qty 1-9)
-└── P/N 1278000 (program peer — identical specs, $7 at qty 1-9)
+P/N 1277970 (TINY PRINTED LABEL FOUNDING DATA POINT — $15 at qty 1-9; sub-0.1 sq ft size class, job economics from Nick-verified production footprint)
+├── P/N 1277980 (program peer — identical specs, $15 at qty 1-9)
+├── P/N 1277990 (program peer — identical specs, $15 at qty 1-9)
+└── P/N 1278000 (program peer — identical specs, $15 at qty 1-9)
 
 P/N 1205720 (CUT VINYL BASELINE — $35/ea at qty 20, Override: Relationship Concession)
 ├── P/N 3017435 (sq ft parity → $35/ea at qty 20)

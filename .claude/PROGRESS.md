@@ -6,6 +6,55 @@
 
 ---
 
+### 2026-05-27 — Reprice: P/N 1277970, 1277980, 1277990, 1278000 — Corrected Production Footprint
+
+**What:** Repriced the 4-label outrigger switch program after Nick provided the actual Nick-verified production footprint. The initial $7/label price was based on a job-floor estimate that materially understated actual production effort.
+
+**Nick-Verified Production Footprint (full 20-label job):**
+- Print vinyl (Orajet 3951): 15" × 30" = 450 sq in = 3.125 sq ft → $3.78
+- Laminate (1-mil polyester): 13.5" × 30" = 405 sq in = 2.8125 sq ft → $2.76
+- Ink (eco-solvent, low coverage on tiny circles): 20 × ~$0.02 = $0.40
+- **Total material cost for the 20-label job: $6.94**
+- Per label: $0.35 | Per P/N (qty 5): $1.74
+
+**Job cost reconstruction:** Material $6.94 + labor (file prep × 4 unique designs, print run, lam pass, kiss-cut, inspect, package) ~$130 + overhead ~$45 = **~$182 total job cost**.
+
+**Repricing:**
+- Per label (qty 1-9): $7 → **$15**
+- Per P/N (qty 5): $35 → **$75**
+- Program total (4 P/Ns × qty 5): $140 → **$300**
+- Original $140 revenue vs $182 cost = ~$42 loss avoided
+- Recommended $300 revenue → ~$118 gross profit → **~39% fully-loaded job-level margin** (healthy for a one-off)
+
+**Tier table updated across all four items:**
+
+| Tier | Old | New |
+|------|-----|-----|
+| 1-9 | $7 | $15 |
+| 10-19 | $5 | $11 |
+| 20-49 | $3.50 | $8 |
+| 50-99 | $2.50 | $6 |
+| 100-199 | $2 | $4.50 |
+| 200+ | $1.50 | $3.50 |
+
+**Files Updated:**
+- `items/1277970.md` — frontmatter prices/material_cost/pricing_logic/notes; full rewrite of Nesting and Material Cost, Pricing, Pricing Derivation, Margin Analysis, Notes and Warnings sections
+- `items/1277980.md`, `items/1277990.md`, `items/1278000.md` — same pattern (program peer references to 1277970)
+- `categories/printed-laminated-orajet.md` — tiny printed labels subsection: prices updated, production footprint table added, reprice note documented
+- `.claude/ARCHITECTURE.md` — catalog price column updated for all four items (qty 1-9 $15, qty 20 $8); margin annotation updated; precedent chain annotation updated
+- `.claude/STATE.yml` — last_session updated to reprice event (item_count unchanged at 11)
+
+**Key Decisions:**
+- **Sq ft band still inapplicable.** At 0.008 sq ft per label or even 3.125 sq ft of production footprint, the singles band yields prices below the one-off job floor. Documented.
+- **Anchor reference:** P/N 1278930 (3-label kit) at $15/label qty 1-9. Outrigger program lands at parity per-label at qty 1-9 — defensible because 4 unique designs in a one-off carry comparable setup effort to a single-design 3-label kit.
+- **Tier compression ~77%** — variable per-label cost is near-zero at this size, so volume amortizes setup.
+- **Spec Extraction, Item Overview, Material Specification, Production Process, Production Debrief sections NOT touched** per session brief.
+- **Pricing Profile band NOT contaminated** — tiny-labels subsection in the category file remains separate from the singles band.
+
+**Status:** Repriced. Ready to send to Sean as a single program email at $300 program total.
+
+---
+
 ### 2026-05-27 — New Items: P/N 1277970, 1277980, 1277990, 1278000 — 4-Label Outrigger Switch Program (18T)
 
 **What:** Priced and documented a 4-label outrigger switch program for a one-off 18T crane build. Sean requested qty 5 of each of 4 labels (20 labels total) as a single program. All four labels are dimensionally and materially identical (Ø1-3/16" circle, Orajet 3951 cast 4-mil vinyl + 1-mil polyester Mylar overlay, kiss cut, Helvetica Bold black text on white). Only the directional content differs:
