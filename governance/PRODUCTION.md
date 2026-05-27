@@ -88,9 +88,11 @@ The single most important production constraint on this account.
 
 ## Process Steps by Category
 
+> **Account-level rule:** Elliott supplies production-ready DWG files for every item. Step 1 (file import/setup) is a ~5-minute mechanical operation per design — NOT artwork prep, design time, or pre-press labor. Do NOT include file prep as a billable labor input in any cost build on this account. See `PRICING_RULES.md` §22.
+
 ### Cut Vinyl (Cut/Weed/Mask)
 
-1. File prep — import DWG/PDF, set up cut file
+1. File import/setup — open the Elliott-supplied production-ready DWG, send to cutter. ~5 min mechanical. NOT billable labor.
 2. Cut — Roland SG3-300 (or 54" plotter for 48" stock)
 3. Weed — remove excess vinyl around cut characters
 4. Mask — apply TransferRite 582U application tape
@@ -98,7 +100,7 @@ The single most important production constraint on this account.
 
 ### Printed + Laminated (Print/Lam/Cut)
 
-1. File prep — import DWG/PDF, set up print file with registration marks
+1. File import/setup — open the Elliott-supplied production-ready DWG with registration marks already defined, send to RIP. ~5 min mechanical. NOT billable labor.
 2. Print — Roland SG3-300, full-color eco-solvent on Orajet 3951
 3. Laminate — apply 1-mil polyester overlaminate (13.5" max width)
 4. Contour cut — Roland follows registration marks

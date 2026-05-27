@@ -86,6 +86,7 @@ Only after reading all eight does pricing begin.
 4. All pricing decisions are Nick's. Overrides are classified and logged.
 5. The system stays in sync at all times. See `COMPLETION_TEMPLATES.md`.
 6. No file is allowed to fall out of sync with any other file. Ever.
+7. **Elliott provides production-ready DWG files for every item on this account, without exception.** File prep, artwork preparation, design time, and pre-press labor are zero-cost, zero-time inputs on every Elliott job — past, present, and future. Step 1 of every process (file import/setup) is a ~5-minute mechanical operation, NOT a billable labor input. Any cost reasoning that uses file prep as a pricing driver on this account is incorrect and must be corrected immediately. This is a permanent account-level truth, not a per-job assumption.
 
 ---
 

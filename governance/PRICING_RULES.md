@@ -45,6 +45,12 @@
 20. **Do not anchor to the same-dimension kit multiplier chain.** It doesn't apply to mixed kits.
 21. **Always run AI model validation on mixed-dimension kits** — minimum Rounds 1 and 2. All 4 rounds if annual spend is significant.
 
+## Account-Level Cost Inputs
+
+22. **Elliott provides production-ready DWG files for every item on this account, without exception.** File prep, artwork preparation, design time, and pre-press labor are NEVER a cost factor on Elliott pricing. Past, present, and future. Step 1 of every documented process (file import/setup) is a ~5-minute mechanical operation, not a billable labor input.
+23. **Do not include file prep, artwork prep, design time, or pre-press labor in any cost build, job reconstruction, or margin analysis on this account.** If you find yourself adding minutes or dollars for "file prep × N unique designs," stop — that input is zero on Elliott. Use only material + machine-time labor (print, lam, cut, weed, inspect, package).
+24. **If a prior session used file prep as a cost driver, that pricing rationale was incorrect.** Document the correction in the affected item's Notes and Warnings section. Do not propagate the incorrect input forward into future quotes.
+
 ---
 
 ## Per-Sq-Ft Kit Premium
