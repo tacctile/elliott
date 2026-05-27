@@ -19,6 +19,10 @@ All quoted items. Updated when items are added, repriced, or status changes.
 | 3017435 | ELLIOTT White Vinyl Cut Lettering | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.56 | $35 | $35.00 | ~76% (24" roll) / ~81% (48" roll) | Quoted | `items/3017435.md` |
 | 3018378 | Label D115 Blue — Model Designation | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.512 | $35 | $35.00 | ~78% | Quoted | `items/3018378.md` |
 | 1186310 | E160 Cardinal Red Model Designation | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.564 | $35 | $35.00 | ~78% | Quoted | `items/1186310.md` |
+| 1277970 | Outrigger Switch — Horizontal Front (18T) | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.008 | $3.50 (qty 1-9: $7) | $3.50 | ~99% gross | Quoted | `items/1277970.md` |
+| 1277980 | Outrigger Switch — Vertical Front (18T) | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.008 | $3.50 (qty 1-9: $7) | $3.50 | ~99% gross | Quoted | `items/1277980.md` |
+| 1277990 | Outrigger Switch — Horizontal Rear (18T) | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.008 | $3.50 (qty 1-9: $7) | $3.50 | ~99% gross | Quoted | `items/1277990.md` |
+| 1278000 | Outrigger Switch — Vertical Rear (18T) | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.008 | $3.50 (qty 1-9: $7) | $3.50 | ~99% gross | Quoted | `items/1278000.md` |
 
 ---
 
@@ -27,7 +31,7 @@ All quoted items. Updated when items are added, repriced, or status changes.
 | Category | Material Family | Category File | Item Count | Profile Status |
 |----------|-----------------|---------------|------------|----------------|
 | Cut Vinyl Lettering | 3M 180mC Cut Vinyl | `categories/cut-vinyl-3m-180mc.md` | 4 | Narrowing — 4 data points at 2.51–2.564 sq ft, all at $35/qty 20 |
-| Printed + Laminated | Orajet 3951 Cast + Polyester Lam | `categories/printed-laminated-orajet.md` | 3 | Singles: Wide (1 data point). Kits: Moderate (2 data points) |
+| Printed + Laminated | Orajet 3951 Cast + Polyester Lam | `categories/printed-laminated-orajet.md` | 7 | Singles (≥0.5 sq ft): Wide (1 data point). Kits: Moderate (2 data points). Tiny labels (≤0.1 sq ft): Founding data point (4 program peers, job economics — outside the sq ft band by design) |
 | Panel Decals | Convex High Bond + Poly Lam | Not yet created | 0 | No profile — first item establishes it |
 | Polycarbonate | Lexan/Polycarbonate | Not yet created | 0 | No profile — first item establishes it |
 
@@ -42,6 +46,11 @@ P/N 1230820 (ROOT BENCHMARK — $20/ea at qty 20)
 ├── P/N 1278930 (1.5x → $30/kit at qty 20)
 │   └── P/N 1245130 (5/3 parity → $50/kit at qty 20)
 └── [future printed/laminated items validate against Pricing Profile band]
+
+P/N 1277970 (TINY PRINTED LABEL FOUNDING DATA POINT — $7 at qty 1-9; sub-0.1 sq ft size class, job economics)
+├── P/N 1277980 (program peer — identical specs, $7 at qty 1-9)
+├── P/N 1277990 (program peer — identical specs, $7 at qty 1-9)
+└── P/N 1278000 (program peer — identical specs, $7 at qty 1-9)
 
 P/N 1205720 (CUT VINYL BASELINE — $35/ea at qty 20, Override: Relationship Concession)
 ├── P/N 3017435 (sq ft parity → $35/ea at qty 20)

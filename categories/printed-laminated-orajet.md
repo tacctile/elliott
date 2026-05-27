@@ -14,6 +14,19 @@
 |-----|-------------|------------|-------|-----------------|-----------|--------|
 | 1230820 | Load Chart, D105 | 15" × 12.44" | 1.296 | $20 | $20.00 | FA Accepted |
 
+### Tiny Printed Labels — Sub-0.1 Sq Ft Size Class (Job Economics, Not Sq Ft)
+
+> **Outside the singles per-sq-ft band by design.** These items price on minimum run / job economics — at 0.008 sq ft, applying the $15.43/sq ft band yields $0.12/label, which does not cover setup. Material cost is effectively zero relative to the job floor. Founding data point: P/N 1277970. Do NOT feed these prices into the singles Pricing Profile band — they are not comparable data points.
+
+| P/N | Description | Dimensions | Sq Ft | Price (qty 1-9) | Status |
+|-----|-------------|------------|-------|------------------|--------|
+| 1277970 | Outrigger Switch — Horizontal Front (18T) | Ø1-3/16" circle | 0.008 | $7 | Quoted |
+| 1277980 | Outrigger Switch — Vertical Front (18T) | Ø1-3/16" circle | 0.008 | $7 | Quoted |
+| 1277990 | Outrigger Switch — Horizontal Rear (18T) | Ø1-3/16" circle | 0.008 | $7 | Quoted |
+| 1278000 | Outrigger Switch — Vertical Rear (18T) | Ø1-3/16" circle | 0.008 | $7 | Quoted |
+
+*One-off custom build — 4-label outrigger switch program ordered together by Sean for a single 18T crane build. Qty 5 each; no reorder expectation. Tier listed is qty 1-9 (operationally relevant tier for this program). Full tier table populated in each item file for structural completeness.*
+
 ### Multi-Label Kits
 
 | P/N | Description | Labels | Dimensions (each) | Sq Ft/Kit | Price (qty 20) | Per Label | Lam Passes | Status |
@@ -41,6 +54,8 @@ Derived from accepted pricing on real items. Tightens with every new item.
 
 **Band width:** Wide — 1 data point. Future items in 0.5–2.0 sq ft range should land within ±15% of the per-sq-ft rate.
 
+**Band scope:** Applies to printed/laminated singles in the ~0.5–2.0 sq ft range. Items below 0.1 sq ft (tiny printed labels) price on minimum run / job economics, not sq ft — see the Tiny Printed Labels table above and P/N 1277970 (founding data point). These items are NOT included in the band calculation.
+
 ### Multi-Label Kits (Same Dimensions, Same Material)
 
 **Data points:** 2 items (1278930 — 3 labels, 1245130 — 5 labels)
@@ -67,11 +82,12 @@ Beyond 2 lam passes or mixed dimensions → cost-build from scratch. Boundary is
 
 ## Pricing Rules for This Category
 
-1. **Single labels** — validate against the singles per-sq-ft band.
-2. **Same-dimension kits (≤2 lam passes)** — validate against the kit per-label band.
-3. **Kits exceeding 2 lam passes** — cost-build from scratch. Run AI validation.
-4. **Mixed-dimension kits** — see methodology below. Cost-build from scratch.
-5. **The Pricing Profile is the primary validation tool, not the benchmark chain.**
+1. **Single labels (≥0.5 sq ft)** — validate against the singles per-sq-ft band.
+2. **Tiny printed labels (≤0.1 sq ft)** — price on minimum run / job economics. Sq ft band is inapplicable; setup, file prep, print, lam, cut, inspect, and package dominate cost. Reference P/N 1277970 as the founding data point.
+3. **Same-dimension kits (≤2 lam passes)** — validate against the kit per-label band.
+4. **Kits exceeding 2 lam passes** — cost-build from scratch. Run AI validation.
+5. **Mixed-dimension kits** — see methodology below. Cost-build from scratch.
+6. **The Pricing Profile is the primary validation tool, not the benchmark chain.**
 
 ---
 

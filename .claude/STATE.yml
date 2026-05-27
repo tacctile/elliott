@@ -2,11 +2,11 @@
 # Updated at the end of every session
 
 last_session:
-  date: "2026-05-26"
-  type: "new_item"
-  summary: "Priced and documented P/N 1186310 — E160 Cardinal Red model designation. Direct dimensional/material clone of FA-accepted P/N 1205720. $35 at qty 20 via sq ft parity. ~78% margin. No FA, no AI validation (direct parity exemption)."
+  date: "2026-05-27"
+  type: "new_item_program"
+  summary: "Priced and documented 4-label outrigger switch program (P/N 1277970, 1277980, 1277990, 1278000) for one-off 18T crane build. All four share identical specs (Ø1-3/16\" circle, Orajet 3951 + 1-mil polyester, kiss-cut); only directional content varies. Priced on minimum run / job economics — $7/label at qty 1-9 (Sean's order tier). Founding data point for sub-0.1 sq ft printed label size class. Sq ft Pricing Profile band explicitly NOT contaminated. No FA, no AI validation (one-off, job economics call)."
 
-next_action: "Send P/N 1186310 quote to Sean. Await response on pending quotes 1245130, 3017435, 3018378, 1186310."
+next_action: "Send 4-label outrigger switch program quote to Sean as a single email. Await response on pending quotes 1245130, 3017435, 3018378, 1186310, plus this new program."
 blockers: "none"
-item_count: 7
-pending_quotes: "1245130, 3017435, 3018378, 1186310 — quoted May 2026, awaiting Sean response"
+item_count: 11
+pending_quotes: "1245130, 3017435, 3018378, 1186310, 1277970, 1277980, 1277990, 1278000 — quoted May 2026, awaiting Sean response"
