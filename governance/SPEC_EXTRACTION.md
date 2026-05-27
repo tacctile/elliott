@@ -103,6 +103,7 @@ These defaults apply unless the drawing explicitly states otherwise:
 | Application | Hand-applied on equipment | Elliott production process |
 | Packaging | Flat, stacked, kits collated | Account standard |
 | Tolerances | ±1/16" | Industry standard for this product class |
+| Artwork / File Prep | Production-ready DWG provided by Elliott | Zero-cost, zero-time input on every Elliott job — past, present, and future. NEVER a cost factor. See `PRICING_RULES.md` §22-24. |
 
 ---
 

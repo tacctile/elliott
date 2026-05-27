@@ -14,33 +14,48 @@
 |-----|-------------|------------|-------|-----------------|-----------|--------|
 | 1230820 | Load Chart, D105 | 15" × 12.44" | 1.296 | $20 | $20.00 | FA Accepted |
 
-### Tiny Printed Labels — Sub-0.1 Sq Ft Size Class (Job Economics, Not Sq Ft)
+### Tiny Printed Labels — Sub-0.1 Sq Ft Size Class (One-Off Job Economics, Not Sq Ft)
 
-> **Outside the singles per-sq-ft band by design.** These items price on minimum run / job economics — at 0.008 sq ft, applying the $15.43/sq ft band yields $0.12/label, which does not cover setup. The job's actual material cost is built from the production footprint (vinyl + laminate consumed), not per-label area. Founding data point: P/N 1277970. Do NOT feed these prices into the singles Pricing Profile band — they are not comparable data points.
+> ## ⚠ DO NOT BENCHMARK FUTURE PRICING AGAINST THE TINY-LABEL ITEMS BELOW
+>
+> The four items in this subsection (P/N 1277970, 1277980, 1277990, 1278000) are a single **one-off program** for a custom 18T crane build. Sean Finn verbatim: *"this will be a one off for a custom build we are doing."*
+>
+> Their $2.75/label price (and the $55 program total) is a **minimum-worthwhile-charge floor**, NOT a catalog rate, NOT a comparable, and NOT a benchmark for any future Elliott item — including any future tiny-label or one-off request.
+>
+> - The per-sq-ft rate implied by this pricing (**~$343/sq ft**) is an arithmetic artifact of minimum-run economics on tiny labels. It is meaningless as a per-sq-ft reference.
+> - The flat $2.75/label tier table on these items is structural padding for frontmatter compliance. There is no volume tier — Sean ordered qty 5 once, will not reorder.
+> - **Do NOT feed these prices into the Pricing Profile band** (singles, kit, or any other). They are explicitly excluded.
+> - **Do NOT use these items to anchor a future tiny-label quote.** Rebuild the job economics from scratch every time: material footprint + production time on the actual job, then anchor to whichever account floor is appropriate at the time.
+>
+> If a future session reaches for these items as a benchmark, **STOP and re-read this callout.**
 
-| P/N | Description | Dimensions | Sq Ft | Price (qty 1-9) | Status |
-|-----|-------------|------------|-------|------------------|--------|
-| 1277970 | Outrigger Switch — Horizontal Front (18T) | Ø1-3/16" circle | 0.008 | $15 | Quoted |
-| 1277980 | Outrigger Switch — Vertical Front (18T) | Ø1-3/16" circle | 0.008 | $15 | Quoted |
-| 1277990 | Outrigger Switch — Horizontal Rear (18T) | Ø1-3/16" circle | 0.008 | $15 | Quoted |
-| 1278000 | Outrigger Switch — Vertical Rear (18T) | Ø1-3/16" circle | 0.008 | $15 | Quoted |
+| P/N | Description | Dimensions | Sq Ft | Price (flat, all tiers) | Status |
+|-----|-------------|------------|-------|--------------------------|--------|
+| 1277970 | Outrigger Switch — Horizontal Front (18T) | Ø1-3/16" circle | 0.008 | $2.75 | Quoted |
+| 1277980 | Outrigger Switch — Vertical Front (18T) | Ø1-3/16" circle | 0.008 | $2.75 | Quoted |
+| 1277990 | Outrigger Switch — Horizontal Rear (18T) | Ø1-3/16" circle | 0.008 | $2.75 | Quoted |
+| 1278000 | Outrigger Switch — Vertical Rear (18T) | Ø1-3/16" circle | 0.008 | $2.75 | Quoted |
 
-**4-label outrigger switch program — Nick-verified production economics (2026-05-27):**
+**4-label outrigger switch program — current pricing (2026-05-27 evening, post-purge):**
 
 | Metric | Value |
 |--------|-------|
 | Production footprint | 3.125 sq ft vinyl + 2.8125 sq ft laminate (1 pass, 1 print run) |
 | Material cost (full 20-label job) | $6.94 |
-| Material cost per label | $0.35 |
-| Material cost per P/N (qty 5) | $1.74 |
-| **Recommended price per label (qty 1-9)** | **$15** |
-| **Per P/N (qty 5)** | **$75** |
-| **Program total (4 P/Ns × qty 5)** | **$300** |
-| Job-level fully-loaded margin (program revenue $300 vs ~$182 cost) | ~39% |
+| File prep / artwork prep / design time | **$0** — Elliott provides production-ready DWG (account rule, see `PRICING_RULES.md` §22) |
+| Production time (file import + print/lam/cut/inspect/package) | ~25 min total |
+| **Price per label (flat, all tiers)** | **$2.75** |
+| **Per P/N (qty 5)** | **$13.75** |
+| **Program total (4 P/Ns × qty 5)** | **$55** |
+| Implied per-sq-ft rate (DO NOT USE AS A REFERENCE) | ~$343/sq ft — arithmetic artifact only |
+| Anchor reasoning | $55 = the lowest first article price on the account (P/N 1230820 FA), used here as a program-level minimum-worthwhile-charge floor — NOT as a per-label comparable |
 
-*One-off custom build for a single 18T crane build. Qty 5 each; no reorder expectation. Tier listed is qty 1-9 (operationally relevant tier for this program). Full tier table populated in each item file for structural completeness.*
+*One-off custom build for a single 18T crane build. Qty 5 each; no reorder expectation. The flat tier table on each item file exists only for frontmatter completeness; the operational number is the $55 program total.*
 
-*Repricing note (2026-05-27): initial $7/label was a job-floor estimate that did not account for actual production footprint and labor. Repriced to $15/label after Nick provided the verified footprint. Original price would have produced ~$42 loss across the program.*
+**Repricing history (2026-05-27):**
+1. $7/label = $140 program total — initial job-floor estimate.
+2. $15/label = $300 program total — used "file prep × 4 unique designs" as a major labor cost driver.
+3. **$2.75/label = $55 program total — current.** Account-wide artwork-prep purge corrected the file-prep assumption: Elliott provides production-ready DWG files for every item on this account. File prep is NOT a cost input. With true inputs ($6.94 material + ~25 min production), the worthwhile-charge floor is the account's lowest FA price ($55), not a labor-heavy reconstructed figure.
 
 ### Multi-Label Kits
 
@@ -98,7 +113,7 @@ Beyond 2 lam passes or mixed dimensions → cost-build from scratch. Boundary is
 ## Pricing Rules for This Category
 
 1. **Single labels (≥0.5 sq ft)** — validate against the singles per-sq-ft band.
-2. **Tiny printed labels (≤0.1 sq ft)** — price on minimum run / job economics. Sq ft band is inapplicable; setup, file prep, print, lam, cut, inspect, and package dominate cost. Reference P/N 1277970 as the founding data point.
+2. **Tiny printed labels (≤0.1 sq ft)** — price from job economics (material footprint + production time), anchored to the lowest account-level worthwhile-charge floor. Sq ft band is inapplicable. **Do NOT use P/N 1277970/1277980/1277990/1278000 as a benchmark** — they are a one-off priced at the account FA floor ($55 program total). Rebuild from scratch every time. NOTE: file prep is NEVER a cost driver on this account (see Pricing Rules §22).
 3. **Same-dimension kits (≤2 lam passes)** — validate against the kit per-label band.
 4. **Kits exceeding 2 lam passes** — cost-build from scratch. Run AI validation.
 5. **Mixed-dimension kits** — see methodology below. Cost-build from scratch.
