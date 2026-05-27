@@ -24,6 +24,7 @@ All quoted items. Updated when items are added, repriced, or status changes.
 | 1277990 | Outrigger Switch — Horizontal Rear (18T) ⚠ one-off, do NOT benchmark | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.008 | $2.75 (flat — one-off) | $2.75 | N/A (one-off, $55 program) | Quoted | `items/1277990.md` |
 | 1278000 | Outrigger Switch — Vertical Rear (18T) ⚠ one-off, do NOT benchmark | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.008 | $2.75 (flat — one-off) | $2.75 | N/A (one-off, $55 program) | Quoted | `items/1278000.md` |
 | 3017583 | LBL - PTO Engage Process (ANSI Z535) ⚠ one-off, do NOT benchmark | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.026 | $9.17 (flat — one-off) | $9.17 | ~97% (structural — one-off, $55 program at qty 6) | Quoted | `items/3017583.md` |
+| 3017584 | LBL - PTO Active (smallest item on account) ⚠ one-off, do NOT benchmark | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.00174 | $9.17 (flat — one-off) | $9.17 | ~99% (structural — one-off, $55 program at qty 6) | Quoted | `items/3017584.md` |
 
 ---
 
@@ -32,7 +33,7 @@ All quoted items. Updated when items are added, repriced, or status changes.
 | Category | Material Family | Category File | Item Count | Profile Status |
 |----------|-----------------|---------------|------------|----------------|
 | Cut Vinyl Lettering | 3M 180mC Cut Vinyl | `categories/cut-vinyl-3m-180mc.md` | 4 | Narrowing — 4 data points at 2.51–2.564 sq ft, all at $35/qty 20 |
-| Printed + Laminated | Orajet 3951 Cast + Polyester Lam | `categories/printed-laminated-orajet.md` | 8 | Singles (≥0.5 sq ft): Wide (1 data point). Kits: Moderate (2 data points). Tiny labels (≤0.1 sq ft): 4 one-off outrigger program peers ($55 program total / $2.75 per label) + 1 standalone one-off (3017583, $55 program total / $9.17 per label at qty 6) — explicitly excluded from any band; do NOT benchmark |
+| Printed + Laminated | Orajet 3951 Cast + Polyester Lam | `categories/printed-laminated-orajet.md` | 9 | Singles (≥0.5 sq ft): Wide (1 data point). Kits: Moderate (2 data points). Tiny labels (≤0.1 sq ft): 4 one-off outrigger program peers ($55 program total / $2.75 per label) + 2 standalone one-offs (3017583 at 0.026 sq ft and 3017584 at 0.00174 sq ft — smallest item on the account; both $55 program total / $9.17 per label at qty 6) — explicitly excluded from any band; do NOT benchmark |
 | Panel Decals | Convex High Bond + Poly Lam | Not yet created | 0 | No profile — first item establishes it |
 | Polycarbonate | Lexan/Polycarbonate | Not yet created | 0 | No profile — first item establishes it |
 
@@ -62,6 +63,16 @@ P/N 3017583 (STANDALONE ONE-OFF — $55 program total / $9.17 per label at qty 6
     arithmetic byproduct of $55 ÷ 6 and scales inversely with quantity — not a property
     of the label. Sq ft band inapplicable at 0.026 sq ft. File prep $0 (account rule).
     NEVER use as a benchmark for any future Elliott item.
+
+P/N 3017584 (STANDALONE ONE-OFF — $55 program total / $9.17 per label at qty 6 — DO NOT BENCHMARK)
+    LBL - PTO Active, 0.5" × 0.5" black-text-on-white, qty 6 for a field service request.
+    Smallest item on the entire Elliott account at 0.00174 sq ft. Arrived alongside
+    P/N 3017583 as part of the same next-day-rush field service request (separate line
+    items, not a kit). Same $55 account minimum-worthwhile-charge floor anchor. Implied
+    ~$5,270/sq ft is the most extreme arithmetic artifact on the account — meaningless
+    as a reference. Sq ft band structurally inapplicable. File prep $0 (account rule).
+    "Mylar overlay" drawing wording = standard 1-mil polyester laminate (Mylar is a
+    polyester trade name). NEVER use as a benchmark for any future Elliott item.
 
 P/N 1205720 (CUT VINYL BASELINE — $35/ea at qty 20, Override: Relationship Concession)
 ├── P/N 3017435 (sq ft parity → $35/ea at qty 20)

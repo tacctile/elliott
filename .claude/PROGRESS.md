@@ -6,6 +6,43 @@
 
 ---
 
+### 2026-05-27 — New Item: P/N 3017584 — LBL - PTO Active (One-Off Tiny Label, Smallest Item on the Account, Job Economics)
+
+**What:** Priced and documented P/N 3017584 — a single 0.5" × 0.5" PTO ACTIVE label (black 0.1" Helvetica Bold text on white, R1/8 rounded corners, backing slit at middle) on Orajet 3951 cast vinyl + 1-mil polyester overlaminate. One-off order of qty 6 for a field service request. Rev A, dated 05/26/2026, drafter TJM. Arrived alongside P/N 3017583 as part of the same next-day-rush field service request (separate line items, not a kit).
+
+**Item Created:** `items/3017584.md`
+
+**Pricing:** $55 program total for qty 6 ($9.17/label flat across all six tiers). Anchored to the $55 account minimum-worthwhile-charge floor (P/N 1230820 FA price). Sq ft 0.00174 — **smallest item on the entire Elliott account.** Far outside the ~0.5–2.0 sq ft singles band scope; band is structurally inapplicable.
+
+**Job economics:**
+- Production footprint: ~0.20 sq ft Orajet 3951 + ~0.20 sq ft 1-mil polyester laminate (single pass through 13.5" laminator, single print run)
+- Material cost: ~$0.50 for the 6-label job ($0.08/label) — effectively zero relative to the $55 floor; documented for completeness, does not drive pricing
+- File prep: **$0** per account rule (PRICING_RULES.md §22) — Elliott supplies production-ready DWG
+- Production time: ~20-25 min total (5 min file import + 15-20 min print/lam/cut/inspect/package)
+- Contribution margin: ~$54.50 on $55 revenue (~99%); ~$149/hr per production-minute
+- Implied per-sq-ft rate: ~$5,270/sq ft — the most extreme arithmetic artifact on the account; explicitly meaningless as a reference
+
+**Key Decisions:**
+- **Sq ft band explicitly NOT applied.** At 0.00174 sq ft, the singles band ($15.43/sq ft at qty 20) yields $0.027/label — far below the worthwhile-charge floor and below even the file-import time. Documented in Pricing Derivation.
+- **Anchored to the $55 account floor**, same logic as P/N 3017583 and the outrigger switch program. Outrigger has 20 labels in its program ($55 ÷ 20 = $2.75); 3017583 has 6 labels ($55 ÷ 6 = $9.17); 3017584 has 6 labels ($55 ÷ 6 = $9.17). Per-label rates scale inversely with quantity and are not properties of the labels themselves — explicitly documented.
+- **3017583 + 3017584 are separate line items, not a kit.** They arrived together as part of the same next-day-rush field service request but require separate file imports + separate print/lam/cut/inspect/package runs. Combined PO is quoted as two separate $55 programs ($110 total), not one combined $55. Documented in Pricing Derivation under "Field-service context."
+- **No first article** — one-off, not applicable.
+- **No multi-round AI validation** — straightforward one-off job-economics call per session brief; no precedent-setting risk to existing bands.
+- **Mylar = polyester terminology note documented.** Drawing reads "1 mil clear Mylar overlay" — Mylar is a polyester-film trade name (originally DuPont), so this maps directly to the standard 1-mil polyester laminate used across the Orajet 3951 material family. No material change. Documented as a tagged warning block in Notes and Warnings. Sister item 3017583 uses "1 mil clear vinyl overlay" wording on its drawing for the same physical laminate — Elliott is actively working with Pro Label to standardize spec-sheet verbiage per Nick's account context.
+- **NOT a benchmark.** Eight warning blocks added to Notes and Warnings: ONE-OFF ORDER, DO NOT BENCHMARK, SMALLEST ITEM ON THE ACCOUNT (new structural warning for this item), DO NOT SURFACE PER-LABEL MATH, REORDER PRICING, ACCOUNT FLOOR, MYLAR TERMINOLOGY, ARTWORK PREP. Future tiny labels and one-offs rebuild job economics from scratch — do NOT extrapolate from this item's per-label number.
+- **Pricing Profile band NOT contaminated.** Added 3017584 to the existing "Standalone Tiny One-Offs" subsection in `categories/printed-laminated-orajet.md` (created with 3017583 earlier today), distinct from both the outrigger switch program subsection and the singles Pricing Profile band. Singles band scope (~0.5–2.0 sq ft) and kit band remain intact and unchanged.
+
+**Files Updated:**
+- `items/3017584.md` — new item file with all required frontmatter and all 10 required sections
+- `categories/printed-laminated-orajet.md` — added 3017584 row to "Standalone Tiny One-Offs" subsection table and a new 3017584 job-economics breakdown table; singles Pricing Profile band untouched
+- `.claude/ARCHITECTURE.md` — added 3017584 to catalog (item count 12 → 13); category registry count 8 → 9 for Printed + Laminated; precedent chain extended with 3017584 standalone one-off block
+- `.claude/STATE.yml` — incremented item_count 12 → 13; last_session and next_action updated
+- `.claude/PROGRESS.md` — this entry
+
+**Status:** Quoted. Ready to send to Sean as a single program line — "one-time minimum program charge: $55.00 total" — for qty 6 of P/N 3017584. If 3017583 and 3017584 land on the same PO, quote as two separate $55 programs ($110 total). validate.py passes 0 errors, 0 warnings.
+
+---
+
 ### 2026-05-27 — New Item: P/N 3017583 — LBL - PTO Engage Process (One-Off Tiny Label, Job Economics)
 
 **What:** Priced and documented P/N 3017583 — a single 2.5" × 1.5" ANSI Z535 NOTICE label (Safety White base, Safety Blue header, Safety Black text) on Orajet 3951 cast vinyl + 1-mil polyester overlaminate. One-off order of qty 6 for a unit in the field. Rev B, dated 05/26/2026, drafter TJM.
