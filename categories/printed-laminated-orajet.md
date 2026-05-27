@@ -64,6 +64,7 @@
 | P/N | Description | Dimensions | Sq Ft | Qty | Per Label | Program Total | Status |
 |-----|-------------|------------|-------|-----|-----------|---------------|--------|
 | 3017583 | LBL - PTO Engage Process (ANSI Z535 NOTICE) | 2.500" × 1.500" | 0.026 | 6 | $9.17 | $55 | Quoted |
+| 3017584 | LBL - PTO Active (smallest item on the account) | 0.500" × 0.500" | 0.00174 | 6 | $9.17 | $55 | Quoted |
 
 **3017583 job economics (2026-05-27):**
 
@@ -76,6 +77,21 @@
 | **Program total (qty 6)** | **$55** |
 | Per label (arithmetic — do NOT use as a comparable) | $9.17 |
 | Anchor reasoning | $55 = the lowest first article price on the account (P/N 1230820 FA), used here as a program-level minimum-worthwhile-charge floor |
+
+**3017584 job economics (2026-05-27):**
+
+| Metric | Value |
+|--------|-------|
+| Production footprint | ~0.20 sq ft vinyl + ~0.20 sq ft laminate (1 pass, 1 print run) |
+| Material cost (full 6-label job) | ~$0.50 (effectively zero relative to the $55 floor) |
+| File prep / artwork prep / design time | **$0** — Elliott provides production-ready DWG (account rule, see `PRICING_RULES.md` §22) |
+| Production time (file import + print/lam/cut/inspect/package) | ~20-25 min total |
+| **Program total (qty 6)** | **$55** |
+| Per label (arithmetic — do NOT use as a comparable) | $9.17 |
+| Implied per-sq-ft rate (DO NOT USE AS A REFERENCE) | ~$5,270/sq ft — most extreme arithmetic artifact on the account |
+| Anchor reasoning | $55 = the lowest first article price on the account (P/N 1230820 FA), used here as a program-level minimum-worthwhile-charge floor |
+
+*3017584 is the smallest item on the entire Elliott account at 0.00174 sq ft (0.5" × 0.5"). It arrived alongside 3017583 as part of the same next-day-rush field service request (qty 6 each) — they are separate line items, not a kit. Each is priced as its own one-off at the $55 account floor. Drawing wording "1 mil clear Mylar overlay" maps to the standard 1-mil polyester (Mylar is a polyester trade name).*
 
 ### Multi-Label Kits
 
