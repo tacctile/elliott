@@ -1697,7 +1697,7 @@ document.addEventListener('keydown', e => {
 function openPdfModal(path) {
   const modal = document.getElementById('pdf-modal');
   const embed = document.getElementById('pdf-modal-embed');
-  embed.setAttribute('src', path);
+  embed.setAttribute('src', path + '#zoom=page-fit');
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
