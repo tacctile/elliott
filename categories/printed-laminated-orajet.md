@@ -57,6 +57,26 @@
 2. $15/label = $300 program total — used "file prep × 4 unique designs" as a major labor cost driver.
 3. **$2.75/label = $55 program total — current.** Account-wide artwork-prep purge corrected the file-prep assumption: Elliott provides production-ready DWG files for every item on this account. File prep is NOT a cost input. With true inputs ($6.94 material + ~25 min production), the worthwhile-charge floor is the account's lowest FA price ($55), not a labor-heavy reconstructed figure.
 
+### Standalone Tiny One-Offs
+
+> Single-P/N one-off orders in the tiny-label size class. Each is priced from job economics anchored to the $55 account minimum-worthwhile-charge floor (P/N 1230820 FA). **Each item below is a one-off — do NOT use any of them as a benchmark for any future Elliott item, including future tiny-label or one-off requests.** Per-label rates are arithmetic byproducts of the $55 floor divided by order quantity and scale inversely with quantity — they are not properties of the labels themselves.
+
+| P/N | Description | Dimensions | Sq Ft | Qty | Per Label | Program Total | Status |
+|-----|-------------|------------|-------|-----|-----------|---------------|--------|
+| 3017583 | LBL - PTO Engage Process (ANSI Z535 NOTICE) | 2.500" × 1.500" | 0.026 | 6 | $9.17 | $55 | Quoted |
+
+**3017583 job economics (2026-05-27):**
+
+| Metric | Value |
+|--------|-------|
+| Production footprint | ~0.5 sq ft vinyl + ~0.5 sq ft laminate (1 pass, 1 print run) |
+| Material cost (full 6-label job) | ~$1.70 |
+| File prep / artwork prep / design time | **$0** — Elliott provides production-ready DWG (account rule, see `PRICING_RULES.md` §22) |
+| Production time (file import + print/lam/cut/inspect/package) | ~20-25 min total |
+| **Program total (qty 6)** | **$55** |
+| Per label (arithmetic — do NOT use as a comparable) | $9.17 |
+| Anchor reasoning | $55 = the lowest first article price on the account (P/N 1230820 FA), used here as a program-level minimum-worthwhile-charge floor |
+
 ### Multi-Label Kits
 
 | P/N | Description | Labels | Dimensions (each) | Sq Ft/Kit | Price (qty 20) | Per Label | Lam Passes | Status |
