@@ -6,6 +6,37 @@
 
 ---
 
+### 2026-05-27 — Frontend: Materials Tab + Sticky Header + Red Purge + Badge Removal
+
+**What:** Three-part frontend overhaul.
+
+**Part 1 — Materials data layer.** Created new `materials/` directory at repo root with 7 material files (YAML frontmatter only, no prose). One file per material — pure data layer for the frontend:
+- `orajet-3951-white.md` (print_media)
+- `1mil-polyester-overlaminate.md` (laminate)
+- `3m-180mc-cardinal-red.md`, `3m-180mc-olympic-blue.md`, `3m-180mc-white-24in.md`, `3m-180mc-white-48in.md` (cut_vinyl)
+- `transferrite-582u.md` (tape)
+
+Each material file carries: manufacturer, product name/code, dimensions (roll width, length), full cost breakdown (per roll, per yard, per sq ft, per MSI where applicable), verified date, compatibility links to other materials, and `used_in_items` list mapping each material to the items that use it. All values sourced from `governance/PRODUCTION.md` — no invented data. Empty fields left as empty strings or null.
+
+Created `scripts/build_materials.py` following the exact same pattern as `build_frontend.py`. Reads `materials/*.md` frontmatter, writes `frontend/materials.json` with structure: `{generated, material_count, materials: {material_id: {frontmatter}}}`. No fields stripped — Nick is the sole user. Updated `.github/workflows/build-frontend.yml` to run `build_materials.py` and include `frontend/materials.json` in the auto-commit.
+
+**Part 2 — Frontend overhaul — red purge + badge removal.** Elliott red (`#E8000D`) now appears in exactly one place: the ELLIOTT wordmark in the top-left header. Removed red from gross profit cells (now white/light gray), from the qty 20 row highlight (now `rgba(255,255,255,0.06)` subtle dark highlight), from the Copy for Email button (now dark gray surface-3 with white text and border-medium border), from the One-Off Program badge (now dark gray inline tag), from selected-item sidebar indicator (now white), from filter pills (now surface-3 + border-strong), from stat-block hover bars (removed entirely), and from search-input focus glow (now subtle white glow). Replaced `--accent` and all `--accent-dim`/`--accent-glow` CSS vars with `--brand-red` (used only on `.brand`), `--row-highlight`, and neutral surface vars.
+
+Removed all status badges system-wide:
+- Sidebar item list no longer shows FA ACCEPTED / QUOTED / ONE-OFF PROGRAM chips
+- Item detail sticky header no longer shows the status badge next to the P/N (kept only the One-Off tag, redesigned as a neutral dark-gray inline tag)
+- The Status row in the Specifications panel is retained as a plain data row (not a badge)
+
+**Part 3 — Frontend overhaul — sticky header + materials tab.** Item detail layout now has a sticky top block (`position: sticky; top: 0`) that contains: P/N + title + breadcrumb on the left, spec sheet thumbnail on the right (PDF rendered via pdf.js to canvas at scale 0.5, capped at 120px height, opens in new tab on click), and the 4-card stat bar below spanning full width. Below the sticky block, a `.scroll-area` div scrolls everything else: volume pricing table, specifications card, and a full-width notes panel. Notes panel uses `white-space: pre-wrap` with 40px+ bottom padding to guarantee no truncation. If no spec sheet exists for an item, the right side of the sticky header is simply empty — no placeholder.
+
+Added a tab bar in the topbar with two tabs: Items (default) and Materials. The Materials tab swaps the sidebar to a grouped material list (sectioned by Cut Vinyl / Print Media / Laminate / Application Tape, alphabetical within group) and swaps the main panel to a material detail view with the same sticky-header pattern: name + manufacturer + code on the left, stat bar (Cost/Sq Ft, Roll Width, Thickness, Verified Date) below, then a scrollable area with Specifications (left, only fields with values are rendered) and Connections (right, listing items that use the material plus the related material type — tape for cut vinyl, laminate for print media, substrate for laminate, cut vinyls for tape). Every item link in the Materials tab calls `selectItem(pn)` which switches back to the Items tab and loads the item detail. Every material link calls `selectMaterial(mid)`. Notes panel renders only if non-empty.
+
+**Validation:** `python scripts/build_materials.py` clean (7 materials). `python scripts/build_frontend.py` clean (11 items). `python scripts/validate.py` — 0 errors, 0 warnings.
+
+**Files touched:** `materials/*.md` (7 new), `scripts/build_materials.py` (new), `frontend/index.html` (full rewrite), `frontend/materials.json` (built), `.github/workflows/build-frontend.yml`, `.claude/PROGRESS.md`, `.claude/STATE.yml`.
+
+---
+
 ### 2026-05-27 — Price Lock + System Audit: P/N 1277970, 1277980, 1277990, 1278000 — Final $55 Program Locked, Full Repo Audit Clean
 
 **What:** Two-part session.
