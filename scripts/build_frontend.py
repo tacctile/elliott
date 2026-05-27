@@ -30,13 +30,9 @@ ALL_EXTS = IMAGE_EXTS | DOC_EXTS
 
 # Internal fields that must never be exposed in the public data.json
 STRIP_FIELDS = {
-    'pricing_logic',
     'benchmark_item',
     'downstream_items',
-    'material_cost_per_unit',
-    'cost_version_date',
     'override_type',
-    'margin_at_qty_20',
 }
 
 

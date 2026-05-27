@@ -20,10 +20,10 @@
     --text-primary: #f0f0f2;
     --text-secondary: #a0a3ae;
     --text-tertiary: #5e616e;
-    --text-inverse: #0a0a0b;
-    --accent: #e8c547;
-    --accent-dim: rgba(232, 197, 71, 0.15);
-    --accent-glow: rgba(232, 197, 71, 0.06);
+    --text-inverse: #ffffff;
+    --accent: #E8000D;
+    --accent-dim: rgba(232, 0, 13, 0.14);
+    --accent-glow: rgba(232, 0, 13, 0.08);
     --green: #4ade80;
     --green-dim: rgba(74, 222, 128, 0.12);
     --amber: #fbbf24;
@@ -36,11 +36,13 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  html, body { height: 100%; }
+
   body {
     font-family: 'Outfit', sans-serif;
     background: var(--surface-0);
     color: var(--text-primary);
-    min-height: 100vh;
+    overflow: hidden;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -56,19 +58,24 @@
     z-index: 0;
   }
 
-  .app { position: relative; z-index: 1; }
+  .app {
+    position: relative;
+    z-index: 1;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 
   /* === TOP BAR === */
   .topbar {
     border-bottom: 1px solid var(--border-subtle);
     padding: 0 32px;
     height: 56px;
+    flex: 0 0 56px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background: var(--surface-1);
-    position: sticky;
-    top: 0;
     z-index: 50;
     backdrop-filter: blur(12px);
   }
@@ -83,7 +90,7 @@
     font-weight: 900;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: #e52527;
+    color: var(--accent);
   }
   .topbar .divider {
     width: 1px;
@@ -107,30 +114,30 @@
 
   /* === LAYOUT === */
   .layout {
+    flex: 1 1 auto;
     display: grid;
     grid-template-columns: 320px 1fr;
-    min-height: calc(100vh - 56px);
+    min-height: 0;
+    overflow: hidden;
   }
   @media (max-width: 860px) {
-    .layout { grid-template-columns: 1fr; }
-    .sidebar { border-right: none; border-bottom: 1px solid var(--border-subtle); max-height: 50vh; }
+    .layout { grid-template-columns: 1fr; grid-template-rows: 40vh 1fr; }
   }
 
   /* === SIDEBAR === */
   .sidebar {
     background: var(--surface-1);
     border-right: 1px solid var(--border-subtle);
-    overflow-y: auto;
     display: flex;
     flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
   }
   .search-wrap {
     padding: 16px;
     border-bottom: 1px solid var(--border-subtle);
-    position: sticky;
-    top: 0;
     background: var(--surface-1);
-    z-index: 10;
+    flex: 0 0 auto;
   }
   .search-wrap input {
     width: 100%;
@@ -150,7 +157,7 @@
     box-shadow: 0 0 0 3px var(--accent-glow);
   }
 
-  .item-list { flex: 1; overflow-y: auto; }
+  .item-list { flex: 1 1 auto; overflow-y: auto; min-height: 0; }
 
   .list-item {
     padding: 14px 16px;
@@ -160,9 +167,7 @@
     position: relative;
   }
   .list-item:hover { background: var(--surface-2); }
-  .list-item.selected {
-    background: var(--surface-2);
-  }
+  .list-item.selected { background: var(--surface-2); }
   .list-item.selected::before {
     content: '';
     position: absolute;
@@ -216,9 +221,8 @@
   .main {
     overflow-y: auto;
     padding: 32px;
-    max-height: calc(100vh - 56px);
+    min-height: 0;
   }
-  @media (max-width: 860px) { .main { max-height: none; } }
 
   .empty {
     display: flex;
@@ -244,8 +248,8 @@
 
   /* === DETAIL HEADER === */
   .detail-header {
-    margin-bottom: 32px;
-    padding-bottom: 24px;
+    margin-bottom: 28px;
+    padding-bottom: 22px;
     border-bottom: 1px solid var(--border-subtle);
   }
   .detail-header .dh-top {
@@ -260,10 +264,7 @@
     font-size: 32px;
     font-weight: 700;
     letter-spacing: -0.5px;
-    background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--text-primary);
   }
   .dh-badge {
     font-size: 11px;
@@ -276,17 +277,11 @@
   .dh-badge-accepted { background: var(--green-dim); color: var(--green); }
   .dh-badge-quoted { background: var(--amber-dim); color: var(--amber); }
   .dh-badge-ordered { background: var(--blue-dim); color: var(--blue); }
-
-  .dh-override {
-    font-size: 10px;
-    font-weight: 600;
-    padding: 3px 8px;
-    border-radius: 3px;
-    background: var(--red-dim);
-    color: var(--red);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+  .dh-badge-oneoff {
+    background: var(--accent-dim);
+    color: var(--accent);
   }
+
   .detail-header .dh-desc {
     font-size: 16px;
     color: var(--text-secondary);
@@ -303,7 +298,7 @@
   }
   .dh-crumbs .sep { color: var(--text-tertiary); opacity: 0.4; }
 
-  /* === FILE VIEWER (thumbnails) === */
+  /* === FILE VIEWER === */
   .file-viewer {
     margin-bottom: 28px;
     display: none;
@@ -426,12 +421,15 @@
     color: var(--text-secondary);
   }
 
-  /* === STAT BLOCKS (big numbers row) === */
+  /* === STAT BAR === */
   .stat-row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 12px;
     margin-bottom: 28px;
+  }
+  @media (max-width: 1000px) {
+    .stat-row { grid-template-columns: repeat(2, 1fr); }
   }
   .stat-block {
     background: var(--surface-2);
@@ -464,18 +462,32 @@
     font-size: 22px;
     font-weight: 600;
     color: var(--text-primary);
+    line-height: 1.2;
   }
   .stat-block .stat-value.highlight { color: var(--accent); }
+  .stat-block .stat-value.muted {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
   .stat-block .stat-sub {
     font-size: 11px;
     color: var(--text-tertiary);
-    margin-top: 2px;
+    margin-top: 4px;
   }
 
-  /* === PRICING TABLE === */
-  .section {
+  /* === MIDDLE GRID === */
+  .mid-grid {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 16px;
     margin-bottom: 28px;
   }
+  @media (max-width: 900px) {
+    .mid-grid { grid-template-columns: 1fr; }
+  }
+
+  /* === SECTION === */
+  .section { margin-bottom: 0; }
   .section-title {
     font-size: 11px;
     font-weight: 700;
@@ -487,6 +499,7 @@
     border-bottom: 1px solid var(--border-subtle);
   }
 
+  /* === PRICING TABLE === */
   .ptable {
     width: 100%;
     border-collapse: separate;
@@ -503,14 +516,14 @@
     letter-spacing: 0.8px;
     color: var(--text-tertiary);
     text-align: left;
-    padding: 12px 16px;
+    padding: 10px 12px;
     background: var(--surface-3);
     border-bottom: 1px solid var(--border-medium);
   }
   .ptable thead th:not(:first-child) { text-align: right; }
   .ptable tbody td {
-    padding: 12px 16px;
-    font-size: 14px;
+    padding: 10px 12px;
+    font-size: 13px;
     border-bottom: 1px solid var(--border-subtle);
   }
   .ptable tbody tr:last-child td { border-bottom: none; }
@@ -518,48 +531,81 @@
     text-align: right;
     font-family: 'IBM Plex Mono', monospace;
     font-weight: 500;
-    font-size: 13px;
+    font-size: 12px;
   }
   .ptable tbody td:first-child {
     color: var(--text-secondary);
-    font-size: 13px;
+    font-size: 12px;
   }
-  .ptable tbody tr.row-highlight {
-    background: var(--accent-dim);
-  }
-  .ptable tbody tr.row-highlight td {
-    color: var(--text-primary);
-    font-weight: 600;
-  }
+  .ptable tbody tr.row-highlight { background: var(--accent-dim); }
+  .ptable tbody tr.row-highlight td { color: var(--text-primary); font-weight: 600; }
   .ptable tbody tr.row-highlight td:first-child {
     color: var(--accent);
     font-weight: 700;
   }
   .ptable .col-margin {
-    color: var(--text-tertiary) !important;
-    font-size: 12px !important;
-    font-weight: 400 !important;
+    color: var(--text-tertiary);
+    font-size: 11px;
+    font-weight: 400;
   }
-  .ptable .col-profit {
-    color: var(--green) !important;
+  .ptable .col-profit { color: var(--green); }
+  .ptable .cell-missing {
+    color: var(--text-tertiary);
+    font-weight: 400;
   }
 
-  /* === DETAIL GRID === */
-  .detail-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 28px;
+  /* === ONE-OFF BLOCK === */
+  .oneoff-block {
+    background: var(--surface-2);
+    border: 1px solid var(--border-subtle);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 20px;
   }
-  @media (max-width: 700px) { .detail-grid { grid-template-columns: 1fr; } }
+  .oneoff-block .oneoff-tag {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .oneoff-block .oneoff-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .oneoff-block .oneoff-line:last-of-type { border-bottom: none; }
+  .oneoff-block .oneoff-k {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  .oneoff-block .oneoff-v {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .oneoff-block .oneoff-note {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-subtle);
+  }
 
+  /* === SPECS CARD === */
   .info-card {
     background: var(--surface-2);
     border: 1px solid var(--border-subtle);
     border-radius: 8px;
     padding: 18px;
   }
-  .info-card.full { grid-column: 1 / -1; }
   .info-card h4 {
     font-size: 10px;
     font-weight: 700;
@@ -572,7 +618,7 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    padding: 7px 0;
+    padding: 8px 0;
   }
   .info-row + .info-row { border-top: 1px solid var(--border-subtle); }
   .info-row .ir-k {
@@ -593,12 +639,37 @@
     font-size: 12px;
   }
   .ir-v.accent { color: var(--accent); }
+  .ir-status {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
 
-  /* === LOGIC / NOTES TEXT === */
-  .prose {
+  /* === NOTES PANEL === */
+  .notes-panel {
+    background: var(--surface-2);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 20px 22px;
+    margin-bottom: 32px;
+  }
+  .notes-panel h4 {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-tertiary);
+    margin-bottom: 12px;
+  }
+  .notes-panel .prose {
     font-size: 13px;
-    line-height: 1.7;
+    line-height: 1.75;
     color: var(--text-secondary);
+    white-space: pre-wrap;
+    word-break: break-word;
   }
 
   /* === COPY BUTTON === */
@@ -646,6 +717,7 @@
     gap: 6px;
     flex-wrap: wrap;
     border-bottom: 1px solid var(--border-subtle);
+    flex: 0 0 auto;
   }
   .filter-pill {
     font-family: 'Outfit', sans-serif;
@@ -671,9 +743,9 @@
   }
 
   /* === SCROLLBAR === */
-  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--surface-4); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb { background: var(--surface-4); border-radius: 4px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
 </style>
 </head>
@@ -715,15 +787,21 @@
           <div class="thumb-grid" id="thumbGrid"></div>
         </div>
         <div class="stat-row" id="statRow"></div>
-        <div class="section" id="pricingSection">
-          <div class="section-title">Volume Pricing</div>
-          <div id="pricingTable"></div>
-          <div class="copy-wrap">
-            <button class="copy-btn" id="copyBtn" onclick="copyForEmail()">Copy for Email</button>
-            <span class="copy-hint" id="copyHint">Copied to clipboard</span>
+        <div class="mid-grid">
+          <div class="section" id="pricingSection">
+            <div class="section-title" id="pricingTitle">Volume Pricing</div>
+            <div id="pricingBody"></div>
+            <div class="copy-wrap">
+              <button class="copy-btn" id="copyBtn" onclick="copyForEmail()">Copy for Email</button>
+              <span class="copy-hint" id="copyHint">Copied to clipboard</span>
+            </div>
+          </div>
+          <div class="section">
+            <div class="section-title">Specifications</div>
+            <div class="info-card" id="specsCard"></div>
           </div>
         </div>
-        <div class="detail-grid" id="detailGrid"></div>
+        <div id="notesContainer"></div>
       </div>
     </div>
   </div>
@@ -768,7 +846,7 @@ function buildFilters() {
   const families = new Set();
   sortedPNs.forEach(pn => families.add(items[pn].frontmatter.material_family));
   const wrap = document.getElementById('filterWrap');
-  
+
   const allBtn = document.createElement('button');
   allBtn.className = 'filter-pill active';
   allBtn.textContent = 'All';
@@ -778,7 +856,6 @@ function buildFilters() {
   families.forEach(family => {
     const btn = document.createElement('button');
     btn.className = 'filter-pill';
-    // Short label — strip redundant words
     const short = family.replace('Orajet 3951 Cast + Polyester Lam', 'Printed + Laminated')
                         .replace('3M 180mC Cut Vinyl', 'Cut Vinyl');
     btn.textContent = short;
@@ -807,26 +884,27 @@ function renderList(query) {
     const fm = items[pn].frontmatter;
     if (activeFilter && fm.material_family !== activeFilter) return false;
     return pn.includes(q)
-      || fm.description.toLowerCase().includes(q)
-      || fm.model.toLowerCase().includes(q)
-      || fm.item_type.toLowerCase().includes(q)
-      || fm.material_family.toLowerCase().includes(q);
+      || (fm.description || '').toLowerCase().includes(q)
+      || (fm.model || '').toLowerCase().includes(q)
+      || (fm.item_type || '').toLowerCase().includes(q)
+      || (fm.material_family || '').toLowerCase().includes(q);
   });
 
   el.innerHTML = matches.map(pn => {
     const fm = items[pn].frontmatter;
     const sc = statusClass(fm.status);
     const sel = pn === selectedPN ? ' selected' : '';
+    const price = num(fm.price_20_49);
     return `<div class="list-item${sel}" data-pn="${pn}" onclick="selectItem('${pn}')">
       <div class="li-top">
         <span class="li-pn">${pn}</span>
-        <span class="li-status ${sc}">${fm.status}</span>
+        <span class="li-status ${sc}">${fm.status || '—'}</span>
       </div>
-      <div class="li-desc">${fm.description}</div>
+      <div class="li-desc">${fm.description || ''}</div>
       <div class="li-meta">
-        <span>${fm.model}</span>
-        <span>${fm.item_type}</span>
-        <span class="li-price">$${num(fm.price_20_49)}</span>
+        <span>${fm.model || ''}</span>
+        <span>${fm.item_type || ''}</span>
+        <span class="li-price">${price === '—' ? '—' : '$' + price}</span>
       </div>
     </div>`;
   }).join('');
@@ -848,6 +926,12 @@ function badgeClass(s) {
   return 'dh-badge-accepted';
 }
 
+function isOneOff(fm) {
+  const m = String(fm.margin_at_qty_20 || '');
+  const p = String(fm.pricing_logic || '');
+  return m.includes('N/A') || p.toUpperCase().includes('ONE-OFF');
+}
+
 function selectItem(pn) {
   selectedPN = pn;
   const item = items[pn];
@@ -856,45 +940,50 @@ function selectItem(pn) {
   document.getElementById('emptyState').style.display = 'none';
   const detail = document.getElementById('detail');
   detail.classList.remove('visible');
-  void detail.offsetWidth; // reflow for animation restart
+  void detail.offsetWidth;
   detail.classList.add('visible');
+
+  // Reset scroll position on selection
+  document.querySelector('.main').scrollTop = 0;
 
   renderList(document.getElementById('search').value);
   renderHeader(fm);
   renderFiles(item);
   renderStats(fm);
   renderPricing(fm);
-  renderDetails(fm);
+  renderSpecs(fm);
+  renderNotes(fm);
 }
 
 function renderHeader(fm) {
   const el = document.getElementById('detailHeader');
-  const override = fm.override_type
-    ? `<span class="dh-override">${fm.override_type}</span>` : '';
+  const oneOff = isOneOff(fm);
+  const tag = oneOff
+    ? `<span class="dh-badge dh-badge-oneoff">One-Off Program</span>` : '';
   el.innerHTML = `
     <div class="dh-top">
       <span class="dh-pn">${fm.part_number}</span>
-      <span class="dh-badge ${badgeClass(fm.status)}">${fm.status}</span>
-      ${override}
+      <span class="dh-badge ${badgeClass(fm.status)}">${fm.status || '—'}</span>
+      ${tag}
     </div>
-    <div class="dh-desc">${fm.description}</div>
+    <div class="dh-desc">${fm.description || ''}</div>
     <div class="dh-crumbs">
-      <span>${fm.model}</span><span class="sep">·</span>
-      <span>${fm.item_type}</span><span class="sep">·</span>
-      <span>${fm.material_family}</span>
+      <span>${fm.model || ''}</span><span class="sep">·</span>
+      <span>${fm.item_type || ''}</span><span class="sep">·</span>
+      <span>${fm.material_family || ''}</span>
     </div>
   `;
 }
 
 // === FILE VIEWER + LIGHTBOX ===
-let lightboxFiles = []; // array of {type, src} for lightbox
+let lightboxFiles = [];
 let lightboxIndex = 0;
 let pdfDocCache = null;
 
 function renderFiles(item) {
   const viewer = document.getElementById('fileViewer');
   const grid = document.getElementById('thumbGrid');
-  const files = item.image; // now an array of {type, path} or null
+  const files = item.image;
 
   if (!files || files.length === 0) {
     viewer.classList.remove('visible');
@@ -905,9 +994,9 @@ function renderFiles(item) {
   grid.innerHTML = '';
   lightboxFiles = [];
 
-  files.forEach((file, idx) => {
+  files.forEach((file) => {
     if (file.type === 'pdf') {
-      renderPdfThumbs(file.path, grid, idx);
+      renderPdfThumbs(file.path, grid);
     } else {
       const src = file.path;
       lightboxFiles.push({ type: 'image', src });
@@ -927,27 +1016,24 @@ function renderFiles(item) {
   });
 }
 
-async function renderPdfThumbs(path, grid, fileIdx) {
+async function renderPdfThumbs(path, grid) {
   const src = path;
   try {
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     const pdf = await pdfjsLib.getDocument(src).promise;
     pdfDocCache = pdf;
-    const startLbIdx = lightboxFiles.length;
 
     for (let i = 1; i <= pdf.numPages; i++) {
       const page = await pdf.getPage(i);
       const viewport = page.getViewport({ scale: 0.4 });
-      
-      // Thumbnail canvas
       const canvas = document.createElement('canvas');
       canvas.width = viewport.width;
       canvas.height = viewport.height;
       await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-      
+
       const lbIdx = lightboxFiles.length;
       lightboxFiles.push({ type: 'pdf', pdfSrc: src, pageNum: i });
-      
+
       const thumb = document.createElement('div');
       thumb.className = 'thumb';
       thumb.onclick = () => openLightbox(lbIdx);
@@ -1032,7 +1118,6 @@ async function renderLightboxContent() {
   }
 }
 
-// Keyboard nav for lightbox
 document.addEventListener('keydown', e => {
   if (!document.getElementById('lightbox').classList.contains('open')) return;
   if (e.key === 'Escape') closeLightbox();
@@ -1040,60 +1125,122 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') lightboxNext();
 });
 
+// === STATS ===
 function renderStats(fm) {
   const el = document.getElementById('statRow');
-  const isKit = fm.label_count > 1;
-  const mc = fm.material_cost_per_unit;
-  const p20 = fm.price_20_49;
-  const margin = ((p20 - mc) / p20 * 100).toFixed(0);
-  const sqft = fm.sq_ft_per_kit;
-  const ppsf = (p20 / sqft).toFixed(2);
+  const oneOff = isOneOff(fm);
 
-  let html = `
+  const p20 = toNum(fm.price_20_49);
+  const mc = toNum(fm.material_cost_per_unit);
+  const sqft = toNum(fm.sq_ft_per_kit);
+
+  // Price card
+  const priceCard = `
     <div class="stat-block">
       <div class="stat-label">Price @ Qty 20</div>
-      <div class="stat-value highlight">$${num(p20)}</div>
-      ${isKit ? `<div class="stat-sub">$${num(fm.per_label_at_qty_20)} per label</div>` : ''}
-    </div>
+      <div class="stat-value highlight">${p20 != null ? '$' + p20.toFixed(2) : '—'}</div>
+      ${(fm.label_count > 1 && toNum(fm.per_label_at_qty_20) != null)
+        ? `<div class="stat-sub">$${toNum(fm.per_label_at_qty_20).toFixed(2)} per label</div>` : ''}
+    </div>`;
+
+  // Material cost card
+  const mcCard = `
     <div class="stat-block">
       <div class="stat-label">Material Cost</div>
-      <div class="stat-value">$${num(mc)}</div>
-      <div class="stat-sub">as of ${fm.cost_version_date}</div>
-    </div>
-    <div class="stat-block">
-      <div class="stat-label">Margin @ 20</div>
-      <div class="stat-value">${margin}%</div>
-    </div>
-    <div class="stat-block">
-      <div class="stat-label">$/Sq Ft @ 20</div>
-      <div class="stat-value">$${ppsf}</div>
-      <div class="stat-sub">${sqft.toFixed(3)} sq ft</div>
-    </div>
-  `;
-  if (isKit) {
-    html += `
-    <div class="stat-block">
-      <div class="stat-label">Labels / Kit</div>
-      <div class="stat-value">${fm.label_count}</div>
-      <div class="stat-sub">${fm.sq_ft_per_label} sq ft each</div>
+      <div class="stat-value">${mc != null ? '$' + mc.toFixed(2) : '—'}</div>
+      ${fm.cost_version_date ? `<div class="stat-sub">as of ${fm.cost_version_date}</div>` : ''}
     </div>`;
+
+  // Margin card
+  let marginCard;
+  if (oneOff) {
+    marginCard = `
+      <div class="stat-block">
+        <div class="stat-label">Margin @ Qty 20</div>
+        <div class="stat-value muted">N/A — One-Off Program</div>
+      </div>`;
+  } else {
+    const marginStr = fm.margin_at_qty_20 ? String(fm.margin_at_qty_20).trim() : '';
+    let marginDisplay;
+    if (marginStr) {
+      marginDisplay = marginStr;
+    } else if (p20 != null && mc != null) {
+      marginDisplay = ((p20 - mc) / p20 * 100).toFixed(0) + '%';
+    } else {
+      marginDisplay = '—';
+    }
+    marginCard = `
+      <div class="stat-block">
+        <div class="stat-label">Margin @ Qty 20</div>
+        <div class="stat-value">${marginDisplay}</div>
+      </div>`;
   }
-  el.innerHTML = html;
+
+  // $/sq ft card — suppressed for one-off
+  let ppsfCard = '';
+  if (!oneOff) {
+    if (p20 != null && sqft != null && sqft > 0) {
+      const ppsf = (p20 / sqft).toFixed(2);
+      ppsfCard = `
+        <div class="stat-block">
+          <div class="stat-label">$/Sq Ft @ Qty 20</div>
+          <div class="stat-value">$${ppsf}</div>
+          <div class="stat-sub">${sqft.toFixed(3)} sq ft</div>
+        </div>`;
+    } else {
+      ppsfCard = `
+        <div class="stat-block">
+          <div class="stat-label">$/Sq Ft @ Qty 20</div>
+          <div class="stat-value">—</div>
+        </div>`;
+    }
+  }
+
+  // Grid: 4 cards for standard, 3 cards for one-off
+  el.style.gridTemplateColumns = oneOff ? 'repeat(3, 1fr)' : 'repeat(4, 1fr)';
+  el.innerHTML = priceCard + mcCard + marginCard + ppsfCard;
 }
 
+// === PRICING ===
 function renderPricing(fm) {
-  const mc = fm.material_cost_per_unit;
+  const title = document.getElementById('pricingTitle');
+  const body = document.getElementById('pricingBody');
+  const oneOff = isOneOff(fm);
+
+  if (oneOff) {
+    title.textContent = 'Program Pricing';
+    const perLabel = toNum(fm.price_1_9);
+    body.innerHTML = `
+      <div class="oneoff-block">
+        <div class="oneoff-tag">One-Time Program Only</div>
+        <div class="oneoff-line">
+          <span class="oneoff-k">Per-Label Rate</span>
+          <span class="oneoff-v">${perLabel != null ? '$' + perLabel.toFixed(2) : '—'}</span>
+        </div>
+        <div class="oneoff-note">
+          Program Note: See pricing derivation for full program context.
+          Not a catalog rate — do not use as a benchmark for future items.
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  title.textContent = 'Volume Pricing';
+  const mc = toNum(fm.material_cost_per_unit);
   const isKit = fm.label_count > 1;
 
   const tiers = [
-    { label: 'First Article', price: fm.first_article_price },
-    { label: '1–9', price: fm.price_1_9 },
-    { label: '10–19', price: fm.price_10_19 },
-    { label: '20–49', price: fm.price_20_49 },
-    { label: '50–99', price: fm.price_50_99 },
-    { label: '100–199', price: fm.price_100_199 },
-    { label: '200+', price: fm.price_200_plus },
-  ].filter(t => t.price !== '' && t.price != null);
+    { label: '1–9',       price: toNum(fm.price_1_9) },
+    { label: '10–19',     price: toNum(fm.price_10_19) },
+    { label: '20–49',     price: toNum(fm.price_20_49), highlight: true },
+    { label: '50–99',     price: toNum(fm.price_50_99) },
+    { label: '100–199',   price: toNum(fm.price_100_199) },
+    { label: '200+',      price: toNum(fm.price_200_plus) },
+  ].filter(t => t.price != null);
+
+  // First Article row, if present
+  const fa = toNum(fm.first_article_price);
 
   let html = `<table class="ptable"><thead><tr>
     <th>Quantity</th><th>Unit Price</th>
@@ -1101,92 +1248,133 @@ function renderPricing(fm) {
     <th>Gross Profit</th><th>Margin</th>
   </tr></thead><tbody>`;
 
-  tiers.forEach(t => {
-    const p = typeof t.price === 'string' ? parseFloat(t.price) : t.price;
-    if (isNaN(p)) return;
-    const perLabel = isKit ? p / fm.label_count : null;
-    const profit = p - mc;
-    const margin = (profit / p * 100).toFixed(0);
+  if (fa != null) {
+    const profit = mc != null ? (fa - mc) : null;
+    const margin = (mc != null && fa > 0) ? ((fa - mc) / fa * 100).toFixed(0) + '%' : '—';
     html += `<tr>
+      <td>First Article</td>
+      <td>$${fa.toFixed(2)}</td>
+      ${isKit ? `<td>$${(fa / fm.label_count).toFixed(2)}</td>` : ''}
+      <td class="${profit != null ? 'col-profit' : 'cell-missing'}">${profit != null ? '$' + profit.toFixed(2) : '—'}</td>
+      <td class="col-margin">${margin}</td>
+    </tr>`;
+  }
+
+  tiers.forEach(t => {
+    const p = t.price;
+    const perLabel = isKit ? p / fm.label_count : null;
+    const profit = mc != null ? (p - mc) : null;
+    const margin = (mc != null && p > 0) ? ((p - mc) / p * 100).toFixed(0) + '%' : '—';
+    const cls = t.highlight ? 'row-highlight' : '';
+    html += `<tr class="${cls}">
       <td>${t.label}</td>
-      <td>$${num(p)}</td>
-      ${isKit ? `<td>$${num(perLabel)}</td>` : ''}
-      <td class="col-profit">$${num(profit)}</td>
-      <td class="col-margin">${margin}%</td>
+      <td>$${p.toFixed(2)}</td>
+      ${isKit ? `<td>$${perLabel.toFixed(2)}</td>` : ''}
+      <td class="${profit != null ? 'col-profit' : 'cell-missing'}">${profit != null ? '$' + profit.toFixed(2) : '—'}</td>
+      <td class="col-margin">${margin}</td>
     </tr>`;
   });
 
   html += '</tbody></table>';
-  document.getElementById('pricingTable').innerHTML = html;
+  body.innerHTML = html;
 }
 
-function renderDetails(fm) {
-  const el = document.getElementById('detailGrid');
+// === SPECS ===
+function renderSpecs(fm) {
+  const el = document.getElementById('specsCard');
+  const w = toNum(fm.width_in);
+  const h = toNum(fm.height_in);
+  const sfl = toNum(fm.sq_ft_per_label);
+  const sfk = toNum(fm.sq_ft_per_kit);
+  const dim = (w != null && h != null) ? `${w}" × ${h}"` : '—';
+
+  const statusClsName = badgeClass(fm.status).replace('dh-', 'li-');
+  const statusBadge = `<span class="ir-status ${statusClsName}">${fm.status || '—'}</span>`;
+
+  let html = '';
+  html += row('Dimensions', dim);
+  html += row('Sq Ft / Label', sfl != null ? sfl.toFixed(3) : '—');
+  if (fm.label_count > 1 && sfk != null) {
+    html += row('Sq Ft / Kit', sfk.toFixed(3));
+    html += row('Labels / Kit', fm.label_count);
+  }
+  html += row('Material Family', fm.material_family || '—');
+  html += row('Process', fm.process || '—');
+  html += row('Lam Passes', fm.lamination_passes != null && fm.lamination_passes !== '' ? fm.lamination_passes : '—');
+  html += row('Cut Runs', fm.cut_runs != null && fm.cut_runs !== '' ? fm.cut_runs : '—');
+  html += `<div class="info-row"><span class="ir-k">Status</span><span class="ir-v">${statusBadge}</span></div>`;
+  html += row('Date Quoted', fm.date_quoted || '—');
+
+  el.innerHTML = html;
+}
+
+// === NOTES ===
+function renderNotes(fm) {
+  const el = document.getElementById('notesContainer');
+  const notes = (fm.notes || '').trim();
+  if (!notes) { el.innerHTML = ''; return; }
   el.innerHTML = `
-    <div class="info-card">
-      <h4>Specifications</h4>
-      ${row('Dimensions', `${fm.width_in}" × ${fm.height_in}"`)}
-      ${row('Sq Ft / Label', fm.sq_ft_per_label.toFixed(3))}
-      ${fm.label_count > 1 ? row('Sq Ft / Kit', fm.sq_ft_per_kit.toFixed(3)) : ''}
-      ${row('Material Family', fm.material_family)}
-      ${row('Process', fm.process)}
-      ${row('Lam Passes', fm.lamination_passes)}
-      ${row('Cut Runs', fm.cut_runs)}
-    </div>
-    <div class="info-card">
-      <h4>Lineage</h4>
-      ${row('Benchmark', fm.benchmark_item)}
-      ${row('Downstream', fm.downstream_items || 'None')}
-      ${row('Date Quoted', fm.date_quoted)}
-      ${fm.override_type ? row('Override', fm.override_type) : ''}
-    </div>
-    <div class="info-card full">
-      <h4>Pricing Logic</h4>
-      <div class="prose">${fm.pricing_logic}</div>
-    </div>
-    ${fm.notes ? `<div class="info-card full">
+    <div class="notes-panel">
       <h4>Notes</h4>
-      <div class="prose">${fm.notes}</div>
-    </div>` : ''}
+      <div class="prose">${escapeHtml(notes)}</div>
+    </div>
   `;
+}
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }
 
 function row(k, v) {
   return `<div class="info-row"><span class="ir-k">${k}</span><span class="ir-v">${v}</span></div>`;
 }
 
-function num(n) {
+function toNum(n) {
+  if (n === null || n === undefined || n === '') return null;
   const v = typeof n === 'string' ? parseFloat(n) : n;
-  return isNaN(v) ? n : v.toFixed(2);
+  return isNaN(v) ? null : v;
+}
+
+function num(n) {
+  const v = toNum(n);
+  return v == null ? '—' : v.toFixed(2);
 }
 
 function copyForEmail() {
   if (!selectedPN) return;
   const fm = items[selectedPN].frontmatter;
+  const oneOff = isOneOff(fm);
   const isKit = fm.label_count > 1;
-  const unit = isKit ? 'per kit' : 'ea';
 
   let lines = [`P/N ${fm.part_number} — ${fm.description}`];
   if (isKit) lines.push(`Kit of ${fm.label_count} labels`);
   lines.push(fm.material_family);
   lines.push('');
 
-  const tiers = [
-    { label: 'First Article', price: fm.first_article_price },
-    { label: '1-9', price: fm.price_1_9 },
-    { label: '10-19', price: fm.price_10_19 },
-    { label: '20-49', price: fm.price_20_49 },
-    { label: '50-99', price: fm.price_50_99 },
-    { label: '100-199', price: fm.price_100_199 },
-    { label: '200+', price: fm.price_200_plus },
-  ].filter(t => t.price !== '' && t.price != null);
+  if (oneOff) {
+    const perLabel = toNum(fm.price_1_9);
+    lines.push(`One-Time Program — $${perLabel != null ? perLabel.toFixed(2) : '—'} per label`);
+    lines.push(`Not a catalog rate. Quoted for this program only.`);
+  } else {
+    const unit = isKit ? 'per kit' : 'ea';
+    const tiers = [
+      { label: 'First Article', price: toNum(fm.first_article_price) },
+      { label: '1-9',     price: toNum(fm.price_1_9) },
+      { label: '10-19',   price: toNum(fm.price_10_19) },
+      { label: '20-49',   price: toNum(fm.price_20_49) },
+      { label: '50-99',   price: toNum(fm.price_50_99) },
+      { label: '100-199', price: toNum(fm.price_100_199) },
+      { label: '200+',    price: toNum(fm.price_200_plus) },
+    ].filter(t => t.price != null);
 
-  tiers.forEach(t => {
-    const p = typeof t.price === 'string' ? parseFloat(t.price) : t.price;
-    if (isNaN(p)) return;
-    const padLabel = t.label.padEnd(8);
-    lines.push(`${padLabel}$${num(p)} ${unit}`);
-  });
+    tiers.forEach(t => {
+      const padLabel = t.label.padEnd(14);
+      lines.push(`${padLabel}$${t.price.toFixed(2)} ${unit}`);
+    });
+  }
 
   navigator.clipboard.writeText(lines.join('\n')).then(() => {
     const btn = document.getElementById('copyBtn');
