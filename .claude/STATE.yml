@@ -2,11 +2,11 @@
 # Updated at the end of every session
 
 last_session:
-  date: "2026-05-26"
-  type: "new_item"
-  summary: "Priced and documented P/N 1186310 — E160 Cardinal Red model designation. Direct dimensional/material clone of FA-accepted P/N 1205720. $35 at qty 20 via sq ft parity. ~78% margin. No FA, no AI validation (direct parity exemption)."
+  date: "2026-05-27"
+  type: "reprice"
+  summary: "Repriced the 4-label outrigger switch program (P/N 1277970, 1277980, 1277990, 1278000) after Nick provided actual production footprint. Footprint: 3.125 sq ft vinyl + 2.8125 sq ft laminate + ink, 1 pass, $6.94 total material for the 20-label job ($0.35/label). Price corrected from $7/label to $15/label at qty 1-9 — per P/N (qty 5) = $75, program total $300. Fully-loaded margin ~39% at the program level (healthy for a one-off). Original $7/label would have produced a ~$42 loss."
 
-next_action: "Send P/N 1186310 quote to Sean. Await response on pending quotes 1245130, 3017435, 3018378, 1186310."
+next_action: "Send 4-label outrigger switch program quote to Sean at the corrected $300 program total. Await response on pending quotes 1245130, 3017435, 3018378, 1186310, plus this program."
 blockers: "none"
-item_count: 7
-pending_quotes: "1245130, 3017435, 3018378, 1186310 — quoted May 2026, awaiting Sean response"
+item_count: 11
+pending_quotes: "1245130, 3017435, 3018378, 1186310, 1277970, 1277980, 1277990, 1278000 — quoted/repriced May 2026, awaiting Sean response"
