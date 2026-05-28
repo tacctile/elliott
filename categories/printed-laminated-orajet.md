@@ -115,11 +115,11 @@ Derived from accepted pricing on real items. Tightens with every new item.
 
 | Metric | Current Band | Notes |
 |--------|-------------|-------|
-| Material cost / sq ft | ~$3.09/sq ft (1230820) · ~$3.38/sq ft (1082570 flood coat) | Fully loaded. 1082570 higher due to Safety Yellow flood coat ink assumption. |
+| Material cost / sq ft | ~$2.49/sq ft (1230820) · ~$2.65/sq ft (1082570 flood coat) | Fully loaded. 1082570 higher due to Safety Yellow flood coat ink assumption. Laminate updated 2026-05-28 to $0.2389/sq ft. |
 | Selling price / sq ft at qty 20 | ~$15.43–$15.91/sq ft | 1230820 at $15.43; 1082570 production rate at $15.91. Tight band — consistent. |
-| Margin at qty 20 | ~79–80% | Both items on target with internal benchmark |
+| Margin at qty 20 | ~83–84% | 1230820 at ~84%; 1082570 at ~83% (Safety Yellow flood coat assumption). Margins improved from ~79–80% following laminate cost correction. |
 | Tier compression (1-9 → 200+) | ~63–74% discount | 1230820: $30→$11 (63%). 1082570: $16.50→$4.25 (74%) — AI-validated final tiers. |
-| Margin floor (200+) | ~60–64% | 1230820 at ~64%; 1082570 at ~60% (intentional volume reward below standard floor — Nick's decision; see item file). |
+| Margin floor (200+) | ~69–71% | 1230820 at ~71%; 1082570 at ~69% (intentional volume reward for strategic account; Nick's decision; see item file). |
 
 **Band width:** Narrowing — 2 consistent data points at opposite ends of the singles scope (0.503 sq ft and 1.296 sq ft), both landing within 3% of each other on a per-sq-ft basis. Band is converging toward $15.43–$15.91/sq ft at qty 20.
 
@@ -133,12 +133,12 @@ Derived from accepted pricing on real items. Tightens with every new item.
 
 | Metric | Current Band | Notes |
 |--------|-------------|-------|
-| Per-label material cost | ~$1.21/label | Canonical: $3.63/3 (1278930) and $6.03/5 (1245130). Component-level estimates ($0.74+$0.47+$0.27=$1.48) overstate due to per-label laminate rounding — use kit totals. |
+| Per-label material cost | ~$1.00–$1.03/label | Canonical: $2.99/3 (1278930) and $5.16/5 (1245130). Component-level estimates overstate due to per-label laminate rounding — use kit totals. Laminate updated 2026-05-28 to $0.2389/sq ft. |
 | Per-label selling price at qty 20 | $10.00/label | Parity across both kits |
-| Kit margin at qty 20 | ~87-88% | Higher than singles — lower per-label material cost relative to price |
+| Kit margin at qty 20 | ~90% | Higher than singles — lower per-label material cost relative to price. Margins improved from ~87–88% following laminate cost correction. |
 | Per-label price / sq ft at qty 20 | ~$16.42/sq ft | Higher than singles — intentional (see below) |
 | Tier compression (1-9 → 200+) | 60% discount | $45→$18 (3-label), $75→$30 (5-label) |
-| Margin floor (200+) | ~79% | Kit margins hold better at volume |
+| Margin floor (200+) | ~83% | Kit margins hold better at volume |
 
 **Per-sq-ft kit premium:** ~$16.42 vs ~$15.43 for singles. This ~6% premium is intentional — matched-set collation, multi-label inspection, controlled-set packaging. Not a pricing error.
 

@@ -218,3 +218,91 @@ ARCHITECTURE.md: all 14 items correctly listed with matching data — no correct
 ### Validator
 
 `python scripts/validate.py` — **PASS: 0 errors, 0 warnings** (post-corrections)
+
+---
+
+## 2026-05-28 — Material Cost Update: 1-Mil Polyester Overlaminate
+
+**Scope:** Laminate rate corrected from unreconciled $0.98/sq ft to verified invoice-derived $0.2389/sq ft (all-in including freight). 10 affected printed/laminated items recalculated. No prices changed.
+**Branch:** `claude/eager-ride-WsrAr`
+
+---
+
+### Invoice Verification (Nick-confirmed)
+
+| Line | Value |
+|------|-------|
+| Supplier | Flexcon |
+| Product Code | FLX000233 |
+| Item | 1055390 |
+| Rolls purchased | 8 |
+| Roll dimensions | 13.5" wide × 386 ft long |
+| Roll area | 13.5" × 386 ft = 5,211 sq in = 434.25 sq ft/roll |
+| Material subtotal | $705.36 |
+| Freight | $124.66 |
+| Total paid | $830.02 |
+| **Cost per roll** | $830.02 ÷ 8 = **$103.7525/roll** |
+| **Cost per sq ft** | $103.7525 ÷ 434.25 sq ft = **$0.2389/sq ft** |
+| Cost per MSI | $103.7525 ÷ (500.256 MSI total ÷ 8) = **$1.6592/MSI** |
+| Cost per linear ft | $103.7525 ÷ 386 ft = **$0.2688/linear ft** |
+| Cost per linear yd | $0.2688 × 3 = **$0.8063/linear yd** |
+
+Prior rate: $0.98/sq ft — unreconciled (flagged in 2026-05-28 audit as FLAG 1, cost_per_msi inconsistency). $0.98/sq ft is retired — do NOT use in any future cost build.
+
+---
+
+### Pre-Edit Math Verification — All 10 Affected Items
+
+Laminate consumption figures extracted from each item's Nesting and Material Cost section. Items 1230820, 1278930, 1245130 have only dollar costs documented — implied sq ft back-calculated at $old_lam / $0.98. Items 1082570, 1277970-series, 3017583, 3017584 have explicit sq ft.
+
+**Method for items with only dollar cost:** implied sq ft = documented_cost / $0.98/sq ft
+
+| P/N | Lam sq ft source | Lam sq ft | Old lam cost | New lam cost (× $0.2389) | Old total | New total | Old margin (qty 20) | New margin (qty 20) |
+|-----|-----------------|-----------|-------------|--------------------------|-----------|-----------|---------------------|---------------------|
+| 1230820 | Back-calc: $1.02/$0.98 | 1.041 sq ft | $1.02 | 1.041 × $0.2389 = $0.2487 ≈ **$0.25** | $4.00 | $4.00 − $1.02 + $0.25 = **$3.23** | ~80% ($16.77/$20) | ~84% ($16.77/$20) |
+| 1278930 | Back-calc: $0.85/$0.98 | 0.867 sq ft | $0.85 | 0.867 × $0.2389 = $0.2071 ≈ **$0.21** | $3.63 | $3.63 − $0.85 + $0.21 = **$2.99** | ~88% ($26.37/$30) | ~90% ($27.01/$30) |
+| 1245130 | Back-calc: $1.15/$0.98 | 1.173 sq ft | $1.15 | 1.173 × $0.2389 = $0.2802 ≈ **$0.28** | $6.03 | $6.03 − $1.15 + $0.28 = **$5.16** | ~88% ($43.97/$50) | ~90% ($44.84/$50) |
+| 1082570 | Explicit: 0.503 sq ft | 0.503 sq ft | $0.49 | 0.503 × $0.2389 = $0.1202 ≈ **$0.12** | $1.70 | $1.70 − $0.49 + $0.12 = **$1.33** | ~79% ($6.30/$8) | ~83% ($6.67/$8) |
+| 1277970–1278000 | Explicit: 2.8125 sq ft (whole 20-label job) | 2.8125 sq ft | $2.76 | 2.8125 × $0.2389 = $0.6721 ≈ **$0.67** | $6.94 job | $6.94 − $2.76 + $0.67 = **$4.85** job | N/A (one-off) | N/A |
+| 1277970–1278000 per label | $4.85 ÷ 20 | — | $0.35/label | — | — | **$0.24/label** | — | — |
+| 3017583 | Explicit: 0.5 sq ft (whole 6-label job) | 0.5 sq ft | $0.49 | 0.5 × $0.2389 = $0.1195 ≈ **$0.12** | $1.70 job | $1.70 − $0.49 + $0.12 = **$1.33** job | N/A (one-off) | N/A |
+| 3017583 per label | $1.33 ÷ 6 | — | $0.28/label | — | — | **$0.22/label** | — | — |
+| 3017584 | Explicit: 0.20 sq ft (whole 6-label job) | 0.20 sq ft | $0.20 | 0.20 × $0.2389 = $0.0478 ≈ **$0.05** | $0.50 job | $0.50 − $0.20 + $0.05 = **$0.35** job | N/A (one-off) | N/A |
+| 3017584 per label | $0.35 ÷ 6 | — | $0.08/label | — | — | **$0.06/label** | — | — |
+
+**Verification:**
+- 1230820: ($20 − $3.23)/$20 = $16.77/$20 = 83.85% ≈ ~84% ✓
+- 1278930: ($30 − $2.99)/$30 = $27.01/$30 = 90.0% ≈ ~90% ✓
+- 1245130: ($50 − $5.16)/$50 = $44.84/$50 = 89.7% ≈ ~90% ✓
+- 1082570: ($8.00 − $1.33)/$8.00 = $6.67/$8.00 = 83.4% ≈ ~83% ✓
+
+No prices changed. All margin improvements are a direct result of the corrected laminate cost — the price structure is unchanged.
+
+---
+
+### Files Updated
+
+| File | Change |
+|------|--------|
+| `materials/1mil-polyester-overlaminate.md` | Added manufacturer/product_code/roll dimensions/cost_per_roll; updated cost_per_sq_ft ($0.98→$0.2389), cost_per_msi ($1.41→$1.6592); added cost_per_linear_ft/yd; verified_date→2026-05-28 |
+| `governance/PRODUCTION.md` | Laminate row updated; Material Cost Quick Reference updated for all lam-affected figures |
+| `items/1230820.md` | material_cost_per_unit: 4.00→3.23; margin_at_qty_20: ~80%→~84%; Nesting lam line/total updated; Margin Analysis table updated; cost_version_date→2026-05-28 |
+| `items/1278930.md` | material_cost_per_unit: 3.63→2.99; margin_at_qty_20: ~88%→~90%; Nesting lam line/total updated; Margin Analysis table updated; cost_version_date→2026-05-28 |
+| `items/1245130.md` | material_cost_per_unit: 6.03→5.16; margin_at_qty_20: ~88%→~90%; Nesting lam line/total updated; Margin Analysis table updated; cost_version_date→2026-05-28 |
+| `items/1277970.md` | material_cost_per_unit: 0.35→0.24; cost_version_date→2026-05-28; Nesting lam line/totals updated |
+| `items/1277980.md` | material_cost_per_unit: 0.35→0.24; cost_version_date→2026-05-28; Nesting lam line/totals updated |
+| `items/1277990.md` | material_cost_per_unit: 0.35→0.24; cost_version_date→2026-05-28; Nesting lam line/totals updated |
+| `items/1278000.md` | material_cost_per_unit: 0.35→0.24; cost_version_date→2026-05-28; Nesting lam line/totals updated |
+| `items/3017583.md` | material_cost_per_unit: 0.28→0.22; cost_version_date→2026-05-28; Nesting lam line/totals updated |
+| `items/3017584.md` | material_cost_per_unit: 0.08→0.06; cost_version_date→2026-05-28; Nesting lam line/totals updated |
+| `categories/printed-laminated-orajet.md` | Singles profile: material cost/sq ft, margin at qty 20, margin floor updated; Kits profile: per-label material cost, margins updated |
+| `.claude/ARCHITECTURE.md` | Margin columns updated for all printed/laminated items |
+| `.claude/STATE.yml` | last_session updated |
+
+**No prices changed. No frontmatter price, status, override_type, pricing_logic, or benchmark_item modified.**
+
+---
+
+### Validator
+
+`python scripts/validate.py` — **PASS: 0 errors, 0 warnings** (post-update)

@@ -65,7 +65,7 @@ The single most important production constraint on this account.
 | Component | Cost | Notes | Verified |
 |-----------|------|-------|----------|
 | Orajet 3951 cast vinyl | ~$1.21/sq ft | White cast, adhesive back | 2026-04-22 |
-| 1-mil polyester overlaminate | ~$1.41/MSI (1,000 sq in) = ~$0.98/sq ft | 13.5" max width on current laminator | 2026-04-22 |
+| 1-mil polyester overlaminate | $1.6592/MSI = $0.2389/sq ft (Flexcon FLX000233, all-in incl. freight) | 13.5" max width on current laminator | 2026-05-28 |
 | Eco-solvent ink (Roland TR2) | ~$0.25-0.30/label | At 11.13" × 7.88" size | 2026-04-22 |
 
 ---
@@ -120,17 +120,17 @@ The single most important production constraint on this account.
 - Laminate (1-mil polyester): amortized across the full lamination pass — not a per-label charge
 - Ink: ~$0.27
 - **Per-label material cost: ~$1.21** (canonical)
-- **3-label kit (1278930): ~$3.63** (1 lamination pass — all 3 labels fit across 13.5")
-- **5-label kit (1245130): ~$6.03** (2 lamination passes required)
+- **3-label kit (1278930): ~$2.99** (1 lamination pass — all 3 labels fit across 13.5")
+- **5-label kit (1245130): ~$5.16** (2 lamination passes required)
 
-> **Note:** A per-label laminate estimate of ~$0.47 produces a component total of ~$1.48/label. This overstates the actual cost because the laminate roll covers the full 13.5" pass width — the cost is amortized across all labels in the pass, not charged per label. Always use the kit-level totals ($3.63 and $6.03) as canonical material costs. These derive from frontmatter `material_cost_per_unit` values, which are ground truth.
+> **Note:** A per-label laminate estimate of ~$0.15 (at $0.2389/sq ft × 0.609 sq ft) produces a component total of ~$1.16/label. This overstates the actual cost because the laminate roll covers the full 13.5" pass width — the cost is amortized across all labels in the pass, not charged per label. Always use the kit-level totals ($2.99 and $5.16) as canonical material costs. These derive from frontmatter `material_cost_per_unit` values, which are ground truth.
 
 ### At 15" × 12.44" (single load chart label)
 
 - Vinyl: 1.296 sq ft × $1.21 = $1.57
-- Laminate: ~$1.02
+- Laminate: ~$0.25
 - Ink: ~$0.50
-- **Total per label: ~$3.09-4.00**
+- **Total per label: ~$2.32–$3.23**
 
 ### Cut Vinyl at ~2.51–2.56 sq ft
 
