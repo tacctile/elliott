@@ -6,6 +6,46 @@
 
 ---
 
+### 2026-05-28 — Audit: Cut Vinyl Margin Revalidation — Stale Prose References Corrected
+
+**What:** Post-material-cost-update audit of all cut vinyl item files and supporting files. Verified that all margin figures, material costs, and cross-references are internally consistent following the 2026-05-28 material cost update session (Cardinal Red + TransferRite both changed).
+
+**Margin Comparison Table:**
+
+| P/N | Pre-Correction Margin | Post-Correction Margin | ARCH ✓ | Category ✓ | Frontmatter ✓ | Nesting Section ✓ | Margin Analysis ✓ |
+|-----|----------------------|------------------------|--------|-----------|--------------|------------------|------------------|
+| 1205720 | ~78% | ~75% | ✓ | ✓ | ✓ | ✓ | ✓ |
+| 1186310 | ~78% | ~75% | ✓ | ✓ | ✓ | ✓ | ✓ |
+| 3017435 | ~76% / ~81% | ~73% / ~78% | ✓ | ✓ | ✓ | ✓ | ✓ |
+| 3018378 | ~78% | ~75% | ✓ | ✓ | ✓ | ✓ | ✓ |
+
+**Stale reference search:**
+- `$0.18` tape cost anywhere in repo: **0 instances** — fully cleaned in prior session ✓
+- `$2.56/sq ft` as Cardinal Red vinyl cost anywhere in repo: **0 instances** in data sections ✓
+- `~80%` on cut vinyl items at qty 20: **0 instances** ✓
+
+**Stale prose references found and corrected (5 instances, 2 files):**
+
+1. `items/3017435.md` — `pricing_logic` frontmatter: old costs "$8.46 on 24\", $6.74 on 48\"" → **"$9.51 on 24\", $7.79 on 48\""**
+2. `items/3017435.md` — `notes` frontmatter: "Material cost drops from $8.46 to $6.74 on 48\" stock" → **"Material cost: $9.51 on 24\" stock, $7.79 on 48\" stock"**
+3. `items/3018378.md` — `pricing_logic` frontmatter: "material cost ($7.88 vs $7.01)" → **"material cost per label ($8.92 vs $8.74)"**
+4. `items/3018378.md` — Pricing Derivation section: stale "$7.88 vs $7.01. This reduces margin by ~2 points at qty 20 (78% vs 80%)" → **updated to reflect current $8.92 vs $8.74, both ~75% at qty 20**
+5. `items/3018378.md` — Notes and Warnings: stale reference to "P/N 1205720 used the label-area method ($6.55 = 2.56 sq ft × $2.56/sq ft)" → **corrected to document the historical error accurately without carrying the stale $2.56/sq ft cost figure as a live calculation**
+
+**Also corrected:**
+- `.claude/ARCHITECTURE.md` — `Last Updated` date was still 2026-05-22 after the prior session updated the margin columns; corrected to **2026-05-28**
+
+**Files Updated:**
+- `items/3017435.md` — pricing_logic and notes frontmatter fields updated (old costs → new costs)
+- `items/3018378.md` — pricing_logic frontmatter, Pricing Derivation section, Notes and Warnings section updated
+- `.claude/ARCHITECTURE.md` — Last Updated date corrected
+- `.claude/STATE.yml` — last_session and next_action updated
+- `.claude/PROGRESS.md` — this entry
+
+**Status:** Complete. All 4 cut vinyl items fully in sync — margins, material costs, and all prose references consistent. validate.py 0 errors, 0 warnings. build_frontend.py and build_materials.py rebuilt.
+
+---
+
 ### 2026-05-28 — Material Cost Update: Cardinal Red 24"×50yd $775.10 + TransferRite 582U 24"×100yd $118.21 — Margins Recalculated on 4 Cut Vinyl Items
 
 **What:** Two material cost changes. (1) 3M Controltac 180mC-53 Cardinal Red roll size changed from 24"×10yd at $153.60 to 24"×50yd at $775.10 — roll width unchanged, only length and price changed. Cardinal Red only; all other 180mC colors unchanged. (2) TransferRite Ultra 582U application tape changed from 30"×100yd at $135.06 to 24"×100yd at $118.21 — tape width now matches vinyl roll width exactly at 24", eliminating prior 6" overhang. This applies to all cut vinyl items on the account.

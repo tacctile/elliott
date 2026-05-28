@@ -2,7 +2,7 @@
 
 > **Living document — updated every session that changes structure.**
 >
-> Last Updated: 2026-05-22
+> Last Updated: 2026-05-28
 
 ---
 
