@@ -27,7 +27,7 @@ Derived from accepted pricing on real items. Tightens with every new item. New i
 |--------|-------------|-------|
 | Material cost / label | $7.79–$9.51 | Range: 48" roll ($7.79 best nesting) to 24" roll ($8.74, $8.92, $9.51 by color/roll) |
 | Material cost / sq ft | ~$3.04–$3.72 | Vinyl ($2.15–$2.71) + tape ($0.5911/sq ft) + waste |
-| Selling price / sq ft at qty 20 | ~$13.67–$13.93/sq ft | $35 / sq ft — consistent across all 4 items |
+| Selling price / sq ft at qty 20 | ~$13.65–$13.94/sq ft | $35 / sq ft — consistent across all 4 items |
 | Margin at qty 20 | ~73–78% | Range driven by material cost, not price variation |
 | Tier compression (1-9 → 200+) | 51% discount | $45 → $22 |
 | Margin floor (200+) | ~57–65% | 24" roll White floor at ~57% — migrate to 48" stock at 200+ volumes |
