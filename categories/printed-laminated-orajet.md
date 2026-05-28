@@ -15,7 +15,7 @@
 | 1230820 | Load Chart, D105 | 15" × 12.44" | 1.296 | $20 | $20.00 | FA Accepted |
 | 1082570 | Load Chart, I70 EZR Mount 3.6K | 10" × 7.25" | 0.503 | $8 ¹ | $8.00 ¹ | Quoted |
 
-¹ **Production rate at qty 20** ($15.91/sq ft — within singles band). Initial order (qty 2, SO 20125600) is **$55 floor-anchored** ($27.50/label) — the floor price does NOT enter the band; it is a job-economics minimum for this one-off order. Open color conflict pending (Safety Yellow assumed for pricing — conservative; see `items/1082570.md` Notes and Warnings for full documentation).
+¹ **Production rate at qty 20** ($15.91/sq ft — within singles band). Current order (qty 2, SO 20125600) is **$42.00 flat** — job economics / setup recovery framing; NOT a per-label rate. 4-round, 6-model AI validation complete (24 runs): $55 account floor rejected for this label size vs D105 comparison. Tiers: $16.50 / $10.50 / $8.00 / $6.25 / $5.25 / $4.25. No MOQ — Elliott strategic account. Open color conflict — samples delivered (~26 hours), awaiting Sean's PO selection (Safety Yellow assumed — conservative). See `items/1082570.md` for full documentation.
 
 ### Tiny Printed Labels — Sub-0.1 Sq Ft Size Class (One-Off Job Economics, Not Sq Ft)
 
@@ -111,7 +111,7 @@ Derived from accepted pricing on real items. Tightens with every new item.
 
 ### Single Labels
 
-**Data points:** 1 confirmed (1230820 — 1.296 sq ft, FA Accepted). 1082570 (0.503 sq ft, Quoted) quotes at $15.91/sq ft — consistent with band, but initial order is floor-anchored (qty 2 at $55); not yet confirmed at production volume. Band tightening deferred until production-volume acceptance.
+**Data points:** 1 confirmed (1230820 — 1.296 sq ft, FA Accepted). 1082570 (0.503 sq ft, Quoted) quotes at $15.91/sq ft — consistent with band; AI validated (4 rounds, 6 models, 24 runs). Current order is $42.00 flat job-economics (not a band data point). Band tightening deferred until production-volume acceptance.
 
 | Metric | Current Band | Notes |
 |--------|-------------|-------|
