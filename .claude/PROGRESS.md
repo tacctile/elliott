@@ -6,6 +6,52 @@
 
 ---
 
+### 2026-05-28 — Pricing Lock: P/N 1082570 — $42 Flat Qty 2, Validated Tiers, 4-Round AI Validation Complete, Color Conflict Pending (Samples Delivered)
+
+**What:** Post-validation pricing lock for P/N 1082570 (Load Chart Label, I70 EZR Mount 3.6K). The 4-round, 6-model AI validation process (24 total model runs) was completed following the initial quote session. This session locks the validated pricing into the item file and all dependent files.
+
+**Validation Summary:**
+
+**Round 1 (Build — 6 models):** Qty 2 consensus $38–$45 cluster. Qty 20 consensus $8.50–$11.00. All 6 rejected $55 floor for this label size vs D105 comparison. All 6 agreed setup-recovery logic applies to the current order.
+
+**Round 2 (Destruction — 6 models):** All 6 found $55 floor indefensible at 0.503 sq ft vs D105. All 6 identified 20-49 tier as most competitively exposed. All 6 recommended Option B (job economics) over Option A ($55 floor). Consensus qty 2: $40–$42. Consensus 20-49 tier: $7.25–$8.50/label. Consensus 1-9 tier: $14–$18/label (one model recommended $16.50 — noted for Round 4).
+
+**Round 3 (Buyer Simulation — 6 models):** 5 of 6 approved $42 for qty 2 without question (instant approval below $50–$100). D105 delta at qty 20: +3% ($15.91 vs $15.43/sq ft) — every model called it a non-issue. Job economics framing was the single most cited approval driver. 1 outlier at $24–$26 rejected (ignores setup recovery).
+
+**Round 4 (Final Synthesis — 6 models):** 5 of 6 unanimous: send as shown. 1 model recommended bumping 1-9 from $16.00 → $16.50 to widen the gap at low quantities — adopted. No MOQ — Nick's decision, permanent account-level rule.
+
+**Validated Pricing Locked:**
+- Current order (qty 2, SO 20125600): **$42.00 flat** — job economics framing (setup recovery), NOT a per-label rate, NOT a floor-anchored price
+- Tiers: 1-9: $16.50 / 10-19: $10.50 / 20-49: $8.00 / 50-99: $6.25 / 100-199: $5.25 / 200+: $4.25
+- No MOQ — permanent account-level rule
+
+**Key Decisions:**
+- **Option A ($55 floor) rejected.** Indefensible at 0.503 sq ft vs D105 comparison. All 6 models in Round 2 rejected it.
+- **Option B ($42 flat) adopted.** Job economics / setup recovery framing. 5 of 6 models in Round 3 approved without question.
+- **$16.50 for 1-9 tier** adopted on Round 4 model recommendation — widens gap between current-order flat price and low-end catalog tier.
+- **200+ at $4.25** ($8.45/sq ft) intentionally below D105 anchor ($15.43/sq ft) — volume reward for strategic account. 60% margin is below standard category minimum (~64%) by design.
+- **No MOQ.** Elliott is a strategic account; access at any quantity is intentional and permanent.
+
+**Color Conflict Update (Status Unchanged — Open):**
+- Nick sent Sean physical samples of both versions (black on white per artwork; Safety Yellow per drawing note 6)
+- Samples delivered within **~26 hours** of the request
+- Sean has not confirmed which version he wants; PO not received
+- Pricing assumes Safety Yellow (conservative); production blocked pending selection
+
+**Strategic Account Development Note:**
+Sean's response to the sample delivery included a request for Nick to suggest what specs to call out on a drawing for label/decal procurement. More significantly, Sean and his manager are initiating a project to develop an **engineering and procurement standard for labels/decals at Elliott Equipment**. They will reach out to Nick for input. Documented in item file Notes and Warnings.
+
+**Files Updated:**
+- `items/1082570.md` — frontmatter: prices updated (16.50/10.50/8.00/6.25/5.25/4.25), pricing_logic and notes updated; Pricing section: $42 flat current order, tier table updated; Pricing Derivation: PENDING removed, Step 3 labeled pre-validation, Step 4 rewritten (Option A/B + full 4-round validation), Step 6 updated to $42; Margin Analysis: tier table and one-off order section updated; Notes and Warnings: color conflict updated (samples delivered), current order section rewritten ($42/job-economics/no-MOQ), AI VALIDATION COMPLETE section added, strategic account development note added
+- `categories/printed-laminated-orajet.md` — 1082570 footnote updated (AI validated, $42 flat, no MOQ); Pricing Profile singles data points note updated
+- `.claude/ARCHITECTURE.md` — 1082570 catalog row updated (samples delivered, $42 job economics); category registry Profile Status updated; precedent chain updated
+- `.claude/STATE.yml` — last_session and next_action updated
+- `.claude/PROGRESS.md` — this entry
+
+**Status:** Pricing locked. Ready to quote $42.00 flat to Sean when PO arrives. Awaiting: (1) Sean's color selection via PO; (2) Sean's outreach re: engineering/procurement standard project. validate.py passes 0 errors, 0 warnings.
+
+---
+
 ### 2026-05-28 — New Item: P/N 1082570 — Load Chart Label, I70 EZR Mount 3.6K (Singles Band, Qty 2 One-Off, Safety Yellow Assumed, Color Conflict Pending)
 
 **What:** Priced and documented P/N 1082570 — a single 10" × 7.25" (0.503 sq ft) crane operation load chart label for the Elliott I70 (75") model. Material: Orajet 3951 cast vinyl + 1-mil polyester overlaminate ("1 mil clear Mylar overlay" on drawing — Mylar = polyester trade name). Drawing dated 08-25-04 (R.M.W./KML). No dimensions on drawing — confirmed by Derrik Walton, P.E., Engineering Manager at Elliott Equipment, via email 2026-05-28, referencing I50 chart as size standard.
