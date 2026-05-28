@@ -2,7 +2,49 @@
 
 > **Newest entries at the top. Updated every session.**
 >
-> Last Updated: 2026-05-27
+> Last Updated: 2026-05-28
+
+---
+
+### 2026-05-28 — New Item: P/N 1082570 — Load Chart Label, I70 EZR Mount 3.6K (Singles Band, Qty 2 One-Off, Safety Yellow Assumed, Color Conflict Pending)
+
+**What:** Priced and documented P/N 1082570 — a single 10" × 7.25" (0.503 sq ft) crane operation load chart label for the Elliott I70 (75") model. Material: Orajet 3951 cast vinyl + 1-mil polyester overlaminate ("1 mil clear Mylar overlay" on drawing — Mylar = polyester trade name). Drawing dated 08-25-04 (R.M.W./KML). No dimensions on drawing — confirmed by Derrik Walton, P.E., Engineering Manager at Elliott Equipment, via email 2026-05-28, referencing I50 chart as size standard.
+
+**Item Created:** `items/1082570.md`
+
+**Pricing:** Production tier table anchored to singles band ($8/label at qty 20 = $15.91/sq ft). Current order (qty 2, SO 20125600) floor-anchored at $55 total ($27.50/label) — specific I70 unit shipping, urgent. No first article.
+
+**Production tier table:**
+- 1-9: $12 / 10-19: $10 / 20-49: $8 / 50-99: $7 / 100-199: $6 / 200+: $5
+
+**Job economics (current order, qty 2):**
+- Material cost: 2 × $1.70 = $3.40 (Safety Yellow flood coat assumption)
+- File prep: $0 (account rule — Elliott provides production-ready DWG, `PRICING_RULES.md` §22)
+- Production time: ~20-25 min
+- Program total: $55.00
+- Contribution margin: ~94% (structural — one-off floor pricing)
+
+**Key Decisions:**
+- **Singles band applied.** At 0.503 sq ft, 1082570 is at the low end of the singles scope (~0.5–2.0 sq ft). Band rate: 0.503 × $15.43 = $7.76 → $8 at qty 20 ($15.91/sq ft, within ±15% of band center). Production tiers proportioned from 1230820 tier ratios.
+- **$55 floor applies to the current order (qty 2).** At the production tier 1-9 rate ($12/label), qty 2 = $24 — below the $55 minimum-worthwhile-charge threshold. Floor applied consistently with all prior one-off small-run precedents. Production tier table is valid for reorder volumes.
+- **Floor price does NOT contaminate the singles band.** $27.50/label (=$54.67/sq ft implied) is an arithmetic artifact of the $55 floor at qty 2. It is explicitly excluded from band calculations.
+- **Safety Yellow flood coat assumed (open color conflict):** Drawing note 6 specifies Safety Yellow background; artwork shows white background. These are in direct conflict. Nick will send Sean mockups of both versions; Sean selects via PO. Pricing assumes Safety Yellow (higher ink coverage, conservative — $0.60/label ink vs ~$0.25 for black-on-white). If Sean selects black-on-white: pricing holds, margin improves ~4 points. Under no circumstances produce without Sean's color selection.
+- **Material cost $1.70/label (Safety Yellow assumption):** vinyl $0.61 + lam $0.49 + flood coat ink $0.60.
+- **Margin at qty 20:** ~79% (band target). Floor at 200+: ~66% (above category minimum ~64%).
+- **No first article** — not requested, not offered. One-off tied to specific ship order.
+- **Multi-round AI validation pending** — Nick will run separately. Pricing methodology is established (singles band scaling + account floor); no novel element requiring pre-validation.
+- **Singles Pricing Profile band tightening:** 1082570 adds a second band-consistent calibration point at the opposite end of the singles scope (0.503 vs 1.296 sq ft). Both land within 3% per-sq-ft ($15.43 vs $15.91). Band is converging. Tightening deferred pending production-volume acceptance.
+- **Mylar terminology documented** as polyester trade name (consistent with 3017584 note).
+- **200+ tier set at $5 (not $4):** Proportional calculation gives $4.40 → $4, but at $1.70 material, $4 yields ~59% margin (below ~64% category floor). Rounded up to $5 to maintain ~66% at the floor tier.
+
+**Files Updated:**
+- `items/1082570.md` — new item file with all required frontmatter and all 10 required sections
+- `categories/printed-laminated-orajet.md` — added 1082570 to singles catalog table with floor-anchoring footnote; updated Pricing Profile singles section (1 confirmed → 2 data points note, band tightening deferred)
+- `.claude/ARCHITECTURE.md` — added 1082570 to catalog; updated Printed + Laminated count 9 → 10; added singles band precedent chain entry; updated category registry Profile Status
+- `.claude/STATE.yml` — incremented item_count 13 → 14; last_session and next_action updated
+- `.claude/PROGRESS.md` — this entry
+
+**Status:** Quoted. $55 total for qty 2 (SO 20125600). Urgent — specific I70 unit shipping. Pending: (1) Sean's color version selection (Safety Yellow vs white background); (2) multi-round AI validation (Nick's separate session). `validate.py` passes 0 errors, 0 warnings.
 
 ---
 

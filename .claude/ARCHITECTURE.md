@@ -25,6 +25,7 @@ All quoted items. Updated when items are added, repriced, or status changes.
 | 1278000 | Outrigger Switch — Vertical Rear (18T) ⚠ one-off, do NOT benchmark | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.008 | $2.75 (flat — one-off) | $2.75 | N/A (one-off, $55 program) | Quoted | `items/1278000.md` |
 | 3017583 | LBL - PTO Engage Process (ANSI Z535) ⚠ one-off, do NOT benchmark | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.026 | $9.17 (flat — one-off) | $9.17 | ~97% (structural — one-off, $55 program at qty 6) | Quoted | `items/3017583.md` |
 | 3017584 | LBL - PTO Active (smallest item on account) ⚠ one-off, do NOT benchmark | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.00174 | $9.17 (flat — one-off) | $9.17 | ~99% (structural — one-off, $55 program at qty 6) | Quoted | `items/3017584.md` |
+| 1082570 | Load Chart, I70 EZR Mount 3.6K ⚠ color conflict pending (Safety Yellow assumed) | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.503 | $8 (prod. rate at qty 20) | $8.00 | ~79% (at prod. vol.; initial order floor-anchored at $55/qty 2) | Quoted | `items/1082570.md` |
 
 ---
 
@@ -33,7 +34,7 @@ All quoted items. Updated when items are added, repriced, or status changes.
 | Category | Material Family | Category File | Item Count | Profile Status |
 |----------|-----------------|---------------|------------|----------------|
 | Cut Vinyl Lettering | 3M 180mC Cut Vinyl | `categories/cut-vinyl-3m-180mc.md` | 4 | Narrowing — 4 data points at 2.51–2.564 sq ft, all at $35/qty 20 |
-| Printed + Laminated | Orajet 3951 Cast + Polyester Lam | `categories/printed-laminated-orajet.md` | 9 | Singles (≥0.5 sq ft): Wide (1 data point). Kits: Moderate (2 data points). Tiny labels (≤0.1 sq ft): 4 one-off outrigger program peers ($55 program total / $2.75 per label) + 2 standalone one-offs (3017583 at 0.026 sq ft and 3017584 at 0.00174 sq ft — smallest item on the account; both $55 program total / $9.17 per label at qty 6) — explicitly excluded from any band; do NOT benchmark |
+| Printed + Laminated | Orajet 3951 Cast + Polyester Lam | `categories/printed-laminated-orajet.md` | 10 | Singles (≥0.5 sq ft): Narrowing — 2 consistent data points (1230820 at 1.296 sq ft confirmed; 1082570 at 0.503 sq ft quoted, $15.91/sq ft — band-consistent, initial order floor-anchored). Kits: Moderate (2 data points). Tiny labels (≤0.1 sq ft): 4 one-off outrigger program peers ($55 program total / $2.75 per label) + 2 standalone one-offs (3017583 at 0.026 sq ft and 3017584 at 0.00174 sq ft — smallest item on the account; both $55 program total / $9.17 per label at qty 6) — explicitly excluded from any band; do NOT benchmark |
 | Panel Decals | Convex High Bond + Poly Lam | Not yet created | 0 | No profile — first item establishes it |
 | Polycarbonate | Lexan/Polycarbonate | Not yet created | 0 | No profile — first item establishes it |
 
@@ -47,7 +48,12 @@ How prices were originally established. New items validate against Category Pric
 P/N 1230820 (ROOT BENCHMARK — $20/ea at qty 20)
 ├── P/N 1278930 (1.5x → $30/kit at qty 20)
 │   └── P/N 1245130 (5/3 parity → $50/kit at qty 20)
-└── [future printed/laminated items validate against Pricing Profile band]
+├── P/N 1082570 (singles band → $8/label at qty 20, $15.91/sq ft — within band)
+│       0.503 sq ft — low end of singles scope. Proportional sq ft scaling from 1230820.
+│       Initial order qty 2 (SO 20125600) floor-anchored at $55 ($27.50/label). Floor
+│       price does NOT contaminate the band. Open color conflict pending (Safety Yellow
+│       assumed). AI validation pending. Status: Quoted.
+└── [future printed/laminated singles validate against Pricing Profile band]
 
 P/N 1277970 (ONE-OFF PROGRAM — $55 program total / $2.75 per label — DO NOT BENCHMARK)
 ├── P/N 1277980 (program peer — identical specs, same one-off program)
