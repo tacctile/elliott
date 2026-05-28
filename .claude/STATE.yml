@@ -3,10 +3,10 @@
 
 last_session:
   date: "2026-05-28"
-  type: "pricing_lock"
-  summary: "Locked validated pricing for P/N 1082570 — 4-round, 6-model AI validation (24 total runs) complete. $55 account floor rejected by all 6 models. Current order (qty 2, SO 20125600): $42.00 flat — job economics/setup recovery framing. Validated tiers: $16.50/$10.50/$8.00/$6.25/$5.25/$4.25. No MOQ — permanent account-level rule (Elliott strategic account). Color conflict: samples delivered (~26 hours, both versions — black on white per artwork; Safety Yellow per drawing note 6); Sean has not confirmed version; PO not received; production blocked. Strategic account: Sean and manager initiating engineering/procurement standard for labels/decals; will reach out to Nick. validate.py 0 errors, 0 warnings."
+  type: "material_cost_update"
+  summary: "Cardinal Red 3M 180mC-53 roll changed to 24\"×50yd $775.10 ($15.502/yd, $7.751/sq ft). TransferRite Ultra 582U tape changed to 24\"×100yd $118.21 ($1.1821/yd, $0.5911/sq ft) — tape width now matches vinyl width, no overhang. Margins recalculated on 4 cut vinyl items: 1205720 ~78%→~75%, 1186310 ~78%→~75%, 3017435 ~76%/~81%→~73%/~78%, 3018378 ~78%→~75%. No items below 60% at qty 20 — no flags, no price changes. validate.py 0 errors, 0 warnings."
 
-next_action: "Send $42 quote to Sean when PO arrives (job economics framing — setup recovery on 2-label run). Confirm color selection (Safety Yellow vs black on white) via PO. Await Sean's outreach re: engineering/procurement standard project."
+next_action: "Send $42 quote to Sean for 1082570 when PO arrives (job economics framing — setup recovery on 2-label run). Confirm color selection (Safety Yellow vs black on white) via PO. Await Sean's outreach re: engineering/procurement standard project."
 blockers: "Open color conflict on 1082570 — Sean must select Safety Yellow or white background before production. PO not yet received."
 item_count: 14
 material_count: 7

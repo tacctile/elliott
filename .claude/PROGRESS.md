@@ -6,6 +6,130 @@
 
 ---
 
+### 2026-05-28 — Material Cost Update: Cardinal Red 24"×50yd $775.10 + TransferRite 582U 24"×100yd $118.21 — Margins Recalculated on 4 Cut Vinyl Items
+
+**What:** Two material cost changes. (1) 3M Controltac 180mC-53 Cardinal Red roll size changed from 24"×10yd at $153.60 to 24"×50yd at $775.10 — roll width unchanged, only length and price changed. Cardinal Red only; all other 180mC colors unchanged. (2) TransferRite Ultra 582U application tape changed from 30"×100yd at $135.06 to 24"×100yd at $118.21 — tape width now matches vinyl roll width exactly at 24", eliminating prior 6" overhang. This applies to all cut vinyl items on the account.
+
+**New Material Costs (Nick confirmed — not recalculated):**
+
+| Material | Old Roll | Old $/yd | Old $/sq ft | New Roll | New $/yd | New $/sq ft |
+|----------|----------|----------|-------------|----------|----------|-------------|
+| Cardinal Red 3M 180mC-53 | 24"×10yd $153.60 | $15.360 | $7.680 | 24"×50yd $775.10 | $15.502 | $7.751 |
+| TransferRite Ultra 582U | 30"×100yd $135.06 | $1.3506 | $0.5402 | 24"×100yd $118.21 | $1.1821 | $0.5911 |
+
+**Full Nesting Math — All 4 Affected Items:**
+
+---
+
+**P/N 1205720 — E190 Cardinal Red (Cardinal Red vinyl + tape both change)**
+
+Nesting (from existing item file):
+- 2 labels across 24" roll (11" + 11" = 22" — 2" waste strip)
+- Label length: 33.5625" = 0.9323 yd
+- Labels per roll: 20 (2 across × 10 positions down 360" roll)
+
+Vinyl cost (new $15.502/yd):
+- Row cost: 0.9323 yd × $15.502/yd = $14.452
+- Per label: $14.452 ÷ 2 = **$7.226** (was $7.16)
+
+Tape cost (new $0.5911/sq ft):
+- Label area: 2.56 sq ft
+- Tape cost: 2.56 × $0.5911 = **$1.513** (was $0.46)
+
+Total: $7.226 + $1.513 = $8.739 → **$8.74** (was $7.62, Δ +$1.12)
+Margin at qty 20: ($35 − $8.74) ÷ $35 = $26.26 ÷ $35 = **~75%** (was ~78%)
+
+---
+
+**P/N 1186310 — E160 Cardinal Red (Cardinal Red vinyl + tape both change)**
+
+Nesting (from existing item file — dimensions identical to 1205720):
+- 2 labels across 24" roll (11" + 11" = 22")
+- Label length: 33.5625" = 0.9323 yd
+
+Vinyl cost (new $15.502/yd):
+- Row cost: 0.9323 yd × $15.502/yd = $14.452
+- Per label: $14.452 ÷ 2 = **$7.226** (was $7.16)
+
+Tape cost (new $0.5911/sq ft):
+- Label area: 2.564 sq ft (3-decimal precision)
+- Tape cost: 2.564 × $0.5911 = **$1.516** (was $0.46)
+
+Total: $7.226 + $1.516 = $8.742 → **$8.74** (was $7.62, Δ +$1.12)
+Margin at qty 20: ($35 − $8.74) ÷ $35 = **~75%** (was ~78%)
+
+---
+
+**P/N 3017435 — ELLIOTT White (tape only — White vinyl costs unchanged)**
+
+Nesting 24" roll (from existing item file):
+- 2 labels across (8.38" + 8.38" = 16.76" ≤ 24")
+- Label length: 43.91" = 1.22 yd
+
+Vinyl cost (White, $13.116/yd — unchanged):
+- Row cost: 1.22 × $13.116/yd = $16.002; ÷ 2 = **$8.00** (unchanged)
+
+Tape cost (new $0.5911/sq ft):
+- Label area: 2.56 sq ft
+- Tape cost: 2.56 × $0.5911 = **$1.513** (was $0.46)
+
+Total (24" roll): $8.00 + $1.513 = **$9.513 → $9.51** (was $8.46, Δ +$1.05)
+Margin at qty 20 (24" roll): ($35 − $9.51) ÷ $35 = $25.49 ÷ $35 = **~73%** (was ~76%)
+
+Nesting 48" roll (from existing item file):
+- 5 labels across (8.38" × 5 = 41.9" ≤ 48")
+- Label length: 43.91" = 1.22 yd
+
+Vinyl cost (White 48", $25.744/yd — unchanged):
+- Row cost: 1.22 × $25.744/yd = $31.407; ÷ 5 = **$6.28** (unchanged)
+
+Tape cost: 2.56 × $0.5911 = **$1.513** (same label area)
+
+Total (48" roll): $6.28 + $1.513 = **$7.793 → $7.79** (was $6.74, Δ +$1.05)
+Margin at qty 20 (48" roll): ($35 − $7.79) ÷ $35 = $27.21 ÷ $35 = **~78%** (was ~81%)
+
+---
+
+**P/N 3018378 — D115 Olympic Blue (tape only — Olympic Blue vinyl cost unchanged)**
+
+Nesting (from existing item file):
+- 2 labels across 24" roll (11" + 11" = 22")
+- Label length: 32.88" = 0.9133 yd
+
+Vinyl cost (Olympic Blue, $16.278/yd — unchanged):
+- Row cost: 0.9133 × $16.278/yd = $14.867; ÷ 2 = **$7.43** (unchanged)
+
+Tape cost (new $0.5911/sq ft):
+- Label area: 2.512 sq ft
+- Tape cost: 2.512 × $0.5911 = **$1.485** (was $0.45)
+
+Total: $7.43 + $1.485 = $8.915 → **$8.92** (was $7.88, Δ +$1.04)
+Margin at qty 20: ($35 − $8.92) ÷ $35 = $26.08 ÷ $35 = **~75%** (was ~78%)
+
+---
+
+**Margin Flag Check:** All margins at qty 20 remain well above 60%. No price changes needed or recommended. No flags.
+
+**Material cost per sq ft — new band:** $3.04–$3.72 (vinyl + tape combined)
+**Margin band — new range:** ~73–78% at qty 20
+
+**Files Updated:**
+- `materials/3m-180mc-cardinal-red.md` — roll_length_yd 10→50, cost_per_roll 153.60→775.10, cost_per_linear_yd 15.36→15.502, cost_per_sq_ft 2.56→7.751, verified_date 2026-05-28
+- `materials/transferrite-582u.md` — roll_width_in 30→24, cost_per_roll 135.06→118.21, cost_per_sq_ft 0.18→0.5911, added cost_per_linear_yd 1.1821, verified_date 2026-05-28
+- `governance/PRODUCTION.md` — Cardinal Red row updated, TransferRite row updated, process improvement note added (tape width = vinyl width, no overhang), quick reference section updated for all 4 items
+- `items/1205720.md` — material_cost_per_unit 7.62→8.74, cost_version_date, margin_at_qty_20 ~78%→~75%, Material Specification, Nesting and Material Cost, Margin Analysis sections updated
+- `items/1186310.md` — material_cost_per_unit 7.62→8.74, cost_version_date, margin_at_qty_20 ~78%→~75%, Material Specification, Nesting and Material Cost, Margin Analysis sections updated
+- `items/3017435.md` — material_cost_per_unit 8.46→9.51, cost_version_date, margin_at_qty_20 ~76%/~81%→~73%/~78%, Material Specification, Nesting and Material Cost, Margin Analysis sections updated
+- `items/3018378.md` — material_cost_per_unit 7.88→8.92, cost_version_date, margin_at_qty_20 ~78%→~75%, Material Specification, Nesting and Material Cost, Margin Analysis sections updated
+- `categories/cut-vinyl-3m-180mc.md` — Pricing Profile material cost band $6.74–$8.46→$7.79–$9.51, margin band ~76–78%→~73–78%, margin floor note updated
+- `.claude/ARCHITECTURE.md` — margin columns updated for all 4 cut vinyl items
+- `.claude/STATE.yml` — last_session and next_action updated
+- `.claude/PROGRESS.md` — this entry
+
+**Status:** Complete. validate.py 0 errors, 0 warnings. build_frontend.py and build_materials.py rebuilt.
+
+---
+
 ### 2026-05-28 — Pricing Lock: P/N 1082570 — $42 Flat Qty 2, Validated Tiers, 4-Round AI Validation Complete, Color Conflict Pending (Samples Delivered)
 
 **What:** Post-validation pricing lock for P/N 1082570 (Load Chart Label, I70 EZR Mount 3.6K). The 4-round, 6-model AI validation process (24 total model runs) was completed following the initial quote session. This session locks the validated pricing into the item file and all dependent files.

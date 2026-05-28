@@ -25,12 +25,12 @@ Derived from accepted pricing on real items. Tightens with every new item. New i
 
 | Metric | Current Band | Notes |
 |--------|-------------|-------|
-| Material cost / label | $6.74–$8.46 | Range: 48" roll ($6.74 best nesting) to 24" roll ($7.62, $7.88, $8.46 by color/roll) |
-| Material cost / sq ft | ~$2.63–$3.37 | Vinyl ($2.15–$2.71) + tape ($0.18) + waste |
-| Selling price / sq ft at qty 20 | ~$13.67–$13.93/sq ft | $35 / sq ft — consistent across all 3 items |
-| Margin at qty 20 | ~76–78% | Range driven by material cost, not price variation |
+| Material cost / label | $7.79–$9.51 | Range: 48" roll ($7.79 best nesting) to 24" roll ($8.74, $8.92, $9.51 by color/roll) |
+| Material cost / sq ft | ~$3.04–$3.72 | Vinyl ($2.15–$2.71) + tape ($0.5911/sq ft) + waste |
+| Selling price / sq ft at qty 20 | ~$13.67–$13.93/sq ft | $35 / sq ft — consistent across all 4 items |
+| Margin at qty 20 | ~73–78% | Range driven by material cost, not price variation |
 | Tier compression (1-9 → 200+) | 51% discount | $45 → $22 |
-| Margin floor (200+) | ~62–65% | Healthy for a low-complexity process |
+| Margin floor (200+) | ~57–65% | 24" roll White floor at ~57% — migrate to 48" stock at 200+ volumes |
 
 **Band width:** Narrowing — 4 data points at 2.51-2.564 sq ft all at the same $35 price. Per-sq-ft rate range is $13.65-$13.94 (consistent; lower bound reflects 3-decimal sq ft precision on Cardinal Red E160/E190 dimensions, equivalent to $13.67 at 2-decimal precision). Items at significantly different sq ft (sub-1 or 5+) will still need validation.
 

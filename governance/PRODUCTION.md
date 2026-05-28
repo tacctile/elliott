@@ -47,7 +47,7 @@ The single most important production constraint on this account.
 
 | Color | Code | Roll Size | Cost/Roll | Cost/Yard | Cost/Sq Ft | Verified |
 |-------|------|-----------|-----------|-----------|------------|----------|
-| Cardinal Red | 53 | 24" × 10yd | ~$153.60 | $15.36 | $2.56 | 2026-04-22 |
+| Cardinal Red | 53 | 24" × 50yd | $775.10 | $15.502 | $7.751 | 2026-05-28 |
 | Olympic Blue | 57 | 24" × 10yd | $162.78 | $16.278 | $2.71 | 2026-05-22 |
 | White | 10 | 24" × 10yd | $131.16 | $13.116 | $2.19 | 2026-05-21 |
 | White | 10 | 48" × 10yd | $257.44 | $25.744 | $2.15 | 2026-05-21 |
@@ -56,7 +56,9 @@ The single most important production constraint on this account.
 
 | Product | Roll Size | Cost/Roll | Cost/Sq Ft | Verified |
 |---------|-----------|-----------|------------|----------|
-| TransferRite Ultra 582U | 30" × 100yd | $135.06 | $0.18 | 2026-04-22 |
+| TransferRite Ultra 582U | 24" × 100yd | $118.21 | $0.5911 | 2026-05-28 |
+
+**Process improvement note (2026-05-28):** TransferRite 582U roll width is now 24", matching the 3M 180mC vinyl roll width exactly. The previous 30" roll had 6" of overhang on 24" vinyl stock. The new 24" tape is cleaner — no overhang, no waste strip. No negative application implication.
 
 ### Printed Labels — Orajet 3951 + Polyester Lam
 
@@ -132,7 +134,7 @@ The single most important production constraint on this account.
 
 ### Cut Vinyl at ~2.51–2.56 sq ft
 
-- Cardinal Red, 24" roll: ~$7.16 vinyl + $0.46 tape = **~$7.62/label total** *(at 2.56 sq ft, P/N 1205720 — length-based method)*
-- Olympic Blue, 24" roll: ~$7.43 vinyl + $0.45 tape = **~$7.88/label total** *(at 2.512 sq ft, P/N 3018378 — length-based method)*
-- White, 24" roll: ~$8.00 vinyl + $0.46 tape = **~$8.46/label total** *(at 2.56 sq ft, P/N 3017435 — length-based method)*
-- White, 48" roll: ~$6.28 vinyl + $0.46 tape = **~$6.74/label total** *(at 2.56 sq ft, P/N 3017435)*
+- Cardinal Red, 24" roll: ~$7.23 vinyl + $1.51 tape = **~$8.74/label total** *(at 2.56 sq ft, P/N 1205720 — length-based method)*
+- Olympic Blue, 24" roll: ~$7.43 vinyl + $1.49 tape = **~$8.92/label total** *(at 2.512 sq ft, P/N 3018378 — length-based method)*
+- White, 24" roll: ~$8.00 vinyl + $1.51 tape = **~$9.51/label total** *(at 2.56 sq ft, P/N 3017435 — length-based method)*
+- White, 48" roll: ~$6.28 vinyl + $1.51 tape = **~$7.79/label total** *(at 2.56 sq ft, P/N 3017435)*
