@@ -16,6 +16,6 @@ verified_date: "2026-04-22"
 distributor: ""
 max_laminator_width_in: 13.5
 compatible_substrates: ["orajet-3951-white"]
-used_in_items: ["1230820", "1278930", "1245130", "1277970", "1277980", "1277990", "1278000"]
+used_in_items: ["1230820", "1278930", "1245130", "1277970", "1277980", "1277990", "1278000", "3017583", "3017584", "1082570"]
 notes: "13.5\" is the hard constraint on current laminator. Wider laminator planned after 18 months locked-in orders."
 ---

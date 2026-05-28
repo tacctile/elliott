@@ -118,8 +118,8 @@ Derived from accepted pricing on real items. Tightens with every new item.
 | Material cost / sq ft | ~$3.09/sq ft (1230820) · ~$3.38/sq ft (1082570 flood coat) | Fully loaded. 1082570 higher due to Safety Yellow flood coat ink assumption. |
 | Selling price / sq ft at qty 20 | ~$15.43–$15.91/sq ft | 1230820 at $15.43; 1082570 production rate at $15.91. Tight band — consistent. |
 | Margin at qty 20 | ~79–80% | Both items on target with internal benchmark |
-| Tier compression (1-9 → 200+) | ~58–63% discount | 1230820: $30→$11 (63%). 1082570: $12→$5 (58%). |
-| Margin floor (200+) | ~64–66% | 1230820 at ~64%; 1082570 at ~66%. Both healthy on single-pass. |
+| Tier compression (1-9 → 200+) | ~63–74% discount | 1230820: $30→$11 (63%). 1082570: $16.50→$4.25 (74%) — AI-validated final tiers. |
+| Margin floor (200+) | ~60–64% | 1230820 at ~64%; 1082570 at ~60% (intentional volume reward below standard floor — Nick's decision; see item file). |
 
 **Band width:** Narrowing — 2 consistent data points at opposite ends of the singles scope (0.503 sq ft and 1.296 sq ft), both landing within 3% of each other on a per-sq-ft basis. Band is converging toward $15.43–$15.91/sq ft at qty 20.
 

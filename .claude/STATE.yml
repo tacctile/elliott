@@ -4,10 +4,10 @@
 last_session:
   date: "2026-05-28"
   type: "audit"
-  summary: "Cut vinyl margin revalidation audit. All 4 items (1205720, 1186310, 3017435, 3018378) verified fully in sync across ARCHITECTURE.md, category file, frontmatter, Nesting section, and Margin Analysis. No $0.18 tape or $2.56/sq ft vinyl references remain anywhere. 5 stale prose instances corrected in items/3017435.md (pricing_logic, notes) and items/3018378.md (pricing_logic, Pricing Derivation, Notes and Warnings). ARCHITECTURE.md Last Updated date corrected to 2026-05-28. validate.py 0 errors, 0 warnings."
+  summary: "Full pricing integrity audit — 11 checks, 2 flags, 6 corrections applied. CHECK 1 (frontmatter math): PASS — all 14 items verified. CHECK 2 (material costs): PASS — all item costs reconcile with material rates. CHECK 3 (band consistency): PASS — minor band table range corrected. CHECK 4 (precedent chain): PASS — all chains intact. CHECK 5 (override docs): PASS — all overrides documented. CHECK 6 (one-off isolation): PASS — all 6 one-offs properly isolated. CHECK 7 (cross-file sync): 4 corrections applied (orajet+lam used_in_items, 1205720 stale roll cost, STATE.yml pending_quotes). CHECK 8 (category integrity): 2 corrections applied (cut-vinyl band table, printed-lam stale 1082570 tiers). CHECK 9 (material integrity): 2 flags — lam cost_per_msi formula inconsistency (Nick review), Cardinal Red cost_per_sq_ft different formula from other materials (informational only). CHECK 10 (STATE.yml): pending_quotes corrected to include 1082570. CHECK 11 (open items): color conflict on 1082570 open, PO pending. validate.py 0 errors, 0 warnings."
 
 next_action: "Send $42 quote to Sean for 1082570 when PO arrives (job economics framing — setup recovery on 2-label run). Confirm color selection (Safety Yellow vs black on white) via PO. Await Sean's outreach re: engineering/procurement standard project."
 blockers: "Open color conflict on 1082570 — Sean must select Safety Yellow or white background before production. PO not yet received."
 item_count: 14
 material_count: 7
-pending_quotes: "1245130, 3017435, 3018378, 1186310, 1277970, 1277980, 1277990, 1278000, 3017583, 3017584 — quoted/repriced May 2026, awaiting Sean response"
+pending_quotes: "1082570, 1245130, 3017435, 3018378, 1186310, 1277970, 1277980, 1277990, 1278000, 3017583, 3017584 — quoted/repriced May 2026, awaiting Sean response/PO"

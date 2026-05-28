@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-28T21:58:02Z",
+  "generated": "2026-05-28T22:25:04Z",
   "material_count": 7,
   "materials": {
     "1mil-polyester-overlaminate": {
@@ -30,7 +30,10 @@
           "1277970",
           "1277980",
           "1277990",
-          "1278000"
+          "1278000",
+          "3017583",
+          "3017584",
+          "1082570"
         ],
         "notes": "13.5\" is the hard constraint on current laminator. Wider laminator planned after 18 months locked-in orders."
       }
@@ -175,7 +178,10 @@
           "1277970",
           "1277980",
           "1277990",
-          "1278000"
+          "1278000",
+          "3017583",
+          "3017584",
+          "1082570"
         ],
         "notes": ""
       }
