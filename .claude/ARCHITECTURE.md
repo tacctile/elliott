@@ -2,7 +2,7 @@
 
 > **Living document — updated every session that changes structure.**
 >
-> Last Updated: 2026-05-22
+> Last Updated: 2026-05-28
 
 ---
 
@@ -15,10 +15,10 @@ All quoted items. Updated when items are added, repriced, or status changes.
 | 1230820 | Load Chart Label, Model D105 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 1.296 | $20 | $20.00 | ~80% | FA Accepted | `items/1230820.md` |
 | 1278930 | 3-Label Lifting Capacity Chart Kit, E190 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Kit | 3 | 0.609 | $30 | $10.00 | ~88% | FA Accepted | `items/1278930.md` |
 | 1245130 | 5-Label Lifting Capacity Chart Kit, E160 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Kit | 5 | 0.609 | $50 | $10.00 | ~88% | Quoted | `items/1245130.md` |
-| 1205720 | E190 Cardinal Red Model Designation | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.56 | $35 | $35.00 | ~78% | FA Accepted | `items/1205720.md` |
-| 3017435 | ELLIOTT White Vinyl Cut Lettering | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.56 | $35 | $35.00 | ~76% (24" roll) / ~81% (48" roll) | Quoted | `items/3017435.md` |
-| 3018378 | Label D115 Blue — Model Designation | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.512 | $35 | $35.00 | ~78% | Quoted | `items/3018378.md` |
-| 1186310 | E160 Cardinal Red Model Designation | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.564 | $35 | $35.00 | ~78% | Quoted | `items/1186310.md` |
+| 1205720 | E190 Cardinal Red Model Designation | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.56 | $35 | $35.00 | ~75% | FA Accepted | `items/1205720.md` |
+| 3017435 | ELLIOTT White Vinyl Cut Lettering | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.56 | $35 | $35.00 | ~73% (24" roll) / ~78% (48" roll) | Quoted | `items/3017435.md` |
+| 3018378 | Label D115 Blue — Model Designation | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.512 | $35 | $35.00 | ~75% | Quoted | `items/3018378.md` |
+| 1186310 | E160 Cardinal Red Model Designation | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.564 | $35 | $35.00 | ~75% | Quoted | `items/1186310.md` |
 | 1277970 | Outrigger Switch — Horizontal Front (18T) ⚠ one-off, do NOT benchmark | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.008 | $2.75 (flat — one-off) | $2.75 | N/A (one-off, $55 program) | Quoted | `items/1277970.md` |
 | 1277980 | Outrigger Switch — Vertical Front (18T) ⚠ one-off, do NOT benchmark | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.008 | $2.75 (flat — one-off) | $2.75 | N/A (one-off, $55 program) | Quoted | `items/1277980.md` |
 | 1277990 | Outrigger Switch — Horizontal Rear (18T) ⚠ one-off, do NOT benchmark | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.008 | $2.75 (flat — one-off) | $2.75 | N/A (one-off, $55 program) | Quoted | `items/1277990.md` |

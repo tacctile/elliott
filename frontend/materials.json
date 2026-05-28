@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-28T21:04:34Z",
+  "generated": "2026-05-28T21:55:33Z",
   "material_count": 7,
   "materials": {
     "1mil-polyester-overlaminate": {
@@ -48,11 +48,11 @@
         "film_thickness_mil": 2,
         "adhesive_type": "Permanent pressure-sensitive",
         "roll_width_in": 24,
-        "roll_length_yd": 10,
-        "cost_per_roll": 153.6,
-        "cost_per_linear_yd": 15.36,
-        "cost_per_sq_ft": 2.56,
-        "verified_date": "2026-04-22",
+        "roll_length_yd": 50,
+        "cost_per_roll": 775.1,
+        "cost_per_linear_yd": 15.502,
+        "cost_per_sq_ft": 7.751,
+        "verified_date": "2026-05-28",
         "distributor": "",
         "compatible_tapes": [
           "transferrite-582u"
@@ -188,11 +188,12 @@
         "product_name": "TransferRite Ultra 582U",
         "product_code": "582U",
         "film_type": "Medium-tack paper application tape",
-        "roll_width_in": 30,
+        "roll_width_in": 24,
         "roll_length_yd": 100,
-        "cost_per_roll": 135.06,
-        "cost_per_sq_ft": 0.18,
-        "verified_date": "2026-04-22",
+        "cost_per_roll": 118.21,
+        "cost_per_sq_ft": 0.5911,
+        "cost_per_linear_yd": 1.1821,
+        "verified_date": "2026-05-28",
         "distributor": "",
         "compatible_cut_vinyls": [
           "3m-180mc-cardinal-red",
