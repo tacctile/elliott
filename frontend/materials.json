@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-29T00:28:17Z",
+  "generated": "2026-05-29T00:31:26Z",
   "material_count": 6,
   "materials": {
     "1mil-polyester-overlaminate": {
@@ -116,7 +116,7 @@
         "cost_per_linear_yd": 13.116,
         "cost_per_sq_ft": 2.19,
         "verified_date": "2026-05-21",
-        "distributor": "",
+        "distributor": "GRIMCO",
         "compatible_tapes": [
           "transferrite-582u"
         ],
