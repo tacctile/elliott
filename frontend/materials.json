@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-29T00:26:45Z",
+  "generated": "2026-05-29T00:27:19Z",
   "material_count": 7,
   "materials": {
     "1mil-polyester-overlaminate": {
@@ -70,9 +70,9 @@
         "notes": "Length-based material cost method used for nesting calculations."
       }
     },
-    "3m-180mc-olympic-blue": {
+    "3m-180mc-sapphire-blue": {
       "frontmatter": {
-        "material_id": "3m-180mc-olympic-blue",
+        "material_id": "3m-180mc-sapphire-blue",
         "material_type": "cut_vinyl",
         "manufacturer": "3M",
         "product_name": "Controltac 180mC",
