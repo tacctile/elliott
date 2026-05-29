@@ -11,7 +11,7 @@ cost_per_roll: 118.21
 cost_per_sq_ft: 0.5911
 cost_per_linear_yd: 1.1821
 verified_date: "2026-05-28"
-distributor: ""
+distributor: "GRIMCO"
 compatible_cut_vinyls: ["3m-180mc-cardinal-red", "3m-180mc-olympic-blue", "3m-180mc-white-24in", "3m-180mc-white-48in"]
 used_in_items: ["1205720", "1186310", "3017435", "3018378"]
 notes: ""
