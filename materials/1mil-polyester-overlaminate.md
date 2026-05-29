@@ -16,7 +16,7 @@ cost_per_msi: 1.6592
 cost_per_linear_ft: 0.2688
 cost_per_linear_yd: 0.8063
 verified_date: "2026-05-28"
-distributor: ""
+distributor: "Flexcon"
 max_laminator_width_in: 13.5
 compatible_substrates: ["orajet-3951-white"]
 used_in_items: ["1230820", "1278930", "1245130", "1277970", "1277980", "1277990", "1278000", "3017583", "3017584", "1082570"]
