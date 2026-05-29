@@ -6,7 +6,7 @@ product_name: "Orajet 3951"
 product_code: "3951"
 color: "White"
 film_type: "Cast vinyl"
-film_thickness_mil: 4
+film_thickness_mil: 2
 adhesive_type: "Permanent pressure-sensitive"
 roll_width_in: 30
 roll_length_yd: null
