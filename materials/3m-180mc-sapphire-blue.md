@@ -5,7 +5,7 @@ manufacturer: "3M"
 product_name: "Controltac 180mC"
 product_code: "180mC-57"
 color_name: "Sapphire Blue"
-color_code: "57"
+color_code: "37"
 film_type: "Cast vinyl"
 film_thickness_mil: 2
 adhesive_type: "Permanent pressure-sensitive"
