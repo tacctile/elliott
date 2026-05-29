@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-29T00:31:26Z",
+  "generated": "2026-05-29T00:31:39Z",
   "material_count": 6,
   "materials": {
     "1mil-polyester-overlaminate": {
@@ -175,7 +175,7 @@
         "cost_per_sq_ft": 0.5911,
         "cost_per_linear_yd": 1.1821,
         "verified_date": "2026-05-28",
-        "distributor": "",
+        "distributor": "GRIMCO",
         "compatible_cut_vinyls": [
           "3m-180mc-cardinal-red",
           "3m-180mc-olympic-blue",
