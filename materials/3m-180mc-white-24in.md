@@ -15,7 +15,7 @@ cost_per_roll: 131.16
 cost_per_linear_yd: 13.116
 cost_per_sq_ft: 2.19
 verified_date: "2026-05-21"
-distributor: ""
+distributor: "GRIMCO"
 compatible_tapes: ["transferrite-582u"]
 used_in_items: ["3017435"]
 notes: "Length-based material cost method used for nesting calculations. 24\" roll runs on Roland SG3-300."
