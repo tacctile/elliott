@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-29T00:23:30Z",
+  "generated": "2026-05-29T00:26:12Z",
   "material_count": 7,
   "materials": {
     "1mil-polyester-overlaminate": {
@@ -77,7 +77,7 @@
         "manufacturer": "3M",
         "product_name": "Controltac 180mC",
         "product_code": "180mC-57",
-        "color_name": "Olympic Blue",
+        "color_name": "Sapphire Blue",
         "color_code": "57",
         "film_type": "Cast vinyl",
         "film_thickness_mil": 2,
@@ -88,7 +88,7 @@
         "cost_per_linear_yd": 16.278,
         "cost_per_sq_ft": 2.71,
         "verified_date": "2026-05-22",
-        "distributor": "",
+        "distributor": "GRIMCO",
         "compatible_tapes": [
           "transferrite-582u"
         ],
