@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-29T00:14:12Z",
+  "generated": "2026-05-29T00:21:25Z",
   "material_count": 7,
   "materials": {
     "1mil-polyester-overlaminate": {
@@ -166,11 +166,11 @@
         "film_thickness_mil": 2,
         "adhesive_type": "Permanent pressure-sensitive",
         "roll_width_in": 30,
-        "roll_length_yd": null,
-        "cost_per_roll": null,
+        "roll_length_yd": 50,
+        "cost_per_roll": 454.46,
         "cost_per_sq_ft": 1.21,
         "verified_date": "2026-04-22",
-        "distributor": "",
+        "distributor": "GRIMCO",
         "compatible_laminates": [
           "1mil-polyester-overlaminate"
         ],
