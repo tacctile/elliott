@@ -2,7 +2,32 @@
 
 > **Newest entries at the top. Updated every session.**
 >
-> Last Updated: 2026-05-28
+> Last Updated: 2026-05-29
+
+---
+
+### 2026-05-29 — Documentation Audit Fix: FLAG 1 (cost_per_msi) + FLAG 2 (Cardinal Red derivation note)
+
+**What:** Two documentation-only fixes to material files identified in the 2026-05-28 full pricing integrity audit. No prices changed. No item files changed. No category files changed. No margins changed.
+
+**FLAG 1 — `materials/1mil-polyester-overlaminate.md` — `cost_per_msi`:**
+Field was already correct at `1.6592` when this session began — no change needed. The prior audit flagged `cost_per_msi: 1.41` as inconsistent with `cost_per_sq_ft: 0.2389` (1 MSI = 1000 sq in = 6.944 sq ft → $0.2389/sq ft × 6.944 = $1.6592/MSI). That fix was already applied (likely during the 2026-05-28 laminate cost update session). Session brief confirmed the target value as `1.6592`; file already matched. No edit made to this file.
+
+**FLAG 2 — `materials/3m-180mc-cardinal-red.md` — `notes` field derivation clarification:**
+Added explanation to the `notes` field documenting that `cost_per_sq_ft: 7.751` for Cardinal Red is derived as `cost_per_linear_yd / roll_width_ft` ($15.502 / 2 ft = $7.751/sq ft) — the length-based method — not the area method used by other 180mC color files (Olympic Blue, White). This is intentional: item pricing uses the length-based method directly, so `cost_per_sq_ft` reflects that same basis. Numeric value unchanged at `7.751`.
+
+**Files Updated:**
+- `materials/3m-180mc-cardinal-red.md` — `notes` field updated (derivation explanation added; no numeric values changed)
+- `.claude/STATE.yml` — last_session and next_action updated
+- `.claude/PROGRESS.md` — this entry
+
+**Files Confirmed Unchanged:**
+- `materials/1mil-polyester-overlaminate.md` — FLAG 1 already correct; no edit made
+- All item files — no changes
+- All category files — no changes
+- `governance/ARCHITECTURE.md` — no changes
+
+**Status:** Complete. validate.py 0 errors, 0 warnings. build_materials.py clean (6 materials).
 
 ---
 
