@@ -1,5 +1,5 @@
 {
-  "generated": "2026-05-29T00:21:25Z",
+  "generated": "2026-05-29T00:22:01Z",
   "material_count": 7,
   "materials": {
     "1mil-polyester-overlaminate": {
@@ -21,7 +21,7 @@
         "cost_per_linear_ft": "0.2688",
         "cost_per_linear_yd": 0.8063,
         "verified_date": "2026-05-28",
-        "distributor": "",
+        "distributor": "Flexcon",
         "max_laminator_width_in": 13.5,
         "compatible_substrates": [
           "orajet-3951-white"
