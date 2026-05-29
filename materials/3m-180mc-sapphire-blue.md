@@ -1,5 +1,5 @@
 ---
-material_id: "3m-180mc-olympic-blue"
+material_id: "3m-180mc-sapphire-blue"
 material_type: "cut_vinyl"
 manufacturer: "3M"
 product_name: "Controltac 180mC"
