@@ -2,7 +2,7 @@
 
 > **Single source of truth. Read first, every session. No exceptions.**
 >
-> Last Updated: 2026-06-01 (governance/CALCULATOR.md added)
+> Last Updated: 2026-06-01 (governance/VALIDATION_PROMPTS.md added)
 
 ---
 
@@ -55,6 +55,8 @@ This is not a codebase. It is a knowledge system with the same architectural dis
 Only after reading all eight does pricing begin.
 
 > **Note:** For new item pricing, the Calculator tab in the frontend can be used to generate an initial pricing brief before beginning the Claude Code session. The calculator output (validation brief) is the input to Round 1 of the 4-round AI validation process. The calculator does NOT write files — Claude Code does. See `governance/CALCULATOR.md` for the calculator's scope, routing tree, flag definitions, and full session sequence.
+>
+> **Note:** After the calculator generates the validation brief, the 4-wave AI validation process begins per `governance/VALIDATION_PROMPTS.md`. Claude Chat generates one wave prompt at a time. Nick runs each wave across 6 models in ChatHub. After Wave 4, Claude Chat produces the Final Synthesis Table. Nick locks the final price before Claude Code writes any files.
 
 ### Material Cost Update
 
@@ -155,7 +157,8 @@ elliott/
 │   ├── PRICING_VALIDATION.md      # 4-round, 6-model validation methodology
 │   ├── PRICING_RULES.md           # Non-negotiable pricing constraints
 │   ├── PRODUCTION.md              # Equipment, materials, nesting, process
-│   └── CALCULATOR.md              # Calculator routing, flags, scope, relationship to AI validation
+│   ├── CALCULATOR.md              # Calculator routing, flags, scope, relationship to AI validation
+│   └── VALIDATION_PROMPTS.md      # 4-wave AI validation prompt system — wave structure, attack angles, output schemas, behavioral rules
 ├── categories/
 │   ├── cut-vinyl-3m-180mc.md      # Material system + pricing profile + decision tree
 │   └── printed-laminated-orajet.md

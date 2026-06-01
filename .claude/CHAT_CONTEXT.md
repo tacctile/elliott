@@ -29,8 +29,19 @@ This file defines how both paths work.
 6. Nick pastes the prompt into Claude Code (Opus 4.7, max effort) with the repo mounted.
 7. Claude Code outputs: spec extraction, pricing recommendation, complete item `.md` file, updated category profile, updated ARCHITECTURE.md.
 8. Nick reviews the output.
-9. Nick runs the pricing through 6 additional AI models across 4 rounds (Build, Destruction, Buyer Simulation, Final Synthesis) per `governance/PRICING_VALIDATION.md`.
-10. Nick commits and sends the quote.
+9. Nick opens a fresh Claude Chat session with the full repo loaded (minus item files and frontend).
+10. Nick pastes the validation brief from the calculator.
+11. Claude Chat generates Wave 1 prompt (per `governance/VALIDATION_PROMPTS.md`).
+12. Nick runs Wave 1 across 6 models in ChatHub, pastes all 6 responses back into Claude Chat.
+13. Claude Chat generates Wave 2 prompt incorporating Wave 1 findings.
+14. Nick runs Wave 2, pastes all 6 responses.
+15. Claude Chat generates Wave 3 prompt.
+16. Nick runs Wave 3, pastes all 6 responses.
+17. Claude Chat generates Wave 4 prompt.
+18. Nick runs Wave 4, pastes all 6 responses.
+19. Claude Chat produces the Final Synthesis Table.
+20. Nick and Claude Chat discuss and lock the final price.
+21. Nick commits and sends the quote.
 
 ### Critical Rule
 
