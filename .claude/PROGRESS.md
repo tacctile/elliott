@@ -6,6 +6,37 @@
 
 ---
 
+### 2026-06-01 — Maintenance: Resolved Audit Flags J-1 through J-5 — Olympic Blue Rename, White-48in Material Created, COMPLETION_TEMPLATES Ref Fixed, Dangling References Cleared
+
+**What:** Pre-existing audit identified five flags unrelated to any recent pricing session. All five resolved in this session. No prices changed. No item statuses changed. No margin figures changed.
+
+**Flags Resolved:**
+
+- **J-1 (COMPLETION_TEMPLATES.md reference):** `.claude/COMPLETION_TEMPLATES.md` exists. MASTER_CONTEXT.md Core Rule #5 referenced bare `COMPLETION_TEMPLATES.md` — updated to `.claude/COMPLETION_TEMPLATES.md`. README.md had the same ambiguous reference — also updated. MASTER_CONTEXT.md file map updated to include the `materials/` directory (was absent).
+- **J-2 (missing materials/3m-180mc-olympic-blue.md):** Resolved by J-4 fix. File now exists with correct data.
+- **J-3 (missing materials/3m-180mc-white-48in.md):** Created with verified data from `governance/PRODUCTION.md` — cost_per_roll: 257.44, cost_per_linear_yd: 25.744, cost_per_sq_ft: 2.15, verified_date: 2026-05-21.
+- **J-4 (wrong data in incorrectly-named material file):** File was created under the wrong color name. Renamed to `materials/3m-180mc-olympic-blue.md`. Fixed: material_id → "3m-180mc-olympic-blue", color_name → "Olympic Blue", color_code 37 → 57. product_code 180mC-57 and all cost fields were already correct.
+- **J-5 (dangling references in transferrite-582u.md):** `transferrite-582u.md` compatible_cut_vinyls already listed the correct IDs ("3m-180mc-olympic-blue" and "3m-180mc-white-48in") — the files simply didn't exist yet. Resolved by J-3 + J-4. All four compatible_cut_vinyls now resolve to existing files.
+
+**Files Modified:**
+- `materials/3m-180mc-[wrong-name].md` — DELETED (incorrectly-named file replaced by olympic-blue.md)
+- `materials/3m-180mc-olympic-blue.md` — CREATED (renamed and corrected: material_id, color_name, color_code fixed)
+- `materials/3m-180mc-white-48in.md` — CREATED (new file, verified data from PRODUCTION.md)
+- `.claude/MASTER_CONTEXT.md` — Core Rule #5 path corrected; file map updated to include materials directory
+- `README.md` — COMPLETION_TEMPLATES.md reference updated to `.claude/COMPLETION_TEMPLATES.md`
+- `.claude/PROGRESS.md` — this entry
+- `.claude/STATE.yml` — last_session updated, material_count 6→7, next_action prepended with maintenance session completion note
+- `frontend/materials.json` — rebuilt via build_materials.py (7 materials; incorrectly-named entry replaced by 3m-180mc-olympic-blue)
+
+**Key Decisions:**
+- No pricing changes of any kind. These are documentation and file structure fixes only.
+- material_count incremented from 6 to 7 (added white-48in).
+- All other STATE.yml fields unchanged — next_action quote to Sean preserved as primary next action.
+
+**Status:** Complete. validate.py 0 errors, 0 warnings. build_frontend.py clean. build_materials.py clean (7 materials).
+
+---
+
 ### 2026-06-01 — Pricing Revision + Governance Update: P/N 1210810 — Never-Pay-More Cliff Eliminated, $55 Flat MOQ Floor, $4.75 at 10-19, Account-Level MOQ 10 + $55 Minimum Order Charge Rules Codified
 
 **What:** Revised tier structure on P/N 1210810 (LBL - DANGER FALLING JIB) to eliminate the never-pay-more cliff at the 1-9/10-19 boundary. New 1-9 = $55.00 flat minimum order charge (NOT per-unit). New 10-19 = $4.75. Initial order updated to $47.50. Established permanent account-level MOQ 10 and $55 minimum order charge rules for all printed/laminated items. Invoice protection language codified.
