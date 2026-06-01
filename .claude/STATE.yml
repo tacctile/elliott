@@ -2,12 +2,12 @@
 # Updated at the end of every session
 
 last_session:
-  date: "2026-05-29"
-  type: "documentation_audit_fix"
-  summary: "Documentation-only audit fixes for FLAG 1 + FLAG 2 from 2026-05-28 integrity audit. FLAG 1 (1mil-polyester-overlaminate.md cost_per_msi): already correct at 1.6592 when session began — no edit needed. FLAG 2 (3m-180mc-cardinal-red.md notes field): added derivation explanation documenting that cost_per_sq_ft is derived as cost_per_linear_yd / roll_width_ft (length-based method), not the area method used by other 180mC colors — numeric value 7.751 unchanged. No prices changed. No item files changed. No category files changed. validate.py 0 errors, 0 warnings. build_materials.py clean."
+  date: "2026-06-01"
+  type: "new_item"
+  summary: "New item P/N 1210810 (LBL - Danger Falling Jib, 10.5\" × 4\", 0.292 sq ft). Cost-built from scratch — below singles band scope (~0.5–2.0 sq ft). Material cost $0.68 (vinyl $0.35 + lam $0.07 + ink $0.25 assumed medium-high). 20-49 anchor $3.50 at ~80% margin. Tiers: $7.00/$4.50/$3.50/$2.75/$2.25/$2.00. Initial order qty 10 quoted at 1-9 rate ($70.00). PENDING 4-ROUND AI VALIDATION. PRICING_VALIDATION.md updated — 'When NOT to use' exemption removed; standing account-level validation rule added. validate.py 0 errors, 0 warnings."
 
-next_action: "Send $42 quote to Sean for 1082570 when PO arrives (job economics framing — setup recovery on 2-label run). Confirm color selection (Safety Yellow vs black on white) via PO. Await Sean's outreach re: engineering/procurement standard project."
-blockers: "Open color conflict on 1082570 — Sean must select Safety Yellow or white background before production. PO not yet received."
-item_count: 14
+next_action: "Nick to run 4-round AI validation on 1210810 externally and return with final numbers. Also: send $42 quote to Sean for 1082570 when PO arrives. Confirm color selection on 1082570. Await Sean re: engineering/procurement standard project."
+blockers: "1210810 pending 4-round AI validation — do NOT quote to Sean until Nick confirms validation complete. Open color conflict on 1082570 — Sean must select Safety Yellow or white background before production."
+item_count: 15
 material_count: 7
-pending_quotes: "1082570, 1245130, 3017435, 3018378, 1186310, 1277970, 1277980, 1277990, 1278000, 3017583, 3017584 — quoted/repriced May 2026, awaiting Sean response/PO"
+pending_quotes: "1210810 — Quoted (pending 4-round AI validation, do NOT send to Sean until complete). 1082570, 1245130, 3017435, 3018378, 1186310, 1277970, 1277980, 1277990, 1278000, 3017583, 3017584 — quoted/repriced May 2026, awaiting Sean response/PO"

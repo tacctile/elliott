@@ -2,7 +2,59 @@
 
 > **Newest entries at the top. Updated every session.**
 >
-> Last Updated: 2026-05-29
+> Last Updated: 2026-06-01
+
+---
+
+### 2026-06-01 — New Item: P/N 1210810 — LBL - Danger Falling Jib (Below Singles Band Scope, Cost-Build From Scratch, Pending 4-Round AI Validation)
+
+**What:** Priced and documented P/N 1210810 — a single 10.5" × 4" (0.292 sq ft) ANSI Z535.1 + Z535.4 DANGER label for jib hazard warning. Material: Orajet 3951 cast vinyl + 1-mil polyester overlaminate ("1 mil clear Mylar overlay" — Mylar = polyester trade name, consistent with 3017583/3017584/1082570 precedent). Drawing date 09/2015. Engineer/Drafter: DS/TJK. Not model-specific (generic jib hazard label). Radiused corners (R1/8" assumed, not dimensioned). Backing slit at middle (Note 2). No paint mask (Note 6).
+
+**Volume Context (Sean's Email 2026-05-29):** Initial order qty 10. Projected ~30/month starting 2027. Quoted initial 10 at 1-9 tier rate. 20-49 tier is production-volume anchor.
+
+**Item Created:** `items/1210810.md`
+
+**Pricing:** Cost-built from scratch — item is below current singles band scope (~0.5–2.0 sq ft). No band rate applied directly.
+
+**Material cost: $0.68/label**
+- Vinyl (Orajet 3951): 0.292 × $1.21 = $0.35
+- Laminate (1-mil polyester): 0.292 × $0.2389 = $0.07
+- Ink (medium-high assumed — safety red flood coat header + black schematics): $0.25 (flagged for post-production refinement)
+
+**20-49 anchor at ~80% margin:** $0.68 / 0.20 = $3.40 → $3.50/label (80.6% margin)
+
+**Tier table (PENDING 4-ROUND AI VALIDATION):**
+
+| Tier | Price | Margin |
+|------|-------|--------|
+| 1-9 | $7.00 | ~90% |
+| 10-19 | $4.50 | ~85% |
+| 20-49 | $3.50 | ~80% |
+| 50-99 | $2.75 | ~75% |
+| 100-199 | $2.25 | ~70% |
+| 200+ | $2.00 | ~66% |
+
+**Initial order quote (qty 10 at 1-9 rate):** $70.00
+
+**Key Decisions:**
+- **Cost-build from scratch.** At 0.292 sq ft, item is below the singles band scope (~0.5–2.0 sq ft). Band rates ($15.43–$15.91/sq ft) used as directional reference only, not applied directly.
+- **No $55 floor.** This is a real catalog item with real volume — qty 10 initial + ~30/month in 2027. Floor logic not applicable.
+- **20-49 tier anchored to ~80% margin** per session brief. Production-volume anchor for ~30 units/month starting 2027.
+- **Tier compression ratios from 1082570** (the validated comparable at the low end of the singles scope), per session brief.
+- **Ink cost assumed at $0.25/label** (medium-high: safety red flood coat header ~40% of area, black schematic panels ~30%). Flagged for post-production refinement. Does not block pricing.
+- **PENDING 4-ROUND AI VALIDATION.** Standing Elliott Equipment account rule — all items go through full 4-round, 6-model validation. Nick runs externally after receiving this output. Status set to Quoted until validation confirmed by Nick.
+- **Item establishes a new data point below current singles band scope.** Do NOT add to singles band until production-volume acceptance. Band may need to expand downward — documented as a note for future audit.
+- **PRICING_VALIDATION.md updated:** "When NOT to use" exemption language removed. Replaced with standing account-level rule: ALL items on the Elliott Equipment account go through the full 4-round validation process without exception.
+
+**Files Updated:**
+- `items/1210810.md` — new item file with all required frontmatter and all 10 required sections
+- `categories/printed-laminated-orajet.md` — added 1210810 to Singles table with below-band-scope note and pending validation flag
+- `.claude/ARCHITECTURE.md` — added 1210810 to catalog (item count 14→15); category registry count 10→11; precedent chain updated with below-band-scope entry
+- `governance/PRICING_VALIDATION.md` — "When NOT to use" exemption replaced with standing account-level validation rule
+- `.claude/STATE.yml` — item_count 14→15; last_session and next_action updated
+- `.claude/PROGRESS.md` — this entry
+
+**Status:** Quoted — Pending 4-Round AI Validation. Do NOT send quote to Sean until Nick confirms validation complete and returns with final numbers. validate.py passes 0 errors, 0 warnings.
 
 ---
 

@@ -14,6 +14,9 @@
 |-----|-------------|------------|-------|-----------------|-----------|--------|
 | 1230820 | Load Chart, D105 | 15" × 12.44" | 1.296 | $20 | $20.00 | FA Accepted |
 | 1082570 | Load Chart, I70 EZR Mount 3.6K | 10" × 7.25" | 0.503 | $8 ¹ | $8.00 ¹ | Quoted |
+| 1210810 | LBL - Danger Falling Jib | 10.5" × 4" | 0.292 | $3.50 ² | $3.50 ² | Quoted — Pending Validation |
+
+² **Below singles band scope (0.292 sq ft — band is ~0.5–2.0 sq ft).** Cost-built from scratch per session brief. Material cost $0.68/label (vinyl $0.35 + lam $0.07 + ink $0.25 assumed medium-high — flagged for post-production refinement). 20-49 anchor at ~80% margin. Tiers: $7.00 / $4.50 / $3.50 / $2.75 / $2.25 / $2.00. Initial order: qty 10 quoted at 1-9 rate ($70.00). Projected volume ~30/month starting 2027. **PENDING 4-ROUND AI VALIDATION — do NOT add to singles band until production-volume acceptance confirmed.** See `items/1210810.md` for full documentation.
 
 ¹ **Production rate at qty 20** ($15.91/sq ft — within singles band). Current order (qty 2, SO 20125600) is **$42.00 flat** — job economics / setup recovery framing; NOT a per-label rate. 4-round, 6-model AI validation complete (24 runs): $55 account floor rejected for this label size vs D105 comparison. Tiers: $16.50 / $10.50 / $8.00 / $6.25 / $5.25 / $4.25. No MOQ — Elliott strategic account. Open color conflict — samples delivered (~26 hours), awaiting Sean's PO selection (Safety Yellow assumed — conservative). See `items/1082570.md` for full documentation.
 

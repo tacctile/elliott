@@ -14,9 +14,9 @@
 - Any time gut instinct says something feels off
 - When the pricing decision sets a precedent future items will be measured against
 
-**When NOT to use it:** Items dimensionally and materially identical to something already quoted. Match the existing structure and move on. Note: this exempts multi-round AI validation only — Rule 15 (validate against category Pricing Profile band) still applies to every new item regardless.
+**ALL items on the Elliott Equipment account go through the full 4-round validation process without exception. This is a standing account-level rule that supersedes any per-item exemption logic.**
 
-Color variants within the same material family (e.g., different 3M 180mC colors) qualify as "materially identical" for exemption purposes. The margin impact of the different roll cost must be documented even when validation is waived.
+This rule was established 2026-06-01 at the direction of Nick, as a permanent account-level standard. No per-item exemption applies on this account regardless of dimensional similarity, material match, or any other factor. Rule 15 (validate against category Pricing Profile band) also still applies to every new item.
 
 ---
 
