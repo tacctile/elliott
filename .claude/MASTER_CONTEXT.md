@@ -2,7 +2,7 @@
 
 > **Single source of truth. Read first, every session. No exceptions.**
 >
-> Last Updated: 2026-06-01
+> Last Updated: 2026-06-01 (governance/CALCULATOR.md added)
 
 ---
 
@@ -53,6 +53,8 @@ This is not a codebase. It is a knowledge system with the same architectural dis
 8. `.claude/PROGRESS.md` — recent context that affects this quote
 
 Only after reading all eight does pricing begin.
+
+> **Note:** For new item pricing, the Calculator tab in the frontend can be used to generate an initial pricing brief before beginning the Claude Code session. The calculator output (validation brief) is the input to Round 1 of the 4-round AI validation process. The calculator does NOT write files — Claude Code does. See `governance/CALCULATOR.md` for the calculator's scope, routing tree, flag definitions, and full session sequence.
 
 ### Material Cost Update
 
@@ -152,7 +154,8 @@ elliott/
 │   ├── STRUCTURE_RULES.md         # Item documentation standard, database schema
 │   ├── PRICING_VALIDATION.md      # 4-round, 6-model validation methodology
 │   ├── PRICING_RULES.md           # Non-negotiable pricing constraints
-│   └── PRODUCTION.md              # Equipment, materials, nesting, process
+│   ├── PRODUCTION.md              # Equipment, materials, nesting, process
+│   └── CALCULATOR.md              # Calculator routing, flags, scope, relationship to AI validation
 ├── categories/
 │   ├── cut-vinyl-3m-180mc.md      # Material system + pricing profile + decision tree
 │   └── printed-laminated-orajet.md
@@ -175,10 +178,14 @@ elliott/
 ├── scripts/
 │   ├── validate.py                # Structure compliance + math verification
 │   ├── profile.py                 # Recompute pricing profiles from item data
-│   └── build_frontend.py          # Build frontend/data.json from item frontmatter
+│   ├── build_frontend.py          # Build frontend/data.json from item frontmatter
+│   ├── build_materials.py         # Build frontend/materials.json from material frontmatter
+│   └── build_calculator_config.py # Build script for frontend/calculator_config.json
 ├── frontend/
 │   ├── index.html
 │   ├── data.json
+│   ├── materials.json
+│   ├── calculator_config.json     # Generated calculator constants (do not edit manually)
 │   └── images/
 ├── .gitignore
 └── README.md

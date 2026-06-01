@@ -6,6 +6,77 @@
 
 ---
 
+### 2026-06-01 — System: Governance Documentation + Housekeeping (CALCULATOR.md, MASTER_CONTEXT + COMPLETION_TEMPLATES updates, prose-drift cleanup)
+
+**What:** Four-part documentation and housekeeping session. (1) Created `governance/CALCULATOR.md` — the authoritative reference for the calculator system, covering scope, the full routing decision tree, all 22 flag definitions (F1–F22), what the calculator must NOT do, relationship to `governance/PRICING_VALIDATION.md`, how to update the calculator when pricing rules change, and the full 9-step session sequence for adding a new item using the calculator. (2) Updated `.claude/MASTER_CONTEXT.md` File Map to add `governance/CALCULATOR.md`, `scripts/build_calculator_config.py`, `scripts/build_materials.py`, `frontend/calculator_config.json`, and `frontend/materials.json`; added a calculator note to the Reading Order — New Item Pricing section. (3) Updated `.claude/COMPLETION_TEMPLATES.md` Update Triggers table with three new rows: calculator constants change, new material added, pricing band shifts. (4) Housekeeping cleanup: moved root `PROGRESS.md` (the 2026-05-28 pricing integrity audit report) to `audits/2026-05-28-pricing-integrity-audit.md`; updated stale per-job material total references in the `pricing_logic` frontmatter field on three items (3017583: $1.70→$1.33 + $0.28→$0.22; 3017584: $0.50→$0.35 + $0.08→$0.06; 1277970: $6.94 full-job→$4.85, added $0.24/label per current material_cost_per_unit); corrected `.claude/STATE.yml` `pending_quotes` 1210810 entry from "$50.00 for qty 10" to "$47.50 for qty 10" (10 × $4.75, the 10-19 tier price per the 2026-06-01 tier restructure).
+
+**Files Created:**
+- `governance/CALCULATOR.md` — 9-section governance reference (~12 KB)
+- `audits/2026-05-28-pricing-integrity-audit.md` — moved from root `PROGRESS.md` via `git mv` (content unchanged)
+
+**Files Modified:**
+- `.claude/MASTER_CONTEXT.md` — File Map: added `governance/CALCULATOR.md`, `scripts/build_calculator_config.py`, `scripts/build_materials.py`, `frontend/calculator_config.json`, `frontend/materials.json`; Reading Order — New Item Pricing: appended calculator note; Last Updated stamp updated
+- `.claude/COMPLETION_TEMPLATES.md` — Update Triggers table: added 3 new rows (calculator constants change, new material added, pricing band shifts); Last Updated 2026-05-22 → 2026-06-01
+- `items/3017583.md` — pricing_logic: "Material ~$1.70 for the 6-label job (~$0.28/label)" → "Material $1.33 for the 6-label job ($0.22/label, per material_cost_per_unit)"
+- `items/3017584.md` — pricing_logic: "Material ~$0.50 for the 6-label job (~$0.08/label)" → "Material $0.35 for the 6-label job ($0.06/label, per material_cost_per_unit)"
+- `items/1277970.md` — pricing_logic: "Material ~$6.94" → "Material $4.85 for the full 20-label job ($0.24/label, per material_cost_per_unit)"
+- `.claude/STATE.yml` — pending_quotes 1210810: "$50.00 for qty 10" → "$47.50 for qty 10"; last_session and next_action updated
+- `frontend/data.json`, `frontend/materials.json`, `frontend/calculator_config.json` — regenerated (timestamp only; no data changes since item frontmatter pricing fields and material costs are unchanged)
+
+**Files Moved:**
+- `PROGRESS.md` (root, 308 lines, 2026-05-28 audit report) → `audits/2026-05-28-pricing-integrity-audit.md` via `git mv` (content identical)
+
+**Files NOT Modified:**
+- No item prices, statuses, override_types, margins, material_cost_per_unit, or benchmark_items changed
+- No category file band data changed
+- No governance docs other than the new CALCULATOR.md changed
+- No build scripts changed
+- No `frontend/index.html` calculator engine or UI changed
+
+**`governance/CALCULATOR.md` — Section Map:**
+
+1. What the calculator is and is not (first-round brief generator; output goes to 4-round AI validation; never writes files)
+2. Routing decision tree (canonical) — full tree from material_family + sq_ft + item_type → one of 6 routes (cut_vinyl, tiny, kit, single_sub_scope, single_standard, no_profile), plus sq-ft thresholds table from `calculator_config.json`
+3. Flag definitions (canonical) — full F1–F22 table with severity, suppression behavior, and description; STOP banner behavior note
+4. What the calculator must NOT do (canonical) — 10 hard rules: no file writes, no validation replacement, no buyer-facing output, no do_not_benchmark bypass, no hardcoded constants, no stale-cost propagation, no tiny per-label display, no never-pay-more skip on printed/lam, no inventing a band, no modifying existing band data
+5. Relationship to PRICING_VALIDATION.md — flow diagram showing calculator → Round 1 → Round 2 → Round 3 → Round 4 → Nick locks → Claude Code writes
+6. Updating the calculator when pricing rules change — 3 update mechanisms (constant change only → rerun build script; material cost change → update material file + rerun all three; engine behavior change → HTML edit required)
+7. Session sequence for adding a new item — 9 steps: Spec Extraction → Calculator Run → Rounds 1–4 → Nick locks → Claude Code writes → Quote to Sean
+8. Files in the calculator system — table mapping each file to its role and source-of-truth scope
+9. Sanity check reference cases — 6 P/Ns (1230820, 1277970, Convex, kit, 1205720, 1210810) with expected route, price@20, and flags; serves as the calculator's regression-test surface
+
+**Housekeeping — Flag Resolutions:**
+
+| Flag | Resolution |
+|------|-----------|
+| 1.1 (root PROGRESS.md) | Moved to `audits/2026-05-28-pricing-integrity-audit.md` via `git mv`; content unchanged. New `audits/` directory created. `.gitignore` already permits — no update needed |
+| 2A.1 (prose drift — stale per-job material totals on 3017583/3017584/1277970) | All three `pricing_logic` frontmatter fields updated with current material totals (per 2026-05-28 laminate cost correction: $0.2389/sq ft) |
+| 2D.1 (STATE.yml prose drift — 1210810 entry) | `pending_quotes` corrected from "$50.00 for qty 10" to "$47.50 for qty 10" matching 10×$4.75 = $47.50 at the 10-19 tier per the 2026-06-01 tier restructure |
+
+**Acceptance Criteria Met:**
+- `governance/CALCULATOR.md` exists; covers all 7 required topics ✓
+- `.claude/MASTER_CONTEXT.md` File Map and Reading Order updated ✓
+- `.claude/COMPLETION_TEMPLATES.md` Update Triggers table has 3 new rows ✓
+- Root `PROGRESS.md` removed; `audits/2026-05-28-pricing-integrity-audit.md` exists with identical content ✓
+- `items/3017583.md`, `items/3017584.md`, `items/1277970.md` `pricing_logic` updated with current material costs ✓
+- `.claude/STATE.yml` 1210810 entry updated to $47.50 ✓
+- `python scripts/validate.py` — 0 errors, 0 warnings ✓
+- All build scripts clean (15 items, 7 materials, 3 material constants + 3 bands + 8 do_not_benchmark) ✓
+- No existing item prices, margins, or statuses changed ✓
+- No category file band data changed ✓
+
+**Verification:**
+- `python scripts/validate.py` → 0 errors, 0 warnings
+- `python scripts/build_frontend.py` → 15 items, clean
+- `python scripts/build_materials.py` → 7 materials, clean
+- `python scripts/build_calculator_config.py` → 3 material constants, 3 bands, 8 do_not_benchmark items, clean
+- `governance/CALCULATOR.md` cross-references verified against `frontend/index.html` calculator engine (route names, flag IDs F1–F22, threshold values 0.1/0.5/2.0/13.5/28.0 sq ft) and `frontend/calculator_config.json` (band keys, tier templates, do_not_benchmark list) — all canonical references match the implementation
+- Prose updates on 3017583/3017584/1277970 verified against PROGRESS.md root file (now audits/2026-05-28-pricing-integrity-audit.md) Pre-Edit Math Verification table — new figures match the post-laminate-correction totals exactly
+
+**Status:** Complete. Calculator is now governance-documented. Audit report archived. Prose drift cleaned. validate.py passes 0/0; all three build scripts clean.
+
+---
+
 ### 2026-06-01 — System: Session 3 — Calculator Tab UI (form, output panel, validation brief)
 
 **What:** Wired the Session 2 pricing engine to a third top-bar tab — "Calculator" — alongside Items and Materials. The calculator tab takes the full main area (sidebar hidden via `.layout.calc-mode`), splits into a sticky-left input form and a scrollable-right output panel on desktop, and stacks vertically on mobile (single-column at ≤1100px). The engine itself is untouched from Session 2; this session only adds the UI shell, form binding, and output rendering.

@@ -2,7 +2,7 @@
 
 > **What gets updated when. No exceptions. No "I'll update that next time."**
 >
-> Last Updated: 2026-05-22
+> Last Updated: 2026-06-01
 
 ---
 
@@ -27,6 +27,9 @@ This repo is a living, interconnected set of documents. When anything changes, *
 | Production debrief logged | `items/[PN].md` (Production Debrief section) |
 | Drawing revision received | `items/[PN].md` (Spec Extraction, Item Overview, dimensions, sq ft, material cost if changed), `.claude/ARCHITECTURE.md`, `categories/[relevant].md`, `.claude/PROGRESS.md`, `frontend/data.json` (via build_frontend.py) |
 | Item discontinued | `items/[PN].md` (status → Discontinued), `.claude/ARCHITECTURE.md` (status column), `.claude/PROGRESS.md`, `frontend/data.json` (via build_frontend.py) |
+| Calculator constants change (band thresholds, tier ratios, ink rates, account floor) | Re-run `python scripts/build_calculator_config.py`, commit updated `frontend/calculator_config.json`. No code change to index.html required. |
+| New material added to materials/*.md | Re-run all build scripts including `build_calculator_config.py` — verify new material appears in `cut_vinyl_colors` or `material_constants` as appropriate |
+| Pricing band shifts (new FA-Accepted item, band normalization) | Update `categories/*.md` first (source of truth), then re-run `build_calculator_config.py` to propagate to calculator |
 
 ---
 

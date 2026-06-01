@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-01T18:50:22Z",
+  "generated": "2026-06-01T19:06:40Z",
   "item_count": 15,
   "items": {
     "1082570": {
@@ -293,7 +293,7 @@
         "first_article_price": "",
         "per_label_at_qty_20": 2.75,
         "margin_at_qty_20": "N/A \u2014 one-off program, flat $55 total, see Pricing Derivation",
-        "pricing_logic": "ONE-OFF PROGRAM PRICE. $55 total for 4-P/N program (5 labels each = 20 labels). $2.75/label is a job economics floor, NOT a catalog rate. Never use as benchmark. See Pricing Derivation. Custom 18T crane build \u2014 Sean: 'this will be a one off for a custom build we are doing.' Material ~$6.94 + ~25 min production (5 min file import + 20 min print/lam/cut/inspect/package). NO file prep cost \u2014 Elliott supplies production-ready DWG. $55 anchors to the lowest first article price on the account (1230820 FA at $55) as a program-level minimum-worthwhile-charge floor, NOT a per-label comparable.",
+        "pricing_logic": "ONE-OFF PROGRAM PRICE. $55 total for 4-P/N program (5 labels each = 20 labels). $2.75/label is a job economics floor, NOT a catalog rate. Never use as benchmark. See Pricing Derivation. Custom 18T crane build \u2014 Sean: 'this will be a one off for a custom build we are doing.' Material $4.85 for the full 20-label job ($0.24/label, per material_cost_per_unit) + ~25 min production (5 min file import + 20 min print/lam/cut/inspect/package). NO file prep cost \u2014 Elliott supplies production-ready DWG. $55 anchors to the lowest first article price on the account (1230820 FA at $55) as a program-level minimum-worthwhile-charge floor, NOT a per-label comparable.",
         "process": "Print/Lam/Cut (1 pass)",
         "lamination_passes": 1,
         "cut_runs": 1,
@@ -556,7 +556,7 @@
         "first_article_price": "",
         "per_label_at_qty_20": 9.17,
         "margin_at_qty_20": "~97%",
-        "pricing_logic": "ONE-OFF JOB ECONOMICS. $55 program total for qty 6 of a single 2.5\\\" \u00d7 1.5\\\" ANSI Z535 NOTICE label for a unit in the field. $9.17/label is the arithmetic per-label slice of the $55 program total ($55 \u00f7 6 = $9.17), NOT a catalog rate. Anchors to the $55 account minimum-worthwhile-charge floor (P/N 1230820 FA). Sq ft band is inapplicable at this size \u2014 0.026 sq ft is well outside the ~0.5\u20132.0 sq ft singles band. File prep is $0 per account rule (PRICING_RULES.md \u00a722). Material ~$1.70 for the 6-label job (~$0.28/label); production time ~20-25 min. Never use as benchmark.",
+        "pricing_logic": "ONE-OFF JOB ECONOMICS. $55 program total for qty 6 of a single 2.5\\\" \u00d7 1.5\\\" ANSI Z535 NOTICE label for a unit in the field. $9.17/label is the arithmetic per-label slice of the $55 program total ($55 \u00f7 6 = $9.17), NOT a catalog rate. Anchors to the $55 account minimum-worthwhile-charge floor (P/N 1230820 FA). Sq ft band is inapplicable at this size \u2014 0.026 sq ft is well outside the ~0.5\u20132.0 sq ft singles band. File prep is $0 per account rule (PRICING_RULES.md \u00a722). Material $1.33 for the 6-label job ($0.22/label, per material_cost_per_unit); production time ~20-25 min. Never use as benchmark.",
         "process": "Print/Lam/Cut (1 pass)",
         "lamination_passes": 1,
         "cut_runs": 1,
@@ -599,7 +599,7 @@
         "first_article_price": "",
         "per_label_at_qty_20": 9.17,
         "margin_at_qty_20": "~99%",
-        "pricing_logic": "ONE-OFF JOB ECONOMICS. $55 program total for qty 6 of a single 0.5\\\" \u00d7 0.5\\\" PTO ACTIVE label for a field service request. $9.17/label is the arithmetic per-label slice of the $55 program total ($55 \u00f7 6 = $9.17), NOT a catalog rate. Anchors to the $55 account minimum-worthwhile-charge floor (P/N 1230820 FA). Sq ft band is inapplicable at this size \u2014 0.00174 sq ft is the smallest item on the account and is far below the ~0.5\u20132.0 sq ft singles band scope. File prep is $0 per account rule (PRICING_RULES.md \u00a722). Material ~$0.50 for the 6-label job (~$0.08/label) \u2014 effectively zero relative to the job floor. Production time ~20-25 min. Never use as benchmark.",
+        "pricing_logic": "ONE-OFF JOB ECONOMICS. $55 program total for qty 6 of a single 0.5\\\" \u00d7 0.5\\\" PTO ACTIVE label for a field service request. $9.17/label is the arithmetic per-label slice of the $55 program total ($55 \u00f7 6 = $9.17), NOT a catalog rate. Anchors to the $55 account minimum-worthwhile-charge floor (P/N 1230820 FA). Sq ft band is inapplicable at this size \u2014 0.00174 sq ft is the smallest item on the account and is far below the ~0.5\u20132.0 sq ft singles band scope. File prep is $0 per account rule (PRICING_RULES.md \u00a722). Material $0.35 for the 6-label job ($0.06/label, per material_cost_per_unit) \u2014 effectively zero relative to the job floor. Production time ~20-25 min. Never use as benchmark.",
         "process": "Print/Lam/Cut (1 pass)",
         "lamination_passes": 1,
         "cut_runs": 1,
