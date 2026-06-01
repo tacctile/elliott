@@ -2,7 +2,7 @@
 
 > **Living document — updated every session that changes structure.**
 >
-> Last Updated: 2026-05-28
+> Last Updated: 2026-06-01
 
 ---
 
@@ -26,6 +26,7 @@ All quoted items. Updated when items are added, repriced, or status changes.
 | 3017583 | LBL - PTO Engage Process (ANSI Z535) ⚠ one-off, do NOT benchmark | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.026 | $9.17 (flat — one-off) | $9.17 | ~97% (structural — one-off, $55 program at qty 6) | Quoted | `items/3017583.md` |
 | 3017584 | LBL - PTO Active (smallest item on account) ⚠ one-off, do NOT benchmark | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.00174 | $9.17 (flat — one-off) | $9.17 | ~99% (structural — one-off, $55 program at qty 6) | Quoted | `items/3017584.md` |
 | 1082570 | Load Chart, I70 EZR Mount 3.6K ⚠ color conflict open (samples delivered, awaiting selection) | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.503 | $8 (prod. rate at qty 20) | $8.00 | ~83% (at prod. vol.; current order $42 flat, job economics) | Quoted | `items/1082570.md` |
+| 1210810 | LBL - DANGER FALLING JIB (ANSI Z535) ⚠ ink unverified ($0.25 placeholder, confirm after first run); do NOT benchmark until production-volume acceptance | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.292 | $4.50 | $4.50 | ~80–85% (ink unverified; $0.25→85%, $0.40→82%, $0.50→80%) | Quoted | `items/1210810.md` |
 
 ---
 
@@ -34,7 +35,7 @@ All quoted items. Updated when items are added, repriced, or status changes.
 | Category | Material Family | Category File | Item Count | Profile Status |
 |----------|-----------------|---------------|------------|----------------|
 | Cut Vinyl Lettering | 3M 180mC Cut Vinyl | `categories/cut-vinyl-3m-180mc.md` | 4 | Narrowing — 4 data points at 2.51–2.564 sq ft, all at $35/qty 20 |
-| Printed + Laminated | Orajet 3951 Cast + Polyester Lam | `categories/printed-laminated-orajet.md` | 10 | Singles (≥0.5 sq ft): Narrowing — 2 consistent data points (1230820 at 1.296 sq ft confirmed; 1082570 at 0.503 sq ft quoted, $15.91/sq ft — band-consistent, AI validated, current order $42 flat job-economics). Kits: Moderate (2 data points). Tiny labels (≤0.1 sq ft): 4 one-off outrigger program peers ($55 program total / $2.75 per label) + 2 standalone one-offs (3017583 at 0.026 sq ft and 3017584 at 0.00174 sq ft — smallest item on the account; both $55 program total / $9.17 per label at qty 6) — explicitly excluded from any band; do NOT benchmark |
+| Printed + Laminated | Orajet 3951 Cast + Polyester Lam | `categories/printed-laminated-orajet.md` | 11 | Singles (≥0.5 sq ft): Narrowing — 2 confirmed band data points (1230820 at 1.296 sq ft FA Accepted; 1082570 at 0.503 sq ft quoted, $15.91/sq ft — band-consistent, AI validated). Sub-scope single (0.1–0.5 sq ft): 1210810 at 0.292 sq ft, $4.50 ($15.41/sq ft — band-consistent, AI validated, 4-round 6-model); excluded from band DATA POINTS on dimensional scope until production-volume acceptance. Kits: Moderate (2 data points). Tiny labels (≤0.1 sq ft): 4 one-off outrigger program peers ($55 program total / $2.75 per label) + 2 standalone one-offs (3017583 at 0.026 sq ft and 3017584 at 0.00174 sq ft — smallest item on the account; both $55 program total / $9.17 per label at qty 6) — explicitly excluded from any band; do NOT benchmark |
 | Panel Decals | Convex High Bond + Poly Lam | Not yet created | 0 | No profile — first item establishes it |
 | Polycarbonate | Lexan/Polycarbonate | Not yet created | 0 | No profile — first item establishes it |
 
@@ -54,6 +55,18 @@ P/N 1230820 (ROOT BENCHMARK — $20/ea at qty 20)
 │       4-round, 6-model AI validation complete (24 runs): $55 floor rejected, $42 adopted.
 │       Tiers: $16.50/$10.50/$8.00/$6.25/$5.25/$4.25. No MOQ — Elliott strategic account.
 │       Open color conflict — samples delivered (~26 hrs), awaiting Sean's PO selection.
+│       Status: Quoted.
+├── P/N 1210810 (sub-scope single → $4.50/label at qty 20, $15.41/sq ft — band-consistent by design)
+│       0.292 sq ft — BELOW singles band scope (~0.5 sq ft floor). Band exclusion is DIMENSIONAL,
+│       not pricing: validated $/sq ft ($15.41) is essentially at the band floor ($15.43).
+│       4-round, 6-model AI validation complete (24 runs, 2026-06-01):
+│         Option A (preliminary $3.50 at qty 20) rejected 0/6 — unanimously.
+│         Option B ($4.50 at qty 20, band-aligned) adopted with 10-19 adjusted $5.50→$5.00.
+│         Fundamental correction: below-scope dimensional position does NOT justify below-band $/sq ft.
+│       Tiers: $8.50/$5.00/$4.50/$3.50/$2.75/$2.50. Initial order qty 10: $50.00 (10-19 tier).
+│       Ink ($0.25) UNVERIFIED — Safety Red flood coat; confirm after first run ($0.40–$0.50 realistic).
+│       Do NOT benchmark until production-volume acceptance confirmed by Nick.
+│       No MOQ — Elliott strategic account. 2028 MOQ plan documented in item file.
 │       Status: Quoted.
 └── [future printed/laminated singles validate against Pricing Profile band]
 

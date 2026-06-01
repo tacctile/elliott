@@ -14,8 +14,11 @@
 |-----|-------------|------------|-------|-----------------|-----------|--------|
 | 1230820 | Load Chart, D105 | 15" × 12.44" | 1.296 | $20 | $20.00 | FA Accepted |
 | 1082570 | Load Chart, I70 EZR Mount 3.6K | 10" × 7.25" | 0.503 | $8 ¹ | $8.00 ¹ | Quoted |
+| 1210810 | LBL - DANGER FALLING JIB (ANSI Z535) | 10.5" × 4" | 0.292 | $4.50 ² | $4.50 ² | Quoted |
 
 ¹ **Production rate at qty 20** ($15.91/sq ft — within singles band). Current order (qty 2, SO 20125600) is **$42.00 flat** — job economics / setup recovery framing; NOT a per-label rate. 4-round, 6-model AI validation complete (24 runs): $55 account floor rejected for this label size vs D105 comparison. Tiers: $16.50 / $10.50 / $8.00 / $6.25 / $5.25 / $4.25. No MOQ — Elliott strategic account. Open color conflict — samples delivered (~26 hours), awaiting Sean's PO selection (Safety Yellow assumed — conservative). See `items/1082570.md` for full documentation.
+
+² **4-round, 6-model AI validation complete (24 runs). Band-consistent at $15.41/sq ft** (singles band: $15.43–$15.91/sq ft — essentially at the band floor). Initial order qty 10: **$50.00** (10-19 tier at $5.00). Projected volume ~30/month starting 2027 → recurring at $4.50 (20-49 tier). Tiers: $8.50 / $5.00 / $4.50 / $3.50 / $2.75 / $2.50. Ink cost ($0.25) **UNVERIFIED** — Safety Red flood coat placeholder; realistic range $0.40–$0.50; confirm after first production run. No MOQ — Elliott strategic account. **Dimensional scope exclusion:** 1210810 at 0.292 sq ft is below the ~0.5 sq ft singles band scope floor. It is excluded from band DATA POINTS on **dimensional scope only** — NOT on per-sq-ft grounds. The validated rate ($15.41/sq ft) is band-consistent. Preliminary pricing (20-49 at $3.50 = $11.99/sq ft) incorrectly used the sub-scope position to justify a below-band $/sq ft rate — this was the fundamental error corrected by the 4-round validation. Not added to Pricing Profile band until production-volume acceptance confirmed by Nick. See `items/1210810.md` for full documentation including complete 4-round validation record.
 
 ### Tiny Printed Labels — Sub-0.1 Sq Ft Size Class (One-Off Job Economics, Not Sq Ft)
 
@@ -124,6 +127,8 @@ Derived from accepted pricing on real items. Tightens with every new item.
 **Band width:** Narrowing — 2 consistent data points at opposite ends of the singles scope (0.503 sq ft and 1.296 sq ft), both landing within 3% of each other on a per-sq-ft basis. Band is converging toward $15.43–$15.91/sq ft at qty 20.
 
 **Band scope:** Applies to printed/laminated singles in the ~0.5–2.0 sq ft range. Items below 0.1 sq ft (tiny printed labels) price on minimum run / job economics, not sq ft — see the Tiny Printed Labels table above and P/N 1277970 (founding data point). These items are NOT included in the band calculation.
+
+Items in the 0.1–0.5 sq ft range (such as P/N 1210810 at 0.292 sq ft) are below the band scope floor but above the tiny-label threshold. Correct approach: price at band-consistent $/sq ft (do NOT use the sub-scope position to justify a below-band rate — smaller labels carry higher fixed cost per sq ft, not lower). Exclude from band DATA POINTS until production-volume acceptance confirmed by Nick.
 
 **Floor-anchored orders do NOT feed the band.** One-off small-run orders priced at the $55 account floor (e.g., 1082570 initial qty 2 order at $27.50/label) are explicitly excluded from band calculations. Only production-volume accepted prices enter the band.
 

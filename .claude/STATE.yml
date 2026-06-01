@@ -2,12 +2,12 @@
 # Updated at the end of every session
 
 last_session:
-  date: "2026-05-29"
-  type: "documentation_audit_fix"
-  summary: "Documentation-only audit fixes for FLAG 1 + FLAG 2 from 2026-05-28 integrity audit. FLAG 1 (1mil-polyester-overlaminate.md cost_per_msi): already correct at 1.6592 when session began — no edit needed. FLAG 2 (3m-180mc-cardinal-red.md notes field): added derivation explanation documenting that cost_per_sq_ft is derived as cost_per_linear_yd / roll_width_ft (length-based method), not the area method used by other 180mC colors — numeric value 7.751 unchanged. No prices changed. No item files changed. No category files changed. validate.py 0 errors, 0 warnings. build_materials.py clean."
+  date: "2026-06-01"
+  type: "pricing_lock"
+  summary: "Created and locked item file for P/N 1210810 (LBL - DANGER FALLING JIB) with 4-round, 6-model AI validation (24 total runs) complete. Validated pricing: $8.50/$5.00/$4.50/$3.50/$2.75/$2.50. Initial order qty 10: $50.00 (10-19 tier). Ink cost ($0.25) UNVERIFIED — Safety Red flood coat; confirm after first production run; realistic range $0.40–$0.50. No MOQ documented. 2028 MOQ plan logged. Pricing normalization note (internal) logged. Band-consistent at $15.41/sq ft — dimensionally below scope floor but correctly priced. validate.py 0 errors, 0 warnings. build_frontend.py clean."
 
-next_action: "Send $42 quote to Sean for 1082570 when PO arrives (job economics framing — setup recovery on 2-label run). Confirm color selection (Safety Yellow vs black on white) via PO. Await Sean's outreach re: engineering/procurement standard project."
-blockers: "Open color conflict on 1082570 — Sean must select Safety Yellow or white background before production. PO not yet received."
-item_count: 14
-material_count: 7
-pending_quotes: "1082570, 1245130, 3017435, 3018378, 1186310, 1277970, 1277980, 1277990, 1278000, 3017583, 3017584 — quoted/repriced May 2026, awaiting Sean response/PO"
+next_action: "Send $50.00 quote to Sean for 1210810 (qty 10, 10-19 tier). Include label dimensions in quote email: 'Label measures 10.5\" × 4\" (0.292 sq ft) in cast vinyl with polyester overlaminate — priced at $4.50 at your projected monthly volume.' Also: send $42 quote to Sean for 1082570 when PO arrives (job economics framing). Confirm 1082570 color selection via PO. Await Sean's outreach re: engineering/procurement standard project."
+blockers: "Ink cost on 1210810 unverified — $0.25 is a placeholder for Safety Red flood coat; must confirm after first production run ($0.40–$0.50 realistic range) and update material_cost_per_unit in frontmatter. Open color conflict on 1082570 — Sean must select Safety Yellow or white background before production."
+item_count: 15
+material_count: 6
+pending_quotes: "1210810 (new — $50.00 for qty 10), 1082570, 1245130, 3017435, 3018378, 1186310, 1277970, 1277980, 1277990, 1278000, 3017583, 3017584 — quoted May–Jun 2026, awaiting Sean response/PO"

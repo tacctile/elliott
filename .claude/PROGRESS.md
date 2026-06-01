@@ -2,7 +2,82 @@
 
 > **Newest entries at the top. Updated every session.**
 >
-> Last Updated: 2026-05-29
+> Last Updated: 2026-06-01
+
+---
+
+### 2026-06-01 — Pricing Lock: P/N 1210810 — LBL - DANGER FALLING JIB — 4-Round AI Validation Complete, $4.50 Qty 20-49, $2.50 200+, No-MOQ Documented, Ink Unverified Pending First Run, 2028 MOQ Plan Logged
+
+**What:** Created and fully documented item file for P/N 1210810 (LBL - DANGER FALLING JIB) with validated, locked pricing. The 4-round, 6-model external AI validation (24 total model runs) was completed prior to this session. This session creates the item file with final validated pricing and propagates all changes to dependent files.
+
+**Item Summary:**
+- P/N: 1210810 | Description: LBL - DANGER FALLING JIB
+- Type: Single printed/laminated ANSI Z535.1/Z535.4 DANGER label
+- Dimensions: 10.5" × 4" = 0.292 sq ft
+- Material: Orajet 3951 cast vinyl + 1-mil polyester overlaminate
+- Content: Safety Red flood coat header, white DANGER text, white triangle/exclamation icon, two white field panels with black technical schematics, black body text, black border
+- Drafter: DS / TJK, dated 09/2015
+- Customer: Elliott Equipment Company (Sean Finn)
+- Initial order: qty 10 → $50.00 (10-19 tier at $5.00)
+- Projected volume: ~30/month starting 2027
+
+**Validated Final Pricing — Nick Approved:**
+
+| Tier | Price | $/Sq Ft |
+|------|-------|---------|
+| 1-9 | $8.50 | $29.11 |
+| 10-19 | $5.00 | $17.12 |
+| 20-49 | $4.50 | $15.41 |
+| 50-99 | $3.50 | $11.99 |
+| 100-199 | $2.75 | $9.42 |
+| 200+ | $2.50 | $8.56 |
+
+Material cost: $0.67/label at $0.25 ink (UNVERIFIED). Realistic ink range: $0.40–$0.50.
+
+**4-Round Validation Summary:**
+
+**Round 1 (Build — 6 models):** Vote split 3/3 on below-band positioning. 3 models identified inverted price-size reasoning as a structural error. Ink flagged as understated ($0.25 on a Safety Red flood coat). Tier application error identified: qty 10 incorrectly placed in 1-9 tier in preliminary brief. Proposed 20-49 range: $3.50–$5.50.
+
+**Round 2 (Destruction — 6 models):** Verdict 5 No / 1 Yes-with-modifications. All 4 attack vectors rated High severity. Key: Buyer/Procurement (H) — 25% below-band positioning creates renegotiation trigger on entire account. Competitor (H) — $3.50 at 30/month is attackable. Cost Auditor (H) — $0.25 ink on Safety Red flood coat is unreliable. Strategic (H) — below-band introduction inverts price-size relationship and permanently lowers buyer's reference floor. Proposed 20-49: $4.00–$4.75.
+
+**Round 3 (Buyer Simulation — 6 models):** All 6 approved $45.00 for qty 10. Pushback threshold on 20-49: $3.25–$4.25. $4.00–$4.50 cleared every model. Dimensions flagged as must-include in quote email (4 of 6 models). 30/month recurring volume is the structural anchor — initial order is noise.
+
+**Round 4 (Final Synthesis — 6 models):** Vote: 0 Option A / 3 Option B / 3 Option C. Option A (preliminary) rejected unanimously. Option B ($4.50 at qty 20) adopted — account is in active partnership phase, band integrity outweighs friction avoidance. Universal finding: 10-19 at $5.50 puts qty 10 at $55.00 above approval threshold → consensus fix: drop to $5.00 ($50.00 for qty 10).
+
+**Post-Validation Audit Findings:**
+- Material cost corrected: $0.68 filed → $0.67 (rounding artifact, no pricing impact)
+- 200+ tier: Option B produced $2.25; audit identified this falls below category margin floor at realistic ink ($0.40–$0.50). Nick's decision: raised to $2.50 (200+ orders not expected; tier exists for structural completeness only; warehouse caution documented)
+- No existing items undermined: $/sq ft story clean across all three singles (1230820 at $15.43, 1082570 at $15.91, 1210810 at $15.41)
+- Fundamental error corrected: preliminary used below-band dimensional scope to justify below-band $/sq ft — backwards reasoning. $4.50 corrects this at $15.41/sq ft (essentially the band floor)
+
+**Margin at 20-49 (recurring tier) across ink scenarios:**
+- At $0.25 ink ($0.67 total): 85.1%
+- At $0.40 ink ($0.82 total): 81.8%
+- At $0.50 ink ($0.92 total): 79.6%
+
+**Margin at 200+ across ink scenarios:**
+- At $0.25 ink: 73.2%
+- At $0.40 ink: 67.2%
+- At $0.50 ink: 63.2% (at or near floor — intentional, Nick's decision)
+
+**Strategic Decisions Documented:**
+- **No MOQ:** Permanent account-level rule. Consistent with all Elliott items.
+- **2028 MOQ plan:** Nick's deliberate strategic decision to introduce MOQ structure beginning January 1, 2028. Business justification: COGS and overhead increases. Not an omission — a planned future action.
+- **Ink confirmation task:** Must confirm Safety Red flood coat ink cost after first production run. $0.25 is a placeholder. Do not assume a number — wait for production data.
+- **Quote email anchor line (validated Round 4):** "Label measures 10.5" × 4" (0.292 sq ft) in cast vinyl with polyester overlaminate — priced at $4.50 at your projected monthly volume."
+- **Pricing normalization note (internal only):** Current band ($15.43–$15.91/sq ft) is a relationship concession below industry standard (~$18–$22/sq ft). Nick's plan to normalize toward industry standard by January 1, 2027. Internal context for future sessions only — do not surface to buyer.
+- **Dimensional scope exclusion:** 1210810 at 0.292 sq ft is excluded from singles band DATA POINTS on dimensional scope (below ~0.5 sq ft floor). Exclusion is dimensional, NOT pricing — the validated rate is band-consistent. Not added to band until production-volume acceptance confirmed by Nick.
+
+**Files Updated:**
+- `items/1210810.md` — new item file with all required frontmatter and all 10 required sections; complete 4-round validation record; full margin analysis at all 3 ink scenarios
+- `categories/printed-laminated-orajet.md` — added 1210810 row to Singles table with footnote ²; updated Pricing Profile band scope note to document 0.1–0.5 sq ft sub-scope item handling
+- `.claude/ARCHITECTURE.md` — added 1210810 to catalog (item count 14 → 15); Printed + Laminated count 10 → 11; added 1210810 to precedent chain; Last Updated 2026-05-28 → 2026-06-01
+- `.claude/STATE.yml` — item_count 14 → 15; last_session and next_action updated
+- `.claude/PROGRESS.md` — this entry
+- `materials/orajet-3951-white.md` — added 1210810 to used_in_items
+- `materials/1mil-polyester-overlaminate.md` — added 1210810 to used_in_items
+
+**Status:** Complete. validate.py 0 errors, 0 warnings. build_frontend.py clean. Item file locked with validated pricing.
 
 ---
 
