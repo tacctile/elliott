@@ -6,6 +6,71 @@
 
 ---
 
+### 2026-06-01 — Audit: Full Calculator Accuracy Audit — 1 CRITICAL, 6 WARNINGS, 9 INFO
+
+**What:** Read-and-report-only end-to-end audit of the calculator system across 10 scope areas: config accuracy, engine logic, 15-item price verification, invoice protection, band contamination, config-to-engine sync, material staleness, cross-file consistency, edge case stress test, and validation brief completeness. No files changed except this entry and `STATE.yml`.
+
+**Files Read (all 20 required, in full):** `.claude/MASTER_CONTEXT.md`, `.claude/ARCHITECTURE.md`, `.claude/STATE.yml`, `.claude/PROGRESS.md`, `governance/PRICING_RULES.md`, `governance/PRICING_VALIDATION.md`, `governance/PRODUCTION.md`, `governance/SPEC_EXTRACTION.md`, `governance/STRUCTURE_RULES.md`, `governance/CALCULATOR.md`, `categories/cut-vinyl-3m-180mc.md`, `categories/printed-laminated-orajet.md`, `frontend/calculator_config.json`, `frontend/data.json`, `frontend/materials.json`, `frontend/index.html` (full engine + UI), all 15 `items/*.md`, all 7 `materials/*.md`, `scripts/build_calculator_config.py`, `scripts/validate.py`.
+
+**Verdict:** PASS WITH FINDINGS. Engine matches all 15 catalog items within tolerance (only 1082570 differs at 3.1%, within ±5%, documented). One critical bug must be fixed before kit-route quoting is safe.
+
+**CRITICAL (must fix before live use):**
+
+- **C1 — Never-pay-more cliff check is SKIPPED for the entire kit route.** `buildPrintLamKitTiers()` (index.html lines 3194-3247) returns `kit_totals` but no `tiers` key. The `runCalculator` guard `if (tierBuild.tiers && tierBuild.snap && ...)` evaluates false for kit and skips `checkInvoiceProtection()`. Kit cliffs (3-label template 19×$36=$684 vs 20×$30=$600; 5-label template 19×$60=$1140 vs 20×$50=$1000; any cost-built kit) are never flagged or auto-fixed. F11 cannot fire for kits. Violates `governance/CALCULATOR.md` §4 Rule 8. Fix: add `tiers: kit_totals` to the buildPrintLamKitTiers return, OR handle kit branch explicitly in runCalculator.
+
+**WARNINGS:**
+
+- **W1** — Lam-pass computation: when both dims ≤ 13.5" (laminator) but `label_count × narrow > 28"` (Roland print bed), engine returns 1 pass; reality requires 2 (mixed orientation). Example: 1245130 5-label kit at 11.13"×7.88" returns 1 pass; reality is 2 (3 narrow + 2 rotated). No price impact (kit templates are label-count-driven), only the lam_passes field in the brief is wrong.
+- **W2** — Engine accepts width=0/height=0/label_count=0 silently (produces tiny $55 route with no flag if called from anywhere other than the UI). UI guards this but the engine itself is not defensive. Add input-sanity STOP flag.
+- **W3** — `item_type = kit_*` with `label_count = 1` routes to kit and cost-builds to $10. Should re-route to single or fire a review flag.
+- **W4** — Validation brief is incomplete vs `governance/PRICING_VALIDATION.md` Round 1 input spec. Missing: production process step-by-step (only lam reasoning included), full pricing tiers of benchmark items (only price_20_49 shown), key comparisons section (sq ft only, no production touches or material cost ratio). The "Ready for Round 1: YES" badge is misleading.
+- **W5** — `inferOverrideType()` (line 3411) is route-based, never reads `fm.override_type`. Misreports 1278930's "Relationship Concession (FA only)" as "None" in the kit-comparables table. No price impact today.
+- **W6** — Cut vinyl color not in `cut_vinyl_colors` config: engine returns error string but no flag fires; pricing tiers continue (without margins). Add a STOP flag.
+
+**INFO:**
+
+- **I1** — `materials/3m-180mc-cardinal-red.md` `cost_per_sq_ft: 7.751` is mathematically derived as `cost_per_linear_yd / roll_width_ft` ($15.502/2 ft), but that formula does not produce dollars per sq ft. Area-method (used by Olympic Blue, both Whites) gives $2.584/sq ft. Engine uses `cost_per_linear_yd` directly for cut vinyl, so zero pricing impact. Documented in material notes (2026-05-29 audit fix).
+- **I2** — Prose drift inside `items/1277970.md` line 167: text "Frontmatter `material_cost_per_unit` carries the per-label figure ($0.35)" but actual frontmatter is `0.24`. Missed by the 2026-06-01 housekeeping cleanup.
+- **I3** — `.claude/ARCHITECTURE.md` 1210810 row mixes prose into the Status column (`"Quoted — 1-9: $55 flat MOQ floor / 10-19: $4.75 / initial order $47.50"`). Item-file status frontmatter is clean ("Quoted"); validate.py unaffected.
+- **I4** — 1082570 engine produces $7.75 (round-snap of $0.503 × $15.43 = $7.76) vs filed $8.00 (ceil-snap, AI-validated). 3.1% delta, within ±5% spec tolerance; design choice documented in Session 2 PROGRESS entry.
+- **I5** — Engine material cost does not include the "Waste/setup ~$0.91" allowance that exists in 1230820's filed `material_cost_per_unit`. Engine margins read ~5 points higher than filed; margins are advisory per spec, prices unaffected.
+- **I6** — Orajet 3951 `verified_date` is 2026-04-22 (40 days old). Oldest material on the account. Well within 180-day F2 threshold but worth re-verifying before it ages further.
+- **I7** — Boundary semantics: sq_ft exactly = 0.1 routes to tiny (per `≤` in config); exactly = 0.5 routes to sub_scope. Consistent with `governance/CALCULATOR.md` routing tree wording.
+- **I8** — UI constants `CV_COLOR_LABELS` and `ROUTE_BADGE_LABELS` (index.html lines 2391-2404) are hardcoded; new entries added to `cut_vinyl_colors` will appear with raw keys until HTML is updated. Presentation only, not pricing.
+- **I9** — `data.json` exposes internal fields (`pricing_logic`, `cost_version_date`, `material_cost_per_unit`, `margin_at_qty_20`, etc.) that the calculator engine does not need. By design (sole user is Nick); flagged for awareness.
+
+**15-Item Verification — Engine vs Filed (Price @ qty 20):**
+
+| P/N | Filed | Engine | Match | Notes |
+|-----|-----:|-----:|:--:|---|
+| 1230820 | $20 | $20 | ✓ | F18 + F11 (cliff auto-fix at 10-19) |
+| 1278930 | $30 | $30 | ✓ | **Kit cliffs not flagged (C1)** |
+| 1245130 | $50 | $50 | ✓ | **Kit cliffs not flagged (C1)**; lam_passes 1 vs reality 2 (W1) |
+| 1205720 | $35 | $35 | ✓ | F19 + F15 |
+| 3017435 | $35 | $35 | ✓ | F19 + F15 + F14 (alt width) |
+| 3018378 | $35 | $35 | ✓ | F19 + F15 + F13 (PMS) |
+| 1186310 | $35 | $35 | ✓ | F19 + F15 |
+| 1277970 | $2.75 (one-off; program $55) | $55 program (tiny) | ✓ | Engine intentionally surfaces $55 program, not $2.75/label |
+| 1277980 | $2.75 / $55 | $55 | ✓ | Same as 1277970 |
+| 1277990 | $2.75 / $55 | $55 | ✓ | Same |
+| 1278000 | $2.75 / $55 | $55 | ✓ | Same |
+| 3017583 | $9.17 / $55 | $55 | ✓ | F9 + F18 |
+| 3017584 | $9.17 / $55 | $55 | ✓ | F9 + F18 |
+| 1082570 | $8.00 | **$7.75** | Δ 3.1% (within ±5%) | Round-snap vs ceil-snap; documented |
+| 1210810 | $4.50 | $4.50 | ✓ | F10 + F8 + F18 + F11 + F12 |
+
+**Recommendation:** Engine is safe for live use on cut_vinyl, single_standard, single_sub_scope, tiny, and no_profile routes today. **Kit route requires C1 fix before live quoting of new printed/laminated kits.** The calculator is a Round 1 brief generator only; the 4-round AI validation per `governance/PRICING_VALIDATION.md` remains mandatory for all new items.
+
+**Prioritized fix order:** C1 → W4 (brief completeness) → W1 (lam passes) → W2/W3/W6 (edge cases) → W5 (override_type) → I2/I3 (prose drift).
+
+**Files Modified (this session):**
+- `.claude/PROGRESS.md` — this entry
+- `.claude/STATE.yml` — last_session + next_action updated with audit outcome
+
+**Files NOT Modified:** Per session brief, this is a read-and-report audit only. No item prices, statuses, override_types, margins, material costs, category band data, governance docs, build scripts, or `frontend/index.html` engine code changed.
+
+---
+
 ### 2026-06-01 — System: Governance Documentation + Housekeeping (CALCULATOR.md, MASTER_CONTEXT + COMPLETION_TEMPLATES updates, prose-drift cleanup)
 
 **What:** Four-part documentation and housekeeping session. (1) Created `governance/CALCULATOR.md` — the authoritative reference for the calculator system, covering scope, the full routing decision tree, all 22 flag definitions (F1–F22), what the calculator must NOT do, relationship to `governance/PRICING_VALIDATION.md`, how to update the calculator when pricing rules change, and the full 9-step session sequence for adding a new item using the calculator. (2) Updated `.claude/MASTER_CONTEXT.md` File Map to add `governance/CALCULATOR.md`, `scripts/build_calculator_config.py`, `scripts/build_materials.py`, `frontend/calculator_config.json`, and `frontend/materials.json`; added a calculator note to the Reading Order — New Item Pricing section. (3) Updated `.claude/COMPLETION_TEMPLATES.md` Update Triggers table with three new rows: calculator constants change, new material added, pricing band shifts. (4) Housekeeping cleanup: moved root `PROGRESS.md` (the 2026-05-28 pricing integrity audit report) to `audits/2026-05-28-pricing-integrity-audit.md`; updated stale per-job material total references in the `pricing_logic` frontmatter field on three items (3017583: $1.70→$1.33 + $0.28→$0.22; 3017584: $0.50→$0.35 + $0.08→$0.06; 1277970: $6.94 full-job→$4.85, added $0.24/label per current material_cost_per_unit); corrected `.claude/STATE.yml` `pending_quotes` 1210810 entry from "$50.00 for qty 10" to "$47.50 for qty 10" (10 × $4.75, the 10-19 tier price per the 2026-06-01 tier restructure).
