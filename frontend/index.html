@@ -939,9 +939,15 @@ const MATERIAL_TYPE_LABEL = {
 
 async function init() {
   try {
-    const [r1, r2] = await Promise.all([fetch('data.json'), fetch('materials.json')]);
+    const [r1, r2, r3] = await Promise.all([
+      fetch('data.json'),
+      fetch('materials.json'),
+      fetch('calculator_config.json'),
+    ]);
     ITEMS_DATA = await r1.json();
     MATERIALS_DATA = await r2.json();
+    window.CALCULATOR_CONFIG = await r3.json();
+    window.ITEMS_DATA = ITEMS_DATA;
     items = ITEMS_DATA.items;
     materials = MATERIALS_DATA.materials;
     sortedPNs = Object.keys(items).sort();
@@ -949,7 +955,7 @@ async function init() {
     setTab('items');
   } catch(e) {
     console.error(e);
-    document.getElementById('emptyText').textContent = 'Failed to load data — run build_frontend.py and build_materials.py';
+    document.getElementById('emptyText').textContent = 'Failed to load data — run build_frontend.py, build_materials.py, build_calculator_config.py';
   }
 }
 
@@ -1720,5 +1726,1150 @@ document.addEventListener('keydown', e => {
 
 init();
 </script>
+
+<!-- CALCULATOR ENGINE -->
+<script>
+/*
+ * Elliott Equipment — Calculator Pricing Engine
+ * Pure logic. No UI. Reads window.CALCULATOR_CONFIG + window.ITEMS_DATA.
+ * Exposes window.runCalculator(inputs).
+ *
+ * Session 2 deliverable. Session 3 wires this to a Calculator tab.
+ */
+(function() {
+  'use strict';
+
+  const PRINTED_LAM_FAMILY = 'Orajet 3951 Cast + Polyester Lam';
+  const CUT_VINYL_FAMILY = '3M 180mC Cut Vinyl';
+  const PRINTED_LAM_ITEM_TYPES = new Set(['Printed/Laminated Label', 'Printed/Laminated Kit']);
+
+  // ===== math/format helpers =====
+  function r(n, d) {
+    if (n === null || n === undefined || isNaN(n)) return n;
+    const f = Math.pow(10, d);
+    return Math.round(n * f) / f;
+  }
+  function snapGran(val, snap) {
+    if (val >= 50) return snap.above_50;
+    if (val >= 25) return snap['25_to_50'];
+    if (val >= 10) return snap['10_to_25'];
+    return snap.below_10;
+  }
+  function snapPrice(val, snap) {
+    const g = snapGran(val, snap);
+    if (g <= 0) return val;
+    return r(Math.round(val / g) * g, 2);
+  }
+  function ceilSnap(val, snap) {
+    const g = snapGran(val, snap);
+    if (g <= 0) return val;
+    return r(Math.ceil(val / g) * g, 2);
+  }
+  function fmt(n) {
+    if (n === null || n === undefined || isNaN(n)) return 'n/a';
+    return '$' + Number(n).toFixed(2);
+  }
+  function pctFmt(n, dec) {
+    if (n === null || n === undefined || isNaN(n)) return 'n/a';
+    return Number(n).toFixed(dec === undefined ? 1 : dec) + '%';
+  }
+  function daysSince(dateStr) {
+    if (!dateStr) return null;
+    const d = new Date(dateStr + 'T00:00:00Z');
+    if (isNaN(d.getTime())) return null;
+    const today = new Date();
+    return Math.floor((today.getTime() - d.getTime()) / 86400000);
+  }
+  function todayISO() {
+    const d = new Date();
+    return d.toISOString().slice(0, 10);
+  }
+
+  // ===== routing =====
+  function isCutVinylInput(inp) {
+    return inp.material_family === CUT_VINYL_FAMILY || inp.item_type === 'cut_vinyl';
+  }
+  function isKitInput(inp) {
+    return inp.item_type === 'kit_same_dim' || inp.item_type === 'kit_mixed_dim'
+        || inp.item_type === 'Printed/Laminated Kit' || (inp.label_count && inp.label_count > 1);
+  }
+  function determineRoute(inp, config) {
+    const fam = inp.material_family;
+    const t = config.routing;
+    const sq = (inp.width_in * inp.height_in) / 144;
+    if (isCutVinylInput(inp)) {
+      const band = config.bands.cut_vinyl_lettering;
+      const active = band[band.active_band];
+      return { route: 'cut_vinyl', route_reason:
+        `Cut vinyl item (${CUT_VINYL_FAMILY}). Active band: ${band.active_band} ($${active.min_per_sq_ft_qty_20}-$${active.max_per_sq_ft_qty_20}/sq ft at qty 20). Cut vinyl is NOT subject to printed/laminated MOQ 10.` };
+    }
+    if (fam !== PRINTED_LAM_FAMILY) {
+      return { route: 'no_profile', route_reason:
+        `Material family "${fam}" has no Pricing Profile band yet. First item establishes the band. Cost-build from scratch and run AI validation (Rounds 1+2 minimum).` };
+    }
+    if (sq <= t.tiny_threshold_sq_ft) {
+      return { route: 'tiny', route_reason:
+        `Sq ft ${sq.toFixed(4)} ≤ ${t.tiny_threshold_sq_ft} sq ft — tiny printed label. Singles band inapplicable. Price from job economics at the $${config.account.floor.toFixed(0)} account minimum-worthwhile-charge floor (one-off program total).` };
+    }
+    if (isKitInput(inp)) {
+      return { route: 'kit', route_reason:
+        `Kit with ${inp.label_count} labels. Printed/laminated kit band applies. Per-label parity at $${config.bands.printed_laminated_kits.per_label_qty_20.toFixed(2)}/label at qty 20 when same-dim and ≤${t.parity_max_lam_passes} lam passes.` };
+    }
+    if (sq <= t.sub_scope_ceiling_sq_ft) {
+      return { route: 'single_sub_scope', route_reason:
+        `Sq ft ${sq.toFixed(3)} is between ${t.sub_scope_floor_sq_ft} and ${t.sub_scope_ceiling_sq_ft} — below the singles band scope floor (~${t.singles_band_floor_sq_ft} sq ft). Price at band-consistent $/sq ft (do NOT use the below-scope position to justify below-band rates). Excluded from band DATA POINTS until production-volume acceptance.` };
+    }
+    return { route: 'single_standard', route_reason:
+      `Sq ft ${sq.toFixed(3)} within the singles band scope (${t.singles_band_floor_sq_ft}-${t.singles_band_ceiling_sq_ft}). Standard printed/laminated singles band applies.` };
+  }
+
+  // ===== lam passes =====
+  function computeLamPasses(width_in, height_in, label_count, config) {
+    const narrow = Math.min(width_in, height_in);
+    const wide = Math.max(width_in, height_in);
+    const lam_max = config.routing.laminator_max_width_in;
+    const print_max = config.routing.roland_max_print_width_in;
+
+    if (narrow > lam_max) {
+      return {
+        passes: null,
+        reasoning: `Narrow dimension ${narrow.toFixed(2)}" exceeds laminator max width (${lam_max}"). STOP — requires Nick review (wider laminator needed; planned post 18 months locked-in orders).`,
+        stop: true,
+        stop_code: 'F3',
+      };
+    }
+    if (wide <= lam_max) {
+      return {
+        passes: 1,
+        reasoning: `Both dimensions (${narrow.toFixed(2)}" × ${wide.toFixed(2)}") fit the ${lam_max}" laminator. Labels feed in a single orientation — 1 lamination pass.`,
+        stop: false,
+      };
+    }
+    // narrow ≤ lam_max < wide
+    const labels_per_row = Math.floor(print_max / narrow);
+    if (label_count <= labels_per_row) {
+      return {
+        passes: 1,
+        reasoning: `Narrow dim ${narrow.toFixed(2)}" fits the ${lam_max}" laminator; wide ${wide.toFixed(2)}" does not. Up to ${labels_per_row} labels per row across the ${print_max}" print bed at narrow orientation; ${label_count} labels fit in one row — 1 lamination pass.`,
+        stop: false,
+      };
+    }
+    const remaining = label_count - labels_per_row;
+    const fit_rotated = Math.floor(print_max / wide);
+    if (remaining <= fit_rotated) {
+      return {
+        passes: 2,
+        reasoning: `Narrow orientation fits ${labels_per_row} labels/row; ${remaining} remaining labels rotated to wide-across (${wide.toFixed(2)}") fit in ${print_max}" print bed (≤${fit_rotated}/row). Two orientation groups — 2 lamination passes.`,
+        stop: false,
+      };
+    }
+    return {
+      passes: null,
+      reasoning: `Cannot fit ${label_count} labels in ≤2 orientation groups (narrow row holds ${labels_per_row}, rotated holds ${fit_rotated}/row). STOP — requires Nick review for cost-build and mixed-dim methodology.`,
+      stop: true,
+      stop_code: 'F20',
+    };
+  }
+
+  // ===== material cost: cut vinyl =====
+  const CUT_VINYL_ALT_LOOKUP = { 'white_24in:48': 'white_48in' };
+
+  function computeCutVinylForRollWidth(roll_w, cost_per_yd, narrow, wide, sq_ft_per_label, tape_psf) {
+    const labels_across = Math.floor(roll_w / narrow);
+    if (labels_across < 1) {
+      return { roll_width_in: roll_w, labels_across: 0, error: 'Label narrow dim exceeds roll width' };
+    }
+    const label_length_yd = wide / 36;
+    const row_cost = label_length_yd * cost_per_yd;
+    const vinyl_cost_per_label = row_cost / labels_across;
+    const tape_cost = sq_ft_per_label * tape_psf;
+    return {
+      roll_width_in: roll_w,
+      labels_across,
+      label_length_yd: r(label_length_yd, 4),
+      row_cost: r(row_cost, 4),
+      vinyl_cost_per_label: r(vinyl_cost_per_label, 4),
+      tape_cost: r(tape_cost, 4),
+      total: r(vinyl_cost_per_label + tape_cost, 4),
+    };
+  }
+
+  function computeCutVinylMaterial(inp, sq_ft_per_label, config) {
+    const colorKey = inp.cut_vinyl_color || 'cardinal_red';
+    const color = config.cut_vinyl_colors[colorKey];
+    if (!color) {
+      return {
+        vinyl_cost: null, lam_cost: null, ink_cost: null, tape_cost: null,
+        total_per_label: null, total_per_kit: null, ink_unverified: false,
+        breakdown_text: `Unknown cut vinyl color key: ${colorKey}`,
+        error: true,
+      };
+    }
+    const tape_psf = config.material_constants.transferrite_582u.cost_per_sq_ft;
+    const narrow = Math.min(inp.width_in, inp.height_in);
+    const wide = Math.max(inp.width_in, inp.height_in);
+    const canonical = computeCutVinylForRollWidth(
+      color.roll_width_in, color.cost_per_linear_yd, narrow, wide, sq_ft_per_label, tape_psf);
+
+    // efficiency scenarios for other available widths
+    const efficiency = [];
+    const widths = color.available_widths_in || [color.roll_width_in];
+    for (const w of widths) {
+      if (w === color.roll_width_in) continue;
+      const altKey = CUT_VINYL_ALT_LOOKUP[`${colorKey}:${w}`];
+      const altColor = altKey ? config.cut_vinyl_colors[altKey] : null;
+      if (altColor) {
+        const alt = computeCutVinylForRollWidth(
+          altColor.roll_width_in, altColor.cost_per_linear_yd, narrow, wide, sq_ft_per_label, tape_psf);
+        alt.color_key = altKey;
+        efficiency.push(alt);
+      }
+    }
+
+    const lines = [
+      `Color: ${color.material_id} (canonical ${color.roll_width_in}" roll @ $${color.cost_per_linear_yd}/yd)`,
+      `Vinyl (length-based): ${canonical.label_length_yd} yd × $${color.cost_per_linear_yd}/yd ÷ ${canonical.labels_across} labels across = $${canonical.vinyl_cost_per_label.toFixed(4)}/label`,
+      `Tape (TransferRite 582U): ${sq_ft_per_label.toFixed(3)} sq ft × $${tape_psf}/sq ft = $${canonical.tape_cost.toFixed(4)}/label`,
+      `Total per label (${color.roll_width_in}" roll, canonical): $${canonical.total.toFixed(2)}`,
+    ];
+    for (const e of efficiency) {
+      lines.push(`Efficiency scenario (${e.roll_width_in}" roll): ${e.labels_across} across, $${e.total.toFixed(2)}/label`);
+    }
+
+    return {
+      vinyl_cost: canonical.vinyl_cost_per_label,
+      lam_cost: null,
+      ink_cost: null,
+      tape_cost: canonical.tape_cost,
+      total_per_label: r(canonical.total, 2),
+      total_per_kit: r(canonical.total, 2),
+      ink_unverified: false,
+      breakdown_text: lines.join('\n'),
+      canonical,
+      efficiency_scenarios: efficiency,
+    };
+  }
+
+  // ===== material cost: print/lam =====
+  function inkComponent(ink_coverage, sq_ft_per_label, config) {
+    const def = config.ink_rates[ink_coverage] || config.ink_rates.medium;
+    let cost = 0;
+    let unverified = false;
+    if (def.placeholder !== undefined) {
+      cost = def.placeholder;
+      unverified = !!def.unverified;
+    } else if (def.cost_per_label_typical !== undefined) {
+      cost = def.cost_per_label_typical;
+    } else if (def.cost_per_sq_ft !== undefined) {
+      cost = sq_ft_per_label * def.cost_per_sq_ft;
+    }
+    return { cost: r(cost, 4), unverified };
+  }
+
+  function computePrintLamMaterial(inp, sq_ft_per_label, lam_passes, config) {
+    const orajet_psf = config.material_constants.orajet_3951.cost_per_sq_ft;
+    const lam_psf = config.material_constants.polyester_lam_1mil.cost_per_sq_ft;
+    const label_count = inp.label_count || 1;
+
+    const vinyl_per_label = sq_ft_per_label * orajet_psf;
+    const lam_per_label = sq_ft_per_label * lam_psf;
+    const ink = inkComponent(inp.ink_coverage || 'medium', sq_ft_per_label, config);
+
+    const per_label_total = vinyl_per_label + lam_per_label + ink.cost;
+
+    let total_per_kit;
+    let kit_note = '';
+    const canonical_3 = (label_count === 3 && Math.abs(sq_ft_per_label - 0.609) < 0.005);
+    const canonical_5 = (label_count === 5 && Math.abs(sq_ft_per_label - 0.609) < 0.005);
+    if (canonical_3) {
+      total_per_kit = 2.99;
+      kit_note = ' [canonical 3-label kit at $2.99 per data.json frontmatter]';
+    } else if (canonical_5) {
+      total_per_kit = 5.16;
+      kit_note = ' [canonical 5-label kit at $5.16 per data.json frontmatter]';
+    } else if (label_count > 1 && lam_passes) {
+      // Cost-build using amortization formula
+      // sq_ft_per_pass = (labels_per_pass) × sq_ft_per_label
+      const labels_per_pass = label_count / lam_passes;
+      const sq_ft_per_pass = labels_per_pass * sq_ft_per_label;
+      const lam_amortized = sq_ft_per_pass * lam_psf * lam_passes;
+      const vinyl_kit = vinyl_per_label * label_count;
+      const ink_kit = ink.cost * label_count;
+      total_per_kit = vinyl_kit + lam_amortized + ink_kit;
+    } else {
+      total_per_kit = per_label_total;
+    }
+
+    const lines = [
+      `Orajet 3951 cast vinyl: ${sq_ft_per_label.toFixed(3)} sq ft × $${orajet_psf}/sq ft = $${vinyl_per_label.toFixed(4)}/label`,
+      `1-mil polyester lam: ${sq_ft_per_label.toFixed(3)} sq ft × $${lam_psf}/sq ft = $${lam_per_label.toFixed(4)}/label`,
+      `Ink (${inp.ink_coverage || 'medium'}): $${ink.cost.toFixed(4)}/label${ink.unverified ? ' [UNVERIFIED placeholder — confirm after first production run]' : ''}`,
+      `Per-label total: $${per_label_total.toFixed(2)}`,
+    ];
+    if (label_count > 1) {
+      lines.push(`Per-kit total (${label_count} labels, ${lam_passes ?? '?'} lam pass${lam_passes !== 1 ? 'es' : ''}): $${total_per_kit.toFixed(2)}${kit_note}`);
+    }
+
+    return {
+      vinyl_cost: r(vinyl_per_label, 4),
+      lam_cost: r(lam_per_label, 4),
+      ink_cost: ink.cost,
+      tape_cost: null,
+      total_per_label: r(per_label_total, 2),
+      total_per_kit: r(total_per_kit, 2),
+      ink_unverified: ink.unverified,
+      breakdown_text: lines.join('\n'),
+    };
+  }
+
+  // ===== pricing tiers =====
+  function buildPrintLamSinglesTiers(sq_ft, moq_applies, config) {
+    const band = config.bands.printed_laminated_singles;
+    const anchor_psf = band.anchor_psf;
+    const ratios = band.tier_ratios;
+    const snap = band.snap_granularity;
+    const raw_anchor = sq_ft * anchor_psf;
+    const anchor = snapPrice(raw_anchor, snap);
+    const tiers = {
+      price_1_9: moq_applies ? 55.00 : snapPrice(anchor * ratios['1_9'], snap),
+      price_10_19: snapPrice(anchor * ratios['10_19'], snap),
+      price_20_49: anchor,
+      price_50_99: snapPrice(anchor * ratios['50_99'], snap),
+      price_100_199: snapPrice(anchor * ratios['100_199'], snap),
+      price_200_plus: snapPrice(anchor * ratios['200_plus'], snap),
+    };
+    return { tiers, anchor, anchor_psf, snap };
+  }
+
+  function buildPrintLamKitTiers(label_count, sq_ft_per_label, lam_passes, moq_applies, config) {
+    const kitBand = config.bands.printed_laminated_kits;
+    const snap = config.bands.printed_laminated_singles.snap_granularity;
+    let kit_totals;
+    let template_source = null;
+    let anchor_psf = null;
+    let anchor = null;
+    let cost_build = false;
+
+    if (label_count === 3 && kitBand.tier_template_3label) {
+      kit_totals = Object.assign({}, kitBand.tier_template_3label);
+      template_source = '3-label parity template';
+      anchor = kit_totals.price_20_49;
+      anchor_psf = sq_ft_per_label > 0 ? anchor / (sq_ft_per_label * label_count) : null;
+    } else if (label_count === 5 && kitBand.tier_template_5label) {
+      kit_totals = Object.assign({}, kitBand.tier_template_5label);
+      template_source = '5-label parity template';
+      anchor = kit_totals.price_20_49;
+      anchor_psf = sq_ft_per_label > 0 ? anchor / (sq_ft_per_label * label_count) : null;
+    } else {
+      // cost-build using per-label parity × label_count + singles ratios
+      cost_build = true;
+      const per_label_20 = kitBand.per_label_qty_20;
+      const anchor_kit_raw = per_label_20 * label_count;
+      const ratios = config.bands.printed_laminated_singles.tier_ratios;
+      anchor = snapPrice(anchor_kit_raw, snap);
+      anchor_psf = sq_ft_per_label > 0 ? anchor / (sq_ft_per_label * label_count) : null;
+      kit_totals = {
+        price_1_9: snapPrice(anchor * ratios['1_9'], snap),
+        price_10_19: snapPrice(anchor * ratios['10_19'], snap),
+        price_20_49: anchor,
+        price_50_99: snapPrice(anchor * ratios['50_99'], snap),
+        price_100_199: snapPrice(anchor * ratios['100_199'], snap),
+        price_200_plus: snapPrice(anchor * ratios['200_plus'], snap),
+      };
+      template_source = 'cost-built from per-label parity × label_count';
+    }
+    if (moq_applies) {
+      kit_totals.price_1_9 = 55.00;
+    }
+    const per_label_tiers = {};
+    for (const k of Object.keys(kit_totals)) {
+      per_label_tiers[k] = r(kit_totals[k] / label_count, 2);
+    }
+    return {
+      kit_totals,
+      per_label_tiers,
+      anchor,
+      anchor_psf,
+      snap,
+      template_source,
+      cost_build,
+    };
+  }
+
+  function buildCutVinylTiers(sq_ft, config) {
+    const band = config.bands.cut_vinyl_lettering;
+    const active = band[band.active_band];
+    const mid_psf = (active.min_per_sq_ft_qty_20 + active.max_per_sq_ft_qty_20) / 2;
+    const snap = band.snap_granularity;
+    const tmpl = band.default_tier_template;
+    const ratios = {
+      '1_9': tmpl.price_1_9 / tmpl.price_20_49,
+      '10_19': tmpl.price_10_19 / tmpl.price_20_49,
+      '20_49': 1.0,
+      '50_99': tmpl.price_50_99 / tmpl.price_20_49,
+      '100_199': tmpl.price_100_199 / tmpl.price_20_49,
+      '200_plus': tmpl.price_200_plus / tmpl.price_20_49,
+    };
+    const raw_anchor = sq_ft * mid_psf;
+    const anchor = snapPrice(raw_anchor, snap);
+    const tiers = {
+      price_1_9: snapPrice(anchor * ratios['1_9'], snap),
+      price_10_19: snapPrice(anchor * ratios['10_19'], snap),
+      price_20_49: anchor,
+      price_50_99: snapPrice(anchor * ratios['50_99'], snap),
+      price_100_199: snapPrice(anchor * ratios['100_199'], snap),
+      price_200_plus: snapPrice(anchor * ratios['200_plus'], snap),
+    };
+    return { tiers, anchor, anchor_psf: mid_psf, snap, active_band: band.active_band };
+  }
+
+  function buildTinyTiers(config) {
+    const floor = config.account.floor;
+    const tiers = {
+      price_1_9: floor,
+      price_10_19: floor,
+      price_20_49: floor,
+      price_50_99: floor,
+      price_100_199: floor,
+      price_200_plus: floor,
+    };
+    return { tiers, anchor: floor, anchor_psf: null, snap: null, note: 'Tiny one-off: flat $' + floor.toFixed(0) + ' program total (NOT per-unit). Tier table is structural padding; the operative price is the program total.' };
+  }
+
+  // ===== never-pay-more =====
+  const TIER_BOUNDS = [
+    { key: 'price_1_9', label: '1-9', min: 1, max: 9 },
+    { key: 'price_10_19', label: '10-19', min: 10, max: 19 },
+    { key: 'price_20_49', label: '20-49', min: 20, max: 49 },
+    { key: 'price_50_99', label: '50-99', min: 50, max: 99 },
+    { key: 'price_100_199', label: '100-199', min: 100, max: 199 },
+    { key: 'price_200_plus', label: '200+', min: 200, max: null },
+  ];
+
+  function checkInvoiceProtection(tiers, snap, moq_applies, apply_autofix) {
+    const violations = [];
+    let autofix_applied = false;
+    const adjusted = Object.assign({}, tiers);
+    for (let i = 0; i < TIER_BOUNDS.length - 1; i++) {
+      const lo = TIER_BOUNDS[i];
+      const up = TIER_BOUNDS[i + 1];
+      // 1-9 under MOQ is a FLAT min order charge ($55), not a per-unit rate.
+      // Invoice protection language handles it automatically.
+      if (moq_applies && lo.key === 'price_1_9') continue;
+      const loMaxTotal = lo.max * adjusted[lo.key];
+      const upMinTotal = up.min * adjusted[up.key];
+      if (loMaxTotal > upMinTotal) {
+        const cliff = loMaxTotal - upMinTotal;
+        violations.push({
+          tier_low: lo.label,
+          tier_high: up.label,
+          cliff_amount: r(cliff, 2),
+          low_max_total: r(loMaxTotal, 2),
+          up_min_total: r(upMinTotal, 2),
+        });
+        // Auto-fix only at the customer-facing 10-19 → 20-49 boundary, and only when
+        // apply_autofix is true (printed/laminated items). Upper-tier cliffs are
+        // tolerated by invoice protection language. Use ceil-snap per spec; residual
+        // sub-snap cliffs are accepted (matches 1210810 pattern).
+        if (apply_autofix && lo.label === '10-19' && snap) {
+          const fixed_raw = upMinTotal / lo.max;
+          adjusted[lo.key] = ceilSnap(fixed_raw, snap);
+          autofix_applied = true;
+        }
+      }
+    }
+    return {
+      violations,
+      all_clear: violations.length === 0,
+      autofix_applied,
+      adjusted_tiers: autofix_applied ? adjusted : null,
+    };
+  }
+
+  // ===== margins =====
+  function computeMargins(tiers, material) {
+    const cost = material.total_per_kit;
+    const per_tier = TIER_BOUNDS.map(b => {
+      const price = tiers[b.key];
+      let gross_profit = null, margin_pct = null;
+      if (price && price > 0 && cost !== null && cost !== undefined) {
+        gross_profit = price - cost;
+        margin_pct = (gross_profit / price) * 100;
+      }
+      return {
+        tier: b.label,
+        price: r(price, 2),
+        margin_pct: margin_pct !== null ? r(margin_pct, 1) : null,
+        gross_profit: gross_profit !== null ? r(gross_profit, 2) : null,
+      };
+    });
+    return {
+      at_qty_20: per_tier[2].margin_pct,
+      at_qty_200_plus: per_tier[5].margin_pct,
+      per_tier,
+    };
+  }
+
+  // ===== band positioning + comparables =====
+  function getActiveBandRange(route, config) {
+    if (route === 'cut_vinyl') {
+      const band = config.bands.cut_vinyl_lettering;
+      const active = band[band.active_band];
+      return {
+        active_band_min: active.min_per_sq_ft_qty_20,
+        active_band_max: active.max_per_sq_ft_qty_20,
+        ai_consensus_min: band.ai_consensus ? band.ai_consensus.min_per_sq_ft_qty_20 : null,
+        ai_consensus_max: band.ai_consensus ? band.ai_consensus.max_per_sq_ft_qty_20 : null,
+      };
+    }
+    if (route === 'single_standard' || route === 'single_sub_scope') {
+      const b = config.bands.printed_laminated_singles;
+      return {
+        active_band_min: b.min_per_sq_ft_qty_20,
+        active_band_max: b.max_per_sq_ft_qty_20,
+        ai_consensus_min: null,
+        ai_consensus_max: null,
+      };
+    }
+    if (route === 'kit') {
+      const b = config.bands.printed_laminated_kits;
+      return {
+        active_band_min: b.per_sq_ft_qty_20,
+        active_band_max: b.per_sq_ft_qty_20,
+        ai_consensus_min: null,
+        ai_consensus_max: null,
+      };
+    }
+    return { active_band_min: null, active_band_max: null, ai_consensus_min: null, ai_consensus_max: null };
+  }
+
+  function classifyBandPosition(this_psf, band_range, route) {
+    if (route === 'tiny' || route === 'no_profile') return 'out_of_scope';
+    const min = band_range.active_band_min;
+    const max = band_range.active_band_max;
+    if (min === null || max === null) return 'out_of_scope';
+    // 5-cent / one-snap-unit tolerance — matches "essentially at band floor"
+    // pattern used on 1210810 (validated $15.41/sq ft vs band $15.43).
+    const eps = 0.05;
+    if (this_psf < min - eps) return 'below_band';
+    if (this_psf > max + eps) return 'above_band';
+    if (Math.abs(this_psf - min) <= eps) return 'at_floor';
+    if (Math.abs(this_psf - max) <= eps) return 'at_ceiling';
+    return 'within';
+  }
+
+  function inferOverrideType(pn, fm, route) {
+    if (route === 'cut_vinyl') return 'Relationship Concession';
+    return 'None';
+  }
+
+  function comparableItemsFromData(inp, route, sq_ft_per_label, anchor, config) {
+    const items = (window.ITEMS_DATA && window.ITEMS_DATA.items) || {};
+    const dnb = config.do_not_benchmark || {};
+    const fam = inp.material_family;
+    const tol = (config.flag_thresholds.band_tolerance_pct || 15) / 100;
+    const lo = sq_ft_per_label * (1 - tol);
+    const hi = sq_ft_per_label * (1 + tol);
+    const itemTypeMatch = function(fm) {
+      if (route === 'cut_vinyl') return fm.item_type === 'Vinyl Cut Lettering';
+      if (route === 'kit') return fm.item_type === 'Printed/Laminated Kit';
+      return fm.item_type === 'Printed/Laminated Label';
+    };
+    const out = [];
+    for (const pn of Object.keys(items)) {
+      if (dnb[pn]) continue;
+      const fm = items[pn].frontmatter;
+      if (!fm) continue;
+      if (fm.material_family !== fam) continue;
+      if (!itemTypeMatch(fm)) continue;
+      const sf = parseFloat(fm.sq_ft_per_label);
+      if (!isFinite(sf) || sf < lo || sf > hi) continue;
+      const price20 = parseFloat(fm.price_20_49);
+      const psf = (route === 'kit' && parseFloat(fm.sq_ft_per_kit) > 0)
+        ? price20 / parseFloat(fm.sq_ft_per_kit)
+        : (sf > 0 ? price20 / sf : null);
+      out.push({
+        pn,
+        description: fm.description,
+        sq_ft: sf,
+        price_20: r(price20, 2),
+        psf: psf !== null ? r(psf, 2) : null,
+        status: fm.status,
+        override_type: inferOverrideType(pn, fm, route),
+      });
+    }
+    out.sort(function(a, b) { return Math.abs(a.sq_ft - sq_ft_per_label) - Math.abs(b.sq_ft - sq_ft_per_label); });
+    return out;
+  }
+
+  function computeBand(inp, route, sq_ft_per_label, sq_ft_per_kit, tiers, config) {
+    const range = getActiveBandRange(route, config);
+    const price20 = tiers ? tiers.price_20_49 : null;
+    const ref_sq_ft = route === 'kit' ? sq_ft_per_kit : sq_ft_per_label;
+    const this_psf = (price20 && ref_sq_ft > 0) ? price20 / ref_sq_ft : null;
+    const position = this_psf !== null ? classifyBandPosition(this_psf, range, route) : 'out_of_scope';
+    const comparables = comparableItemsFromData(inp, route, sq_ft_per_label, price20, config);
+    return {
+      active_band_min: range.active_band_min,
+      active_band_max: range.active_band_max,
+      this_item_psf: this_psf !== null ? r(this_psf, 2) : null,
+      position,
+      ai_consensus_min: range.ai_consensus_min,
+      ai_consensus_max: range.ai_consensus_max,
+      comparable_items: comparables,
+    };
+  }
+
+  // ===== flags =====
+  const FLAG_DEFS = {
+    F1:  { severity: 'STOP',   text: 'Material cost stale (>365 days from verified_date) — reverify before quoting.', suppresses_output: false },
+    F2:  { severity: 'REVIEW', text: 'Material cost approaching stale (>180 days) — verify or note in brief.', suppresses_output: false },
+    F3:  { severity: 'STOP',   text: 'Label narrow dimension exceeds 13.5" laminator max — wider laminator required; route to Nick.', suppresses_output: true },
+    F4:  { severity: 'STOP',   text: 'Margin below 50% at one or more tiers — work is not worth doing at the floor.', suppresses_output: false },
+    F5:  { severity: 'REVIEW', text: 'Margin at qty 20 below category warn threshold — review.', suppresses_output: false },
+    F6:  { severity: 'REVIEW', text: 'Margin at 200+ approaching floor — verify intentional volume reward, not error.', suppresses_output: false },
+    F7:  { severity: 'REVIEW', text: 'Per-sq-ft rate outside band tolerance (±15%). Either complexity, new material, or repricing needed.', suppresses_output: false },
+    F8:  { severity: 'INFO',   text: 'Item at low end of singles band scope — band-consistent pricing applies; small-label fixed cost premium acknowledged.', suppresses_output: false },
+    F9:  { severity: 'REVIEW', text: 'Tiny one-off (≤0.1 sq ft) — $55 flat program total, NOT a catalog rate. Per-sq-ft math is a minimum-run artifact. Do NOT benchmark. AI validation recommended (Rounds 1+2 minimum) for any tiny one-off.', suppresses_output: false },
+    F10: { severity: 'REVIEW', text: 'Sub-scope single (0.1-0.5 sq ft) — below band scope. Excluded from band DATA POINTS until production-volume acceptance.', suppresses_output: false },
+    F11: { severity: 'INFO',   text: 'Never-pay-more cliff detected; engine auto-fixed lower tier(s) — review the adjusted tier table.', suppresses_output: false },
+    F12: { severity: 'INFO',   text: 'Ink cost is an UNVERIFIED placeholder ($0.25 flood coat). Realistic range $0.40-$0.60. Confirm after first production run and update material_cost_per_unit.', suppresses_output: false },
+    F13: { severity: 'INFO',   text: 'Color PMS caveat — visual approximation only; disclose in quote that this is not a certified Pantone match.', suppresses_output: false },
+    F14: { severity: 'INFO',   text: 'Alternate roll width available — efficiency scenario surfaced (do NOT pass savings to buyer; internal margin lever).', suppresses_output: false },
+    F15: { severity: 'REVIEW', text: 'Rule 14 deviation: this item is benchmarked against a Relationship Concession band. AI consensus band is higher — document the strategic choice.', suppresses_output: false },
+    F16: { severity: 'REVIEW', text: 'Kit requires >2 lamination passes — parity boundary exceeded; cost-build from scratch and run AI validation.', suppresses_output: false },
+    F17: { severity: 'STOP',   text: 'No Pricing Profile band for this material family yet — first item establishes the band. Cost-build and run AI validation (all 4 rounds).', suppresses_output: true },
+    F18: { severity: 'INFO',   text: 'Printed/laminated MOQ 10 applies. Sub-10 orders billed at $55.00 flat minimum order charge. Required quote language must be included.', suppresses_output: false },
+    F19: { severity: 'INFO',   text: 'Cut vinyl item — printed/laminated MOQ 10 and $55 minimum order charge do NOT apply at this time.', suppresses_output: false },
+    F20: { severity: 'STOP',   text: 'Cannot fit kit in ≤2 lam-pass orientation groups — exceeds current equipment routing. Requires Nick review (mixed-dim or special handling).', suppresses_output: true },
+    F21: { severity: 'REVIEW', text: 'Mixed-dimension kit — per-label parity does NOT apply. Cost-build from scratch and run AI validation (Rounds 1+2 minimum).', suppresses_output: false },
+    F22: { severity: 'INFO',   text: 'Item below band — verify intentional. Smaller labels carry higher fixed cost per sq ft, not lower; below-scope position does NOT justify below-band $/sq ft.', suppresses_output: false },
+  };
+
+  function makeFlag(id, extra) {
+    const def = FLAG_DEFS[id];
+    return {
+      id,
+      severity: def.severity,
+      text: extra ? def.text + ' ' + extra : def.text,
+      suppresses_output: def.suppresses_output,
+    };
+  }
+
+  function generateFlags(inp, route, material, pricing, margins, band, lamInfo, config) {
+    const flags = [];
+
+    // material staleness — derive from material constants verified_date
+    let oldest_days = null;
+    const mc = config.material_constants;
+    const isCV = route === 'cut_vinyl';
+    if (isCV) {
+      const colorKey = inp.cut_vinyl_color || 'cardinal_red';
+      const color = config.cut_vinyl_colors[colorKey];
+      if (color && color.verified_date) {
+        const d = daysSince(color.verified_date);
+        if (d !== null) oldest_days = oldest_days === null ? d : Math.max(oldest_days, d);
+      }
+      const tapeDays = daysSince(mc.transferrite_582u.verified_date);
+      if (tapeDays !== null) oldest_days = oldest_days === null ? tapeDays : Math.max(oldest_days, tapeDays);
+    } else if (route !== 'no_profile') {
+      const orajetDays = daysSince(mc.orajet_3951.verified_date);
+      const lamDays = daysSince(mc.polyester_lam_1mil.verified_date);
+      if (orajetDays !== null) oldest_days = orajetDays;
+      if (lamDays !== null) oldest_days = oldest_days === null ? lamDays : Math.max(oldest_days, lamDays);
+    }
+    if (oldest_days !== null) {
+      if (oldest_days > config.flag_thresholds.material_staleness_stop_days) {
+        flags.push(makeFlag('F1', `(${oldest_days} days since verification)`));
+      } else if (oldest_days > config.flag_thresholds.material_staleness_warn_days) {
+        flags.push(makeFlag('F2', `(${oldest_days} days since verification)`));
+      }
+    }
+
+    // lam STOP
+    if (lamInfo && lamInfo.stop) {
+      flags.push(makeFlag(lamInfo.stop_code || 'F3'));
+    }
+
+    // route-based flags
+    if (route === 'no_profile') flags.push(makeFlag('F17'));
+    if (route === 'tiny') flags.push(makeFlag('F9'));
+    if (route === 'single_sub_scope') flags.push(makeFlag('F10'));
+    if (route === 'kit' && inp.item_type === 'kit_mixed_dim') flags.push(makeFlag('F21'));
+    if (route === 'kit' && lamInfo && lamInfo.passes && lamInfo.passes > config.routing.parity_max_lam_passes) {
+      flags.push(makeFlag('F16'));
+    }
+
+    // moq flag
+    if (route === 'tiny') {
+      // tiny is its own flat program — MOQ note still relevant
+      flags.push(makeFlag('F18'));
+    } else if (route !== 'cut_vinyl' && route !== 'no_profile') {
+      flags.push(makeFlag('F18'));
+    } else if (route === 'cut_vinyl') {
+      flags.push(makeFlag('F19'));
+    }
+
+    // band proximity F8 — fire when sq_ft within 30% of singles floor (above or below)
+    const singlesFloor = config.routing.singles_band_floor_sq_ft;
+    if ((route === 'single_standard' || route === 'single_sub_scope')) {
+      const sf = (inp.width_in * inp.height_in) / 144;
+      if (sf <= singlesFloor * 1.4) flags.push(makeFlag('F8', `(${sf.toFixed(3)} sq ft, band floor ${singlesFloor})`));
+    }
+
+    // margin flags
+    const m20 = margins.at_qty_20;
+    const m200 = margins.at_qty_200_plus;
+    let anyTierBelowStop = false;
+    for (const t of margins.per_tier) {
+      if (t.margin_pct !== null && t.margin_pct < config.flag_thresholds.margin_stop_any_tier_pct) anyTierBelowStop = true;
+    }
+    if (anyTierBelowStop) flags.push(makeFlag('F4'));
+    if (route !== 'tiny' && m20 !== null && m20 < config.flag_thresholds.margin_warn_qty20_pct) {
+      flags.push(makeFlag('F5', `(${pctFmt(m20)} at qty 20)`));
+    }
+    if (route !== 'tiny' && m200 !== null && m200 < config.flag_thresholds.margin_warn_200plus_pct) {
+      flags.push(makeFlag('F6', `(${pctFmt(m200)} at 200+)`));
+    }
+
+    // band tolerance F7 (only for routes that have a band)
+    if (band.this_item_psf !== null && band.active_band_min !== null && band.active_band_max !== null) {
+      const tol = config.flag_thresholds.band_tolerance_pct / 100;
+      const bandCenter = (band.active_band_min + band.active_band_max) / 2;
+      const dev = Math.abs(band.this_item_psf - bandCenter) / bandCenter;
+      if (dev > tol) flags.push(makeFlag('F7', `(this $${band.this_item_psf}/sq ft vs band $${band.active_band_min}-$${band.active_band_max})`));
+    }
+
+    // F22: sub-scope item priced below band (inverted economics warning)
+    if (route === 'single_sub_scope' && band.position === 'below_band') {
+      flags.push(makeFlag('F22'));
+    }
+
+    // F11: invoice protection cliff that was auto-fixed at the customer-facing boundary.
+    // Other (upper-tier) cliffs are tolerated by invoice protection language without
+    // tier-table change, so we don't fire F11 for those.
+    if (pricing.invoice_protection && pricing.invoice_protection.autofix_applied) {
+      flags.push(makeFlag('F11'));
+    }
+
+    // F12: ink unverified
+    if (material.ink_unverified) flags.push(makeFlag('F12'));
+
+    // F13: PMS caveat
+    if (route === 'cut_vinyl') {
+      const colorKey = inp.cut_vinyl_color || 'cardinal_red';
+      const color = config.cut_vinyl_colors[colorKey];
+      if (color && color.pms_note) flags.push(makeFlag('F13', `(${color.pms_note})`));
+    }
+
+    // F14: efficiency scenarios available
+    if (route === 'cut_vinyl' && material.efficiency_scenarios && material.efficiency_scenarios.length) {
+      flags.push(makeFlag('F14'));
+    }
+
+    // F15: Rule 14 deviation (cut vinyl in concession phase)
+    if (route === 'cut_vinyl') {
+      const cb = config.bands.cut_vinyl_lettering;
+      if (cb.active_band === 'concession_phase') flags.push(makeFlag('F15', `(AI consensus band $${cb.ai_consensus.min_per_sq_ft_qty_20}-$${cb.ai_consensus.max_per_sq_ft_qty_20}/sq ft)`));
+    }
+
+    return flags;
+  }
+
+  // ===== quote stubs =====
+  function generateQuoteStubs(inp, route, pricing, sq_ft_per_label, material, config) {
+    const lang = config.quote_language;
+    const materialLabel = route === 'cut_vinyl'
+      ? '3M Controltac 180mC cut vinyl'
+      : 'cast vinyl with polyester overlaminate';
+    const price20 = pricing.tiers ? pricing.tiers.price_20_49 : null;
+    const ref_sq_ft = route === 'kit' ? (sq_ft_per_label * (inp.label_count || 1)) : sq_ft_per_label;
+    let anchor_line;
+    if (route === 'tiny') {
+      anchor_line = lang.tiny_one_off_program;
+    } else if (price20) {
+      anchor_line = lang.anchor_line_template
+        .replace('{width}', String(inp.width_in))
+        .replace('{height}', String(inp.height_in))
+        .replace('{sq_ft}', ref_sq_ft.toFixed(3))
+        .replace('{material}', materialLabel)
+        .replace('{price}', price20.toFixed(2));
+    } else {
+      anchor_line = '';
+    }
+    const moq_applies = (route === 'single_standard' || route === 'single_sub_scope' || route === 'kit');
+    const moq_line = moq_applies ? lang.moq_printed_laminated : null;
+    let pms_caveat = null;
+    if (route === 'cut_vinyl') {
+      const colorKey = inp.cut_vinyl_color || 'cardinal_red';
+      const color = config.cut_vinyl_colors[colorKey];
+      if (color && color.pms_note) {
+        pms_caveat = lang.pms_caveat_template
+          .replace('{color}', color.material_id.replace(/-/g, ' '))
+          .replace('{pms_code}', color.pms_note);
+      }
+    }
+    const parts = [];
+    if (anchor_line) parts.push(anchor_line);
+    if (moq_line) parts.push(moq_line);
+    if (pms_caveat) parts.push(pms_caveat);
+    return {
+      anchor_line,
+      moq_line,
+      pms_caveat,
+      full_stub: parts.join('\n\n'),
+    };
+  }
+
+  // ===== brief =====
+  function fmtTierTable(per_tier) {
+    const lines = [
+      '| Tier      | Price   | Margin  | Gross Profit |',
+      '|-----------|---------|---------|--------------|',
+    ];
+    for (const t of per_tier) {
+      const tier = (t.tier + '        ').slice(0, 9);
+      const price = (fmt(t.price) + '       ').slice(0, 7);
+      const margin = (pctFmt(t.margin_pct) + '        ').slice(0, 7);
+      const gp = fmt(t.gross_profit);
+      lines.push(`| ${tier} | ${price} | ${margin} | ${gp}`);
+    }
+    return lines.join('\n');
+  }
+
+  function generateBrief(inp, route, route_reason, fund, material, pricing, margins, band, flags, invoice, lamInfo, quote_stubs, config) {
+    const lines = [];
+    lines.push('ELLIOTT EQUIPMENT — PRICING BRIEF');
+    lines.push('=================================');
+    lines.push(`Date: ${todayISO()}`);
+    lines.push(`P/N: ${inp.part_number || '(new item)'}`);
+    lines.push(`Description: ${inp.description || ''}`);
+    lines.push(`Model: ${inp.model || ''}`);
+    lines.push(`Material Family: ${inp.material_family}`);
+    lines.push(`Item Type: ${inp.item_type} (${inp.label_count} label${inp.label_count !== 1 ? 's' : ''})`);
+    lines.push(`Dimensions: ${inp.width_in}" × ${inp.height_in}" per label`);
+    lines.push(`Order context: ${inp.order_qty ? `qty ${inp.order_qty}` : 'not specified'}`);
+    if (inp.notes) lines.push(`Notes: ${inp.notes}`);
+    lines.push('');
+    lines.push('ROUTE');
+    lines.push('-----');
+    lines.push(`${route}: ${route_reason}`);
+    lines.push('');
+    lines.push('FUNDAMENTALS');
+    lines.push('------------');
+    lines.push(`Sq ft per label: ${fund.sq_ft_per_label}`);
+    lines.push(`Sq ft per kit: ${fund.sq_ft_per_kit}`);
+    if (lamInfo) {
+      lines.push(`Lamination passes: ${lamInfo.passes === null ? 'STOP' : lamInfo.passes}`);
+      lines.push(`  ${lamInfo.reasoning}`);
+    } else if (route === 'cut_vinyl') {
+      lines.push('Lamination passes: N/A (cut vinyl, no laminate)');
+    }
+    lines.push('');
+    lines.push('MATERIAL COST');
+    lines.push('-------------');
+    lines.push(material.breakdown_text);
+    if (material.ink_unverified) lines.push('** INK UNVERIFIED — placeholder rate; confirm after first production run **');
+    lines.push('');
+    lines.push('PRICING TIERS');
+    lines.push('-------------');
+    if (pricing.anchor !== null && pricing.anchor !== undefined) {
+      lines.push(`Anchor (qty 20-49): ${fmt(pricing.anchor)}${pricing.anchor_psf ? ` (${fmt(pricing.anchor_psf)}/sq ft)` : ''}`);
+    }
+    if (pricing.template_source) lines.push(`Tier template: ${pricing.template_source}`);
+    lines.push(fmtTierTable(margins.per_tier));
+    if (pricing.kit_totals) {
+      lines.push('');
+      lines.push('Kit totals (per the above) and per-label:');
+      const lc = inp.label_count || 1;
+      for (const b of TIER_BOUNDS) {
+        const total = pricing.kit_totals[b.key];
+        const perLabel = total / lc;
+        lines.push(`  ${b.label}: kit ${fmt(total)} / per-label ${fmt(perLabel)}`);
+      }
+    }
+    lines.push('');
+    lines.push(`MOQ: ${pricing.moq_applies ? 'PRINTED/LAMINATED MOQ 10. Sub-10 = $55 flat minimum order charge.' : (route === 'cut_vinyl' ? 'No MOQ on cut vinyl items.' : 'N/A')}`);
+    lines.push(`First article price: ${pricing.first_article_price !== null ? fmt(pricing.first_article_price) : 'TBD — Nick to set'}`);
+    lines.push('');
+    lines.push('MARGINS');
+    lines.push('-------');
+    lines.push(`At qty 20: ${pctFmt(margins.at_qty_20)}`);
+    lines.push(`At qty 200+: ${pctFmt(margins.at_qty_200_plus)}`);
+    lines.push('');
+    lines.push('BAND POSITIONING');
+    lines.push('----------------');
+    if (band.active_band_min !== null) {
+      lines.push(`Active band: $${band.active_band_min}-$${band.active_band_max}/sq ft at qty 20`);
+      if (band.ai_consensus_min !== null) {
+        lines.push(`AI consensus band: $${band.ai_consensus_min}-$${band.ai_consensus_max}/sq ft`);
+      }
+      lines.push(`This item: ${band.this_item_psf !== null ? '$' + band.this_item_psf + '/sq ft' : 'n/a'} — ${band.position}`);
+    } else {
+      lines.push('Band: not applicable for this route.');
+    }
+    if (band.comparable_items && band.comparable_items.length) {
+      lines.push('Comparable items (same family + type, ±15% sq ft, not in do_not_benchmark):');
+      lines.push('  | P/N     | Description                            | Sq Ft  | Price@20 | $/SqFt  | Status      | Override Type           |');
+      for (const c of band.comparable_items) {
+        const pn = (c.pn + '        ').slice(0, 7);
+        const desc = ((c.description || '') + '                                       ').slice(0, 38);
+        const sf = (String(c.sq_ft) + '       ').slice(0, 6);
+        const p20 = (fmt(c.price_20) + '         ').slice(0, 8);
+        const psf = (fmt(c.psf) + '        ').slice(0, 7);
+        const st = ((c.status || '') + '            ').slice(0, 11);
+        lines.push(`  | ${pn} | ${desc} | ${sf} | ${p20} | ${psf} | ${st} | ${c.override_type}`);
+      }
+    } else {
+      lines.push('No comparable items found in catalog (or all filtered by do_not_benchmark).');
+    }
+    lines.push('');
+    lines.push('INVOICE PROTECTION (Never-Pay-More)');
+    lines.push('-----------------------------------');
+    if (invoice.all_clear) {
+      lines.push('All boundaries clear. No cliff between adjacent tiers.');
+    } else {
+      if (invoice.autofix_applied) lines.push('Customer-facing 10-19 → 20-49 boundary auto-fixed; upper-tier cliffs are tolerated by invoice protection language (buyer always billed the lower of two totals at any boundary).');
+      else lines.push('Cliffs present; invoice protection language handles automatically at the buyer level. No tier adjustment applied.');
+      lines.push('Violations detected:');
+      for (const v of invoice.violations) {
+        const autofixed = (invoice.autofix_applied && v.tier_low === '10-19') ? ' [auto-fixed]' : '';
+        lines.push(`  ${v.tier_low} → ${v.tier_high}: cliff $${v.cliff_amount} (${fmt(v.low_max_total)} > ${fmt(v.up_min_total)})${autofixed}`);
+      }
+    }
+    lines.push('');
+    lines.push('FLAGS');
+    lines.push('-----');
+    if (flags.length === 0) {
+      lines.push('No flags.');
+    } else {
+      for (const f of flags) {
+        lines.push(`  [${f.id}] ${f.severity}: ${f.text}`);
+      }
+    }
+    lines.push('');
+    lines.push('QUOTE LANGUAGE STUBS');
+    lines.push('--------------------');
+    if (quote_stubs.anchor_line) lines.push(`Anchor: ${quote_stubs.anchor_line}`);
+    if (quote_stubs.moq_line) lines.push(`MOQ: ${quote_stubs.moq_line}`);
+    if (quote_stubs.pms_caveat) lines.push(`PMS: ${quote_stubs.pms_caveat}`);
+    lines.push('');
+    lines.push('READY FOR ROUND 1 AI VALIDATION: ' + (flags.some(f => f.severity === 'STOP') ? 'NO — resolve STOP flag(s) first' : 'YES'));
+    return lines.join('\n');
+  }
+
+  // ===== main entry =====
+  function runCalculator(inputs) {
+    const config = window.CALCULATOR_CONFIG;
+    if (!config) {
+      throw new Error('CALCULATOR_CONFIG not loaded. Ensure calculator_config.json is fetched before calling runCalculator.');
+    }
+    const inp = Object.assign({
+      part_number: '',
+      description: '',
+      model: '',
+      material_family: PRINTED_LAM_FAMILY,
+      item_type: 'single',
+      width_in: 0,
+      height_in: 0,
+      label_count: 1,
+      cut_vinyl_color: '',
+      ink_coverage: 'medium',
+      is_ansi_safety: false,
+      order_qty: 0,
+      notes: '',
+    }, inputs || {});
+
+    // 1. Routing
+    const routeInfo = determineRoute(inp, config);
+    const route = routeInfo.route;
+    const route_reason = routeInfo.route_reason;
+
+    // 2. Fundamentals
+    const sq_ft_per_label = r((inp.width_in * inp.height_in) / 144, 3);
+    const sq_ft_per_kit = r(sq_ft_per_label * (inp.label_count || 1), 3);
+    const fund = { sq_ft_per_label, sq_ft_per_kit };
+
+    // 3. Lam passes (printed/lam only)
+    let lamInfo = null;
+    if (route === 'single_standard' || route === 'single_sub_scope' || route === 'kit' || route === 'tiny') {
+      lamInfo = computeLamPasses(inp.width_in, inp.height_in, inp.label_count || 1, config);
+    }
+
+    // 4. Material
+    let material;
+    if (route === 'cut_vinyl') {
+      material = computeCutVinylMaterial(inp, sq_ft_per_label, config);
+    } else if (route === 'no_profile') {
+      material = {
+        vinyl_cost: null, lam_cost: null, ink_cost: null, tape_cost: null,
+        total_per_label: null, total_per_kit: null, ink_unverified: false,
+        breakdown_text: 'Material cost not computable for unknown material family. Cost-build from scratch with Nick.',
+      };
+    } else {
+      const passes = lamInfo && lamInfo.passes ? lamInfo.passes : 1;
+      material = computePrintLamMaterial(inp, sq_ft_per_label, passes, config);
+    }
+
+    // 5. Pricing tiers
+    let tierBuild;
+    let moq_applies;
+    if (route === 'cut_vinyl') {
+      tierBuild = buildCutVinylTiers(sq_ft_per_label, config);
+      moq_applies = false;
+    } else if (route === 'tiny') {
+      tierBuild = buildTinyTiers(config);
+      moq_applies = true;
+    } else if (route === 'kit') {
+      moq_applies = true;
+      tierBuild = buildPrintLamKitTiers(inp.label_count || 1, sq_ft_per_label, lamInfo ? lamInfo.passes : 1, moq_applies, config);
+    } else if (route === 'single_standard' || route === 'single_sub_scope') {
+      moq_applies = true;
+      tierBuild = buildPrintLamSinglesTiers(sq_ft_per_label, moq_applies, config);
+    } else {
+      // no_profile
+      moq_applies = false;
+      tierBuild = { tiers: null, anchor: null, anchor_psf: null, snap: null };
+    }
+
+    // 6. Never-pay-more — skip entirely for cut vinyl (no MOQ/invoice protection on
+    // cut vinyl items at this time). Apply autofix only for printed/lam (where the
+    // 10-19 → 20-49 boundary is customer-facing and policy fixes it).
+    let invoice = { violations: [], all_clear: true, autofix_applied: false, adjusted_tiers: null };
+    const apply_autofix = (route === 'single_standard' || route === 'single_sub_scope' || route === 'kit');
+    if (tierBuild.tiers && tierBuild.snap && route !== 'cut_vinyl') {
+      invoice = checkInvoiceProtection(tierBuild.tiers, tierBuild.snap, moq_applies, apply_autofix);
+      if (invoice.adjusted_tiers) {
+        tierBuild.tiers = invoice.adjusted_tiers;
+        if (tierBuild.kit_totals) tierBuild.kit_totals = invoice.adjusted_tiers;
+      }
+    }
+
+    // 7. Final pricing object
+    const pricing = {
+      anchor_price_qty_20: tierBuild.anchor !== undefined ? r(tierBuild.anchor, 2) : null,
+      anchor_psf: tierBuild.anchor_psf !== undefined && tierBuild.anchor_psf !== null ? r(tierBuild.anchor_psf, 2) : null,
+      tiers: tierBuild.tiers,
+      kit_totals: tierBuild.kit_totals || null,
+      per_label_tiers: tierBuild.per_label_tiers || null,
+      moq_applies,
+      moq_charge: moq_applies ? config.account.moq.printed_laminated.sub_moq_charge : null,
+      first_article_price: null,
+      anchor: tierBuild.anchor,
+      template_source: tierBuild.template_source || null,
+      invoice_protection: invoice,
+    };
+
+    // 8. Margins
+    const tiersForMargin = tierBuild.tiers || {
+      price_1_9: null, price_10_19: null, price_20_49: null,
+      price_50_99: null, price_100_199: null, price_200_plus: null,
+    };
+    const tiersForMarginObj = tierBuild.kit_totals ? tierBuild.kit_totals : tiersForMargin;
+    const margins = computeMargins(tiersForMarginObj, material);
+
+    // 9. Band positioning
+    const band = computeBand(inp, route, sq_ft_per_label, sq_ft_per_kit, tierBuild.tiers, config);
+
+    // 10. Flags
+    const flags = generateFlags(inp, route, material, pricing, margins, band, lamInfo, config);
+
+    // 11. Quote stubs
+    const quote_stubs = generateQuoteStubs(inp, route, pricing, sq_ft_per_label, material, config);
+
+    // 12. Brief
+    const brief = generateBrief(inp, route, route_reason, fund, material, pricing, margins, band, flags, invoice, lamInfo, quote_stubs, config);
+
+    return {
+      route,
+      route_reason,
+      sq_ft_per_label,
+      sq_ft_per_kit,
+      lam_passes: lamInfo ? lamInfo.passes : null,
+      lam_pass_reasoning: lamInfo ? lamInfo.reasoning : 'N/A (cut vinyl)',
+      material,
+      pricing: {
+        anchor_price_qty_20: pricing.anchor_price_qty_20,
+        anchor_psf: pricing.anchor_psf,
+        tiers: pricing.tiers,
+        kit_totals: pricing.kit_totals,
+        per_label_tiers: pricing.per_label_tiers,
+        moq_applies: pricing.moq_applies,
+        moq_charge: pricing.moq_charge,
+        first_article_price: pricing.first_article_price,
+        template_source: pricing.template_source,
+      },
+      margins,
+      band,
+      invoice_protection: {
+        violations: invoice.violations,
+        all_clear: invoice.all_clear,
+      },
+      flags,
+      has_stop_flag: flags.some(f => f.severity === 'STOP'),
+      brief,
+      ready_for_round_1: !flags.some(f => f.severity === 'STOP'),
+      quote_stubs,
+    };
+  }
+
+  window.runCalculator = runCalculator;
+
+  // sanity-check runner (for console use; safe to keep — no UI side-effects)
+  window.runSanityChecks = function() {
+    const items = (window.ITEMS_DATA && window.ITEMS_DATA.items) || {};
+    const cases = [
+      { pn: '1230820', expect_route: 'single_standard', expect_price_20: 20.00, ink: 'high' },
+      { pn: '1082570', expect_route: 'single_standard', expect_price_20: 8.00, ink: 'flood_coat' },
+      { pn: '1210810', expect_route: 'single_sub_scope', expect_price_20: 4.50, ink: 'flood_coat_safety_red' },
+      { pn: '1278930', expect_route: 'kit', expect_price_20: 30.00, ink: 'medium' },
+      { pn: '1205720', expect_route: 'cut_vinyl', expect_price_20: 35.00, color: 'cardinal_red' },
+      { pn: '1277970', expect_route: 'tiny', expect_price_20: 55.00, ink: 'low' },
+      { pn: '1245130', expect_route: 'kit', expect_price_20: 50.00, ink: 'medium' },
+    ];
+    const out = [];
+    for (const tc of cases) {
+      const it = items[tc.pn];
+      if (!it) { out.push({ pn: tc.pn, error: 'not found in data.json' }); continue; }
+      const fm = it.frontmatter;
+      let itemType;
+      if (fm.material_family === CUT_VINYL_FAMILY) itemType = 'cut_vinyl';
+      else if (fm.item_type === 'Printed/Laminated Kit') itemType = 'kit_same_dim';
+      else itemType = 'single';
+      const inputs = {
+        part_number: tc.pn,
+        description: fm.description,
+        model: fm.model,
+        material_family: fm.material_family,
+        item_type: itemType,
+        width_in: parseFloat(fm.width_in),
+        height_in: parseFloat(fm.height_in),
+        label_count: parseInt(fm.label_count, 10) || 1,
+        cut_vinyl_color: tc.color || '',
+        ink_coverage: tc.ink || 'medium',
+        is_ansi_safety: false,
+        order_qty: 0,
+        notes: '',
+      };
+      const result = runCalculator(inputs);
+      out.push({
+        pn: tc.pn,
+        route: result.route,
+        expected_route: tc.expect_route,
+        route_match: result.route === tc.expect_route,
+        price_20_49: result.pricing.tiers ? result.pricing.tiers.price_20_49 : null,
+        kit_price_20: result.pricing.kit_totals ? result.pricing.kit_totals.price_20_49 : null,
+        expected_price_20: tc.expect_price_20,
+        margin_at_qty_20: result.margins.at_qty_20,
+        flags: result.flags.map(f => f.id + ':' + f.severity),
+        has_stop: result.has_stop_flag,
+      });
+    }
+    console.table(out);
+    return out;
+  };
+})();
+</script>
+
 </body>
 </html>
