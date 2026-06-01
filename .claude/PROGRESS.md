@@ -6,6 +6,54 @@
 
 ---
 
+### 2026-06-01 — System: Session 3 — Calculator Tab UI (form, output panel, validation brief)
+
+**What:** Wired the Session 2 pricing engine to a third top-bar tab — "Calculator" — alongside Items and Materials. The calculator tab takes the full main area (sidebar hidden via `.layout.calc-mode`), splits into a sticky-left input form and a scrollable-right output panel on desktop, and stacks vertically on mobile (single-column at ≤1100px). The engine itself is untouched from Session 2; this session only adds the UI shell, form binding, and output rendering.
+
+**UI structure:**
+- **Topbar:** New `<button id="tabCalculator">Calculator</button>` added next to Items and Materials. `setTab('calculator')` toggles `.calc-mode` on `.layout` to hide the sidebar, sets the count chip to `Calc`, and shows `#calculatorPanel`. Returning to Items/Materials removes the class and restores normal flow — all existing Items and Materials behavior is unchanged.
+- **Form (`#calcForm`):** Part Number, Description, Model (all optional), Material Family (Orajet / 3M 180mC / Convex / Lexan), Item Type (single / kit_same_dim / kit_mixed_dim — replaced by a disabled "Cut Vinyl Lettering" indicator and a Color dropdown when 3M 180mC is selected), Width & Height, Label Count (kits only), Ink Coverage + ANSI/Safety checkbox (printed/lam only), Order Quantity (with tier-highlight hint), Notes, and a red "Run Calculator" button. Material-family / item-type change handlers toggle field visibility dynamically — color picker only on cut vinyl, ink/ANSI only on printed/lam, label count only on kits.
+- **Output (`#calcOutput`):** Six dynamic sections built fresh on each run — (1) Routing & Summary with a 4-card stat row (Recommended Price, Material Cost, Margin @ Qty 20, $/Sq Ft) plus a routing badge ("Standard Single", "Kit — N pass(es)", "Tiny / Job Economics", "No Profile", etc.) and the engine's route_reason; tiny route swaps the stat row for the existing `.oneoff-block` showing $55 program total + per-label suppressed; no_profile route shows a Required Inputs checklist. (2) Flags Panel — grouped STOP → REVIEW → INFO, each with severity badge + flag ID + text; prominent "⛔ Output blocked by STOP flag" banner when any STOP fires; "✓ No blocking flags" when empty. (3) Volume Pricing Table — suppressed when any STOP flag fires or when route is tiny/no_profile; reuses existing `.ptable` styling; MOQ row at top showing "$X flat min" when moq_applies; tier matching `order_qty` highlighted with `row-highlight`; kits show Per Label + Per Kit columns; never-pay-more violations rendered as inline amber warning rows below the table. (4) Material Cost Breakdown — collapsible `<details>` containing the engine's pre-formatted breakdown text; ink-unverified warning inline. (5) Band Positioning — collapsible; SVG-free band range visual (zone bar + red marker showing this item's $/sq ft vs band floor/ceiling); Rule 14 deviation note when cut vinyl; comparable items as clickable `.comp-link` rows that call `selectItem(pn)` (which auto-switches to Items tab). (6) Production Summary — collapsible; process type, lam passes, 13.5" laminator fits/STOP status, lam reasoning. (7) Validation Brief — collapsible, expanded by default; "Ready for Round 1: YES/NO" badge; full plain-text brief in a `<pre class="brief-pre">` (monospace, scrollable, 500px max height); "Copy Validation Brief" button using existing `.copy-btn` class with "Copied ✓" feedback for 2 seconds.
+- **CSS:** Added `--flag-stop: #ff6b6b`, `--flag-review: #ffd166`, `--flag-ready: #6bd58b` to `:root`. New components — `.calc-panel`, `.calc-content`, `.calc-form`, `.calc-field` (with `.calc-field-row` for side-by-side inputs and `.hidden` for conditional visibility), `.calc-run-btn`, `.calc-output`, `.calc-section`, `.calc-section-title`, `.calc-section-header`, `.calc-routing-badge`, `.calc-route-reason`, `.flag-banner-stop`, `.flag-row` (with `.sev-STOP`/`.sev-REVIEW`/`.sev-INFO` left-border accents), `.flag-sev`, `.flag-clear`, `.calc-moq-row`, `.calc-cliff-warn`, `.band-bar-wrap`/`.band-bar`/`.band-bar-marker`, `.comp-link`, `.no-profile-checklist`, `.calc-mat-breakdown`, `.brief-status-badge` (ready/not-ready variants), `.brief-pre`. All section headers reuse `.section-title` pattern; all info rows reuse `.info-row`/`.ir-k`/`.ir-v`; routing badge mirrors `.dh-tag` styling; copy button reuses `.copy-btn`. Collapsible sections use native `<details><summary>` with a CSS-rotated ▾ marker.
+- **JS:** Five new helpers — `initCalculatorForm()` (one-time form bootstrap; populates color select from `CALCULATOR_CONFIG.cut_vinyl_colors` with human-readable labels; wires family/item-type change listeners), `updateCalcFormVisibility()` (toggles `.hidden` on conditional field wrappers), `gatherCalcInputs()` (reads all form fields and returns an inputs object matching the engine's schema), `runCalculatorUI()` (validates width/height, calls `window.runCalculator(inputs)`, stores result on `window.lastCalcResult`, dispatches to render functions), `renderCalcOutput()` (orchestrates the six output sections). Each section has its own `renderCalc*()` helper. New helper `effectivePriceTiers(result)` returns `result.pricing.kit_totals || result.pricing.tiers || null` — kit route returns price tiers under `kit_totals`, all other routes use `tiers`; this is consumed in `renderCalcSummary` and `renderCalcPricingTable`. `copyValidationBrief()` writes the brief plain text to the clipboard.
+
+**Acceptance criteria verified (engine + render end-to-end):**
+
+| Scenario                                            | Route             | Price@20 | Margin@20 | Flags                  | STOP? |
+|-----------------------------------------------------|-------------------|---------:|----------:|------------------------|:-----:|
+| 1230820 — Orajet, single, 15"×12.44", medium ink    | single_standard ✓ |   $20.00 |     87.8% | F18, F11               |  no   |
+| 1277970 — Orajet, single, 1.1875"×1.1875" (Ø1-3/16) | tiny ✓            |   $55.00 |     99.8% | F9 (REVIEW), F18       |  no   |
+| Convex High Bond, single, 10"×6"                    | no_profile ✓      |     null |      null | F17 (STOP)             | yes   |
+| Kit — Orajet, kit_same_dim, 8.77"×10", 3 labels     | kit ✓             |   $30.00 |     90.0% | F18                    |  no   |
+| Cut vinyl — Cardinal Red, 33.5625"×11"              | cut_vinyl ✓       |   $35.00 |     75.0% | F19, F15 (Rule 14)     |  no   |
+| Sub-scope — Orajet, single, 10.5"×4", flood Sfty Red| single_sub_scope ✓|    $4.50 |     85.1% | F10 (REVIEW), F8, F18, F11, F12 | no |
+
+All six routes correctly render: stat row vs. one-off block vs. required-inputs checklist; routing badge; flag list grouped/styled by severity (STOP banner shown for Convex); pricing table with MOQ row, order-qty highlight, kit per-label/per-kit columns, $/sq ft column; band visual + comparable-item links; collapsible material breakdown + production summary; validation brief with ready/not-ready badge and copy button. Mobile (≤1100px): form and output stack; (≤480px): padding reduces; flag rows stack their grid cells to two columns.
+
+**Files Modified:**
+- `frontend/index.html` — added Calculator tab button (topbar-tabs), `#calculatorPanel` HTML block as sibling to `#itemDetail`/`#materialDetail`, ~410 lines of CSS (Calculator section between COPY BUTTON and LIGHTBOX), extended `setTab()` to handle `'calculator'` (toggle `.calc-mode`, hide sidebar, show panel, set count chip), and ~440 lines of new calculator JS (helpers + 6 render functions) inserted just before `init()`.
+- `frontend/data.json`, `frontend/materials.json`, `frontend/calculator_config.json` — regenerated (timestamp only)
+- `.claude/STATE.yml` — last_session updated with Session 3 summary
+- `.claude/PROGRESS.md` — this entry
+
+**Files NOT Modified (per spec):**
+- No item files touched
+- No category files touched
+- No governance docs touched
+- No build scripts touched
+- The Session 2 `<!-- CALCULATOR ENGINE -->` script block is byte-identical from Session 2
+
+**Verification:**
+- `python scripts/validate.py` → 0 errors, 0 warnings
+- `python scripts/build_frontend.py` → 15 items, clean
+- `python scripts/build_materials.py` → 7 materials, clean
+- `python scripts/build_calculator_config.py` → 3 material constants, 3 bands, 8 do_not_benchmark items, clean
+- Node syntax check on both inline scripts → both parse cleanly
+- HTTP serve test — index.html (143KB), data.json, materials.json, calculator_config.json all return 200
+- Node-side simulation of `runCalculator()` + `renderCalcSummary()` / `renderCalcPricingTable()` / `renderCalcFlags()` confirms all six acceptance scenarios produce correct HTML
+
+---
+
 ### 2026-06-01 — System: Session 2 — Calculator Core Logic Engine Landed (JS pricing module, no UI)
 
 **What:** Built a self-contained pricing engine inside `frontend/index.html` as a clearly demarcated `<!-- CALCULATOR ENGINE -->` `<script>` block immediately before `</body>`. Pure logic, zero UI. The engine reads `window.CALCULATOR_CONFIG` (loaded via the existing `init()` — extended with one extra fetch for `calculator_config.json`) and `window.ITEMS_DATA`. Exposes `window.runCalculator(inputs)` returning the full `CalculatorResult` per the Session 2 spec. Also exposes `window.runSanityChecks()` for console-side verification.
