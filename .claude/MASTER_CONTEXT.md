@@ -84,7 +84,7 @@ Only after reading all eight does pricing begin.
 2. Nick provides inputs (spec sheets, material costs, strategic direction) and makes final pricing decisions.
 3. Claude recommends, validates, and documents. Claude does not send quotes.
 4. All pricing decisions are Nick's. Overrides are classified and logged.
-5. The system stays in sync at all times. See `COMPLETION_TEMPLATES.md`.
+5. The system stays in sync at all times. See `.claude/COMPLETION_TEMPLATES.md`.
 6. No file is allowed to fall out of sync with any other file. Ever.
 7. **Elliott provides production-ready DWG files for every item on this account, without exception.** File prep, artwork preparation, design time, and pre-press labor are zero-cost, zero-time inputs on every Elliott job — past, present, and future. Step 1 of every process (file import/setup) is a ~5-minute mechanical operation, NOT a billable labor input. Any cost reasoning that uses file prep as a pricing driver on this account is incorrect and must be corrected immediately. This is a permanent account-level truth, not a per-job assumption.
 8. **Printed/laminated items on this account are subject to MOQ 10 and $55 minimum order charge rules.** See Account-Level Order Rules section below. Cut vinyl items are NOT subject to these rules at this time.
@@ -164,6 +164,14 @@ elliott/
 │   ├── 3017435.md
 │   ├── 3018378.md
 │   └── images/                    # Spec sheet PDFs and reference images
+├── materials/
+│   ├── orajet-3951-white.md        # Orafol Orajet 3951 cast vinyl (print media)
+│   ├── 1mil-polyester-overlaminate.md  # Flexcon FLX000233 1-mil polyester overlaminate
+│   ├── 3m-180mc-cardinal-red.md    # 3M Controltac 180mC-53 Cardinal Red
+│   ├── 3m-180mc-olympic-blue.md    # 3M Controltac 180mC-57 Olympic Blue
+│   ├── 3m-180mc-white-24in.md      # 3M Controltac 180mC-10 White, 24" roll
+│   ├── 3m-180mc-white-48in.md      # 3M Controltac 180mC-10 White, 48" roll
+│   └── transferrite-582u.md        # TransferRite Ultra 582U application tape
 ├── scripts/
 │   ├── validate.py                # Structure compliance + math verification
 │   ├── profile.py                 # Recompute pricing profiles from item data

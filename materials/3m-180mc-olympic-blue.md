@@ -1,11 +1,11 @@
 ---
-material_id: "3m-180mc-sapphire-blue"
+material_id: "3m-180mc-olympic-blue"
 material_type: "cut_vinyl"
 manufacturer: "3M"
 product_name: "Controltac 180mC"
 product_code: "180mC-57"
-color_name: "Sapphire Blue"
-color_code: "37"
+color_name: "Olympic Blue"
+color_code: "57"
 film_type: "Cast vinyl"
 film_thickness_mil: 2
 adhesive_type: "Permanent pressure-sensitive"
@@ -18,5 +18,5 @@ verified_date: "2026-05-22"
 distributor: "GRIMCO"
 compatible_tapes: ["transferrite-582u"]
 used_in_items: ["3018378"]
-notes: "Length-based material cost method used for nesting calculations."
+notes: "Length-based material cost method used for nesting calculations. Olympic Blue is a visual approximation of PMS 2386 C — NOT a certified Pantone match. Disclose in any quote where drawing specifies PMS 2386 C."
 ---

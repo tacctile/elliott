@@ -31,4 +31,4 @@ python scripts/profile.py     # Recompute pricing profile bands
 
 - Claude is the sole author and maintainer.
 - Nick provides inputs and makes final pricing decisions.
-- The system stays in sync at all times. See `COMPLETION_TEMPLATES.md`.
+- The system stays in sync at all times. See `.claude/COMPLETION_TEMPLATES.md`.
