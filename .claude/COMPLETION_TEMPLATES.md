@@ -2,7 +2,7 @@
 
 > **What gets updated when. No exceptions. No "I'll update that next time."**
 >
-> Last Updated: 2026-06-01
+> Last Updated: 2026-06-01 (VALIDATION_PROMPTS triggers added)
 
 ---
 
@@ -30,6 +30,8 @@ This repo is a living, interconnected set of documents. When anything changes, *
 | Calculator constants change (band thresholds, tier ratios, ink rates, account floor) | Re-run `python scripts/build_calculator_config.py`, commit updated `frontend/calculator_config.json`. No code change to index.html required. |
 | New material added to materials/*.md | Re-run all build scripts including `build_calculator_config.py` — verify new material appears in `cut_vinyl_colors` or `material_constants` as appropriate |
 | Pricing band shifts (new FA-Accepted item, band normalization) | Update `categories/*.md` first (source of truth), then re-run `build_calculator_config.py` to propagate to calculator |
+| New item pricing validation complete (4 waves done, price locked by Nick) | Claude Code writes item file per `governance/STRUCTURE_RULES.md`; updates `categories/*.md`, `.claude/ARCHITECTURE.md`, `.claude/PROGRESS.md`, `.claude/STATE.yml`, runs all build scripts |
+| Validation wave prompts need updating (band shift, relationship phase change, new benchmark item) | Update `governance/VALIDATION_PROMPTS.md` — specifically Section 3 benchmark anchors, Section 3 band values, and Section 5 Sean profile if relationship status changes |
 
 ---
 

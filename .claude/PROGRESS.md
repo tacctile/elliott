@@ -6,6 +6,78 @@
 
 ---
 
+### 2026-06-01 — Governance: VALIDATION_PROMPTS.md — 4-Wave AI Pricing Validation System Hardwired into Repo DNA
+
+**What:** Created `governance/VALIDATION_PROMPTS.md` — the authoritative governance document for the 4-wave AI pricing validation system. Codifies how every new item on the Elliott Equipment account gets stress-tested across 6 top-tier models, four times (24 total responses) before Nick sends a quote to Sean. The calculator (per `governance/CALCULATOR.md`) generates the Round 0 brief; this document governs Waves 1–4. After Wave 4, Claude Chat produces the Final Synthesis Table; Nick locks the final price; Claude Code writes the item file per existing self-healing rules.
+
+**Document Structure — 9 Sections:**
+
+1. **System Overview** — Purpose, philosophy, operating model (flow diagram), and the "24 responses are the research department" framing. Nick is sole decision-maker; Claude Chat is synthesis partner.
+2. **Pre-Wave Requirements** — 8 conditions that must be true before Wave 1 starts (Ready for Round 1: YES, no STOP flags, spec extraction complete, materials verified within 180 days, ink confirmed or flagged, order qty known, FA status confirmed, open items documented).
+3. **Wave 1 — Build Round** — Constructive attack angle; calculator price withheld; embedded account context (Pro Label/Elliott/Sean), printed/lam benchmark anchor (1230820 full 6-tier table $30/$24/$20/$17/$14/$11), kit anchors (1278930 and 1245130), cut vinyl anchor (1205720), current bands (singles $15.43–$15.91/sq ft, kits $10/label $16.42/sq ft, cut vinyl concession $13.65–$13.94/sq ft, AI consensus $14.84–$16.41/sq ft), MOQ 10 + $55 floor + invoice protection rules, $55 account floor anchored to 1230820 FA. Output schema: Interpreted Specs / Benchmark Match / Cost Drivers / Proposed Tier Table / Per-Label Math / Margin Estimate / Risk Flags / Kill Criteria.
+4. **Wave 2 — Destruction Round** — Hostile attack angle; Wave 1 consensus incorporated; 4 mandatory attack vectors (Buyer/Procurement, Competitor, Cost Auditor, Strategic) each rated H/M/L. Output schema: 4 vectors with severity + finding / Weakest Tier / Strongest Tier / Verdict / Recommended Modifications.
+5. **Wave 3 — Buyer Simulation** — Sean Finn profile embedded verbatim (Employee-Owner, normalizes everything, pattern recognition, flawless vendor track record, deepening partnership, standards leverage, approval threshold, incumbent memory, long-term mental model). Output schema: 9 fields including Immediate Reaction / Per-Label Math / Vendor Track Record Impact / Pushback Threshold / Instant Approval Number / Incumbent Comparison / PO Decision / Quote Email Anchor Line / Mental Model Risk.
+6. **Wave 4 — Final Synthesis** — Decisive attack angle; binary verdicts only. Wave 1/2/3 summaries embedded. Output schema: Verdict (YES/NO, no maybe) / Tier-Level Check / Long-Term Precedent / Discomfort Check / Decision Forks / Final Answer (exact tier + exact number).
+7. **Final Synthesis Table** — 6-row × 8-column markdown table (M1–M6 × Wave 1 Anchor / Wave 2 Verdict / Wave 3 Sean Reaction / Wave 4 Final / Key Arguments For / Key Arguments Against / Recommended Price). Below the table: Consensus Summary (agreement, divergence, highest-severity risks, price range, structural risks, Nick's decision range). "Then Claude Chat waits. Nick drives the discussion from here."
+8. **Behavioral Rules for Claude Chat** — 11 rules: one wave at a time, no editorializing between waves, calculator price withheld in Wave 1, incorporate Wave N findings into Wave N+1, never soften the attack, flag every open item, file prep is always $0, never expose 13.5" laminator constraint, never expose multiplier math, never benchmark `do_not_benchmark` items (1277970–1278000 / 3017583 / 3017584 / 1210810 / 1082570), wait for Nick after Wave 4.
+9. **Integration with Existing Governance** — Cross-references to CALCULATOR.md (Round 0 brief generator), PRICING_RULES.md (constraints), categories/*.md (band fence), STRUCTURE_RULES.md + COMPLETION_TEMPLATES.md (item file authoring after Nick locks price), ARCHITECTURE.md Override Types (every deviation logged).
+
+**Source-of-Truth Verification:**
+Every band value, threshold, benchmark tier table, and rule reference in VALIDATION_PROMPTS.md was sourced directly from the current repo. Nothing invented.
+
+- 1230820 tier table $30/$24/$20/$17/$14/$11 — derived from `frontend/calculator_config.json` `bands.printed_laminated_singles.tier_ratios` (1.5/1.2/1.0/0.85/0.7/0.55) × $20 anchor; matches `.claude/ARCHITECTURE.md` precedent chain (ROOT BENCHMARK $20/ea qty 20)
+- 1278930 ($30/kit, $10/label) and 1245130 ($50/kit, $10/label) — match `.claude/ARCHITECTURE.md` catalog and `categories/printed-laminated-orajet.md` kit table
+- 1205720 ($35/ea qty 20, $13.67/sq ft, Cardinal Red, 2.56 sq ft) — matches `.claude/ARCHITECTURE.md` catalog and `categories/cut-vinyl-3m-180mc.md` items table
+- Singles band $15.43–$15.91/sq ft — matches `categories/printed-laminated-orajet.md` Pricing Profile and `frontend/calculator_config.json` bands
+- Kit per-label $10.00 / per-sq-ft $16.42 — matches `categories/printed-laminated-orajet.md` Pricing Profile and `frontend/calculator_config.json` bands
+- Cut vinyl concession band $13.65–$13.94/sq ft — matches `categories/cut-vinyl-3m-180mc.md` Pricing Profile and `frontend/calculator_config.json` bands.cut_vinyl_lettering.concession_phase
+- Cut vinyl AI consensus band $14.84–$16.41/sq ft — matches `categories/cut-vinyl-3m-180mc.md` Pricing Profile override note and `frontend/calculator_config.json` bands.cut_vinyl_lettering.ai_consensus
+- MOQ 10 + $55 minimum order charge + invoice protection — match `governance/PRICING_RULES.md` §25–29 and `.claude/MASTER_CONTEXT.md` Account-Level Order Rules
+- $55 account floor anchored to 1230820 FA — matches `frontend/calculator_config.json` account.floor / account.floor_source_pn
+- `do_not_benchmark` list (8 P/Ns: 1277970/1277980/1277990/1278000/3017583/3017584/1210810/1082570) — matches `frontend/calculator_config.json` do_not_benchmark and `.claude/ARCHITECTURE.md` precedent chain DO NOT BENCHMARK callouts
+- Override Types (Relationship Concession / Competitive Defense / Strategic Anchor / Capacity Fill / Owner Judgment / One-Time Exception) — match `.claude/ARCHITECTURE.md` Override Types table
+
+**Files Created:**
+- `governance/VALIDATION_PROMPTS.md` — 9-section governance document (~22 KB)
+
+**Files Modified:**
+- `.claude/CHAT_CONTEXT.md` — Path 1 workflow: replaced steps 9–10 (single "Nick runs through 6 models across 4 rounds" + "Nick commits and sends") with 13 explicit steps (9–21) walking through the wave-by-wave protocol (open fresh Claude Chat → paste validation brief → Wave 1 prompt → 6 models → Wave 2 prompt → ... → Wave 4 → Final Synthesis Table → Nick locks → quote sent)
+- `.claude/MASTER_CONTEXT.md` — File Map under `governance/`: added `VALIDATION_PROMPTS.md` row; Reading Order — New Item Pricing: added second note explaining the 4-wave AI validation process per VALIDATION_PROMPTS.md; Last Updated stamp updated to "(governance/VALIDATION_PROMPTS.md added)"
+- `.claude/COMPLETION_TEMPLATES.md` — Update Triggers table: added 2 new rows ("New item pricing validation complete (4 waves done, price locked by Nick)" → Claude Code writes item file + propagates per Self-Healing Rule; "Validation wave prompts need updating (band shift, relationship phase change, new benchmark item)" → update VALIDATION_PROMPTS.md Sections 3 and 5); Last Updated stamp updated
+- `.claude/PROGRESS.md` — this entry
+- `.claude/STATE.yml` — last_session + next_action updated
+- `frontend/data.json`, `frontend/materials.json`, `frontend/calculator_config.json` — regenerated (timestamp-only; no data changes)
+
+**Files NOT Modified (per session spec — "Do NOT touch any item files, category files, material files, or frontend files in this session"):**
+- No item files touched (15 items unchanged)
+- No category files touched (band data unchanged)
+- No material files touched (costs and verified_dates unchanged)
+- No `frontend/index.html` touched (calculator engine + UI unchanged)
+- No build scripts touched
+- No other governance docs touched (PRICING_RULES.md, PRICING_VALIDATION.md, CALCULATOR.md, PRODUCTION.md, SPEC_EXTRACTION.md, STRUCTURE_RULES.md unchanged)
+
+**Acceptance Criteria Met:**
+- `governance/VALIDATION_PROMPTS.md` exists with all 9 sections ✓
+- Every band value, threshold, benchmark tier table, and rule reference matches the current repo data exactly — no invented numbers ✓
+- `.claude/CHAT_CONTEXT.md` Path 1 workflow updated to reflect the 4-wave system (steps 9–21) ✓
+- `.claude/MASTER_CONTEXT.md` file map (VALIDATION_PROMPTS.md row) and reading order (4-wave note appended) updated ✓
+- `.claude/COMPLETION_TEMPLATES.md` update triggers table extended with 2 new rows ✓
+- `python scripts/validate.py` → 0 errors, 0 warnings ✓
+- `python scripts/build_frontend.py` → clean (15 items) ✓
+- `python scripts/build_materials.py` → clean (7 materials) ✓
+- `python scripts/build_calculator_config.py` → clean (3 material constants, 3 bands, 8 do_not_benchmark items) ✓
+- No item prices, margins, statuses, or category band data changed ✓
+
+**Key Decisions:**
+- VALIDATION_PROMPTS.md is companion to PRICING_VALIDATION.md, not a replacement. PRICING_VALIDATION.md is the methodology framework (when to use, the 4 rounds, key findings). VALIDATION_PROMPTS.md is the operational contract for Claude Chat during a live validation session (wave-by-wave prompt generation, Sean profile verbatim, embedded benchmark data, behavioral rules).
+- The "4 waves" naming in VALIDATION_PROMPTS.md and the "4 rounds" naming in PRICING_VALIDATION.md refer to the same thing. "Wave" is used in the operational document to emphasize the one-at-a-time generation flow Claude Chat must follow; "Round" is used in the methodology document. Both terms are present and consistent in the surrounding governance.
+- The Wave 1 prompt explicitly withholds the calculator's recommended price so the 6 models anchor independently. This was not previously codified in PRICING_VALIDATION.md but is implicit in the "establish baseline from scratch" framing of Round 1.
+- Behavioral Rule 10 codifies the `do_not_benchmark` filtering at the wave-prompt level (in addition to the calculator's existing filter). This closes the loop: even if a model is asked an open-ended pricing question, it must not be presented with a do_not_benchmark item as a reference.
+
+**Status:** Complete. validate.py 0/0; all 3 build scripts clean. 4-wave validation system is now the permanent operational DNA of the repo.
+
+---
+
 ### 2026-06-01 — Fix: C1 — Restore kit-route never-pay-more check (add `tiers: kit_totals` to buildPrintLamKitTiers return)
 
 **What:** Single-line targeted fix to the CRITICAL bug identified in the 2026-06-01 audit. `buildPrintLamKitTiers()` (`frontend/index.html` line 3238) previously returned `{kit_totals, per_label_tiers, anchor, anchor_psf, snap, template_source, cost_build}` — no `tiers` key. The guard `if (tierBuild.tiers && tierBuild.snap && route !== 'cut_vinyl')` in `runCalculator()` therefore evaluated false for the kit route and skipped `checkInvoiceProtection()`. F11 could not fire for kits. Fix: added `tiers: kit_totals,` as the first field of the return object so the existing guard now evaluates true for the kit route and `checkInvoiceProtection()` runs against the kit's tier table.
