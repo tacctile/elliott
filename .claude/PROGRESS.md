@@ -6,6 +6,106 @@
 
 ---
 
+### 2026-06-01 — Item Revalidation + Governance: P/N 1210810 Price Lock via 4-Wave AI Validation + Account-Wide Full Bleed Ink Rule Established
+
+**What:** Two interconnected tasks completed in a single session. **Task 1** — Account-wide full bleed / full coverage ink rule established and hardwired at the governance layer. From this session forward, every printed/laminated item on the Elliott account is priced assuming **full bleed ink at $0.50/sq ft × full label sq ft**, plus an incidental buffer rounded conservatively upward to account for setup scrap, registration pulls, and minor waste. No medium/low/partial coverage routing is permitted on any Elliott printed/laminated item — past, present, or future. **Task 2** — P/N 1210810 (LBL - DANGER FALLING JIB) revalidated under the new 4-wave atomic AI validation process per `governance/VALIDATION_PROMPTS.md` (24 independent responses across 6 models × 4 waves). All prior pricing structure for 1210810 superseded; final tier table locked above benchmark $/sq ft at every tier (small-format premium consistent and defensible, no inversions). Material cost simultaneously corrected to $0.60 under the new full bleed rule.
+
+**Items Affected:**
+- **1210810** — Revalidated. Final tier table: $55 flat / $5.75 / $4.75 / $4.00 / $3.50 / $2.75. Material cost: $0.60 (full bleed standard + incidental buffer). Margin at qty 20-49: ~87.4%. Initial order qty 10: $57.50 (10-19 tier). Status: Quoted. No override type — pricing validated through full 4-wave AI process.
+
+**4-Wave Validation Record (1210810):**
+
+| Wave | Process | Outcome |
+|------|---------|---------|
+| Wave 1 (Build) | 6 models, atomic prompts. 1 model disqualified (calculation error) → 5 valid responses. | 4 of 5 valid clustered $4.51–$4.64 at qty 20; central tendency $4.58. 1 outlier at $6.00 argued small-format premium ABOVE band. |
+| Wave 2 (Destruction) | 6 models. 4 attack vectors per wave: Buyer/Procurement, Competitor, Cost Auditor, Strategic. | All 6: H severity on Buyer, Competitor, Strategic. Primary finding: 10-19 inversion (smaller label at lower $/sq ft than benchmark). Secondary: $0.55 material understated. Verdict: 5 Yes-with-mods / 1 No. |
+| Wave 3 (Buyer Sim) | 6 models simulating Sean Finn (Employee-Owner, $140K/year program, $/sq ft mental model). | All 6 calculated $15.41/sq ft and confirmed benchmark consistency. $4.50 cleared without fight. PO Decision: 4/6 as-is, 2/6 one low-friction question. Pushback threshold median ~$4.95. All 6 confirmed they are logging $15.41/sq ft as permanent account data point. Anchor: "never invoiced more for smaller qty." |
+| Wave 4 (Final Synthesis) | 6 models, binary verdicts. | UNANIMOUS NO on Wave 3 table. Primary: 10-19 at $4.95 ($16.95/sq ft) was 8.5% below benchmark $/sq ft at same tier ($18.52). A smaller label must carry equal or higher $/sq ft than a larger label at the same tier. Fix range $5.25–$5.95, center $5.40. |
+
+**Nick's Final Decision:** Raised the full table above benchmark $/sq ft at every tier to ensure small-format premium is correct and unambiguous (stronger than Wave 4 minimum fix — propagates the principle to every tier). 20-49 moved from $4.50 to $4.75 to maintain curve integrity with the raised 10-19 tier. Material cost corrected to $0.60 simultaneously under the new full bleed rule.
+
+**$/Sq Ft vs Benchmark at Final Pricing:**
+
+| Tier | Final $/Sq Ft | Benchmark $/Sq Ft | Delta |
+|------|---------------|-------------------|-------|
+| 10-19 | $19.69 | $18.52 | **+6.3%** |
+| 20-49 | $16.27 | $15.43 | **+5.4%** |
+| 50-99 | $13.70 | $13.12 | **+4.4%** |
+| 100-199 | $11.99 | $10.80 | **+11.0%** |
+| 200+ | $9.42 | $8.49 | **+11.0%** |
+
+Small-format premium consistent at every tier. No inversions.
+
+**Material Cost Build (1210810 at 0.292 sq ft):**
+
+| Component | Calculation | Cost |
+|-----------|-------------|------|
+| Orajet 3951 cast vinyl | 0.292 × $1.21 | $0.353 |
+| 1-mil polyester overlaminate | 0.292 × $0.2389 | $0.070 |
+| Eco-solvent ink (full bleed) | 0.292 × $0.50 | $0.146 |
+| Calculated total | | $0.569 |
+| Incidental buffer (conservative round-up) | judgment | +$0.031 |
+| **Canonical `material_cost_per_unit`** | | **$0.60** |
+
+**Files Modified:**
+
+Governance:
+- `governance/PRODUCTION.md` — Added "Account-Wide Ink Coverage Standard" subsection under Material Costs / Printed Labels. Documents $0.50/sq ft full bleed rate as account default and incidental buffer convention. Updated Last Updated stamp.
+- `governance/PRICING_RULES.md` — Added new **§25** (account-wide full bleed ink rule with canonical formula) directly after §22-24 (file prep rules). Renumbered prior §25–29 (MOQ rules) to **§26–30**. Updated Last Updated stamp.
+
+`.claude/`:
+- `.claude/MASTER_CONTEXT.md` — Added new **Core Rule 9** (full bleed ink rule with formula). Updated Account-Level Order Rules cross-reference from "§25–29" to "§26–30". Updated Last Updated stamp.
+- `.claude/ARCHITECTURE.md` — Updated 1210810 catalog row (pricing, margin, status). Updated category registry entry to reflect 1210810's revalidated above-band $/sq ft and to note the new full bleed account-wide rule. Updated 1210810 precedent chain entry with full 4-wave validation record and new tier table. Updated Last Updated stamp.
+- `.claude/PROGRESS.md` — this entry.
+- `.claude/STATE.yml` — last_session + next_action + pending_quotes updated.
+
+Frontend / build:
+- `scripts/build_calculator_config.py` — Updated INK_RATES constant: added `default_coverage: "full_bleed_flood_coat"` with note pointing to §25; added new `full_bleed_flood_coat` entry with `account_default: True`, `cost_per_sq_ft: 0.50`, canonical formula, and applies_to scope; marked `low`/`medium`/`high`/`flood_coat`/`flood_coat_safety_red` keys as DEPRECATED for routing (historical reference only). Updated header source comment from `§25–29` to `§26–30`. Rate values themselves unchanged.
+- `frontend/calculator_config.json` — regenerated (ink_rates section now documents full bleed as account default).
+- `frontend/data.json` — regenerated (1210810 frontmatter updated).
+- `frontend/materials.json` — regenerated (timestamp-only).
+
+Categories:
+- `categories/printed-laminated-orajet.md` — Updated 1210810 row in Singles table ($4.50 → $4.75). Rewrote footnote ² with full 4-wave validation record, new tier structure, $0.60 material cost under full bleed rule, intentional above-band $/sq ft framing, and invoice protection note for 19/20 cliff.
+
+Items:
+- `items/1210810.md` — Updated frontmatter (price_10_19: $4.75 → $5.75; price_20_49: $4.50 → $4.75; price_50_99: $3.50 → $4.00; price_100_199: $2.75 → $3.50; price_200_plus: $2.50 → $2.75; per_label_at_qty_20: $4.50 → $4.75; material_cost_per_unit: $0.67 → $0.60; margin_at_qty_20: prior multi-scenario → "~87%"; rewrote `pricing_logic` and `notes` to reflect 4-wave validation, full bleed rule, and superseded prior structure). Updated Material Specification ink callout (full bleed standard replaces UNVERIFIED placeholder language). Rewrote Nesting and Material Cost material cost breakdown ($0.60 under full bleed). Rewrote Pricing tier table (above-benchmark deltas added). Fully rewrote Pricing Derivation (Step 1–11, full 4-wave record + cross-references). Rewrote Margin Analysis (single $0.60 column + per-tier margins). Rewrote Notes and Warnings (revalidation note, account-wide ink rule note, updated MOQ/initial-order/projected-volume sections, superseded prior `INK UNVERIFIED` block).
+
+**Files NOT Modified (per session spec):**
+- `items/1210810.md` Spec Extraction, Item Overview, Production Process, Production Debrief — preserved per "do not change" instruction. The Item Overview's "Initial Order: Qty 10 — $47.50" line is now stale vs the new $57.50 in Notes/Pricing; preserved per explicit instruction.
+- Material files (`materials/*.md`) — no material cost figures changed in any material file.
+- Other item files (14 items unchanged).
+- Other category file (`categories/cut-vinyl-3m-180mc.md`) — cut vinyl is NOT subject to the printed/laminated rules; unchanged.
+- Other governance docs (SPEC_EXTRACTION.md, STRUCTURE_RULES.md, PRICING_VALIDATION.md, CALCULATOR.md, VALIDATION_PROMPTS.md) — unchanged.
+- `frontend/index.html` — calculator engine unchanged.
+- Calculator ink rate VALUES — only the default assumption documentation changed.
+
+**Acceptance Criteria Met:**
+- `items/1210810.md` frontmatter matches final validated tier table exactly ✓
+- material_cost_per_unit = 0.60 ✓
+- per_label_at_qty_20 = 4.75 ✓
+- margin_at_qty_20 = ~87% ✓
+- Full 4-wave validation record documented in Pricing Derivation ✓
+- `governance/PRICING_RULES.md` contains new §25 (full bleed ink rule); prior §25–29 renumbered to §26–30 ✓
+- `governance/PRODUCTION.md` documents full bleed assumption and $0.50/sq ft rate ✓
+- `.claude/MASTER_CONTEXT.md` Core Rules updated with ink assumption rule (new Core Rule 9) ✓
+- `frontend/calculator_config.json` updated to document full bleed as account default ✓
+- `categories/printed-laminated-orajet.md` 1210810 row and footnote updated ✓
+- `.claude/ARCHITECTURE.md` 1210810 row + precedent chain + category registry updated ✓
+- `python scripts/validate.py` → 0 errors, 0 warnings ✓
+- All 3 build scripts run clean (`build_frontend.py` 15 items, `build_materials.py` 7 materials, `build_calculator_config.py` 3+3+8) ✓
+
+**Key Decisions:**
+- The full bleed ink rule is established as a **permanent account-level truth**, hardwired at three governance layers simultaneously: MASTER_CONTEXT.md Core Rule 9, PRICING_RULES.md §25, and PRODUCTION.md Account-Wide Ink Coverage Standard. No future session may price a printed/laminated item on this account at any coverage other than full bleed. The incidental buffer convention (judgment-applied conservative round-up) is documented at all three layers.
+- The §25–29 → §26–30 renumber required updating cross-references in MASTER_CONTEXT.md ("§25–29" → "§26–30") and the build script header comment (`scripts/build_calculator_config.py` line 34). Other cross-references in the items/categories/governance corpus continue to point at §22–24 (file prep, unchanged) or at §28 (now §29 — invoice protection) via the renumbered slot, which is the same semantic concept. The build script reference at line 293 already pointed to "§28" which was previously the quote-language rule; that's now §29. Updated.
+- 1210810 retains its dimensional band exclusion (0.292 sq ft is below the ~0.5 sq ft singles band scope floor) and its do_not_benchmark status — both unchanged. The exclusion is DIMENSIONAL, not pricing. The framing has evolved: prior derivation framed 1210810 as "band-consistent at $15.41/sq ft." The 4-wave revalidation established that this framing was structurally incorrect. The validated $/sq ft is INTENTIONALLY ABOVE the band, reflecting the structurally required small-format premium. Prior framing is fully superseded in `items/1210810.md`, `categories/printed-laminated-orajet.md`, and `.claude/ARCHITECTURE.md`.
+- Invoice protection (PRICING_RULES.md §28, the renumbered slot for what was §27) automatically resolves the new 19/20 boundary cliff on 1210810 (19 × $5.75 = $109.25 vs 20 × $4.75 = $95.00). The buyer is charged the lower of the two — $95.00 at qty 19. No structural problem.
+- The Item Overview "Initial Order: Qty 10 — $47.50" line in items/1210810.md is now stale vs the new $57.50 elsewhere in the file; preserved per the explicit "do not change Item Overview" instruction in this session's prompt. Frontmatter is canonical; downstream consumers (calculator, data.json) will use the new $5.75 × 10 = $57.50.
+
+**Status:** Complete. validate.py 0/0; all 3 build scripts clean. Account-wide full bleed ink rule is now permanent operational DNA. 1210810 final pricing locked.
+
+---
+
 ### 2026-06-01 — Governance: VALIDATION_PROMPTS.md — 4-Wave AI Pricing Validation System Hardwired into Repo DNA
 
 **What:** Created `governance/VALIDATION_PROMPTS.md` — the authoritative governance document for the 4-wave AI pricing validation system. Codifies how every new item on the Elliott Equipment account gets stress-tested across 6 top-tier models, four times (24 total responses) before Nick sends a quote to Sean. The calculator (per `governance/CALCULATOR.md`) generates the Round 0 brief; this document governs Waves 1–4. After Wave 4, Claude Chat produces the Final Synthesis Table; Nick locks the final price; Claude Code writes the item file per existing self-healing rules.

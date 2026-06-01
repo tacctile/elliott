@@ -2,7 +2,7 @@
 
 > **Living document — updated every session that changes structure.**
 >
-> Last Updated: 2026-06-01
+> Last Updated: 2026-06-01 (1210810 revalidated under 4-wave atomic AI process; account-wide full bleed ink rule established)
 
 ---
 
@@ -26,7 +26,7 @@ All quoted items. Updated when items are added, repriced, or status changes.
 | 3017583 | LBL - PTO Engage Process (ANSI Z535) ⚠ one-off, do NOT benchmark | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.026 | $9.17 (flat — one-off) | $9.17 | ~97% (structural — one-off, $55 program at qty 6) | Quoted | `items/3017583.md` |
 | 3017584 | LBL - PTO Active (smallest item on account) ⚠ one-off, do NOT benchmark | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.00174 | $9.17 (flat — one-off) | $9.17 | ~99% (structural — one-off, $55 program at qty 6) | Quoted | `items/3017584.md` |
 | 1082570 | Load Chart, I70 EZR Mount 3.6K ⚠ color conflict open (samples delivered, awaiting selection) | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.503 | $8 (prod. rate at qty 20) | $8.00 | ~83% (at prod. vol.; current order $42 flat, job economics) | Quoted | `items/1082570.md` |
-| 1210810 | LBL - DANGER FALLING JIB (ANSI Z535) ⚠ ink unverified ($0.25 placeholder, confirm after first run); do NOT benchmark until production-volume acceptance | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.292 | $4.50 | $4.50 | ~80–85% (ink unverified; $0.25→85%, $0.40→82%, $0.50→80%) | Quoted — 1-9: $55 flat MOQ floor / 10-19: $4.75 / initial order $47.50 | `items/1210810.md` |
+| 1210810 | LBL - DANGER FALLING JIB (ANSI Z535) ⚠ do NOT benchmark until production-volume acceptance | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.292 | $4.75 | $4.75 | ~87% (at $0.60 material, full bleed standard) | Quoted — 1-9: $55 flat MOQ floor / 10-19: $5.75 / initial order $57.50 | `items/1210810.md` |
 
 ---
 
@@ -35,7 +35,7 @@ All quoted items. Updated when items are added, repriced, or status changes.
 | Category | Material Family | Category File | Item Count | Profile Status |
 |----------|-----------------|---------------|------------|----------------|
 | Cut Vinyl Lettering | 3M 180mC Cut Vinyl | `categories/cut-vinyl-3m-180mc.md` | 4 | Narrowing — 4 data points at 2.51–2.564 sq ft, all at $35/qty 20 |
-| Printed + Laminated | Orajet 3951 Cast + Polyester Lam | `categories/printed-laminated-orajet.md` | 11 | **MOQ 10 now in effect for all new printed/laminated items (established 2026-06-01). $55 minimum order charge on sub-10 orders. Invoice protection applies.** Singles (≥0.5 sq ft): Narrowing — 2 confirmed band data points (1230820 at 1.296 sq ft FA Accepted; 1082570 at 0.503 sq ft quoted, $15.91/sq ft — band-consistent, AI validated). Sub-scope single (0.1–0.5 sq ft): 1210810 at 0.292 sq ft, $4.50 ($15.41/sq ft — band-consistent, AI validated, 4-round 6-model; 1-9 tier revised to $55 flat MOQ floor, 10-19 revised to $4.75); excluded from band DATA POINTS on dimensional scope until production-volume acceptance. Kits: Moderate (2 data points). Tiny labels (≤0.1 sq ft): 4 one-off outrigger program peers ($55 program total / $2.75 per label) + 2 standalone one-offs (3017583 at 0.026 sq ft and 3017584 at 0.00174 sq ft — smallest item on the account; both $55 program total / $9.17 per label at qty 6) — explicitly excluded from any band; do NOT benchmark |
+| Printed + Laminated | Orajet 3951 Cast + Polyester Lam | `categories/printed-laminated-orajet.md` | 11 | **MOQ 10 in effect for all new printed/laminated items (established 2026-06-01). $55 minimum order charge on sub-10 orders. Invoice protection applies. Full bleed ink rule ($0.50/sq ft × full label sq ft) in effect account-wide (established 2026-06-01).** Singles (≥0.5 sq ft): Narrowing — 2 confirmed band data points (1230820 at 1.296 sq ft FA Accepted; 1082570 at 0.503 sq ft quoted, $15.91/sq ft — band-consistent, AI validated). Sub-scope single (0.1–0.5 sq ft): 1210810 at 0.292 sq ft, $4.75 ($16.27/sq ft — INTENTIONALLY ABOVE band per Wave 4 verdict; 4-wave atomic AI validated 2026-06-01; small-format premium consistent and defensible at every tier); excluded from band DATA POINTS on dimensional scope until production-volume acceptance. Kits: Moderate (2 data points). Tiny labels (≤0.1 sq ft): 4 one-off outrigger program peers ($55 program total / $2.75 per label) + 2 standalone one-offs (3017583 at 0.026 sq ft and 3017584 at 0.00174 sq ft — smallest item on the account; both $55 program total / $9.17 per label at qty 6) — explicitly excluded from any band; do NOT benchmark |
 | Panel Decals | Convex High Bond + Poly Lam | Not yet created | 0 | No profile — first item establishes it |
 | Polycarbonate | Lexan/Polycarbonate | Not yet created | 0 | No profile — first item establishes it |
 
@@ -56,22 +56,27 @@ P/N 1230820 (ROOT BENCHMARK — $20/ea at qty 20)
 │       Tiers: $16.50/$10.50/$8.00/$6.25/$5.25/$4.25. No MOQ — Elliott strategic account.
 │       Open color conflict — samples delivered (~26 hrs), awaiting Sean's PO selection.
 │       Status: Quoted.
-├── P/N 1210810 (sub-scope single → $4.50/label at qty 20, $15.41/sq ft — band-consistent by design)
+├── P/N 1210810 (sub-scope single → $4.75/label at qty 20, $16.27/sq ft — INTENTIONALLY ABOVE band)
 │       0.292 sq ft — BELOW singles band scope (~0.5 sq ft floor). Band exclusion is DIMENSIONAL,
-│       not pricing: validated $/sq ft ($15.41) is essentially at the band floor ($15.43).
-│       4-round, 6-model AI validation complete (24 runs, 2026-06-01):
-│         Option A (preliminary $3.50 at qty 20) rejected 0/6 — unanimously.
-│         Option B ($4.50 at qty 20, band-aligned) adopted with 10-19 adjusted $5.50→$5.00.
-│         Fundamental correction: below-scope dimensional position does NOT justify below-band $/sq ft.
-│       TIER RESTRUCTURE (2026-06-01): never-pay-more cliff eliminated at 1-9/10-19 boundary.
-│         1-9: $55.00 flat minimum order charge (NOT per-unit) — never-pay-more compliance + MOQ 10.
-│         10-19: $4.75 (revised from $5.00) — never-pay-more compliant: 19×$4.75=$90.25≈20×$4.50=$90.00 ✓
-│         20-49 and below: unchanged.
-│       Tiers: $55 flat/$4.75/$4.50/$3.50/$2.75/$2.50. Initial order qty 10: $47.50 (10-19 tier).
-│       Ink ($0.25) UNVERIFIED — Safety Red flood coat; confirm after first run ($0.40–$0.50 realistic).
+│       not pricing. Validated $/sq ft ($16.27 at qty 20-49) is INTENTIONALLY ABOVE the singles band
+│       ($15.43–$15.91/sq ft) — the structurally required small-format premium per Wave 4 verdict.
+│       REVALIDATED 2026-06-01 via 4-wave atomic AI validation (24 independent responses, 6 models × 4 waves):
+│         Wave 1 (Build): 4/5 valid clustered $4.51–$4.64 at qty 20; 1 outlier at $6.00 argued premium ABOVE band.
+│         Wave 2 (Destruction): 6/6 H severity on buyer/competitor/strategic. Primary: 10-19 inverted vs benchmark.
+│         Wave 3 (Buyer Sim): All 6 cleared $4.50 without fight; anchor "never invoiced more for smaller qty."
+│         Wave 4 (Final Synthesis): UNANIMOUS NO on Wave 3 table — 10-19 at $4.95 was 8.5% below benchmark
+│           $/sq ft ($18.52). Smaller labels must carry equal or higher $/sq ft. Fix range $5.25–$5.95, center $5.40.
+│         Nick's decision: Raised full table above benchmark $/sq ft at every tier; 20-49 moved $4.50→$4.75
+│           to maintain curve integrity. Small-format premium consistent and defensible at every tier.
+│       Tiers: $55 flat/$5.75/$4.75/$4.00/$3.50/$2.75. Initial order qty 10: $57.50 (10-19 tier).
+│       Material cost $0.60 under account-wide full bleed ink rule established same session (PRICING_RULES.md §25):
+│         Orajet 0.292×$1.21=$0.353 + lam 0.292×$0.2389=$0.070 + ink 0.292×$0.50=$0.146 = $0.569
+│         + incidental buffer (conservative round-up) = $0.60. Margin at qty 20-49: ~87.4%.
+│       Invoice protection automatically resolves 19/20 cliff (19×$5.75=$109.25 vs 20×$4.75=$95.00).
 │       Do NOT benchmark until production-volume acceptance confirmed by Nick.
 │       MOQ 10 — printed/laminated account rule (2026-06-01). $55 min order charge on sub-10 orders.
-│       2028 MOQ plan: this session begins formalization; full account MOQ structure Jan 1, 2028.
+│       2028 MOQ plan: full account MOQ structure Jan 1, 2028.
+│       Prior pricing structure (tiers $55/$4.75/$4.50/$3.50/$2.75/$2.50 with $0.67 material at $0.25 ink) SUPERSEDED.
 │       Status: Quoted.
 └── [future printed/laminated singles validate against Pricing Profile band]
 

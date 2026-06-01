@@ -2,7 +2,7 @@
 
 > **Single source of truth. Read first, every session. No exceptions.**
 >
-> Last Updated: 2026-06-01 (governance/VALIDATION_PROMPTS.md added)
+> Last Updated: 2026-06-01 (account-wide full bleed ink rule established; PRICING_RULES.md §25 added; prior MOQ rules renumbered §26–30)
 
 ---
 
@@ -92,6 +92,7 @@ Only after reading all eight does pricing begin.
 6. No file is allowed to fall out of sync with any other file. Ever.
 7. **Elliott provides production-ready DWG files for every item on this account, without exception.** File prep, artwork preparation, design time, and pre-press labor are zero-cost, zero-time inputs on every Elliott job — past, present, and future. Step 1 of every process (file import/setup) is a ~5-minute mechanical operation, NOT a billable labor input. Any cost reasoning that uses file prep as a pricing driver on this account is incorrect and must be corrected immediately. This is a permanent account-level truth, not a per-job assumption.
 8. **Printed/laminated items on this account are subject to MOQ 10 and $55 minimum order charge rules.** See Account-Level Order Rules section below. Cut vinyl items are NOT subject to these rules at this time.
+9. **All printed/laminated items are priced at full bleed / full coverage ink ($0.50/sq ft × full label sq ft) at all times.** No partial, medium, or low coverage assumptions are permitted on any Elliott printed/laminated item — past, present, or future. Material cost always includes an incidental buffer rounded conservatively upward to account for setup scrap, registration pulls, and minor waste. Canonical formula: `(Orajet sq ft × $1.21) + (lam sq ft × $0.2389) + (label sq ft × $0.50) + incidental buffer`. The frontmatter `material_cost_per_unit` field reflects the buffered total. Established 2026-06-01. See `governance/PRICING_RULES.md` §25 and `governance/PRODUCTION.md` Account-Wide Ink Coverage Standard.
 
 ---
 
@@ -99,7 +100,7 @@ Only after reading all eight does pricing begin.
 
 > **Established 2026-06-01. Apply to printed/laminated items (Orajet 3951 + polyester lam). Cut vinyl items (3M 180mC) are NOT subject to these rules at this time.**
 >
-> Full rule codification: `governance/PRICING_RULES.md` §25–29 and `categories/printed-laminated-orajet.md` Account-Level Order Rules block.
+> Full rule codification: `governance/PRICING_RULES.md` §26–30 and `categories/printed-laminated-orajet.md` Account-Level Order Rules block.
 
 ### Printed/Laminated MOQ: 10 Units
 
