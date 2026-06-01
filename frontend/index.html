@@ -3236,6 +3236,7 @@ init();
       per_label_tiers[k] = r(kit_totals[k] / label_count, 2);
     }
     return {
+      tiers: kit_totals,
       kit_totals,
       per_label_tiers,
       anchor,
