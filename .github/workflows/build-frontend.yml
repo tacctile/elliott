@@ -8,6 +8,7 @@ on:
       - 'materials/**'
       - 'scripts/build_frontend.py'
       - 'scripts/build_materials.py'
+      - 'scripts/build_calculator_config.py'
 
 jobs:
   build:
@@ -25,10 +26,13 @@ jobs:
       - name: Build materials.json
         run: python scripts/build_materials.py
 
+      - name: Build calculator_config.json
+        run: python scripts/build_calculator_config.py
+
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add frontend/data.json frontend/materials.json frontend/images/
+          git add frontend/data.json frontend/materials.json frontend/calculator_config.json frontend/images/
           git diff --cached --quiet || git commit -m "system: auto-rebuild frontend data + sync images"
           git push

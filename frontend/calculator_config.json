@@ -1,0 +1,248 @@
+{
+  "generated": "2026-06-01T17:59:19Z",
+  "version": "1.0",
+  "account": {
+    "floor": 55.0,
+    "floor_source_pn": "1230820",
+    "floor_label": "Account minimum-worthwhile-charge floor (1230820 FA price)",
+    "moq": {
+      "printed_laminated": {
+        "min_units": 10,
+        "sub_moq_charge": 55.0,
+        "applies": true,
+        "note": "Orders <10 units billed at $55.00 flat minimum order charge"
+      },
+      "cut_vinyl": {
+        "applies": false,
+        "note": "Cut vinyl items are NOT subject to MOQ 10 or $55 minimum order charge at this time"
+      }
+    }
+  },
+  "routing": {
+    "tiny_threshold_sq_ft": 0.1,
+    "sub_scope_floor_sq_ft": 0.1,
+    "sub_scope_ceiling_sq_ft": 0.5,
+    "singles_band_floor_sq_ft": 0.5,
+    "singles_band_ceiling_sq_ft": 2.0,
+    "laminator_max_width_in": 13.5,
+    "roland_max_print_width_in": 28.0,
+    "parity_max_lam_passes": 2
+  },
+  "bands": {
+    "cut_vinyl_lettering": {
+      "concession_phase": {
+        "min_per_sq_ft_qty_20": 13.65,
+        "max_per_sq_ft_qty_20": 13.94,
+        "anchor_pn": "1205720",
+        "note": "Relationship Concession phase \u2014 Rule 14 deviation acknowledged. All 4 current cut vinyl items priced within this band by design."
+      },
+      "ai_consensus": {
+        "min_per_sq_ft_qty_20": 14.84,
+        "max_per_sq_ft_qty_20": 16.41,
+        "note": "Would-be normalized band per AI consensus. Normalization planned January 2027."
+      },
+      "active_band": "concession_phase",
+      "margin_floor_warn_pct": 57.0,
+      "margin_floor_stop_pct": 50.0,
+      "margin_target_qty_20_min_pct": 73.0,
+      "margin_target_qty_20_max_pct": 78.0,
+      "tier_compression_pct": 51.0,
+      "default_tier_template": {
+        "price_1_9": 45,
+        "price_10_19": 40,
+        "price_20_49": 35,
+        "price_50_99": 30,
+        "price_100_199": 26,
+        "price_200_plus": 22
+      },
+      "snap_granularity": {
+        "above_50": 5,
+        "25_to_50": 5,
+        "10_to_25": 1,
+        "below_10": 0.25
+      },
+      "calibration_note": "Band calibrated at 2.51-2.56 sq ft. Items at significantly different sq ft require validation."
+    },
+    "printed_laminated_singles": {
+      "min_per_sq_ft_qty_20": 15.43,
+      "max_per_sq_ft_qty_20": 15.91,
+      "anchor_pn": "1230820",
+      "anchor_psf": 15.43,
+      "margin_floor_warn_pct": 64.0,
+      "margin_floor_stop_pct": 50.0,
+      "margin_target_qty_20_min_pct": 83.0,
+      "margin_target_qty_20_max_pct": 84.0,
+      "tier_ratios": {
+        "1_9": 1.5,
+        "10_19": 1.2,
+        "20_49": 1.0,
+        "50_99": 0.85,
+        "100_199": 0.7,
+        "200_plus": 0.55
+      },
+      "snap_granularity": {
+        "above_50": 5,
+        "25_to_50": 1,
+        "10_to_25": 0.5,
+        "below_10": 0.25
+      },
+      "note": "Band anchored at 1230820 ($15.43/sq ft). 1082570 AI-validated at $15.91/sq ft. Band is narrowing."
+    },
+    "printed_laminated_kits": {
+      "per_label_qty_20": 10.0,
+      "per_sq_ft_qty_20": 16.42,
+      "per_sq_ft_premium_over_singles_pct": 6.0,
+      "margin_floor_warn_pct": 83.0,
+      "margin_floor_stop_pct": 50.0,
+      "parity_applies_when": "same_dimensions AND same_material AND lam_passes <= 2",
+      "tier_compression_pct": 60.0,
+      "tier_template_3label": {
+        "price_1_9": 45,
+        "price_10_19": 36,
+        "price_20_49": 30,
+        "price_50_99": 26,
+        "price_100_199": 21,
+        "price_200_plus": 18
+      },
+      "tier_template_5label": {
+        "price_1_9": 75,
+        "price_10_19": 60,
+        "price_20_49": 50,
+        "price_50_99": 43,
+        "price_100_199": 35,
+        "price_200_plus": 30
+      },
+      "note": "Per-label parity at $10.00/label qty 20. Kit premium ~6% over singles intentional \u2014 matched-set collation, multi-label inspection, controlled-set packaging."
+    }
+  },
+  "material_constants": {
+    "orajet_3951": {
+      "cost_per_sq_ft": 1.21,
+      "material_id": "orajet-3951-white",
+      "verified_date": "2026-04-22",
+      "roll_width_in": 30
+    },
+    "polyester_lam_1mil": {
+      "cost_per_sq_ft": 0.2389,
+      "material_id": "1mil-polyester-overlaminate",
+      "verified_date": "2026-05-28",
+      "max_width_in": 13.5
+    },
+    "transferrite_582u": {
+      "cost_per_sq_ft": 0.5911,
+      "material_id": "transferrite-582u",
+      "verified_date": "2026-05-28"
+    }
+  },
+  "ink_rates": {
+    "low": {
+      "cost_per_label_typical": 0.1,
+      "note": "Text-only, minimal coverage"
+    },
+    "medium": {
+      "cost_per_sq_ft": 0.44,
+      "note": "Standard full-color process. ~$0.27 at 0.609 sq ft."
+    },
+    "high": {
+      "cost_per_label_typical": 0.4,
+      "note": "Heavy coverage, multiple solid fills"
+    },
+    "flood_coat": {
+      "cost_per_label_min": 0.4,
+      "cost_per_label_max": 0.6,
+      "placeholder": 0.25,
+      "placeholder_note": "WARNING: $0.25 is an understated placeholder historically used (1210810). Realistic range $0.40-$0.60. Must confirm after first production run.",
+      "unverified": true
+    },
+    "flood_coat_safety_red": {
+      "cost_per_label_min": 0.4,
+      "cost_per_label_max": 0.5,
+      "placeholder": 0.25,
+      "unverified": true,
+      "note": "Safety Red flood coat. $0.25 used in 1210810 as placeholder \u2014 UNVERIFIED. Confirm after first run."
+    }
+  },
+  "cut_vinyl_colors": {
+    "cardinal_red": {
+      "material_id": "3m-180mc-cardinal-red",
+      "cost_method": "length_based",
+      "cost_per_linear_yd": 15.502,
+      "roll_width_in": 24,
+      "roll_width_ft": 2.0,
+      "available_widths_in": [
+        24
+      ],
+      "verified_date": "2026-05-28"
+    },
+    "olympic_blue": {
+      "material_id": "3m-180mc-olympic-blue",
+      "cost_method": "length_based",
+      "cost_per_linear_yd": 16.278,
+      "roll_width_in": 24,
+      "roll_width_ft": 2.0,
+      "available_widths_in": [
+        24
+      ],
+      "pms_note": "Visual approximation of PMS 2386 C \u2014 not a certified Pantone match. Disclose in quote.",
+      "verified_date": "2026-05-22"
+    },
+    "white_24in": {
+      "material_id": "3m-180mc-white-24in",
+      "cost_method": "length_based",
+      "cost_per_linear_yd": 13.116,
+      "roll_width_in": 24,
+      "roll_width_ft": 2.0,
+      "available_widths_in": [
+        24,
+        48
+      ],
+      "verified_date": "2026-05-21"
+    },
+    "white_48in": {
+      "material_id": "3m-180mc-white-48in",
+      "cost_method": "length_based",
+      "cost_per_linear_yd": 25.744,
+      "roll_width_in": 48,
+      "roll_width_ft": 4.0,
+      "available_widths_in": [
+        48
+      ],
+      "verified_date": "2026-05-21"
+    }
+  },
+  "do_not_benchmark": {
+    "1277970": "One-off program peer \u2014 $55 floor pricing, not a catalog rate",
+    "1277980": "One-off program peer \u2014 $55 floor pricing, not a catalog rate",
+    "1277990": "One-off program peer \u2014 $55 floor pricing, not a catalog rate",
+    "1278000": "One-off program peer \u2014 $55 floor pricing, not a catalog rate",
+    "3017583": "Standalone one-off \u2014 $55 floor pricing, not a catalog rate",
+    "3017584": "Standalone one-off \u2014 $55 floor pricing, not a catalog rate",
+    "1210810": "Sub-scope single \u2014 excluded from band data points until production-volume acceptance",
+    "1082570": "Initial order was $42 flat job-economics (not a catalog rate). Production tier table is valid for reorder volumes."
+  },
+  "override_type_precedent": {
+    "Relationship Concession": false,
+    "One-Time Exception": false,
+    "Capacity Fill": false,
+    "Owner Judgment": "case_by_case",
+    "Competitive Defense": true,
+    "Strategic Anchor": true
+  },
+  "quote_language": {
+    "moq_printed_laminated": "Minimum order for printed labels is 10 units. Orders below 10 units are subject to a $55.00 minimum order charge. You will never be invoiced more for a smaller quantity.",
+    "tiny_one_off_program": "One-time minimum program charge: $55.00 total",
+    "anchor_line_template": "Label measures {width}\" \u00d7 {height}\" ({sq_ft} sq ft) in {material} \u2014 priced at ${price} at your projected monthly volume.",
+    "pms_caveat_template": "{color} is a visual approximation of {pms_code} \u2014 not a certified Pantone match.",
+    "ink_unverified_note": "Ink cost is a placeholder pending first production run. Update material_cost_per_unit after run.",
+    "sub_scope_note": "Dimensional scope exclusion: this item is below the 0.5 sq ft singles band floor. Band-consistent $/sq ft applies. Excluded from band data points until production-volume acceptance confirmed.",
+    "rule_14_note": "Rule 14 deviation: benchmarked against a Relationship Concession item. AI consensus band: ${min}-${max}/sq ft."
+  },
+  "flag_thresholds": {
+    "material_staleness_warn_days": 180,
+    "material_staleness_stop_days": 365,
+    "margin_stop_any_tier_pct": 50.0,
+    "margin_warn_200plus_pct": 57.0,
+    "margin_warn_qty20_pct": 64.0,
+    "band_tolerance_pct": 15.0
+  }
+}
