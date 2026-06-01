@@ -726,6 +726,548 @@
   }
   .copy-hint.show { opacity: 1; }
 
+  /* === CALCULATOR === */
+  :root {
+    --flag-stop: #ff6b6b;
+    --flag-review: #ffd166;
+    --flag-ready: #6bd58b;
+  }
+
+  .layout.calc-mode { grid-template-columns: 1fr; }
+  .layout.calc-mode .sidebar { display: none; }
+  @media (max-width: 860px) {
+    .layout.calc-mode { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+  }
+
+  .calc-panel {
+    display: none;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%;
+    overflow-y: auto;
+  }
+  .calc-panel.visible {
+    display: flex;
+    animation: fadeUp 0.25s ease-out;
+  }
+
+  .calc-content {
+    display: grid;
+    grid-template-columns: minmax(320px, 380px) 1fr;
+    gap: 20px;
+    padding: 24px 32px 48px;
+    align-items: start;
+  }
+  @media (max-width: 1100px) {
+    .calc-content { grid-template-columns: 1fr; padding: 20px; }
+  }
+  @media (max-width: 480px) {
+    .calc-content { padding: 14px; gap: 14px; }
+  }
+
+  .calc-form {
+    background: var(--surface-2);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 20px;
+    position: sticky;
+    top: 0;
+  }
+  @media (max-width: 1100px) {
+    .calc-form { position: static; }
+  }
+  .calc-form h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .calc-field { margin-bottom: 14px; }
+  .calc-field.hidden { display: none; }
+  .calc-field.calc-field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .calc-field > label {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-tertiary);
+    margin-bottom: 5px;
+  }
+  .calc-field input[type=text],
+  .calc-field input[type=number],
+  .calc-field select,
+  .calc-field textarea {
+    width: 100%;
+    padding: 8px 10px;
+    background: var(--surface-0);
+    border: 1px solid var(--border-medium);
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.12s;
+  }
+  .calc-field input:focus,
+  .calc-field select:focus,
+  .calc-field textarea:focus {
+    border-color: var(--border-strong);
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.04);
+  }
+  .calc-field input:disabled {
+    color: var(--text-tertiary);
+    background: var(--surface-1);
+  }
+  .calc-field textarea {
+    resize: vertical;
+    min-height: 60px;
+    font-family: 'Outfit', sans-serif;
+  }
+  .calc-field .calc-hint {
+    font-size: 10px;
+    color: var(--text-tertiary);
+    margin-top: 4px;
+    font-style: italic;
+    line-height: 1.4;
+  }
+  .calc-field .checkbox-label {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    text-transform: none;
+    letter-spacing: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .calc-field input[type=checkbox] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: var(--brand-red);
+  }
+
+  .calc-run-btn {
+    width: 100%;
+    margin-top: 6px;
+    padding: 12px 16px;
+    background: var(--brand-red);
+    color: var(--text-inverse);
+    border: none;
+    border-radius: 6px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: filter 0.12s, transform 0.08s;
+  }
+  .calc-run-btn:hover { filter: brightness(1.12); }
+  .calc-run-btn:active { transform: translateY(1px); }
+
+  .calc-output {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+  }
+
+  .calc-empty {
+    background: var(--surface-2);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 40px 24px;
+    text-align: center;
+    color: var(--text-tertiary);
+    font-size: 13px;
+  }
+
+  .calc-section {
+    background: var(--surface-2);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+  .calc-section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    color: var(--text-tertiary);
+    margin: 0 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .calc-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .calc-section-header .calc-section-title {
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+
+  .calc-routing-badge {
+    display: inline-block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 3px;
+    background: var(--surface-3);
+    color: var(--text-primary);
+    border: 1px solid var(--border-strong);
+  }
+
+  .calc-route-reason {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    line-height: 1.55;
+    margin-top: 12px;
+  }
+
+  /* Collapsible sections (details/summary) */
+  .calc-section details > summary {
+    cursor: pointer;
+    list-style: none;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    color: var(--text-tertiary);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-subtle);
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .calc-section details > summary::-webkit-details-marker { display: none; }
+  .calc-section details > summary::after {
+    content: '▾';
+    color: var(--text-tertiary);
+    font-size: 10px;
+    transition: transform 0.15s;
+    margin-left: 8px;
+  }
+  .calc-section details[open] > summary::after { transform: rotate(180deg); }
+  .calc-section details > summary:hover { color: var(--text-secondary); }
+
+  /* Flags */
+  .flag-banner-stop {
+    background: rgba(255, 107, 107, 0.10);
+    border: 1px solid var(--flag-stop);
+    border-radius: 6px;
+    padding: 12px 16px;
+    color: var(--flag-stop);
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+  .flag-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .flag-row {
+    display: grid;
+    grid-template-columns: 60px 50px 1fr;
+    gap: 10px;
+    align-items: start;
+    padding: 10px 12px;
+    background: var(--surface-3);
+    border-radius: 5px;
+    border-left: 3px solid var(--text-tertiary);
+  }
+  .flag-row.sev-STOP { border-left-color: var(--flag-stop); }
+  .flag-row.sev-REVIEW { border-left-color: var(--flag-review); }
+  .flag-row.sev-INFO { border-left-color: var(--text-tertiary); }
+  .flag-sev {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 3px 6px;
+    border-radius: 3px;
+    text-align: center;
+    line-height: 1.2;
+  }
+  .flag-sev.STOP { background: var(--flag-stop); color: #1a1a1a; }
+  .flag-sev.REVIEW { background: var(--flag-review); color: #1a1a1a; }
+  .flag-sev.INFO { background: var(--surface-4); color: var(--text-secondary); }
+  .flag-id {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-tertiary);
+    font-weight: 600;
+    padding-top: 2px;
+  }
+  .flag-text {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .flag-clear {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 12px 16px;
+    background: var(--surface-3);
+    border-radius: 6px;
+    border-left: 3px solid var(--text-tertiary);
+  }
+  @media (max-width: 480px) {
+    .flag-row { grid-template-columns: 56px 1fr; }
+    .flag-row .flag-id { grid-column: 2; padding-top: 0; font-size: 10px; }
+    .flag-row .flag-text { grid-column: 1 / -1; }
+  }
+
+  /* Pricing table extras (calculator) */
+  .calc-moq-row td { color: var(--text-secondary); font-size: 12px; font-style: italic; }
+
+  .calc-cliff-warn {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: rgba(255, 209, 102, 0.08);
+    border-left: 3px solid var(--flag-review);
+    border-radius: 4px;
+  }
+  .calc-cliff-warn .cliff-title {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--flag-review);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .calc-cliff-warn .cliff-line {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 3px;
+  }
+
+  /* Band positioning visual */
+  .band-bar-wrap { margin: 14px 0 12px; }
+  .band-bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--text-tertiary);
+    margin-bottom: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .band-bar {
+    position: relative;
+    height: 22px;
+    background: var(--surface-3);
+    border-radius: 4px;
+  }
+  .band-bar-zone {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.10);
+    border-left: 1px solid var(--border-strong);
+    border-right: 1px solid var(--border-strong);
+  }
+  .band-bar-marker {
+    position: absolute;
+    top: -3px;
+    bottom: -3px;
+    width: 3px;
+    background: var(--brand-red);
+    transform: translateX(-50%);
+    border-radius: 2px;
+  }
+  .band-bar-readout {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    margin-top: 8px;
+  }
+  .band-bar-readout .lhs { color: var(--text-tertiary); }
+  .band-bar-readout .rhs {
+    color: var(--text-primary);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .calc-rule14-note {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: rgba(255, 209, 102, 0.06);
+    border-left: 3px solid var(--flag-review);
+    border-radius: 4px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .comp-section-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-tertiary);
+    margin: 14px 0 8px;
+  }
+  .comp-link {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 9px 12px;
+    background: var(--surface-3);
+    border: 1px solid var(--border-subtle);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.12s;
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 5px;
+  }
+  .comp-link:hover {
+    background: var(--surface-4);
+    border-color: var(--border-strong);
+  }
+  .comp-link .comp-pn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .comp-link .comp-desc {
+    font-size: 11px;
+    color: var(--text-secondary);
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .comp-link .comp-psf {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+  }
+  .comp-empty {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    font-style: italic;
+    padding: 6px 0;
+  }
+
+  /* No-profile checklist */
+  .no-profile-checklist {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 0;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+  .no-profile-checklist li {
+    padding-left: 22px;
+    position: relative;
+  }
+  .no-profile-checklist li::before {
+    content: '☐';
+    position: absolute;
+    left: 0;
+    color: var(--text-tertiary);
+  }
+  .no-profile-checklist code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    background: var(--surface-3);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  /* Material breakdown */
+  .calc-mat-breakdown {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    background: var(--surface-0);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    padding: 12px 14px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin: 0;
+  }
+  .calc-ink-warn {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--flag-review);
+  }
+
+  /* Validation brief */
+  .brief-status-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .brief-status-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 9px;
+    border-radius: 3px;
+  }
+  .brief-status-badge.ready {
+    background: rgba(107, 213, 139, 0.14);
+    color: var(--flag-ready);
+    border: 1px solid rgba(107, 213, 139, 0.35);
+  }
+  .brief-status-badge.not-ready {
+    background: rgba(255, 107, 107, 0.14);
+    color: var(--flag-stop);
+    border: 1px solid var(--flag-stop);
+  }
+  .brief-pre {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    line-height: 1.55;
+    color: var(--text-secondary);
+    background: var(--surface-0);
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    padding: 14px 16px;
+    white-space: pre;
+    overflow-x: auto;
+    max-height: 500px;
+    overflow-y: auto;
+    margin: 0;
+  }
+
+  /* Stat row inside calc — already styled via .stat-row */
+  .calc-section .stat-row { margin-bottom: 4px; }
+  .calc-section .stat-block .stat-sub.warn { color: var(--flag-review); }
+
   /* === LIGHTBOX === */
   .lightbox {
     display: none;
@@ -826,6 +1368,7 @@
     <div class="topbar-tabs">
       <button class="tab-btn active" id="tabItems" onclick="setTab('items')">Items</button>
       <button class="tab-btn" id="tabMaterials" onclick="setTab('materials')">Materials</button>
+      <button class="tab-btn" id="tabCalculator" onclick="setTab('calculator')">Calculator</button>
     </div>
     <span class="count-chip" id="countChip">—</span>
   </div>
@@ -874,6 +1417,108 @@
             </div>
           </div>
           <div id="notesContainer"></div>
+        </div>
+      </div>
+
+      <!-- CALCULATOR PANEL -->
+      <div class="calc-panel" id="calculatorPanel">
+        <div class="calc-content">
+          <div class="calc-form" id="calcForm">
+            <h3>Calculator Inputs</h3>
+
+            <div class="calc-field calc-field-row">
+              <div>
+                <label>Part Number</label>
+                <input type="text" id="calc-pn" placeholder="optional" autocomplete="off" spellcheck="false" />
+              </div>
+              <div>
+                <label>Model</label>
+                <input type="text" id="calc-model" placeholder="optional" autocomplete="off" spellcheck="false" />
+              </div>
+            </div>
+
+            <div class="calc-field">
+              <label>Description</label>
+              <input type="text" id="calc-desc" placeholder="optional" autocomplete="off" spellcheck="false" />
+            </div>
+
+            <div class="calc-field">
+              <label>Material Family</label>
+              <select id="calc-family">
+                <option value="3M 180mC Cut Vinyl">3M 180mC Cut Vinyl</option>
+                <option value="Orajet 3951 Cast + Polyester Lam" selected>Orajet 3951 + Polyester Lam</option>
+                <option value="Convex High Bond + Poly Lam">Convex High Bond + Poly Lam</option>
+                <option value="Lexan/Polycarbonate">Lexan/Polycarbonate</option>
+              </select>
+            </div>
+
+            <div class="calc-field hidden" id="calc-color-wrap">
+              <label>Color</label>
+              <select id="calc-color"></select>
+            </div>
+
+            <div class="calc-field hidden" id="calc-cv-itemtype-wrap">
+              <label>Item Type</label>
+              <input type="text" value="Cut Vinyl Lettering" disabled />
+            </div>
+
+            <div class="calc-field" id="calc-itemtype-wrap">
+              <label>Item Type</label>
+              <select id="calc-itemtype">
+                <option value="single">Single Label</option>
+                <option value="kit_same_dim">Multi-Label Kit (same dimensions)</option>
+                <option value="kit_mixed_dim">Multi-Label Kit (mixed dimensions)</option>
+              </select>
+            </div>
+
+            <div class="calc-field calc-field-row">
+              <div>
+                <label>Width (in)</label>
+                <input type="number" id="calc-width" step="0.001" min="0" placeholder="e.g. 15" />
+              </div>
+              <div>
+                <label>Height (in)</label>
+                <input type="number" id="calc-height" step="0.001" min="0" placeholder="e.g. 12.44" />
+              </div>
+            </div>
+
+            <div class="calc-field hidden" id="calc-labelcount-wrap">
+              <label>Label Count</label>
+              <input type="number" id="calc-labelcount" min="1" step="1" value="3" />
+            </div>
+
+            <div class="calc-field" id="calc-ink-wrap">
+              <label>Ink Coverage</label>
+              <select id="calc-ink">
+                <option value="low">Low / Text Only</option>
+                <option value="medium" selected>Medium / Standard</option>
+                <option value="high">High / Multiple Fills</option>
+                <option value="flood_coat">Flood Coat</option>
+                <option value="flood_coat_safety_red">Flood Coat — Safety Red</option>
+              </select>
+            </div>
+
+            <div class="calc-field" id="calc-ansi-wrap">
+              <label class="checkbox-label"><input type="checkbox" id="calc-ansi" /> ANSI/Safety Label</label>
+            </div>
+
+            <div class="calc-field">
+              <label>Order Quantity</label>
+              <input type="number" id="calc-qty" min="0" step="1" placeholder="optional" />
+              <div class="calc-hint">Sean's actual order qty — used to identify which tier applies</div>
+            </div>
+
+            <div class="calc-field">
+              <label>Notes</label>
+              <textarea id="calc-notes" placeholder="optional" rows="3"></textarea>
+            </div>
+
+            <button class="calc-run-btn" id="calc-run-btn" onclick="runCalculatorUI()">Run Calculator</button>
+          </div>
+
+          <div class="calc-output" id="calcOutput">
+            <div class="calc-empty">Enter inputs and click <strong>Run Calculator</strong> to generate pricing.</div>
+          </div>
         </div>
       </div>
 
@@ -963,11 +1608,26 @@ function setTab(tab) {
   activeTab = tab;
   document.getElementById('tabItems').classList.toggle('active', tab === 'items');
   document.getElementById('tabMaterials').classList.toggle('active', tab === 'materials');
+  document.getElementById('tabCalculator').classList.toggle('active', tab === 'calculator');
   document.getElementById('search').value = '';
   activeFilter = null;
   document.getElementById('itemDetail').classList.remove('visible');
   document.getElementById('materialDetail').classList.remove('visible');
+  document.getElementById('calculatorPanel').classList.remove('visible');
   document.getElementById('emptyState').style.display = 'flex';
+
+  const layout = document.querySelector('.layout');
+
+  if (tab === 'calculator') {
+    layout.classList.add('calc-mode');
+    document.getElementById('emptyState').style.display = 'none';
+    document.getElementById('calculatorPanel').classList.add('visible');
+    document.getElementById('countChip').textContent = 'Calc';
+    initCalculatorForm();
+    return;
+  }
+
+  layout.classList.remove('calc-mode');
 
   if (tab === 'items') {
     document.getElementById('emptyText').textContent = 'Select an item from the list';
@@ -1723,6 +2383,496 @@ document.addEventListener('keydown', e => {
     closePdfModal();
   }
 });
+
+/* ===== CALCULATOR TAB ===== */
+
+let calcFormInitialized = false;
+
+const CV_COLOR_LABELS = {
+  cardinal_red: 'Cardinal Red (24" roll)',
+  olympic_blue: 'Olympic Blue (24" roll)',
+  white_24in: 'White (24" roll)',
+  white_48in: 'White (48" roll)',
+};
+
+const ROUTE_BADGE_LABELS = {
+  single_standard: 'Standard Single',
+  single_sub_scope: 'Sub-Scope Single',
+  cut_vinyl: 'Cut Vinyl Lettering',
+  tiny: 'Tiny / Job Economics',
+  no_profile: 'No Profile',
+};
+
+const TIER_BOUNDS_UI = [
+  { key: 'price_1_9',     label: '1–9',     min: 1,   max: 9     },
+  { key: 'price_10_19',   label: '10–19',   min: 10,  max: 19    },
+  { key: 'price_20_49',   label: '20–49',   min: 20,  max: 49    },
+  { key: 'price_50_99',   label: '50–99',   min: 50,  max: 99    },
+  { key: 'price_100_199', label: '100–199', min: 100, max: 199   },
+  { key: 'price_200_plus',label: '200+',    min: 200, max: 99999 },
+];
+
+function initCalculatorForm() {
+  if (calcFormInitialized) return;
+  if (!window.CALCULATOR_CONFIG) return;
+  calcFormInitialized = true;
+
+  const colorSel = document.getElementById('calc-color');
+  const colors = window.CALCULATOR_CONFIG.cut_vinyl_colors || {};
+  colorSel.innerHTML = Object.keys(colors).map(k =>
+    `<option value="${k}">${escapeHtml(CV_COLOR_LABELS[k] || k)}</option>`
+  ).join('');
+
+  document.getElementById('calc-family').addEventListener('change', updateCalcFormVisibility);
+  document.getElementById('calc-itemtype').addEventListener('change', updateCalcFormVisibility);
+  updateCalcFormVisibility();
+}
+
+function updateCalcFormVisibility() {
+  const family = document.getElementById('calc-family').value;
+  const isCV = family === '3M 180mC Cut Vinyl';
+  const isPL = family === 'Orajet 3951 Cast + Polyester Lam';
+  const itemType = document.getElementById('calc-itemtype').value;
+  const isKit = !isCV && itemType.startsWith('kit_');
+
+  document.getElementById('calc-color-wrap').classList.toggle('hidden', !isCV);
+  document.getElementById('calc-cv-itemtype-wrap').classList.toggle('hidden', !isCV);
+  document.getElementById('calc-itemtype-wrap').classList.toggle('hidden', isCV);
+  document.getElementById('calc-labelcount-wrap').classList.toggle('hidden', !isKit);
+  document.getElementById('calc-ink-wrap').classList.toggle('hidden', !isPL);
+  document.getElementById('calc-ansi-wrap').classList.toggle('hidden', !isPL);
+}
+
+function gatherCalcInputs() {
+  const family = document.getElementById('calc-family').value;
+  const isCV = family === '3M 180mC Cut Vinyl';
+  const itemType = isCV ? 'cut_vinyl' : document.getElementById('calc-itemtype').value;
+  const isKit = !isCV && itemType.startsWith('kit_');
+  return {
+    part_number: document.getElementById('calc-pn').value.trim(),
+    description: document.getElementById('calc-desc').value.trim(),
+    model: document.getElementById('calc-model').value.trim(),
+    material_family: family,
+    item_type: itemType,
+    width_in: parseFloat(document.getElementById('calc-width').value) || 0,
+    height_in: parseFloat(document.getElementById('calc-height').value) || 0,
+    label_count: isKit ? (parseInt(document.getElementById('calc-labelcount').value, 10) || 1) : 1,
+    cut_vinyl_color: isCV ? document.getElementById('calc-color').value : '',
+    ink_coverage: document.getElementById('calc-ink').value,
+    is_ansi_safety: document.getElementById('calc-ansi').checked,
+    order_qty: parseInt(document.getElementById('calc-qty').value, 10) || 0,
+    notes: document.getElementById('calc-notes').value.trim(),
+  };
+}
+
+function runCalculatorUI() {
+  const inputs = gatherCalcInputs();
+  const out = document.getElementById('calcOutput');
+  if (!inputs.width_in || !inputs.height_in) {
+    out.innerHTML = '<div class="calc-empty" style="color: var(--flag-stop);">Width and Height are required.</div>';
+    return;
+  }
+  if (typeof window.runCalculator !== 'function') {
+    out.innerHTML = '<div class="calc-empty" style="color: var(--flag-stop);">Calculator engine not loaded.</div>';
+    return;
+  }
+  let result;
+  try {
+    result = window.runCalculator(inputs);
+  } catch (err) {
+    out.innerHTML = `<div class="calc-empty" style="color: var(--flag-stop);">Calculator error: ${escapeHtml(err && err.message ? err.message : String(err))}</div>`;
+    return;
+  }
+  window.lastCalcResult = result;
+  window.lastCalcInputs = inputs;
+  renderCalcOutput(result, inputs);
+}
+
+function renderCalcOutput(result, inputs) {
+  const el = document.getElementById('calcOutput');
+  const hasStop = result.has_stop_flag;
+  const route = result.route;
+
+  const sections = [];
+  sections.push(renderCalcSummary(result, inputs));
+  sections.push(renderCalcFlags(result));
+  if (!hasStop && route !== 'tiny' && route !== 'no_profile') {
+    sections.push(renderCalcPricingTable(result, inputs));
+  }
+  if (route !== 'no_profile') {
+    sections.push(renderCalcMaterialBreakdown(result));
+    sections.push(renderCalcBandPositioning(result, inputs));
+    sections.push(renderCalcProductionSummary(result));
+  }
+  sections.push(renderCalcBrief(result));
+
+  el.innerHTML = sections.join('');
+}
+
+function routeBadgeLabel(result, inputs) {
+  if (result.route === 'kit') {
+    const passes = result.lam_passes;
+    return `Kit — ${passes != null ? passes + ' pass' + (passes !== 1 ? 'es' : '') : 'lam passes TBD'}`;
+  }
+  return ROUTE_BADGE_LABELS[result.route] || result.route;
+}
+
+function effectivePriceTiers(result) {
+  return result.pricing.kit_totals || result.pricing.tiers || null;
+}
+
+function renderCalcSummary(result, inputs) {
+  const route = result.route;
+  const badge = routeBadgeLabel(result, inputs);
+  const reason = escapeHtml(result.route_reason || '');
+
+  if (route === 'no_profile') {
+    return `
+      <div class="calc-section">
+        <div class="calc-section-header">
+          <h3 class="calc-section-title">Routing</h3>
+          <span class="calc-routing-badge">${escapeHtml(badge)}</span>
+        </div>
+        <p class="calc-route-reason" style="margin-top: 0;">${reason}</p>
+        <div class="comp-section-label">Required Inputs to Proceed</div>
+        <ul class="no-profile-checklist">
+          <li>Verified material cost per sq ft (substrate, laminate or topcoat, ink/process)</li>
+          <li>Production process step-by-step (lam/cure passes, cut runs, equipment)</li>
+          <li>Comparable jobs from prior accounts (if any)</li>
+          <li>Quote target by industry rules of thumb ($/sq ft)</li>
+          <li>Run AI validation (all 4 rounds per <code>governance/PRICING_VALIDATION.md</code>)</li>
+          <li>Document first item in <code>categories/</code> with full Pricing Profile</li>
+        </ul>
+      </div>
+    `;
+  }
+
+  if (route === 'tiny') {
+    const tinyTiers = effectivePriceTiers(result);
+    const tot = tinyTiers ? tinyTiers.price_20_49 : 55;
+    return `
+      <div class="calc-section">
+        <div class="calc-section-header">
+          <h3 class="calc-section-title">Routing</h3>
+          <span class="calc-routing-badge">${escapeHtml(badge)}</span>
+        </div>
+        <div class="oneoff-block" style="border-left-color: var(--flag-review);">
+          <div class="oneoff-tag">One-Time Program Only</div>
+          <div class="oneoff-line">
+            <span class="oneoff-k">Program Total</span>
+            <span class="oneoff-v">$${Number(tot).toFixed(2)}</span>
+          </div>
+          <div class="oneoff-line">
+            <span class="oneoff-k">Per-Label Rate</span>
+            <span class="oneoff-v" style="color: var(--text-tertiary); font-size: 13px;">suppressed (arithmetic artifact)</span>
+          </div>
+          <div class="oneoff-note">
+            Tiny one-off (≤0.1 sq ft) — $${Number(tot).toFixed(0)} program total. NOT a per-unit rate. Per-label math is suppressed in customer-facing output. Per-sq-ft math is a minimum-run artifact. Do NOT benchmark this item against future quotes.
+          </div>
+        </div>
+        <p class="calc-route-reason">${reason}</p>
+      </div>
+    `;
+  }
+
+  const tiers = effectivePriceTiers(result);
+  const isKit = (inputs.label_count || 1) > 1;
+  const price20 = tiers ? tiers.price_20_49 : null;
+  const matCost = result.material.total_per_kit;
+  const margin = result.margins.at_qty_20;
+  const sqFtRef = isKit ? result.sq_ft_per_kit : result.sq_ft_per_label;
+  const psf = (price20 != null && sqFtRef > 0) ? price20 / sqFtRef : null;
+  const ppsfSub = sqFtRef > 0 ? sqFtRef.toFixed(3) + ' sq ft' : '';
+
+  const priceCard = `
+    <div class="stat-block">
+      <div class="stat-label">Recommended Price (qty 20)</div>
+      <div class="stat-value">${price20 != null ? '$' + price20.toFixed(2) : '—'}</div>
+      ${isKit && price20 != null ? `<div class="stat-sub">$${(price20 / inputs.label_count).toFixed(2)} per label</div>` : ''}
+    </div>`;
+  const matCard = `
+    <div class="stat-block">
+      <div class="stat-label">Material Cost</div>
+      <div class="stat-value">${matCost != null ? '$' + matCost.toFixed(2) : '—'}</div>
+      ${result.material.ink_unverified ? '<div class="stat-sub warn">ink unverified</div>' : ''}
+    </div>`;
+  const marginCard = `
+    <div class="stat-block">
+      <div class="stat-label">Margin @ Qty 20</div>
+      <div class="stat-value">${margin != null ? margin.toFixed(1) + '%' : '—'}</div>
+    </div>`;
+  const psfCard = `
+    <div class="stat-block">
+      <div class="stat-label">$/Sq Ft @ Qty 20</div>
+      <div class="stat-value">${psf != null ? '$' + psf.toFixed(2) : '—'}</div>
+      ${ppsfSub ? `<div class="stat-sub">${ppsfSub}</div>` : ''}
+    </div>`;
+
+  return `
+    <div class="calc-section">
+      <div class="calc-section-header">
+        <h3 class="calc-section-title">Routing &amp; Summary</h3>
+        <span class="calc-routing-badge">${escapeHtml(badge)}</span>
+      </div>
+      <div class="stat-row">${priceCard + matCard + marginCard + psfCard}</div>
+      <p class="calc-route-reason">${reason}</p>
+    </div>
+  `;
+}
+
+function renderCalcFlags(result) {
+  const flags = result.flags || [];
+  const stops = flags.filter(f => f.severity === 'STOP');
+  const reviews = flags.filter(f => f.severity === 'REVIEW');
+  const infos = flags.filter(f => f.severity === 'INFO');
+
+  let banner = '';
+  if (stops.length > 0) {
+    banner = '<div class="flag-banner-stop">⛔ Output blocked by STOP flag — resolve before proceeding</div>';
+  }
+
+  let body;
+  if (flags.length === 0) {
+    body = '<div class="flag-clear">✓ No blocking flags</div>';
+  } else {
+    const ordered = [...stops, ...reviews, ...infos];
+    body = '<div class="flag-list">' + ordered.map(f => `
+      <div class="flag-row sev-${f.severity}">
+        <span class="flag-sev ${f.severity}">${f.severity}</span>
+        <span class="flag-id">${escapeHtml(f.id)}</span>
+        <span class="flag-text">${escapeHtml(f.text)}</span>
+      </div>
+    `).join('') + '</div>';
+  }
+
+  return `
+    <div class="calc-section">
+      <h3 class="calc-section-title">Flags</h3>
+      ${banner}
+      ${body}
+    </div>
+  `;
+}
+
+function renderCalcPricingTable(result, inputs) {
+  const tiers = effectivePriceTiers(result);
+  if (!tiers) return '';
+  const isKit = (inputs.label_count || 1) > 1;
+  const moqApplies = result.pricing.moq_applies;
+  const orderQty = inputs.order_qty || 0;
+  const sqFtRef = isKit ? result.sq_ft_per_kit : result.sq_ft_per_label;
+  const matCost = result.material.total_per_kit;
+  const perLabelTiers = result.pricing.per_label_tiers;
+
+  let activeTier = 'price_20_49';
+  if (orderQty > 0) {
+    for (const b of TIER_BOUNDS_UI) {
+      if (orderQty >= b.min && orderQty <= b.max) { activeTier = b.key; break; }
+    }
+  }
+
+  const cols = isKit
+    ? ['Quantity', 'Per Label', 'Per Kit', '$/Sq Ft', 'Gross Profit', 'Margin']
+    : ['Quantity', 'Price', '$/Sq Ft', 'Gross Profit', 'Margin'];
+
+  let html = `<table class="ptable"><thead><tr>${cols.map(c => `<th>${c}</th>`).join('')}</tr></thead><tbody>`;
+
+  if (moqApplies) {
+    const moqPrice = tiers.price_1_9;
+    const moqCells = isKit
+      ? `<td>—</td><td>$${moqPrice.toFixed(2)} flat min</td><td>—</td><td class="cell-missing">—</td><td class="col-margin">—</td>`
+      : `<td>$${moqPrice.toFixed(2)} flat min</td><td>—</td><td class="cell-missing">—</td><td class="col-margin">—</td>`;
+    html += `<tr class="calc-moq-row${activeTier === 'price_1_9' ? ' row-highlight' : ''}"><td>1–9 (MOQ)</td>${moqCells}</tr>`;
+  }
+
+  const startIdx = moqApplies ? 1 : 0;
+  for (let i = startIdx; i < TIER_BOUNDS_UI.length; i++) {
+    const b = TIER_BOUNDS_UI[i];
+    const price = tiers[b.key];
+    if (price == null) continue;
+    const perLabel = isKit
+      ? (perLabelTiers ? perLabelTiers[b.key] : price / inputs.label_count)
+      : price;
+    const psf = (sqFtRef > 0) ? price / sqFtRef : null;
+    const profit = matCost != null ? (price - matCost) : null;
+    const marginPct = (matCost != null && price > 0) ? ((price - matCost) / price * 100) : null;
+    const hl = b.key === activeTier ? 'row-highlight' : '';
+    const cells = isKit
+      ? `<td>$${perLabel.toFixed(2)}</td><td>$${price.toFixed(2)}</td><td>${psf != null ? '$' + psf.toFixed(2) : '—'}</td><td class="${profit != null ? 'col-profit' : 'cell-missing'}">${profit != null ? '$' + profit.toFixed(2) : '—'}</td><td class="col-margin">${marginPct != null ? marginPct.toFixed(0) + '%' : '—'}</td>`
+      : `<td>$${price.toFixed(2)}</td><td>${psf != null ? '$' + psf.toFixed(2) : '—'}</td><td class="${profit != null ? 'col-profit' : 'cell-missing'}">${profit != null ? '$' + profit.toFixed(2) : '—'}</td><td class="col-margin">${marginPct != null ? marginPct.toFixed(0) + '%' : '—'}</td>`;
+    html += `<tr class="${hl}"><td>${b.label}</td>${cells}</tr>`;
+  }
+  html += '</tbody></table>';
+
+  const inv = result.invoice_protection;
+  if (inv && inv.violations && inv.violations.length > 0) {
+    html += '<div class="calc-cliff-warn"><div class="cliff-title">Never-Pay-More Cliffs</div>';
+    for (const v of inv.violations) {
+      html += `<div class="cliff-line">${escapeHtml(v.tier_low)} → ${escapeHtml(v.tier_high)}: $${v.cliff_amount} cliff ($${v.low_max_total} &gt; $${v.up_min_total}) — invoice protection language handles at billing.</div>`;
+    }
+    html += '</div>';
+  }
+
+  return `
+    <div class="calc-section">
+      <h3 class="calc-section-title">Volume Pricing</h3>
+      ${html}
+    </div>
+  `;
+}
+
+function renderCalcMaterialBreakdown(result) {
+  const text = result.material.breakdown_text || 'n/a';
+  const warn = result.material.ink_unverified
+    ? '<p class="calc-ink-warn">⚠ Ink cost is an UNVERIFIED placeholder — confirm after first production run.</p>'
+    : '';
+  return `
+    <div class="calc-section">
+      <details>
+        <summary>Material Cost Breakdown</summary>
+        <pre class="calc-mat-breakdown">${escapeHtml(text)}</pre>
+        ${warn}
+      </details>
+    </div>
+  `;
+}
+
+function renderCalcBandPositioning(result, inputs) {
+  const band = result.band || {};
+  let visualHtml = '';
+  if (band.active_band_min != null && band.active_band_max != null && band.this_item_psf != null) {
+    const lo = Number(band.active_band_min);
+    const hi = Number(band.active_band_max);
+    const cur = Number(band.this_item_psf);
+    const span = Math.max(hi - lo, 0.5);
+    const viewLo = Math.min(lo - span * 0.4, cur - span * 0.2);
+    const viewHi = Math.max(hi + span * 0.4, cur + span * 0.2);
+    const range = viewHi - viewLo;
+    const loPct = range > 0 ? ((lo - viewLo) / range) * 100 : 25;
+    const hiPct = range > 0 ? ((hi - viewLo) / range) * 100 : 75;
+    const curPct = range > 0 ? Math.max(0, Math.min(100, ((cur - viewLo) / range) * 100)) : 50;
+    visualHtml = `
+      <div class="band-bar-wrap">
+        <div class="band-bar-labels">
+          <span>$${viewLo.toFixed(2)}/sq ft</span>
+          <span>$${viewHi.toFixed(2)}/sq ft</span>
+        </div>
+        <div class="band-bar">
+          <div class="band-bar-zone" style="left: ${loPct}%; right: ${100 - hiPct}%;"></div>
+          <div class="band-bar-marker" style="left: ${curPct}%;"></div>
+        </div>
+        <div class="band-bar-readout">
+          <span class="lhs">Active band: $${lo}–$${hi}/sq ft</span>
+          <span class="rhs">This item: $${cur.toFixed(2)}/sq ft · ${escapeHtml(band.position || '—')}</span>
+        </div>
+      </div>
+    `;
+  } else {
+    visualHtml = `<p style="color: var(--text-tertiary); font-size: 12px; font-style: italic; margin: 10px 0;">No band applies to this route.</p>`;
+  }
+
+  let rule14 = '';
+  if (result.route === 'cut_vinyl' && band.ai_consensus_min != null && band.ai_consensus_max != null) {
+    rule14 = `<div class="calc-rule14-note">Rule 14 deviation: AI consensus band $${band.ai_consensus_min}–$${band.ai_consensus_max}/sq ft. Normalization planned January 2027.</div>`;
+  }
+
+  let compsHtml = '<div class="comp-section-label">Comparable Items (same family + type, ±15% sq ft)</div>';
+  const comps = band.comparable_items || [];
+  if (comps.length === 0) {
+    compsHtml += '<div class="comp-empty">No comparable items in catalog (or all filtered by do_not_benchmark).</div>';
+  } else {
+    for (const c of comps) {
+      const price20 = c.price_20 != null ? '$' + Number(c.price_20).toFixed(2) : '—';
+      const psf = c.psf != null ? '$' + Number(c.psf).toFixed(2) + '/sf' : '—';
+      compsHtml += `
+        <a class="comp-link" href="#" onclick="event.preventDefault(); selectItem('${escapeHtml(c.pn)}');">
+          <span class="comp-pn">${escapeHtml(c.pn)}</span>
+          <span class="comp-desc">${escapeHtml(c.description || '')}</span>
+          <span class="comp-psf">${price20} · ${psf}</span>
+        </a>
+      `;
+    }
+  }
+
+  return `
+    <div class="calc-section">
+      <details>
+        <summary>Band Positioning</summary>
+        ${visualHtml}
+        ${rule14}
+        ${compsHtml}
+      </details>
+    </div>
+  `;
+}
+
+function renderCalcProductionSummary(result) {
+  const route = result.route;
+  const lamPasses = result.lam_passes;
+  const lamReason = result.lam_pass_reasoning || '';
+
+  let process;
+  if (route === 'cut_vinyl') process = 'Cut / Weed / Mask';
+  else if (route === 'no_profile') process = '—';
+  else process = `Print / Lam / Cut (${lamPasses != null ? lamPasses : '?'} pass${lamPasses !== 1 ? 'es' : ''})`;
+
+  const lamRows = [];
+  lamRows.push(`<div class="info-row"><span class="ir-k">Process</span><span class="ir-v">${escapeHtml(process)}</span></div>`);
+  if (route !== 'cut_vinyl' && route !== 'no_profile') {
+    lamRows.push(`<div class="info-row"><span class="ir-k">Lam Passes</span><span class="ir-v">${lamPasses == null ? 'STOP' : lamPasses}</span></div>`);
+    const fits = lamPasses != null;
+    lamRows.push(`<div class="info-row"><span class="ir-k">13.5" Laminator</span><span class="ir-v" style="color: ${fits ? 'var(--text-primary)' : 'var(--flag-stop)'};">${fits ? 'fits' : 'exceeds — STOP'}</span></div>`);
+  }
+  lamRows.push(`<div class="info-row"><span class="ir-k">Reasoning</span><span class="ir-v" style="max-width: 75%; font-size: 11px; line-height: 1.5;">${escapeHtml(lamReason)}</span></div>`);
+
+  return `
+    <div class="calc-section">
+      <details>
+        <summary>Production Summary</summary>
+        <div class="info-card" style="background: none; border: none; padding: 0;">
+          ${lamRows.join('')}
+        </div>
+      </details>
+    </div>
+  `;
+}
+
+function renderCalcBrief(result) {
+  const ready = !!result.ready_for_round_1;
+  return `
+    <div class="calc-section">
+      <details open>
+        <summary>Validation Brief</summary>
+        <div class="brief-status-row">
+          <span class="brief-status-badge ${ready ? 'ready' : 'not-ready'}">Ready for Round 1: ${ready ? 'YES' : 'NO'}</span>
+        </div>
+        <pre class="brief-pre">${escapeHtml(result.brief || '')}</pre>
+        <div class="copy-wrap">
+          <button class="copy-btn" id="copyBriefBtn" onclick="copyValidationBrief()">Copy Validation Brief</button>
+          <span class="copy-hint" id="copyBriefHint">Copied ✓</span>
+        </div>
+      </details>
+    </div>
+  `;
+}
+
+function copyValidationBrief() {
+  const result = window.lastCalcResult;
+  if (!result || !result.brief) return;
+  navigator.clipboard.writeText(result.brief).then(() => {
+    const btn = document.getElementById('copyBriefBtn');
+    const hint = document.getElementById('copyBriefHint');
+    if (!btn || !hint) return;
+    btn.classList.add('copied');
+    btn.textContent = 'Copied ✓';
+    hint.classList.add('show');
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.textContent = 'Copy Validation Brief';
+      hint.classList.remove('show');
+    }, 2000);
+  });
+}
 
 init();
 </script>
