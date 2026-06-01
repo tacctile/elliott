@@ -14,11 +14,47 @@
 |-----|-------------|------------|-------|-----------------|-----------|--------|
 | 1230820 | Load Chart, D105 | 15" × 12.44" | 1.296 | $20 | $20.00 | FA Accepted |
 | 1082570 | Load Chart, I70 EZR Mount 3.6K | 10" × 7.25" | 0.503 | $8 ¹ | $8.00 ¹ | Quoted |
-| 1210810 | LBL - DANGER FALLING JIB (ANSI Z535) | 10.5" × 4" | 0.292 | $4.50 ² | $4.50 ² | Quoted |
+| 1210810 | LBL - DANGER FALLING JIB (ANSI Z535) | 10.5" × 4" | 0.292 | $4.50 ² | $4.50 ² | Quoted — MOQ 10 / $55 min order charge |
 
 ¹ **Production rate at qty 20** ($15.91/sq ft — within singles band). Current order (qty 2, SO 20125600) is **$42.00 flat** — job economics / setup recovery framing; NOT a per-label rate. 4-round, 6-model AI validation complete (24 runs): $55 account floor rejected for this label size vs D105 comparison. Tiers: $16.50 / $10.50 / $8.00 / $6.25 / $5.25 / $4.25. No MOQ — Elliott strategic account. Open color conflict — samples delivered (~26 hours), awaiting Sean's PO selection (Safety Yellow assumed — conservative). See `items/1082570.md` for full documentation.
 
-² **4-round, 6-model AI validation complete (24 runs). Band-consistent at $15.41/sq ft** (singles band: $15.43–$15.91/sq ft — essentially at the band floor). Initial order qty 10: **$50.00** (10-19 tier at $5.00). Projected volume ~30/month starting 2027 → recurring at $4.50 (20-49 tier). Tiers: $8.50 / $5.00 / $4.50 / $3.50 / $2.75 / $2.50. Ink cost ($0.25) **UNVERIFIED** — Safety Red flood coat placeholder; realistic range $0.40–$0.50; confirm after first production run. No MOQ — Elliott strategic account. **Dimensional scope exclusion:** 1210810 at 0.292 sq ft is below the ~0.5 sq ft singles band scope floor. It is excluded from band DATA POINTS on **dimensional scope only** — NOT on per-sq-ft grounds. The validated rate ($15.41/sq ft) is band-consistent. Preliminary pricing (20-49 at $3.50 = $11.99/sq ft) incorrectly used the sub-scope position to justify a below-band $/sq ft rate — this was the fundamental error corrected by the 4-round validation. Not added to Pricing Profile band until production-volume acceptance confirmed by Nick. See `items/1210810.md` for full documentation including complete 4-round validation record.
+² **4-round, 6-model AI validation complete (24 runs). Band-consistent at $15.41/sq ft** (singles band: $15.43–$15.91/sq ft — essentially at the band floor). **Tier structure revised 2026-06-01** to eliminate never-pay-more cliff. New tiers: $55.00 flat (1-9, minimum order charge — NOT per-unit) / $4.75 (10-19) / $4.50 (20-49) / $3.50 (50-99) / $2.75 (100-199) / $2.50 (200+). Initial order qty 10: **$47.50** (10-19 tier at $4.75). Projected volume ~30/month starting 2027 → recurring at $4.50 (20-49 tier). **MOQ 10** — printed/laminated account rule. **$55 minimum order charge** on any order below 10 units (flat total, not per-unit). Invoice protection applies. Ink cost ($0.25) **UNVERIFIED** — Safety Red flood coat placeholder; realistic range $0.40–$0.50; confirm after first production run. **Dimensional scope exclusion:** 1210810 at 0.292 sq ft is below the ~0.5 sq ft singles band scope floor. It is excluded from band DATA POINTS on **dimensional scope only** — NOT on per-sq-ft grounds. The validated rate ($15.41/sq ft) is band-consistent. Not added to Pricing Profile band until production-volume acceptance confirmed by Nick. See `items/1210810.md` for full documentation including complete 4-round validation record and 2026-06-01 tier restructure record.
+
+---
+
+## Account-Level Order Rules — Printed/Laminated Items
+
+> **Established 2026-06-01. Apply to all printed/laminated catalog items on this account going forward.**
+>
+> These rules do NOT apply to 3M 180mC cut vinyl items. Cut vinyl MOQ structure will be addressed separately as that program matures.
+
+### Rule 1 — MOQ 10
+
+All printed/laminated catalog items on this account have a minimum order quantity of **10 units**. This applies to all new items quoted going forward. Existing items are not retroactively restructured — their tier tables remain as quoted.
+
+### Rule 2 — $55 Minimum Order Charge
+
+Any order on a printed/laminated item where the catalog tier pricing produces a total below $55.00 is subject to a **$55.00 minimum order charge**. This applies regardless of quantity. The minimum order charge is a flat total — it is NOT a per-unit rate.
+
+Example: an order of 3 units at $4.50 = $13.50 → billed at $55.00.
+
+The $55.00 floor is the established account minimum-worthwhile-charge, consistent with all prior one-off job handling on this account (3017583, 3017584, outrigger switch program).
+
+### Rule 3 — Invoice Protection
+
+No buyer on this account will ever be invoiced more for ordering a smaller quantity than they would pay for a larger quantity at the next tier. At tier boundaries where the math creates a cliff, invoice protection applies automatically — the buyer is charged whichever total is lower.
+
+### Rule 4 — Sub-10 Handling
+
+Requests for fewer than 10 units of a printed/laminated catalog item are handled as one-off flat-rate jobs at the $55.00 account minimum order charge. Same treatment as all prior field service one-offs (3017583, 3017584, outrigger switches). No per-unit rate applies below MOQ.
+
+### Rule 5 — Required Quote Language
+
+All quotes for printed/laminated items must include the following language:
+
+> "Minimum order for printed labels is 10 units. Orders below 10 units are subject to a $55.00 minimum order charge. You will never be invoiced more for a smaller quantity."
+
+---
 
 ### Tiny Printed Labels — Sub-0.1 Sq Ft Size Class (One-Off Job Economics, Not Sq Ft)
 
@@ -164,6 +200,8 @@ Beyond 2 lam passes or mixed dimensions → cost-build from scratch. Boundary is
 4. **Kits exceeding 2 lam passes** — cost-build from scratch. Run AI validation.
 5. **Mixed-dimension kits** — see methodology below. Cost-build from scratch.
 6. **The Pricing Profile is the primary validation tool, not the benchmark chain.**
+7. **MOQ 10 (established 2026-06-01)** — all new printed/laminated catalog items start their tier tables at qty 10. The 1-9 tier on new items represents a $55.00 flat minimum order charge (not per-unit). See Account-Level Order Rules block above.
+8. **Invoice protection** — buyer will never be invoiced more for a smaller quantity than a larger quantity at the next tier. Applied automatically at all tier boundaries on all printed/laminated items. Required quote language: "You will never be invoiced more for a smaller quantity."
 
 ---
 
