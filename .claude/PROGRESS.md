@@ -6,6 +6,53 @@
 
 ---
 
+### 2026-06-01 — System: Added scripts/build_calculator_config.py — Generates frontend/calculator_config.json
+
+**What:** Created a third build script following the established `build_frontend.py` / `build_materials.py` pattern. Reads governance documents, category files, item frontmatter, and material frontmatter; emits `frontend/calculator_config.json` as the single source of truth for the calculator's logic. The HTML calculator never hardcodes constants — pricing rules change → re-run script → fresh config.
+
+**What's in the JSON:**
+
+- `account` — floor ($55), floor_source_pn (1230820), MOQ rules for printed/laminated vs cut vinyl
+- `routing` — sq ft thresholds (tiny/sub-scope/singles), laminator 13.5", Roland 28", parity max lam passes
+- `bands` — cut_vinyl_lettering (concession + AI consensus + active band selector, margin targets, tier compression, default tier template, snap granularity), printed_laminated_singles (band $15.43–$15.91/sq ft, tier ratios, snap granularity), printed_laminated_kits (per-label $10 parity, 3-label + 5-label tier templates, 6% kit premium)
+- `material_constants` — orajet_3951, polyester_lam_1mil, transferrite_582u (cost_per_sq_ft + verified_date read live from materials/*.md)
+- `cut_vinyl_colors` — cardinal_red, olympic_blue, white_24in, white_48in (cost_per_linear_yd + verified_date read live from materials/*.md; available_widths + roll_width hardcoded)
+- `ink_rates` — low/medium/high/flood_coat/flood_coat_safety_red with placeholder + unverified flags
+- `do_not_benchmark` — 8 P/Ns with reasons (1277970–1278000 outrigger program peers, 3017583/3017584 standalone tiny one-offs, 1210810 sub-scope single, 1082570 job-economics initial order)
+- `override_type_precedent` — maps each of the 6 override types to precedent-setting status (per ARCHITECTURE.md)
+- `quote_language` — required MOQ language verbatim, anchor line template, PMS caveat template, sub-scope note, rule 14 note, ink unverified note
+- `flag_thresholds` — material staleness (180/365 days), margin stop/warn percentages, band tolerance
+
+**Dynamic reads:**
+- `account.floor` ← `items/1230820.md` frontmatter `first_article_price`
+- `material_constants.*.cost_per_sq_ft` + `verified_date` ← `materials/{orajet-3951-white,1mil-polyester-overlaminate,transferrite-582u}.md`
+- `cut_vinyl_colors.*.cost_per_linear_yd` + `verified_date` ← `materials/3m-180mc-{cardinal-red,olympic-blue,white-24in,white-48in}.md`
+
+**Static constants:** Tier ratios, band thresholds, snap granularity, ink rates, do_not_benchmark list, override type precedent, quote language templates, flag thresholds. All named at the top of the script for easy governance updates.
+
+**Files Modified:**
+- `scripts/build_calculator_config.py` — CREATED
+- `.github/workflows/build-frontend.yml` — added 3rd build step (after build_frontend.py and build_materials.py), added script to path filter, added `frontend/calculator_config.json` to git add line
+- `frontend/calculator_config.json` — CREATED (build output, generated 2026-06-01)
+- `.claude/STATE.yml` — last_session updated
+- `.claude/PROGRESS.md` — this entry
+
+**Verification:**
+- `python scripts/build_calculator_config.py` → clean, prints "3 material constants, 3 bands, 8 do_not_benchmark items"
+- Generated JSON is valid; spot-checked: floor=55.0, orajet verified_date=2026-04-22, cardinal_red cost_per_linear_yd=15.502, all 4 cut vinyl colors present, all 8 do_not_benchmark items present
+- `python scripts/validate.py` → 0 errors, 0 warnings
+- `python scripts/build_frontend.py` → clean (15 items)
+- `python scripts/build_materials.py` → clean (7 materials)
+
+**Key Decisions:**
+- No item files, category files, governance docs, or `index.html` were touched in this session. Config-only.
+- Material costs and verified_date fields are read dynamically — the materials/*.md files remain the upstream source of truth. Updating a verified_date in a material file → regenerates the config on next run, no script change needed.
+- All other constants (band thresholds, tier ratios, etc.) are explicit named constants at the top of the script. When governance docs change, edit the script's named constants to match — single, obvious update location.
+
+**Status:** Complete. CI workflow will rebuild calculator_config.json automatically on next push that touches items, materials, or any of the three build scripts.
+
+---
+
 ### 2026-06-01 — Maintenance: Resolved Audit Flags J-1 through J-5 — Olympic Blue Rename, White-48in Material Created, COMPLETION_TEMPLATES Ref Fixed, Dangling References Cleared
 
 **What:** Pre-existing audit identified five flags unrelated to any recent pricing session. All five resolved in this session. No prices changed. No item statuses changed. No margin figures changed.
