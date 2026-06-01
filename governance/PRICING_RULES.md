@@ -2,7 +2,7 @@
 
 > **Non-negotiable constraints. Apply to every pricing decision on this account.**
 >
-> Last Updated: 2026-05-22
+> Last Updated: 2026-06-01
 
 ---
 
@@ -50,6 +50,22 @@
 22. **Elliott provides production-ready DWG files for every item on this account, without exception.** File prep, artwork preparation, design time, and pre-press labor are NEVER a cost factor on Elliott pricing. Past, present, and future. Step 1 of every documented process (file import/setup) is a ~5-minute mechanical operation, not a billable labor input.
 23. **Do not include file prep, artwork prep, design time, or pre-press labor in any cost build, job reconstruction, or margin analysis on this account.** If you find yourself adding minutes or dollars for "file prep × N unique designs," stop — that input is zero on Elliott. Use only material + machine-time labor (print, lam, cut, weed, inspect, package).
 24. **If a prior session used file prep as a cost driver, that pricing rationale was incorrect.** Document the correction in the affected item's Notes and Warnings section. Do not propagate the incorrect input forward into future quotes.
+
+---
+
+## Printed/Laminated MOQ and Minimum Order Rules
+
+> **Established 2026-06-01. Apply to printed/laminated items only. Cut vinyl items are NOT subject to these rules at this time.**
+
+§25 — **MOQ 10 on all printed/laminated catalog items.** All new printed/laminated catalog items quoted on this account have a minimum order quantity of 10 units. The 1-9 tier on new printed/laminated items represents a flat minimum order charge (see §26), not a per-unit rate. This rule applies to all new items going forward; existing item tier tables are not retroactively restructured. Does NOT apply to 3M 180mC cut vinyl items.
+
+§26 — **$55.00 minimum order charge on any printed/laminated order producing a total below $55.00, regardless of quantity.** The minimum order charge is a flat total — it is NOT a per-unit rate and is NOT $55 × quantity. Any order on a printed/laminated catalog item where the buyer orders fewer than 10 units is billed at $55.00 total. The $55.00 floor is the established account minimum-worthwhile-charge, consistent with all prior one-off job handling on this account (3017583, 3017584, outrigger switch program).
+
+§27 — **Invoice protection: buyer never invoiced more for a smaller quantity than a larger quantity at the next tier.** At every tier boundary, the maximum total at the top of the lower tier must never exceed the minimum total at the bottom of the next tier. Where math creates a cliff, invoice protection applies automatically — the buyer is charged whichever total is lower. Applied to all printed/laminated items. New tier structures must verify never-pay-more compliance at all boundaries before quoting.
+
+§28 — **All printed/laminated quotes must include the standard MOQ and invoice protection language.** Required text: "Minimum order for printed labels is 10 units. Orders below 10 units are subject to a $55.00 minimum order charge. You will never be invoiced more for a smaller quantity." This language must appear in every quote for a printed/laminated item on this account, not just for new items.
+
+§29 — **Sub-10 requests on printed/laminated items are handled as one-off flat-rate jobs at the $55 account floor.** Requests for fewer than 10 units of a printed/laminated catalog item are priced as flat-rate one-off jobs at $55.00 total — same treatment as field service one-offs (3017583, 3017584, outrigger switch program). No per-unit rate applies below MOQ. Do not extrapolate from the resulting per-label arithmetic ($55 ÷ qty) as a pricing signal for any future item.
 
 ---
 

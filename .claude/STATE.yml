@@ -3,10 +3,10 @@
 
 last_session:
   date: "2026-06-01"
-  type: "pricing_lock"
-  summary: "Created and locked item file for P/N 1210810 (LBL - DANGER FALLING JIB) with 4-round, 6-model AI validation (24 total runs) complete. Validated pricing: $8.50/$5.00/$4.50/$3.50/$2.75/$2.50. Initial order qty 10: $50.00 (10-19 tier). Ink cost ($0.25) UNVERIFIED — Safety Red flood coat; confirm after first production run; realistic range $0.40–$0.50. No MOQ documented. 2028 MOQ plan logged. Pricing normalization note (internal) logged. Band-consistent at $15.41/sq ft — dimensionally below scope floor but correctly priced. validate.py 0 errors, 0 warnings. build_frontend.py clean."
+  type: "pricing_revision + governance_update"
+  summary: "Revised 1210810 tier structure — eliminated never-pay-more cliff at 1-9/10-19 boundary. New 1-9 = $55.00 flat minimum order charge (not per-unit). New 10-19 = $4.75. Initial order $47.50. Established permanent account-level MOQ 10 and $55 minimum order charge rules for printed/laminated items. Invoice protection language codified. Rules added to PRICING_RULES.md (§25–29), MASTER_CONTEXT.md (new Account-Level Order Rules section), and categories/printed-laminated-orajet.md. Cut vinyl items not affected. validate.py 0 errors, 0 warnings. build_frontend.py clean."
 
-next_action: "Send $50.00 quote to Sean for 1210810 (qty 10, 10-19 tier). Include label dimensions in quote email: 'Label measures 10.5\" × 4\" (0.292 sq ft) in cast vinyl with polyester overlaminate — priced at $4.50 at your projected monthly volume.' Also: send $42 quote to Sean for 1082570 when PO arrives (job economics framing). Confirm 1082570 color selection via PO. Await Sean's outreach re: engineering/procurement standard project."
+next_action: "Send $47.50 quote to Sean for 1210810 (qty 10, 10-19 tier at $4.75). Include in quote: (1) label dimensions: 'Label measures 10.5\" × 4\" (0.292 sq ft) in cast vinyl with polyester overlaminate — priced at $4.50 at your projected monthly volume.' (2) Standard MOQ language: 'Minimum order for printed labels is 10 units. Orders below 10 units are subject to a $55.00 minimum order charge. You will never be invoiced more for a smaller quantity.' Also: send $42 quote to Sean for 1082570 when PO arrives (job economics framing). Confirm 1082570 color selection via PO. Await Sean's outreach re: engineering/procurement standard project."
 blockers: "Ink cost on 1210810 unverified — $0.25 is a placeholder for Safety Red flood coat; must confirm after first production run ($0.40–$0.50 realistic range) and update material_cost_per_unit in frontmatter. Open color conflict on 1082570 — Sean must select Safety Yellow or white background before production."
 item_count: 15
 material_count: 6

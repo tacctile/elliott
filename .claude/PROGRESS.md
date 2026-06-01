@@ -6,6 +6,61 @@
 
 ---
 
+### 2026-06-01 — Pricing Revision + Governance Update: P/N 1210810 — Never-Pay-More Cliff Eliminated, $55 Flat MOQ Floor, $4.75 at 10-19, Account-Level MOQ 10 + $55 Minimum Order Charge Rules Codified
+
+**What:** Revised tier structure on P/N 1210810 (LBL - DANGER FALLING JIB) to eliminate the never-pay-more cliff at the 1-9/10-19 boundary. New 1-9 = $55.00 flat minimum order charge (NOT per-unit). New 10-19 = $4.75. Initial order updated to $47.50. Established permanent account-level MOQ 10 and $55 minimum order charge rules for all printed/laminated items. Invoice protection language codified.
+
+**Cliff Problem Eliminated:**
+- Prior: 9 × $8.50 = $76.50 vs 10 × $5.00 = $50.00 → buyer ordering 9 paid $26.50 MORE than buyer ordering 10. Indefensible.
+- New: 1-9 = $55.00 flat (minimum order charge, not per-unit). 10-19 = $4.75. Never-pay-more verified: 19 × $4.75 = $90.25 ≈ 20 × $4.50 = $90.00 ✓
+
+**Order History Finding:**
+- Every catalog RFQ Sean has sent has been at qty 10 or qty 20.
+- Sub-10 orders have exclusively been one-off field service situations (3017583, 3017584, outrigger program) — priced at $55 account floor, not catalog pricing situations.
+- The 1-9 tier was a structural formality never used in practice for catalog orders.
+
+**New Tier Structure (1210810):**
+
+| Tier | Prior Price | New Price | Notes |
+|------|------------|-----------|-------|
+| 1-9 | $8.50/unit | **$55.00 flat** | Minimum order charge — NOT per-unit |
+| 10-19 | $5.00/unit | **$4.75/unit** | Never-pay-more compliant |
+| 20-49 | $4.50 | $4.50 | Unchanged — validated anchor |
+| 50-99 | $3.50 | $3.50 | Unchanged |
+| 100-199 | $2.75 | $2.75 | Unchanged |
+| 200+ | $2.50 | $2.50 | Unchanged |
+
+Initial order (qty 10): $47.50 (was $50.00).
+
+**Account-Level Rules Established (Printed/Laminated Only):**
+- MOQ 10: all new printed/laminated catalog items start at qty 10
+- $55 minimum order charge on any order producing a total below $55.00, regardless of qty (flat total, not per-unit)
+- Invoice protection: buyer never invoiced more for a smaller quantity than a larger quantity at the next tier
+- Required quote language: "Minimum order for printed labels is 10 units. Orders below 10 units are subject to a $55.00 minimum order charge. You will never be invoiced more for a smaller quantity."
+- Sub-10 handling: flat-rate $55.00 one-off (same as 3017583, 3017584, outrigger program)
+- Cut vinyl items NOT subject to these rules at this time
+
+**Files Modified:**
+- `items/1210810.md` — price_1_9 8.50→55.00 flat (min order charge); price_10_19 5.00→4.75; pricing_logic updated; notes updated; Item Overview initial order $50→$47.50; Pricing section header, tier table, invoice protection, and quote language updated; Notes and Warnings: MOQ 10 block replaces No-MOQ block, initial order block updated; Pricing Derivation: Step 7 added documenting tier restructure decision, cliff problem, order history finding, never-pay-more verification, and MOQ 10 rationale
+- `categories/printed-laminated-orajet.md` — 1210810 Singles table row updated; footnote ² updated to reflect new tier structure, MOQ 10, $55 min charge, invoice protection; new Account-Level Order Rules block added (Rules 1–5); Pricing Rules section: Rules 7–8 added (MOQ 10, invoice protection)
+- `governance/PRICING_RULES.md` — §25–29 added under new "Printed/Laminated MOQ and Minimum Order Rules" section; Last Updated 2026-05-22→2026-06-01
+- `.claude/MASTER_CONTEXT.md` — Core Rule #8 added (reference to Account-Level Order Rules); new "Account-Level Order Rules" section added (MOQ 10, $55 min charge, invoice protection, quote language template, sub-10 handling, cut vinyl exception, 2028 context, pricing normalization internal note); Last Updated 2026-05-22→2026-06-01
+- `.claude/ARCHITECTURE.md` — 1210810 catalog row updated (1-9: $55 flat MOQ floor, 10-19: $4.75, initial order $47.50); precedent chain updated (tier restructure 2026-06-01 documented, never-pay-more compliance noted); Category Registry Printed + Laminated entry updated (MOQ 10 in effect noted)
+- `.claude/PROGRESS.md` — this entry
+- `.claude/STATE.yml` — last_session, next_action, blockers updated
+
+**Key Decisions:**
+- $55.00 flat on 1-9 is a minimum order charge, not a per-unit rate. Never treat, quote, or document it as per-unit.
+- Invoice protection language is mandatory in every printed/laminated quote going forward.
+- Cut vinyl items not affected — MOQ structure for cut vinyl will be addressed separately.
+- 2028 MOQ plan: this session is the beginning of the formalization, not the end of it.
+- Ink confirmation task (Safety Red flood coat, $0.25 placeholder, realistic $0.40–$0.50) preserved — mandatory post-production task.
+- All prior 4-round AI validation history on 1210810 preserved in Pricing Derivation section.
+
+**Status:** Complete. validate.py 0 errors, 0 warnings. build_frontend.py clean. Item file locked with revised pricing.
+
+---
+
 ### 2026-06-01 — Pricing Lock: P/N 1210810 — LBL - DANGER FALLING JIB — 4-Round AI Validation Complete, $4.50 Qty 20-49, $2.50 200+, No-MOQ Documented, Ink Unverified Pending First Run, 2028 MOQ Plan Logged
 
 **What:** Created and fully documented item file for P/N 1210810 (LBL - DANGER FALLING JIB) with validated, locked pricing. The 4-round, 6-model external AI validation (24 total model runs) was completed prior to this session. This session creates the item file with final validated pricing and propagates all changes to dependent files.
