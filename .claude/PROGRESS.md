@@ -6,6 +6,63 @@
 
 ---
 
+### 2026-06-01 — Fix: C1 — Restore kit-route never-pay-more check (add `tiers: kit_totals` to buildPrintLamKitTiers return)
+
+**What:** Single-line targeted fix to the CRITICAL bug identified in the 2026-06-01 audit. `buildPrintLamKitTiers()` (`frontend/index.html` line 3238) previously returned `{kit_totals, per_label_tiers, anchor, anchor_psf, snap, template_source, cost_build}` — no `tiers` key. The guard `if (tierBuild.tiers && tierBuild.snap && route !== 'cut_vinyl')` in `runCalculator()` therefore evaluated false for the kit route and skipped `checkInvoiceProtection()`. F11 could not fire for kits. Fix: added `tiers: kit_totals,` as the first field of the return object so the existing guard now evaluates true for the kit route and `checkInvoiceProtection()` runs against the kit's tier table.
+
+**Files Modified:**
+- `frontend/index.html` — one-line addition at line 3239 (`tiers: kit_totals,`)
+- `frontend/data.json`, `frontend/materials.json`, `frontend/calculator_config.json` — regenerated (timestamp-only; no data changes)
+- `.claude/PROGRESS.md` — this entry
+- `.claude/STATE.yml` — last_session + next_action updated
+
+**Files NOT Modified (per session spec — "Do not touch any item files, category files, governance docs, or build scripts"):**
+- No item files touched
+- No category files touched
+- No governance docs touched
+- No build scripts touched
+
+**Verification — all four acceptance tests against the live engine (Node vm-context test rig):**
+
+| Test | Inputs | Route | Price@20 | F11 | invoice.violations | Result |
+|------|--------|-------|---------:|:---:|:---:|---|
+| 1. 1278930 (3-label kit) | Orajet, kit_same_dim, 11.13"×7.88", lc=3, medium ink | `kit` ✓ | $30.00 ✓ | YES ✓ | 4 | **PASS** — 10-19 → 20-49 cliff ($684 vs $600, $84) detected; 10-19 auto-fixed from template $36 → $32 (ceilSnap of $600/19 = $31.58); 3 upper cliffs recorded but not auto-fixed (tolerated by invoice protection language per spec); F18 + F11 fire |
+| 2. 1245130 (5-label kit) | Orajet, kit_same_dim, 11.13"×7.88", lc=5, medium ink | `kit` ✓ | $50.00 ✓ | YES ✓ | 4 | **PASS** — 10-19 → 20-49 cliff ($1140 vs $1000, $140) detected; 10-19 auto-fixed from template $60 → $55 (ceilSnap of $1000/19 = $52.63 with above_50 gran=5; residual $45 sub-snap cliff remains per spec); F18 + F11 fire |
+| 3a. 1230820 single (regression) | Orajet, single, 15"×12.44", high ink | `single_standard` ✓ | $20.00 ✓ | YES ✓ | 4 | **PASS — identical to pre-fix behavior.** 10-19 auto-fixed from $24 → $21.50; F18 + F11 fire (matches Session 2 sanity expectation exactly) |
+| 3b. 1205720 cut vinyl (regression) | 3M 180mC, cardinal_red, 33.5625"×11" | `cut_vinyl` ✓ | $35.00 ✓ | NO ✓ | 0 | **PASS — identical to pre-fix behavior.** Cut vinyl explicitly skipped per spec (route !== 'cut_vinyl' guard); 0 violations recorded; F19 + F15 fire as expected |
+
+**Full sanity-check matrix (7 cases via `runSanityChecks()`):**
+
+| P/N | Route Match | Price@20 | Margin@20 | Flags | Has STOP |
+|-----|:--:|---:|---:|---|:--:|
+| 1230820 | ✓ | $20.00 | 88.6% | F18, F11 | no |
+| 1082570 | ✓ | $7.75 | 87.4% | F18, F8, F11, F12 | no |
+| 1210810 | ✓ | $4.50 | 85.1% | F10, F18, F8, F11, F12 | no |
+| 1278930 | ✓ | $30.00 | 90.0% | **F18, F11** (F11 newly firing post-fix) | no |
+| 1205720 | ✓ | $35.00 | 75.0% | F19, F15 | no |
+| 1277970 | ✓ | $55.00 | 99.8% | F9, F18 | no |
+| 1245130 | ✓ | $50.00 | 89.7% | **F18, F11** (F11 newly firing post-fix) | no |
+
+Pre-fix sanity table showed 1278930 with `F18 ✓` only and 1245130 with `F18 ✓` only — both now correctly fire F11 as well, confirming the kit-route never-pay-more check is restored. All other items behave identically to pre-fix.
+
+**Acceptance Criteria Met:**
+- `buildPrintLamKitTiers()` return object includes `tiers: kit_totals` ✓
+- `checkInvoiceProtection()` is called for the kit route (4 violations recorded for both 1278930 and 1245130 inputs) ✓
+- F11 fires for both 1278930 and 1245130 kit inputs ✓
+- Kit prices at qty 20 unchanged: 1278930 = $30.00, 1245130 = $50.00 ✓
+- Singles and cut vinyl routes produce identical output to pre-fix ✓
+- No other engine logic changed ✓
+- `python scripts/validate.py` → **0 errors, 0 warnings** ✓
+- `python scripts/build_frontend.py` → clean (15 items) ✓
+- `python scripts/build_materials.py` → clean (7 materials) ✓
+- `python scripts/build_calculator_config.py` → clean (3 material constants, 3 bands, 8 do_not_benchmark items) ✓
+
+**Side effect (beneficial):** Band positioning for kits previously returned `out_of_scope` because `tierBuild.tiers` was undefined → `price20 = null` in `computeBand()`. With `tiers: kit_totals` now present, kits correctly compute `this_item_psf = price_20_49 / sq_ft_per_kit`. For 1278930: $30 / 1.827 = $16.42/sq ft → `at_floor` of the kit band ($16.42). For 1245130: $50 / 3.045 = $16.42/sq ft → `at_floor`. Band tolerance F7 does not fire (0% deviation from center). No false-positive flag added.
+
+**Status:** C1 closed. Engine is now safe for live use on all 6 routes (cut_vinyl, single_standard, single_sub_scope, kit, tiny, no_profile). Remaining audit findings (W1-W6, I1-I9) are documented in the prior PROGRESS entry and remain in the backlog; none block live use of the calculator as a Round 1 brief generator. 4-round AI validation per `governance/PRICING_VALIDATION.md` remains mandatory for all new items.
+
+---
+
 ### 2026-06-01 — Audit: Full Calculator Accuracy Audit — 1 CRITICAL, 6 WARNINGS, 9 INFO
 
 **What:** Read-and-report-only end-to-end audit of the calculator system across 10 scope areas: config accuracy, engine logic, 15-item price verification, invoice protection, band contamination, config-to-engine sync, material staleness, cross-file consistency, edge case stress test, and validation brief completeness. No files changed except this entry and `STATE.yml`.
