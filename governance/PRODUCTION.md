@@ -2,7 +2,7 @@
 
 > **Equipment specs, material costs, nesting rules, and process details.**
 >
-> Last Updated: 2026-05-22
+> Last Updated: 2026-06-01 (account-wide full bleed ink standard hardwired)
 
 ---
 
@@ -66,7 +66,32 @@ The single most important production constraint on this account.
 |-----------|------|-------|----------|
 | Orajet 3951 cast vinyl | ~$1.21/sq ft | White cast, adhesive back | 2026-04-22 |
 | 1-mil polyester overlaminate | $1.6592/MSI = $0.2389/sq ft (Flexcon FLX000233, all-in incl. freight) | 13.5" max width on current laminator | 2026-05-28 |
-| Eco-solvent ink (Roland TR2) | ~$0.25-0.30/label | At 11.13" × 7.88" size | 2026-04-22 |
+| Eco-solvent ink — **full bleed / full coverage (standard)** | **$0.50/sq ft × full label sq ft** | Account standard — every Elliott printed/laminated item priced at full coverage. No partial/medium/low coverage assumptions. | 2026-06-01 |
+
+#### Account-Wide Ink Coverage Standard (Established 2026-06-01)
+
+All printed/laminated items on this account are priced assuming **full bleed / full coverage ink at all times**. There is no medium, low, or partial coverage routing for any Elliott printed/laminated item — past, present, or future. The standard ink rate is **$0.50/sq ft applied to the full label sq ft**.
+
+**Canonical material cost formula for any Elliott printed/laminated item:**
+
+```
+(Orajet 3951 sq ft × $1.21) + (laminate sq ft × $0.2389) + (label sq ft × $0.50) + incidental buffer
+```
+
+**Incidental buffer convention:** The calculated material total is rounded **conservatively upward** to account for setup scrap, registration pulls, and minor production waste. The buffer is judgment-applied, not a fixed number. The frontmatter `material_cost_per_unit` field on every printed/laminated item reflects the buffered total, not the pure calculation.
+
+**Worked example (P/N 1210810 at 0.292 sq ft):**
+
+| Component | Calculation | Cost |
+|-----------|-------------|------|
+| Orajet 3951 cast vinyl | 0.292 × $1.21 | $0.353 |
+| 1-mil polyester overlaminate | 0.292 × $0.2389 | $0.070 |
+| Eco-solvent ink (full bleed) | 0.292 × $0.50 | $0.146 |
+| Calculated total | | **$0.569** |
+| Incidental buffer (conservative round-up) | | + $0.031 |
+| **Canonical `material_cost_per_unit`** | | **$0.60** |
+
+This is the canonical method on this account. See `PRICING_RULES.md` §25 and `MASTER_CONTEXT.md` Core Rules.
 
 ---
 

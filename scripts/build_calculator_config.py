@@ -31,7 +31,7 @@ VERSION = "1.0"
 # ---------------------------------------------------------------------------
 # ACCOUNT-LEVEL CONSTANTS
 # Source: MASTER_CONTEXT.md (Account-Level Order Rules),
-#         governance/PRICING_RULES.md §25–29
+#         governance/PRICING_RULES.md §26–30
 # Floor value itself is read dynamically from items/1230820.md.
 # ---------------------------------------------------------------------------
 
@@ -224,28 +224,51 @@ CUT_VINYL_COLORS_STATIC = {
 
 # ---------------------------------------------------------------------------
 # INK RATES
-# Source: governance/PRODUCTION.md (medium rate); item 1082570 (flood coat);
-#         item 1210810 (Safety Red flood coat placeholder).
+# Source: governance/PRODUCTION.md (Account-Wide Ink Coverage Standard),
+#         governance/PRICING_RULES.md §25 (full bleed account-wide rule),
+#         .claude/MASTER_CONTEXT.md Core Rule 9.
+#
+# ACCOUNT-WIDE DEFAULT (established 2026-06-01):
+#   `full_bleed_flood_coat` is the account default for ALL Elliott
+#   printed/laminated items. No medium / low / partial coverage routing
+#   is permitted on this account. The other rate keys (low/medium/high,
+#   flood_coat, flood_coat_safety_red) are retained for historical/audit
+#   visibility only — they are NOT routing targets for new pricing.
+#
+# Rate values are NOT changed in this session — only the default
+# assumption documentation is updated. The account-wide rate is
+# $0.50/sq ft × full label sq ft; an incidental buffer is then applied
+# to round material totals conservatively upward (judgment, not fixed).
 # ---------------------------------------------------------------------------
 
 INK_RATES = {
+    "default_coverage": "full_bleed_flood_coat",
+    "default_note": "Account-wide standard for ALL Elliott printed/laminated items. Established 2026-06-01. See PRICING_RULES.md §25 and PRODUCTION.md Account-Wide Ink Coverage Standard.",
+    "full_bleed_flood_coat": {
+        "account_default": True,
+        "cost_per_sq_ft": 0.50,
+        "incidental_buffer": "judgment-applied; round material total conservatively upward (setup scrap, registration pulls, minor waste). Not a fixed value.",
+        "applies_to": "All Elliott printed/laminated items — past, present, and future. No partial coverage routing permitted.",
+        "canonical_formula": "(Orajet 3951 sq ft × $1.21) + (laminate sq ft × $0.2389) + (label sq ft × $0.50) + incidental buffer",
+        "note": "Full bleed / full coverage at $0.50/sq ft. This is the only ink routing on this account.",
+    },
     "low": {
         "cost_per_label_typical": 0.10,
-        "note": "Text-only, minimal coverage",
+        "note": "DEPRECATED for routing — historical reference only. Account uses full_bleed_flood_coat exclusively.",
     },
     "medium": {
         "cost_per_sq_ft": 0.44,
-        "note": "Standard full-color process. ~$0.27 at 0.609 sq ft.",
+        "note": "DEPRECATED for routing — historical reference only. Account uses full_bleed_flood_coat exclusively.",
     },
     "high": {
         "cost_per_label_typical": 0.40,
-        "note": "Heavy coverage, multiple solid fills",
+        "note": "DEPRECATED for routing — historical reference only. Account uses full_bleed_flood_coat exclusively.",
     },
     "flood_coat": {
         "cost_per_label_min": 0.40,
         "cost_per_label_max": 0.60,
         "placeholder": 0.25,
-        "placeholder_note": "WARNING: $0.25 is an understated placeholder historically used (1210810). Realistic range $0.40-$0.60. Must confirm after first production run.",
+        "placeholder_note": "Historical placeholder reference. Account-wide standard is full_bleed_flood_coat at $0.50/sq ft (see default_coverage above).",
         "unverified": True,
     },
     "flood_coat_safety_red": {
@@ -253,7 +276,7 @@ INK_RATES = {
         "cost_per_label_max": 0.50,
         "placeholder": 0.25,
         "unverified": True,
-        "note": "Safety Red flood coat. $0.25 used in 1210810 as placeholder — UNVERIFIED. Confirm after first run.",
+        "note": "Historical reference for the 1210810 placeholder period. Superseded by full_bleed_flood_coat account-wide standard (2026-06-01).",
     },
 }
 
@@ -290,7 +313,7 @@ OVERRIDE_TYPE_PRECEDENT = {
 
 # ---------------------------------------------------------------------------
 # QUOTE LANGUAGE
-# Source: governance/PRICING_RULES.md §28, categories/printed-laminated-orajet.md
+# Source: governance/PRICING_RULES.md §29, categories/printed-laminated-orajet.md
 #         Account-Level Order Rules.
 # ---------------------------------------------------------------------------
 

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-01T20:23:11Z",
+  "generated": "2026-06-01T21:59:29Z",
   "version": "1.0",
   "account": {
     "floor": 55.0,
@@ -135,23 +135,33 @@
     }
   },
   "ink_rates": {
+    "default_coverage": "full_bleed_flood_coat",
+    "default_note": "Account-wide standard for ALL Elliott printed/laminated items. Established 2026-06-01. See PRICING_RULES.md \u00a725 and PRODUCTION.md Account-Wide Ink Coverage Standard.",
+    "full_bleed_flood_coat": {
+      "account_default": true,
+      "cost_per_sq_ft": 0.5,
+      "incidental_buffer": "judgment-applied; round material total conservatively upward (setup scrap, registration pulls, minor waste). Not a fixed value.",
+      "applies_to": "All Elliott printed/laminated items \u2014 past, present, and future. No partial coverage routing permitted.",
+      "canonical_formula": "(Orajet 3951 sq ft \u00d7 $1.21) + (laminate sq ft \u00d7 $0.2389) + (label sq ft \u00d7 $0.50) + incidental buffer",
+      "note": "Full bleed / full coverage at $0.50/sq ft. This is the only ink routing on this account."
+    },
     "low": {
       "cost_per_label_typical": 0.1,
-      "note": "Text-only, minimal coverage"
+      "note": "DEPRECATED for routing \u2014 historical reference only. Account uses full_bleed_flood_coat exclusively."
     },
     "medium": {
       "cost_per_sq_ft": 0.44,
-      "note": "Standard full-color process. ~$0.27 at 0.609 sq ft."
+      "note": "DEPRECATED for routing \u2014 historical reference only. Account uses full_bleed_flood_coat exclusively."
     },
     "high": {
       "cost_per_label_typical": 0.4,
-      "note": "Heavy coverage, multiple solid fills"
+      "note": "DEPRECATED for routing \u2014 historical reference only. Account uses full_bleed_flood_coat exclusively."
     },
     "flood_coat": {
       "cost_per_label_min": 0.4,
       "cost_per_label_max": 0.6,
       "placeholder": 0.25,
-      "placeholder_note": "WARNING: $0.25 is an understated placeholder historically used (1210810). Realistic range $0.40-$0.60. Must confirm after first production run.",
+      "placeholder_note": "Historical placeholder reference. Account-wide standard is full_bleed_flood_coat at $0.50/sq ft (see default_coverage above).",
       "unverified": true
     },
     "flood_coat_safety_red": {
@@ -159,7 +169,7 @@
       "cost_per_label_max": 0.5,
       "placeholder": 0.25,
       "unverified": true,
-      "note": "Safety Red flood coat. $0.25 used in 1210810 as placeholder \u2014 UNVERIFIED. Confirm after first run."
+      "note": "Historical reference for the 1210810 placeholder period. Superseded by full_bleed_flood_coat account-wide standard (2026-06-01)."
     }
   },
   "cut_vinyl_colors": {
