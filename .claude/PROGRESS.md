@@ -6,6 +6,143 @@
 
 ---
 
+### 2026-06-05 — New Items: P/N 3010707 / 3010708 / 3010709 (ElliottEquip.com URL Wordmark, 3 Colors) — Founding Data Point Cluster for Sub-1 sq ft Cut Vinyl Size Class (Band C) + Two New Material Files
+
+**What:** Three tasks completed in a single session. **Task 1** — Created two new material files for the sub-1 sq ft cut vinyl program: `materials/3m-180mc-black.md` (3M Controltac 180mC-12 Black, 24" × 50yd at $659.26/roll, $13.1852/yd, $6.5926/sq ft, verified 2026-06-05) and `materials/3m-180mc-white-24in-50yd.md` (3M Controltac 180mC-10 White, 24" × 50yd at $619.21/roll, $12.3842/yd, $6.1921/sq ft, verified 2026-06-05). **Task 2** — Created three new item files for the ElliottEquip.com URL Wordmark program: `items/3010707.md` (Cardinal Red, pricing anchor), `items/3010708.md` (Black, color parity), `items/3010709.md` (White, color parity). All three are **INDEPENDENT** P/Ns at 34.887" × 4" (0.969 sq ft) covered by a single drawing D/3010707. Sean Finn confirmed dimensions and colors via email ("The attached print is for 3010707, 3010708, and 3010709. Measuring from the top of the i and bottom of the p the height is 4". 3010707 is Cardinal Red 53. 3010708 is black [...]. 3010709 is white [...]."). NOT a kit or set — each P/N is ordered independently at whatever quantity Sean needs. All three carry **identical pricing**: $28 / $24 / $20 / $16.50 / $13.50 / $11.50. Material cost differs by color (Cardinal Red $3.79, Black $3.26, White $3.08); margin differs by color (~81%, ~84%, ~85% at qty 20); price does NOT differ by color. Pricing validated through the full 4-wave AI process (24 independent responses across 6 models × 4 waves) per `governance/VALIDATION_PROMPTS.md` plus a final independent 6-model industry-validation audit (6/6 APPROVE, confidence HIGH). Wave 4 verdict: 6/6 UNANIMOUS YES on the full tier table. Status: all three Quoted. **Task 3** — Established the Sub-1 sq ft Cut Vinyl size class (< 1 sq ft) as **Band C** in `categories/cut-vinyl-3m-180mc.md` as a structurally separate band, INDEPENDENT of Band A (Small-Format, 2.51–2.56 sq ft) and Band B (Large-Format, 5+ sq ft). The three bands are INDEPENDENT — they do NOT contaminate or interact. January 2027 normalization plan applies to Band A only.
+
+**Items Affected:**
+- **3010707** — NEW. Cardinal Red. Pricing anchor for the sub-1 sq ft Band C founding cluster. 34.887" × 4" (0.969 sq ft). $28 / $24 / **$20** / $16.50 / $13.50 / $11.50. Material cost $3.79 (worst-case anchor — vinyl $3.52 from 24"×50yd Cardinal Red at $15.502/yd, 5-up nesting + tape $0.27 from 24" TransferRite 582U). Margin at qty 20: ~81.1%. No first article. No override type. Status: Quoted.
+- **3010708** — NEW. Black. Color parity with 3010707. Identical dimensions and tier table. Material cost $3.26. Margin at qty 20: ~83.7%. Status: Quoted.
+- **3010709** — NEW. White (24"×50yd production roll). Color parity with 3010707. Identical dimensions and tier table. Material cost $3.08. Margin at qty 20: ~84.6%. Status: Quoted.
+
+**Materials Affected:**
+- **3m-180mc-black** (NEW) — 3M Controltac 180mC-12 Black, 24" × 50yd at $659.26/roll. Used by 3010708.
+- **3m-180mc-white-24in-50yd** (NEW) — 3M Controltac 180mC-10 White, 24" × 50yd at $619.21/roll (production-volume roll, separate from the existing 24"×10yd White roll). Used by 3010709.
+- **3m-180mc-cardinal-red** (24" × 50yd, existing) — cross-reference updated: added `"3010707"` to `used_in_items`. No cost figures changed.
+- **transferrite-582u** (24" × 100yd, existing) — cross-reference updated: added `"3m-180mc-black"` and `"3m-180mc-white-24in-50yd"` to `compatible_cut_vinyls`; added `"3010707"`, `"3010708"`, `"3010709"` to `used_in_items`. No cost figures changed.
+- **3m-180mc-white-24in** (24" × 10yd, existing) — cross-reference note added pointing to the new 50yd White roll. No cost figures changed, `used_in_items` unchanged (3010709 uses the NEW 50yd roll, not this 10yd roll).
+
+**Pricing Profile Changes:**
+- `categories/cut-vinyl-3m-180mc.md` now contains **THREE independent size-class bands**:
+  - **Band A — Small-Format (2.51–2.56 sq ft):** unchanged. 4 data points (1205720, 1186310, 3017435, 3018378) all at $35/qty 20, $13.65–$13.94/sq ft. Concession-phase per Override on 1205720. January 2027 normalization plan applies to Band A only.
+  - **Band B — Large-Format (5+ sq ft):** unchanged. 1 founding data point (3010704 at 7.069 sq ft, $78/qty 20, $11.03/sq ft).
+  - **Band C — Sub-1 sq ft (< 1 sq ft):** NEW. 3 founding data points (3010707 Cardinal Red, 3010708 Black, 3010709 White — color-parity cluster, all at 0.969 sq ft, $20/qty 20, $20.64/sq ft). 51% $/sq ft step-up from Band A justified by fixed-labor dominance on sub-1 sq ft items + elevated weeding complexity + higher material cost per sq ft.
+- Decision Tree updated with explicit three-way size-class routing as Step 3: sq ft ≥ 5.0 → Band B; 1.0 ≤ sq ft < 5.0 → Band A; sq ft < 1.0 → Band C. No interpolation between bands. Boundary items (~0.8–1.2 sq ft, ~4.5–5.5 sq ft) require 4-wave AI validation.
+- $/sq ft curve across all three bands is monotonically increasing as sq ft drops: Band B ($11.03) → Band A ($13.67) → Band C ($20.64). Structurally coherent, no inversion at any tier.
+
+**4-Wave Validation Record (3010707 — pricing anchor for Band C):**
+
+| Wave | Process | Outcome |
+|------|---------|---------|
+| Wave 1 (Build) | 6 models, atomic prompts. | $16.50–$34.00 at qty 20. Three clusters identified — Low ($16.50–$19.00, proportional Band A scaling), Mid ($22.00, power-law + complexity), High ($31.00–$34.00, absolute labor recovery). All 6 confirmed Cardinal Red worst-case anchor approach; all 6 confirmed $3.79 material; all 6 confirmed $0 file prep. |
+| Wave 2 (Destruction) | 6 models. 4 attack vectors: Buyer/Procurement, Competitor, Cost Auditor, Strategic. | Buyer/Procurement: 6/6 H — high cluster destroyed, Sean pattern-matches against Band A $35/qty 20 (3.7× sq ft, same price) and reads gouging. Competitor: 6/6 H — regional shop (Pro Sign incumbent) at $13–$18 at qty 20. Cost Auditor: 4/6 M, 2/6 H — true material+labor ~$6–$9/label, low cluster margins defensible. Strategic: 6/6 H — high cluster creates unsustainable precedent at Jan 2027 Band A normalization. Convergence to $18–$22 at qty 20, central $20. Verdict: 5 No / 1 Yes-with-mods on original tables. |
+| Wave 3 (Buyer Sim) | 6 models simulating Sean Finn (Employee-Owner, $140K/year program, $/sq ft mental model). | All 6 approved PO at $20/qty 20 (5 as-is, 1 with non-blocking parallel question on large-format scaling). Pushback threshold $22–$24/sq ft; instant approval $18/sq ft (unanimous). All 6 logged $20.64/sq ft as permanent sub-1 sq ft anchor in their mental model. |
+| Wave 4 (Final Synthesis) | 6 models, binary verdicts. | **6/6 UNANIMOUS YES on full tier table $28 / $24 / $20 / $16.50 / $13.50 / $11.50.** 4 of 6 send as-is. 1 suggested 50-99 $16.50→$17.50 (not adopted). 1 suggested 200+ $11.50→$12.50 (not adopted). No tier rejected. All 6 confirmed $20.64/sq ft survives Jan 2027 Band A normalization (premium compresses 51% → 26–39%, structurally better). |
+
+**Final Industry Validation (post-Wave 4, 6 models, independent audit):**
+- 6/6 APPROVE, confidence HIGH.
+- $20.64/sq ft at qty 20 placed at upper-middle of specialty shop range ($17–$25/sq ft for sub-1 sq ft cut vinyl).
+- Tier structure sound: 59% compression, 14–18% step-downs at each tier.
+- $/sq ft curve validated: 51% step-up Band A → Band C within expected 45–60% range for a 2.6× sq ft compression at this character/complexity profile.
+- Margins appropriate for specialty 2-person shop: 67–86.5% across tiers. Above 50% structural floor at every tier including 200+.
+- **Multi-color identical pricing (3010707/3010708/3010709) confirmed as universal industry standard** for color-variant runs of identical geometry.
+- No structural risk to the $140K Elliott account from this price point.
+
+**Nick's Final Decision:** Accepted full Wave 2/3/4 consensus tier table. No modifications adopted from the two Wave 4 soft suggestions. All three colors (3010707 Cardinal Red, 3010708 Black, 3010709 White) carry the identical tier table. Material cost differs by color; margin differs by color; price does NOT differ by color. Cardinal Red is the worst-case material anchor; pricing decisions use the Cardinal Red figure. No override type — pricing validated through full 4-wave process AND final industry audit was also unanimous.
+
+**Material Cost Build (Band C — three colors, all at 0.969 sq ft, 5-up nesting on 24"×50yd roll, feed length per row of 5 = 40.887" = 1.1357 yd, 220 labels per roll):**
+
+| Color | Vinyl Roll | $/Yd | Vinyl/Row of 5 | Vinyl/Label | Tape/Label | **Total/Label** | Margin at qty 20 |
+|-------|-----------|------|-----------------|-------------|------------|------------------|------------------|
+| **Cardinal Red (anchor)** | 24" × 50yd ($775.10) | $15.502 | $17.603 | **$3.52** | $0.27 | **$3.79** | ~81.1% |
+| **Black** | 24" × 50yd ($659.26) | $13.1852 | $14.972 | **$2.99** | $0.27 | **$3.26** | ~83.7% |
+| **White** | 24" × 50yd ($619.21) | $12.3842 | $14.063 | **$2.81** | $0.27 | **$3.08** | ~84.6% |
+
+Tape cost per row of 5: 1.1357 yd × $1.1821/yd (TransferRite 582U) = $1.342. Per-label tape: $1.342 ÷ 5 = $0.27. Tape cost is identical across all three colors.
+
+**Files Created:**
+- `materials/3m-180mc-black.md` — frontmatter only, format mirrors existing Cardinal Red 24"×50yd file
+- `materials/3m-180mc-white-24in-50yd.md` — frontmatter only, format mirrors existing Cardinal Red 24"×50yd file
+- `items/3010707.md` — full item file with all 10 required sections per `governance/STRUCTURE_RULES.md`. Pricing anchor item — contains the full 4-wave validation record and final industry-validation audit summary.
+- `items/3010708.md` — full item file with all 10 required sections. References 3010707 as the benchmark and summarizes the validation.
+- `items/3010709.md` — full item file with all 10 required sections. Same structure as 3010708.
+
+**Files Modified:**
+
+Materials (cross-reference only, no cost figures changed):
+- `materials/3m-180mc-cardinal-red.md` — added `"3010707"` to `used_in_items` list. No other changes.
+- `materials/transferrite-582u.md` — added `"3m-180mc-black"` and `"3m-180mc-white-24in-50yd"` to `compatible_cut_vinyls`; added `"3010707"`, `"3010708"`, `"3010709"` to `used_in_items`. No other changes.
+- `materials/3m-180mc-white-24in.md` — added a cross-reference note in `notes` field pointing to the new 50yd White roll. No cost figures or `used_in_items` changes (3010709 uses the NEW 50yd roll, not this 10yd roll).
+
+Categories:
+- `categories/cut-vinyl-3m-180mc.md` — added 3010707/3010708/3010709 to Items table. Restructured Pricing Profile to add Band C section with full justification (51% $/sq ft step-up, three structural drivers, color-parity pricing rationale, band isolation rules, $/sq ft curve table across all three bands). Expanded Material System with Band C materials block. Updated Decision Tree with sub-1 sq ft routing as Step 3 — three-way size-class routing now explicit. Updated header description from "TWO independent size-class bands" to "THREE independent size-class bands."
+
+`.claude/`:
+- `.claude/ARCHITECTURE.md` — added 3010707/3010708/3010709 to Item Catalog table (three new rows with color-specific descriptions and margin figures). Updated Category Registry — Cut Vinyl entry to reflect 8 items and three-band structure (Band A, Band B, Band C). Added Band C precedent chain branch with: founding data point context for 3010707, full 4-wave validation record (Waves 1–4 with attack vectors and verdicts), final industry-validation audit summary (6/6 APPROVE, HIGH confidence), Nick's decision rationale, full tier table, material cost build for all three colors, color-parity pricing explanation, band isolation note. 3010708 and 3010709 listed as color-parity children of 3010707. Updated Last Updated stamp.
+- `.claude/PROGRESS.md` — this entry.
+- `.claude/STATE.yml` — last_session, next_action, item_count 16 → 19, pending_quotes updated.
+
+Governance:
+- `governance/PRODUCTION.md` — added 24" × 50yd Black ($659.26) and 24" × 50yd White ($619.21) to Cut Vinyl material costs table. Added roll selection note for Band C sub-1 sq ft program (explains 5-up nesting at 4" label height on 24" roll). Added a derivation method note explaining length-based cost_per_sq_ft convention used for the new 50yd rolls (consistent with Cardinal Red 24"×50yd). Added a Material Cost Quick Reference entry for sub-1 sq ft Band C at ~0.969 sq ft showing the full color-by-color build table (vinyl + tape = total per label, $/sq ft, labels per roll). Updated Last Updated stamp.
+
+Build scripts:
+- `scripts/build_calculator_config.py` — added `black` and `white_24in_50yd` entries to `CUT_VINYL_COLORS_STATIC` with their respective `material_id`s and roll specs (`roll_width_in: 24`, `roll_width_ft: 2.0`, `available_widths_in: [24]`). No changes to existing entries' fields. No band, ink-rate, routing, or threshold changes.
+
+Frontend (regenerated by build scripts):
+- `frontend/data.json` — regenerated (now 19 items including 3010707, 3010708, 3010709)
+- `frontend/materials.json` — regenerated (now 11 materials including the two new ones)
+- `frontend/calculator_config.json` — regenerated (now 7 cut vinyl colors: cardinal_red, cardinal_red_15in, olympic_blue, white_24in, white_48in, black, white_24in_50yd; 4 material constants unchanged)
+
+**Files NOT Modified (per session spec):**
+- No existing item prices, margins, statuses, or material costs changed. The 16 existing items are untouched.
+- No existing band values changed on Band A (2.51–2.56 sq ft small-format cluster) or Band B (5+ sq ft large-format). The override note, concession-phase pricing, AI consensus range, January 2027 normalization plan, and Band B 19.3% step-down are all preserved.
+- Cost fields on `materials/3m-180mc-cardinal-red.md`, `materials/transferrite-582u.md`, `materials/3m-180mc-white-24in.md` unchanged — only cross-reference lists (and a note on the 10yd White) were updated.
+- 3010707, 3010708, 3010709 NOT added to the `do_not_benchmark` list — all three are fully validated production items and the founding data points of Band C.
+- No printed/laminated item files, category files, or governance rules touched.
+- `frontend/index.html` calculator engine unchanged.
+- `governance/PRICING_RULES.md`, `governance/PRICING_VALIDATION.md`, `governance/SPEC_EXTRACTION.md`, `governance/STRUCTURE_RULES.md`, `governance/CALCULATOR.md`, `governance/VALIDATION_PROMPTS.md` unchanged.
+- `.claude/MASTER_CONTEXT.md` unchanged.
+- `.claude/COMPLETION_TEMPLATES.md` unchanged.
+
+**Acceptance Criteria Met:**
+- `items/3010707.md` exists with all required frontmatter fields and all 10 required sections ✓
+- `items/3010708.md` exists with all required frontmatter fields and all 10 required sections ✓
+- `items/3010709.md` exists with all required frontmatter fields and all 10 required sections ✓
+- `materials/3m-180mc-black.md` exists with correct frontmatter ✓
+- `materials/3m-180mc-white-24in-50yd.md` exists with correct frontmatter ✓
+- All three items: `width_in: 34.887`, `height_in: 4`, `sq_ft_per_label: 0.969`, `sq_ft_per_kit: 0.969` ✓
+- All three items: identical tier tables ($28 / $24 / $20 / $16.50 / $13.50 / $11.50) ✓
+- All three items: `per_label_at_qty_20: 20.00` ✓
+- 3010707: `material_cost_per_unit: 3.79`, `margin_at_qty_20: "~81%"` ✓
+- 3010708: `material_cost_per_unit: 3.26`, `margin_at_qty_20: "~84%"` ✓
+- 3010709: `material_cost_per_unit: 3.08`, `margin_at_qty_20: "~85%"` ✓
+- `categories/cut-vinyl-3m-180mc.md` contains Band C section with all three items as founding data points ✓
+- `categories/cut-vinyl-3m-180mc.md` Decision Tree includes sub-1 sq ft routing ✓
+- `.claude/ARCHITECTURE.md` contains all three items in catalog and Band C precedent chain ✓
+- `governance/PRODUCTION.md` contains both new material entries and sub-1 sq ft quick reference ✓
+- `scripts/build_calculator_config.py` contains the two new cut vinyl color entries ✓
+- Existing material files have updated cross-references ✓
+- No existing item prices, margins, statuses, or material costs changed ✓
+- No existing band values changed on Bands A or B ✓
+- `python scripts/validate.py` → 0 errors, 0 warnings (with STATE.yml updated to item_count 19) ✓
+- All 3 build scripts run clean ✓
+- `frontend/data.json` (19 items), `frontend/materials.json` (11 materials), `frontend/calculator_config.json` (7 cut vinyl colors) all regenerated ✓
+
+**Key Decisions:**
+- **Band C (Sub-1 sq ft) is established as a structurally independent band** from Band A (Small-Format) and Band B (Large-Format), not a footnote or extension. The three bands have different anchors, different $/sq ft, different material cost ratios, and different normalization schedules. Future cut vinyl items route to one of the three bands based on sq ft (1.0 and 5.0 thresholds), and the bands do not interpolate or interact. The $/sq ft curve across all three bands is monotonically increasing as sq ft drops (B → A → C: $11.03 → $13.67 → $20.64), structurally coherent.
+- **51% $/sq ft step-up from Band A to Band C is structurally warranted, not a relationship/concession reversal.** Three structural drivers: (1) fixed-labor dominance on sub-1 sq ft items (setup/weeding/masking/inspection take the same time per label, amortized over much less area), (2) elevated weeding complexity per sq ft (16 mixed-case characters with 4 enclosed counters, 2 dots, tight q-u channel — vs Band A's 3-7 uppercase block characters with open geometry), (3) higher material cost per sq ft ($3.91/sq ft Cardinal Red worst case vs ~$3.41/sq ft on Band A). Validated unanimously by all 6 Wave 4 AI models and reconfirmed by the final 6-model independent industry audit.
+- **Color-parity pricing on identical geometry is universal industry standard.** All three Band C P/Ns (3010707 Cardinal Red, 3010708 Black, 3010709 White) carry the identical tier table. Pricing is anchored to the worst-case material (Cardinal Red); margins differ by color but price does not. The final 6-model industry-validation audit confirmed this as universal practice for color-variant runs of identical geometry. Differential pricing by color on identical geometry would create a procurement-side problem and would not survive the Wave 3 buyer-simulation test.
+- **The three items are INDEPENDENT P/Ns, not a kit or set.** Sean Finn confirmed via email that drawing D/3010707 covers three independent P/Ns sharing dimensions and process but with different colors. Each P/N is ordered independently at whatever quantity Sean needs at whatever time. This is structurally different from a multi-label kit (where all labels ship together as a controlled set, like 1278930 or 1245130). The quote email should list all three P/Ns with the same tier table and a one-line note that each can be ordered independently.
+- **3010707 is the canonical pricing anchor for Band C.** P/N 3010707 (Cardinal Red, worst-case material cost) carries the full 4-wave validation record and final industry-validation audit in `items/3010707.md`. P/N 3010708 and P/N 3010709 reference 3010707 as the benchmark and summarize the validation; they do not repeat the full wave-by-wave record. This is consistent with the way downstream items reference upstream benchmarks in the existing precedent chain.
+- **All three Band C items are NOT added to the `do_not_benchmark` list.** All three are fully validated production items and the founding data points of Band C. This is consistent with how 3010704 was treated as the founding data point of Band B (also not in `do_not_benchmark`). This is different from one-off items (1277970–1278000, 3017583, 3017584) and from items still pending production-volume acceptance (1210810) which ARE in `do_not_benchmark`.
+- **The two new materials (Black 24"×50yd, White 24"×50yd) are not retrofits to existing items.** They are new materials added specifically for the Band C program. The existing 24"×50yd Cardinal Red roll continues to serve 3010707 (its first Band C use) alongside Band A items 1205720 and 1186310. The existing 24"×10yd White roll continues to serve 3017435 (Band A) for its smaller production runs. No existing item's material cost or roll selection changed.
+- **The January 2027 Band A normalization plan does NOT extend to Band C (or Band B).** All 6 Wave 4 buyer-simulation models confirmed that the $20.64/sq ft Band C anchor SURVIVES Band A normalization — when Band A moves from $13.67/sq ft to $15–$16/sq ft, the Band C premium compresses from 51% to 26–39%, which is structurally BETTER, not worse. Band C does not need to move at the January 2027 inflection. This is a permanent structural feature of the three-band architecture.
+- **Engine routing backlog (Band B + Band C).** The calculator engine in `frontend/index.html` does NOT yet route cut vinyl items by sq ft threshold. The cut_vinyl route logic assumes a single Band A band. The new materials are available in `calculator_config.json` (7 cut vinyl colors total), but the engine does not yet branch on the 1.0 and 5.0 sq ft thresholds. This is not blocking for 3010707/3010708/3010709 or 3010704 (all validated manually via 4-wave AI). Flag for engine update before the next non-Band-A cut vinyl item gets a calculator-driven quote.
+
+**Status:** Complete. validate.py 0/0; all 3 build scripts clean. 3010707/3010708/3010709 quoted at $20/qty 20 (identical pricing across colors). Sub-1 sq ft cut vinyl band (Band C) established as the founding data point structure for the < 1 sq ft size class. Three independent size-class bands now operative in the cut vinyl category — Band A (small-format), Band B (large-format), Band C (sub-1 sq ft) — with monotonically increasing $/sq ft as sq ft drops.
+
+---
+
 ### 2026-06-05 — New Item: P/N 3010704 (LBL-ELLIOTT LRG RED) — Founding Data Point for Large-Format Cut Vinyl Size Class (5+ sq ft) + Two New Material Files
 
 **What:** Three tasks completed in a single session. **Task 1** — Created two new material files for the large-format cut vinyl program: `materials/3m-180mc-cardinal-red-15in.md` (3M Controltac 180mC-53 Cardinal Red, 15" × 50yd at $433.77/roll, $8.6754/yd, $2.3134/sq ft, verified 2026-06-05) and `materials/transferrite-582u-30in.md` (TransferRite Ultra 582U, 30" × 100yd at $141.86/roll, $1.4186/yd, $0.1891/sq ft, verified 2026-06-05). **Task 2** — Created `items/3010704.md` for the LBL-ELLIOTT LRG RED — a large-format "ELLIOTT" brand wordmark at 70-13/16" × 14-3/8" (7.069 sq ft) on Cardinal Red cut vinyl, the first item on the Elliott account in the 5+ sq ft size class. Pricing validated through the full 4-wave AI process (24 independent responses across 6 models × 4 waves) per `governance/VALIDATION_PROMPTS.md`. Final tier table locked by Nick: $105 / $92 / **$78** / $68 / $60 / $52. Material cost: $20.02/label (vinyl $18.51 + tape $1.51). Margin at qty 20: ~74.3%. Status: Quoted. **Task 3** — Established the Large-Format Cut Vinyl size class (5+ sq ft) in `categories/cut-vinyl-3m-180mc.md` as a structurally separate band from the existing 2.51–2.56 sq ft cluster. The two bands are INDEPENDENT — they do not contaminate or interact with each other. The January 2027 normalization plan applies to the 2.51–2.56 sq ft cluster only, not to this large-format class. Decision Tree updated with explicit size-routing at ≥ 5.0 sq ft.

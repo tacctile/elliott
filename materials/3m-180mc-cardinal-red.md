@@ -17,6 +17,6 @@ cost_per_sq_ft: 7.751
 verified_date: "2026-05-28"
 distributor: "GRIMCO"
 compatible_tapes: ["transferrite-582u", "transferrite-582u-30in"]
-used_in_items: ["1205720", "1186310"]
+used_in_items: ["1205720", "1186310", "3010707"]
 notes: "Length-based material cost method used for nesting calculations. cost_per_sq_ft is derived as cost_per_linear_yd / roll_width_ft ($15.502 / 2 ft = $7.751/sq ft), not the area method used by other 180mC color files. This is intentional — item pricing uses the length-based method directly, so cost_per_sq_ft reflects that same basis. Numeric value is correct; derivation method differs from Olympic Blue and White."
 ---

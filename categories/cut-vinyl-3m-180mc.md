@@ -15,6 +15,9 @@
 | 3017435 | ELLIOTT White | 43.91" × 8.38" | 2.56 | $35 | Quoted |
 | 3018378 | D115 Olympic Blue | 32.88" × 11.00" | 2.512 | $35 | Quoted |
 | 3010704 | LBL-ELLIOTT LRG RED (large-format wordmark) | 70-13/16" × 14-3/8" | 7.069 | $78 | Quoted |
+| 3010707 | ElliottEquip.com URL Wordmark, Cardinal Red | 34.887" × 4" | 0.969 | $20 | Quoted |
+| 3010708 | ElliottEquip.com URL Wordmark, Black | 34.887" × 4" | 0.969 | $20 | Quoted |
+| 3010709 | ElliottEquip.com URL Wordmark, White | 34.887" × 4" | 0.969 | $20 | Quoted |
 
 ---
 
@@ -22,7 +25,7 @@
 
 Derived from accepted pricing on real items. Tightens with every new item. New items validate against these bands.
 
-The category now contains TWO independent size-class bands. They do NOT contaminate or interact with each other. Each band is calibrated on its own data points and normalizes on its own schedule.
+The category now contains THREE independent size-class bands. They do NOT contaminate or interact with each other. Each band is calibrated on its own data points and normalizes on its own schedule.
 
 ### Band A — Small-Format Cut Vinyl (2.51–2.56 sq ft)
 
@@ -75,6 +78,50 @@ The concession-phase band ($13.67–$13.93/sq ft) is the current operative prici
 
 **Override note:** None. 3010704 was validated through the full 4-wave AI process and Nick accepted the unanimous Wave 4 recommendation. No override type — engine consensus accepted.
 
+### Band C — Sub-1 sq ft Cut Vinyl (< 1 sq ft)
+
+**Data points:** 3 items at 0.969 sq ft (3010707 Cardinal Red, 3010708 Black, 3010709 White — founding data point cluster, 2026-06-05). All three share identical dimensions (34.887" × 4"), identical process, and identical pricing. Color-only difference.
+
+| Metric | Current Band | Notes |
+|--------|-------------|-------|
+| Material cost / label | $3.08–$3.79 | Range: White $3.08 → Black $3.26 → Cardinal Red $3.79 (worst case). All on 24" × 50yd rolls, 5-up nesting. |
+| Material cost / sq ft | ~$3.18–$3.91 | Slightly higher than Band A material $/sq ft — smaller label area amortizes less efficiently. |
+| Selling price / sq ft at qty 20 | **$20.64/sq ft** | $20 / 0.969 sq ft. 51% step-up from Band A ($13.67/sq ft). |
+| Margin at qty 20 | ~81–85% | Range driven by color-specific material cost. Cardinal Red ~81.1% (worst case anchor), Black ~83.7%, White ~84.6% (best case). |
+| Tier compression (1-9 → 200+) | ~59% discount | $28 → $11.50. Tighter than Band A's 51% — reflects the larger relative discounts appropriate at this size class for higher-volume orders. |
+| Margin floor (200+) | ~67–73% | All three colors well above the ~57% category warn threshold and far above the 50% structural stop. |
+
+**Band anchor:** $20.64/sq ft at qty 20. Anchored by P/N 3010707 (Cardinal Red, worst-case material cost). 4-wave AI validated (24 passes across 6 models × 4 waves, unanimous Wave 4 YES on the full tier table) plus a final independent 6-model industry-validation audit (6/6 APPROVE, confidence HIGH).
+
+**Step-up justification:** 51% $/sq ft step-up from Band A ($13.67 → $20.64) reflects three structural drivers:
+1. **Fixed-labor dominance on sub-1 sq ft items** — setup, weeding, masking, inspection, and packaging take approximately the same time per label regardless of size. At 0.969 sq ft (2.64× smaller than Band A), these fixed costs amortize over much less area. Fixed-labor share of $/sq ft is structurally higher on sub-1 sq ft items.
+2. **Elevated weeding complexity per sq ft** — the "ElliottEquip.com" wordmark has 16 mixed-case characters with 4 enclosed counters (e ×2, o ×1, p ×1), 2 isolated dots, and a tight q-u channel. Band A's "E190" / "E160" / "D115" / "ELLIOTT" designations have 3–7 uppercase block characters with open geometry — much faster weeding per sq ft.
+3. **Higher material cost per sq ft** — $3.91/sq ft (Cardinal Red worst case) vs ~$3.41/sq ft on Band A. The 5-across nesting is efficient, but the smaller label area produces a higher $/sq ft material rate.
+
+**Color-parity pricing:** All three Band C items (3010707 Cardinal Red, 3010708 Black, 3010709 White) carry the identical tier table. Material cost differs by color; margin differs by color; price does NOT differ by color. Confirmed by the final 6-model industry-validation audit as universal industry standard for multi-color variants of identical geometry. Pricing is anchored to the worst-case material (Cardinal Red); the other colors yield better margins at every tier.
+
+**Band isolation:** This band is INDEPENDENT of Band A (small-format, 2.51–2.56 sq ft) and Band B (large-format, 5+ sq ft). The three bands do NOT contaminate or interact with each other.
+
+- The Band A concession-phase pricing does NOT apply to Band C.
+- The Band B 19.3% $/sq ft step-down does NOT extrapolate to Band C.
+- The Band C 51% $/sq ft step-up is NOT a retroactive adjustment to Band A or Band B.
+- **The January 2027 normalization plan applies to Band A only, NOT to Band C** (or Band B). All 6 Wave 4 models confirmed that when Band A moves from $13.67/sq ft to $15–$16/sq ft, the Band C premium compresses from 51% to 26–39% — structurally better, not worse. Band C does not need to move at the January 2027 inflection.
+- Future cut vinyl items at < 1.0 sq ft validate against Band C, NOT Band A or Band B.
+
+**Band width:** 3 founding data points at the same 0.969 sq ft (color-parity cluster). Band will tighten as additional sub-1 sq ft items at different sq ft are quoted. Items at the boundary (~0.8–1.2 sq ft) still require 4-wave AI validation before pricing.
+
+**Override note:** None. The Band C founding data points (3010707/3010708/3010709) were validated through the full 4-wave AI process and Nick accepted the unanimous Wave 4 recommendation. Final industry-validation audit also passed unanimously (6/6 APPROVE, confidence HIGH). No override type — engine consensus accepted.
+
+### $/sq ft Curve Across All Three Bands (at qty 20)
+
+| Band | Sq Ft (representative) | Price (qty 20) | $/sq ft | Step from previous |
+|------|------------------------|----------------|---------|--------------------|
+| Band B (Large-Format) | 7.069 | $78 | $11.03 | — |
+| Band A (Small-Format) | 2.56 | $35 | $13.67 | +24% |
+| Band C (Sub-1 sq ft) | 0.969 | $20 | $20.64 | +51% |
+
+Monotonically increasing as sq ft drops. No inversion at any tier. The three bands form a structurally coherent size-class curve.
+
 ---
 
 ## Material System
@@ -94,6 +141,14 @@ The concession-phase band ($13.67–$13.93/sq ft) is the current operative prici
 
 Large-format items use roll widths optimized for the larger label height. The 15" Cardinal Red roll provides 1-across nesting at 14.375" label height (0.625" clearance); the 30" TransferRite tape provides 2-up nesting (2 × 14.375" = 28.75" across 30" tape, 1.25" waste strip).
 
+**Sub-1 sq ft band (Band C) — < 1 sq ft:**
+- 3M 180mC-53 Cardinal Red, 24" × 50yd (`materials/3m-180mc-cardinal-red.md`) — uses the existing 24" × 50yd Cardinal Red roll
+- 3M 180mC-12 Black, **24" × 50yd** (`materials/3m-180mc-black.md`) — added 2026-06-05
+- 3M 180mC-10 White, **24" × 50yd** (`materials/3m-180mc-white-24in-50yd.md`) — added 2026-06-05 (production-volume White roll, separate from the existing 24" × 10yd White roll at `materials/3m-180mc-white-24in.md`)
+- TransferRite Ultra 582U, 24" × 100yd (`materials/transferrite-582u.md`)
+
+Sub-1 sq ft items at 4" label height nest 5-up on the 24" roll (5 × 4" = 20" across 24" roll, 4" clearance). The 24" TransferRite 582U tape matches the vinyl roll width exactly — no overhang, no waste strip. All three Band C colors share the same nesting layout, the same process, and the same tier table; only material cost differs by color.
+
 ---
 
 ## Decision Tree — New Cut Vinyl Item
@@ -101,13 +156,14 @@ Large-format items use roll widths optimized for the larger label height. The 15
 1. Extract dimensions, calculate sq ft (W × H / 144).
 2. Pull this Pricing Profile.
 3. **Size-class routing (CRITICAL):**
-   - If **sq ft ≥ 5.0** → route to **Band B (Large-Format)** at $11.03/sq ft qty 20. Use the 15" Cardinal Red roll (or appropriate width for the label height) and 30" TransferRite tape (or appropriate width for 2-up nesting). Do NOT benchmark against Band A.
-   - If **sq ft < 5.0** → route to **Band A (Small-Format)** at $13.65–$13.94/sq ft qty 20. Use the 24" rolls (or 48" for White). Do NOT benchmark against Band B.
+   - If **sq ft ≥ 5.0** → route to **Band B (Large-Format)** at $11.03/sq ft qty 20. Use the 15" Cardinal Red roll (or appropriate width for the label height) and 30" TransferRite tape (or appropriate width for 2-up nesting). Do NOT benchmark against Band A or Band C.
+   - If **1.0 ≤ sq ft < 5.0** → route to **Band A (Small-Format)** at $13.65–$13.94/sq ft qty 20. Use the 24" rolls (or 48" for White). Do NOT benchmark against Band B or Band C.
+   - If **sq ft < 1.0** → route to **Band C (Sub-1 sq ft)** at $20.64/sq ft qty 20. Use the 24" × 50yd rolls (Cardinal Red, Black, or White as applicable) and 24" TransferRite tape. Do NOT benchmark against Band A or Band B.
 4. Within the routed band:
    - If similar sq ft to existing items in the band → same tier structure.
    - If significantly different sq ft within the band → scale proportionally, validate against per-sq-ft anchor.
-5. Check color — new color may have different roll cost; verify roll width is appropriate for the label height before assuming nesting math from an existing item.
+5. Check color — new color may have different roll cost; verify roll width is appropriate for the label height before assuming nesting math from an existing item. Pricing is color-agnostic on Band C (price anchored to worst-case Cardinal Red); same convention extends to Bands A and B when multiple colors share a drawing.
 6. Check weeding complexity — complexity premium may be warranted for high-detail items.
-7. **For items at the band boundary (~4.5–5.5 sq ft):** validate via 4-wave AI per `governance/VALIDATION_PROMPTS.md` before pricing — the boundary between bands needs a real data point, not interpolation.
-8. **For items significantly outside both bands (e.g., 1.0–2.5 sq ft or 10+ sq ft):** run full 4-wave AI validation. The bands are calibrated on the existing data points and do not safely extrapolate beyond them.
+7. **For items at the band boundary (~0.8–1.2 sq ft, ~4.5–5.5 sq ft):** validate via 4-wave AI per `governance/VALIDATION_PROMPTS.md` before pricing — boundaries between bands need a real data point, not interpolation.
+8. **For items significantly outside all three bands (e.g., 1.5–2.5 sq ft, 10+ sq ft mega-format):** run full 4-wave AI validation. The bands are calibrated on the existing data points and do not safely extrapolate beyond them.
 9. Create item file, update this category page, update ARCHITECTURE.md.

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-05T16:12:34Z",
+  "generated": "2026-06-05T17:53:55Z",
   "version": "1.0",
   "account": {
     "floor": 55.0,
@@ -235,6 +235,28 @@
         48
       ],
       "verified_date": "2026-05-21"
+    },
+    "black": {
+      "material_id": "3m-180mc-black",
+      "cost_method": "length_based",
+      "cost_per_linear_yd": 13.1852,
+      "roll_width_in": 24,
+      "roll_width_ft": 2.0,
+      "available_widths_in": [
+        24
+      ],
+      "verified_date": "2026-06-05"
+    },
+    "white_24in_50yd": {
+      "material_id": "3m-180mc-white-24in-50yd",
+      "cost_method": "length_based",
+      "cost_per_linear_yd": 12.3842,
+      "roll_width_in": 24,
+      "roll_width_ft": 2.0,
+      "available_widths_in": [
+        24
+      ],
+      "verified_date": "2026-06-05"
     }
   },
   "do_not_benchmark": {
