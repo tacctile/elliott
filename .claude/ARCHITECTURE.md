@@ -2,7 +2,7 @@
 
 > **Living document — updated every session that changes structure.**
 >
-> Last Updated: 2026-06-05 (MOQ 10 / $55 minimum order charge purged from the account; 1210810 1-9 tier added at $7.25; invoice protection preserved and rewritten as §26; $55 anchor preserved for tiny route with "one-off job-economics floor (1230820 FA-anchored)" label)
+> Last Updated: 2026-06-05 (Session D: P/N 1279000 added as the founding data point for the sub-0.1 sq ft printed/laminated Micro-Format Band — $30.86/sq ft anchor at qty 20, 2.0× benchmark; INDEPENDENT band, separate from singles and sub-scope; 4-wave AI validated + final 6-model comprehensive review; calculator routing updated so production-override path uses the micro band ($30.86) instead of the singles band ($15.43))
 
 ---
 
@@ -31,6 +31,7 @@ All quoted items. Updated when items are added, repriced, or status changes.
 | 3010707 | ElliottEquip.com URL Wordmark, Cardinal Red (sub-1 sq ft Band C anchor — pricing anchor for color-parity cluster) | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 0.969 | $20 | $20.00 | ~81% | Quoted | `items/3010707.md` |
 | 3010708 | ElliottEquip.com URL Wordmark, Black (sub-1 sq ft Band C — color parity with 3010707) | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 0.969 | $20 | $20.00 | ~84% | Quoted | `items/3010708.md` |
 | 3010709 | ElliottEquip.com URL Wordmark, White (sub-1 sq ft Band C — color parity with 3010707) | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 0.969 | $20 | $20.00 | ~85% | Quoted | `items/3010709.md` |
+| 1279000 | LBL-MAX PLTF CAP 1200 TIP HZRD (ANSI Z535.4 WARNING — sub-0.1 sq ft Micro-Format Band founding data point) | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.097 | $3.00 | $3.00 | ~93% | Quoted | `items/1279000.md` |
 
 ---
 
@@ -39,7 +40,7 @@ All quoted items. Updated when items are added, repriced, or status changes.
 | Category | Material Family | Category File | Item Count | Profile Status |
 |----------|-----------------|---------------|------------|----------------|
 | Cut Vinyl Lettering | 3M 180mC Cut Vinyl | `categories/cut-vinyl-3m-180mc.md` | 8 | **Three independent size-class bands established 2026-06-05.** Band A — Small-Format (2.51–2.56 sq ft): 4 data points (1205720, 1186310, 3017435, 3018378) all at $35/qty 20, $13.65–$13.94/sq ft. Concession-phase per Override on 1205720; January 2027 normalization plan applies to Band A only. Band B — Large-Format (5+ sq ft): 1 founding data point (3010704 at 7.069 sq ft, $78/qty 20, $11.03/sq ft). 19.3% $/sq ft step-down from Band A reflects fixed-labor amortization, simpler weeding geometry per sq ft, and lower material cost per sq ft on large formats. 4-wave AI validated (24 passes, unanimous Wave 4). Band C — Sub-1 sq ft (< 1 sq ft): 3 founding data points (3010707 Cardinal Red, 3010708 Black, 3010709 White, all at 0.969 sq ft, $20/qty 20, $20.64/sq ft) — color-parity cluster, pricing anchored to worst-case Cardinal Red ($3.79 material). 51% $/sq ft step-up from Band A reflects fixed-labor dominance on sub-1 sq ft items + elevated weeding complexity (16 mixed-case characters, 4 enclosed counters, 2 dots, tight q-u channel) + higher material cost per sq ft. 4-wave AI validated (24 passes, unanimous Wave 4 YES on full tier table) + final independent 6-model industry-validation audit (6/6 APPROVE, confidence HIGH). All three bands are INDEPENDENT — do not contaminate or interact. Future cut vinyl items route by sq ft: ≥ 5.0 → Band B; 1.0 ≤ sq ft < 5.0 → Band A; < 1.0 → Band C. The January 2027 normalization plan applies to Band A only. |
-| Printed + Laminated | Orajet 3951 Cast + Polyester Lam | `categories/printed-laminated-orajet.md` | 11 | **Full bleed ink rule ($0.50/sq ft × full label sq ft) in effect account-wide (established 2026-06-01).** Singles (≥0.5 sq ft): Narrowing — 2 confirmed band data points (1230820 at 1.296 sq ft FA Accepted; 1082570 at 0.503 sq ft quoted, $15.91/sq ft — band-consistent, AI validated). Sub-scope single (0.1–0.5 sq ft): 1210810 at 0.292 sq ft, $4.75 ($16.27/sq ft — INTENTIONALLY ABOVE band per Wave 4 verdict; 4-wave atomic AI validated 2026-06-01; small-format premium consistent and defensible at every tier); excluded from band DATA POINTS on dimensional scope until production-volume acceptance. Kits: Moderate (2 data points). Tiny labels (≤0.1 sq ft): 4 one-off outrigger program peers ($55 program total / $2.75 per label) + 2 standalone one-offs (3017583 at 0.026 sq ft and 3017584 at 0.00174 sq ft — smallest item on the account; both $55 program total / $9.17 per label at qty 6) — explicitly excluded from any band; do NOT benchmark |
+| Printed + Laminated | Orajet 3951 Cast + Polyester Lam | `categories/printed-laminated-orajet.md` | 12 | **Full bleed ink rule ($0.50/sq ft × full label sq ft) in effect account-wide (established 2026-06-01). Three INDEPENDENT size-class bands now defined (Micro / Sub-scope / Singles).** Singles (≥0.5 sq ft, calibrated 0.5–1.3 sq ft): Narrowing — 2 confirmed band data points (1230820 at 1.296 sq ft FA Accepted; 1082570 at 0.503 sq ft quoted, $15.91/sq ft — band-consistent, AI validated). Sub-scope single (0.1–0.5 sq ft): 1210810 at 0.292 sq ft, $4.75 ($16.27/sq ft — INTENTIONALLY ABOVE band per Wave 4 verdict; 4-wave atomic AI validated 2026-06-01; small-format premium consistent and defensible at every tier); excluded from band DATA POINTS on dimensional scope until production-volume acceptance. **Micro-Format Band (< 0.1 sq ft, production volume) — established 2026-06-05.** 1 founding data point (1279000 at 0.097 sq ft, $3.00/qty 20, **$30.86/sq ft = 2.0× benchmark**). 100% $/sq ft step-up from singles band justified by fixed-labor dominance on sub-0.1 sq ft items. 4-wave AI validated (24 passes, 6 models × 4 waves) + final 6-model comprehensive review (6/6 send as shown). Tier compression 53.3% (correctly flatter than singles — material negligible, labor dominant). INDEPENDENT band — does not contaminate or interact with singles or sub-scope. Future sub-0.1 sq ft production items validate against THIS band; one-off / field-service at ≤0.1 sq ft continues to route to the tiny $55 floor. Kits: Moderate (2 data points). Tiny one-offs (≤0.1 sq ft): 4 one-off outrigger program peers ($55 program total / $2.75 per label) + 2 standalone one-offs (3017583 at 0.026 sq ft and 3017584 at 0.00174 sq ft — smallest item on the account; both $55 program total / $9.17 per label at qty 6) — explicitly excluded from any band; do NOT benchmark |
 | Panel Decals | Convex High Bond + Poly Lam | Not yet created | 0 | No profile — first item establishes it |
 | Polycarbonate | Lexan/Polycarbonate | Not yet created | 0 | No profile — first item establishes it |
 
@@ -182,6 +183,34 @@ P/N 3010707 (SUB-1 SQ FT CUT VINYL FOUNDING DATA POINT — Band C, $20/ea at qty
         identical process, identical tier table. Each P/N ordered INDEPENDENTLY by Sean — NOT a kit
         or set. Drawing D/3010707 covers all three items. Sean Finn confirmed via email.
         [future sub-1 sq ft cut vinyl items (< 1 sq ft) validate against Band C]
+
+P/N 1279000 (SUB-0.1 SQ FT PRINTED/LAMINATED FOUNDING DATA POINT — Micro-Format Band, $3.00/ea at qty 20, no override)
+│       0.097 sq ft (8.00" × 1.75") — 13.3× smaller than the 1230820 benchmark.
+│       First production-volume printed/laminated item below 0.1 sq ft on the Elliott account.
+│       Establishes the Micro-Format Band at $30.86/sq ft at qty 20 — INDEPENDENT band, separate
+│       from the singles band ($15.43–$15.91/sq ft) and the sub-scope handling (0.1–0.5 sq ft).
+│       100% $/sq ft step-up from singles band justified by fixed-labor dominance on sub-0.1 sq ft items.
+│       VALIDATED 2026-06-05 via 4-wave atomic AI validation (24 independent responses, 6 models × 4 waves)
+│       plus final comprehensive 6-model review (6/6 send as shown).
+│       Tiers: $4.50 / $3.50 / $3.00 / $2.60 / $2.30 / $2.10. Material cost $0.20.
+│       Margin at qty 20: ~93%. No first article. No MOQ. No override.
+│       Tier compression 53.3% (correctly flatter than benchmark 63.3% — material is 6.7% of price,
+│         fixed labor dominates, labor doesn't compress as steeply at volume on tiny labels).
+│       Annual volume ~200 (Sean stated); batch pattern 20–50.
+│       Pro Sign incumbent estimate: $2.50–$3.25 at qty 20. Wave 3 pushback threshold: $3.25–$3.75.
+│       All 6 Wave 3 buyer-sim models will log $30.86/sq ft as the "small safety label rate" — a
+│         permanent account data point.
+│       Per-label floor caution: do NOT linearly extrapolate $30.86/sq ft below ~0.06 sq ft — at
+│         extreme smallness, a per-label floor (~$2.50–$3.00 at qty 20) overrides $/sq ft scaling
+│         because fixed labor per label has a minimum regardless of label size.
+│       The tiny route ($55 flat) remains the default for ≤0.1 sq ft one-off / field-service requests;
+│         the Micro-Format Band applies only to production catalog items via the production-override
+│         path in the calculator.
+│       Drawing dated 06-05-2026 (today — brand-new spec); treat first production run as de facto
+│         internal first article for ANSI Z535.4 color verification (orange WARNING header, alert
+│         symbol, red elements, black body text).
+│       Status: Quoted.
+└── [future sub-0.1 sq ft production printed/laminated items validate against this band]
 
 P/N 3010704 (LARGE-FORMAT CUT VINYL FOUNDING DATA POINT — Band B, $78/ea at qty 20, no override)
 │       7.069 sq ft (70-13/16" × 14-3/8") — 2.76× the small-format cluster scale.

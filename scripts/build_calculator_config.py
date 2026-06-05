@@ -161,6 +161,41 @@ PRINTED_LAMINATED_SINGLES_BAND = {
     "note": "Band anchored at 1230820 ($15.43/sq ft). 1082570 AI-validated at $15.91/sq ft. Band is narrowing.",
 }
 
+PRINTED_LAMINATED_MICRO_BAND = {
+    "anchor_psf_qty_20": 30.86,
+    "anchor_pn": "1279000",
+    "anchor_price_qty_20": 3.00,
+    "anchor_sq_ft": 0.097,
+    "threshold_sq_ft": 0.1,
+    "margin_floor_warn_pct": 85.0,
+    "margin_floor_stop_pct": 50.0,
+    "margin_target_qty_20_min_pct": 90.0,
+    "margin_target_qty_20_max_pct": 95.0,
+    "tier_ratios": {
+        "1_9": 1.50,
+        "10_19": 1.167,
+        "20_49": 1.00,
+        "50_99": 0.867,
+        "100_199": 0.767,
+        "200_plus": 0.70,
+    },
+    "tier_template": {
+        "price_1_9": 4.50,
+        "price_10_19": 3.50,
+        "price_20_49": 3.00,
+        "price_50_99": 2.60,
+        "price_100_199": 2.30,
+        "price_200_plus": 2.10,
+    },
+    "snap_granularity": {
+        "above_50": 5,
+        "25_to_50": 1,
+        "10_to_25": 0.50,
+        "below_10": 0.10,
+    },
+    "note": "Sub-0.1 sq ft micro-format band — founding data point 1279000 at 0.097 sq ft. 100% step-up from singles band. Fixed-labor dominance. 4-wave AI validated + final 6-model comprehensive review. Per-label floor ~$2.50-$3.00 overrides $/sq ft scaling below ~0.06 sq ft.",
+}
+
 PRINTED_LAMINATED_KITS_BAND = {
     "per_label_qty_20": 10.00,
     "per_sq_ft_qty_20": 16.42,
@@ -493,6 +528,7 @@ def build_config():
         "bands": {
             "cut_vinyl_lettering": CUT_VINYL_LETTERING_BAND,
             "printed_laminated_singles": PRINTED_LAMINATED_SINGLES_BAND,
+            "printed_laminated_micro": PRINTED_LAMINATED_MICRO_BAND,
             "printed_laminated_kits": PRINTED_LAMINATED_KITS_BAND,
         },
         "material_constants": build_material_constants(),

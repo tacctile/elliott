@@ -3,7 +3,7 @@
 > **Authoritative reference for the Elliott calculator system.**
 > The HTML calculator at `frontend/index.html` is the implementation; this document is the contract.
 >
-> Last Updated: 2026-06-05 (Session C — tier boundary constraint enforcement (F23), Band B/C cut vinyl routing, sub-0.1 production override, 1-9 auto-generation at 1.5×; Section 3 F23 added; Section 9 sanity matrix extended; Section 4 Rule 11 added)
+> Last Updated: 2026-06-05 (Session D — sub-0.1 sq ft printed/laminated Micro-Format Band added ($30.86/sq ft anchor, 1279000 founding data point); production-override path now routes to the micro band instead of the singles band; Section 2 Route Definitions clarified; Section 9 production-override sanity case updated to ~$3.00 expected price)
 
 ---
 
@@ -118,7 +118,7 @@ Every input is dispatched to exactly one route. The route determines which band,
 | `cut_vinyl` | 3M 180mC Cut Vinyl | any | any | Cut Vinyl Lettering — size-class routed: sq ft ≥ 5.0 → Band B (Large-Format, $11.03/sq ft anchor, 3010704 founding); 1.0 ≤ sq ft < 5.0 → Band A (Small-Format, concession_phase, $13.65–$13.94/sq ft); sq ft < 1.0 → Band C (Sub-1 sq ft, $20.64/sq ft anchor, 3010707 founding cluster) | No MOQ. Invoice protection (§26) applies at all tier boundaries. |
 | `tiny` | Orajet 3951 | ≤ 0.1 sq ft | any | None | All 6 tiers flatten to $55 one-off job-economics floor (1230820 FA-anchored) |
 | `kit` | Orajet 3951 | > 0.1 sq ft | label_count > 1 OR `Printed/Laminated Kit` | Printed/Laminated Kits | No MOQ. Invoice protection (§26) applies at all tier boundaries. |
-| `single_sub_scope` | Orajet 3951 | 0.1–0.5 sq ft | single | Printed/Laminated Singles (band-consistent, item excluded from band DATA POINTS) | No MOQ. Invoice protection (§26) applies at all tier boundaries. |
+| `single_sub_scope` | Orajet 3951 | 0.1–0.5 sq ft *(standard route)* OR ≤ 0.1 sq ft *(via production-override path)* | single | Printed/Laminated Singles (band-consistent, item excluded from band DATA POINTS) for 0.1–0.5 sq ft. **Sub-0.1 sq ft Micro-Format Band ($30.86/sq ft anchor, 1279000 founding data point)** when `production_override: true` is set on a sub-0.1 sq ft Orajet 3951 single — uses the validated tier template directly when the item's sq ft is within ±30% of the founding anchor sq ft (0.097). | No MOQ. Invoice protection (§26) applies at all tier boundaries. |
 | `single_standard` | Orajet 3951 | > 0.5 sq ft | single | Printed/Laminated Singles | No MOQ. Invoice protection (§26) applies at all tier boundaries. |
 | `no_profile` | Convex High Bond, Lexan/Polycarbonate, or any other | any | any | None | STOP — F17 fires, output suppressed, Required Inputs checklist shown |
 
@@ -134,6 +134,8 @@ Every input is dispatched to exactly one route. The route determines which band,
 - `parity_max_lam_passes`: **2** (kit lam passes > 2 → F16 REVIEW)
 - `cut_vinyl_band_thresholds.band_b_floor_sq_ft`: **5.0** (sq ft ≥ this → Band B Large-Format)
 - `cut_vinyl_band_thresholds.band_c_ceiling_sq_ft`: **1.0** (sq ft < this → Band C Sub-1 sq ft)
+- `bands.printed_laminated_micro.threshold_sq_ft`: **0.1** (sq ft ≤ this AND production override → Micro-Format Band, $30.86/sq ft anchor, 1279000 founding data point)
+- `bands.printed_laminated_micro.anchor_sq_ft`: **0.097** (founding anchor; templates used directly when item sq ft is within ±30% of this value)
 
 ---
 
@@ -442,7 +444,7 @@ The reference cases below are the calculator's regression test surface. Any engi
 | Convex High Bond single, 10"×6" | `no_profile` | n/a (output suppressed) | F17 (STOP) | yes |
 | **NEW** — 3010704 equivalent (Cut vinyl Cardinal Red, 70.8125"×14.375", 7.069 sq ft, Band B) | `cut_vinyl` | ~$53.85 (algorithmic; Band B template $78 capped by cascade) | F15, F23 (×5), F7, F5 | no |
 | **NEW** — 3010707 equivalent (Cut vinyl Cardinal Red, 34.887"×4", 0.969 sq ft, Band C) | `cut_vinyl` | ~$11.89 (algorithmic; Band C template $20 capped by cascade) | F15, F23 (×5), F7 | no |
-| **NEW** — Sub-0.1 sq ft production override (Orajet single, 8"×1.75", 0.0972 sq ft, `production_override: true`) | `single_sub_scope` | ~$0.76 (algorithmic; anchor $1.50 capped by cascade) | F10, F8, F22, F23 (×5), F7, F12 | no |
+| **UPDATED (Session D)** — Sub-0.1 sq ft production override (Orajet single, 8"×1.75", 0.0972 sq ft, `production_override: true`) | `single_sub_scope` | **~$3.00 (Micro-Format Band template — within ±30% of 1279000 founding anchor at 0.097 sq ft; uses validated $4.50/$3.50/$3.00/$2.60/$2.30/$2.10 template directly)** | F10, F8 (band-position warnings against micro anchor), F23 (count depends on template cliff structure — micro template has no 9/10 inversion at template values, so F23 fires fewer times than the singles cascade) | no |
 
 If a route doesn't match for any of these cases, the change is incorrect — either the change has a bug or the reference case needs explicit reconsideration with Nick before proceeding. Prices are documented for traceability but the spec explicitly tolerates snap-rounding variance — only routes are hard requirements.
 

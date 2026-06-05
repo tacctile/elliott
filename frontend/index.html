@@ -2981,8 +2981,13 @@ init();
         `Material family "${fam}" has no Pricing Profile band yet. First item establishes the band. Cost-build from scratch and run AI validation (Rounds 1+2 minimum).` };
     }
     if (sq <= t.tiny_threshold_sq_ft && inp.production_override) {
+      let microNote = '';
+      if (config.bands && config.bands.printed_laminated_micro) {
+        const m = config.bands.printed_laminated_micro;
+        microNote = ` Using sub-0.1 sq ft micro-format band ($${m.anchor_psf_qty_20}/sq ft anchor, ${m.anchor_pn} founding data point).`;
+      }
       return { route: 'single_sub_scope', route_reason:
-        `Sq ft ${sq.toFixed(4)} ≤ ${t.tiny_threshold_sq_ft} — would normally route to tiny, but production catalog override is set. Routing to single_sub_scope for real tier pricing.` };
+        `Sq ft ${sq.toFixed(4)} ≤ ${t.tiny_threshold_sq_ft} — would normally route to tiny, but production catalog override is set. Routing to single_sub_scope for real tier pricing.${microNote}` };
     }
     if (sq <= t.tiny_threshold_sq_ft) {
       return { route: 'tiny', route_reason:
@@ -3216,6 +3221,55 @@ init();
       price_200_plus: snapPrice(anchor * ratios['200_plus'], snap),
     };
     return { tiers, anchor, anchor_psf, snap };
+  }
+
+  function buildPrintLamMicroTiers(sq_ft, config) {
+    const band = config.bands.printed_laminated_micro;
+    if (!band) {
+      // Defensive fallback — if micro band missing from config, fall back to singles
+      return buildPrintLamSinglesTiers(sq_ft, config);
+    }
+    const anchor_psf = band.anchor_psf_qty_20;
+    const anchor_sq_ft_ref = band.anchor_sq_ft;
+    const ratios = band.tier_ratios;
+    const snap = band.snap_granularity;
+    const tmpl = band.tier_template;
+
+    const within_anchor = anchor_sq_ft_ref > 0 && Math.abs(sq_ft - anchor_sq_ft_ref) / anchor_sq_ft_ref <= 0.30;
+    let tiers, anchor, used_template;
+    if (within_anchor && tmpl) {
+      tiers = Object.assign({}, tmpl);
+      anchor = tmpl.price_20_49;
+      used_template = true;
+    } else {
+      const raw_anchor = sq_ft * anchor_psf;
+      anchor = snapPrice(raw_anchor, snap);
+      tiers = {
+        price_1_9: snapPrice(anchor * ratios['1_9'], snap),
+        price_10_19: snapPrice(anchor * ratios['10_19'], snap),
+        price_20_49: anchor,
+        price_50_99: snapPrice(anchor * ratios['50_99'], snap),
+        price_100_199: snapPrice(anchor * ratios['100_199'], snap),
+        price_200_plus: snapPrice(anchor * ratios['200_plus'], snap),
+      };
+      used_template = false;
+    }
+    return {
+      tiers,
+      anchor,
+      anchor_psf,
+      snap,
+      used_template,
+      micro_band: true,
+      // Skip cascade enforcement when the template is used directly — the table is
+      // AI-validated and Nick-locked (4-wave + final 6-model review); cliffs are
+      // intentional and resolved by §26 invoice protection at billing time. When
+      // outside ±30% the tiers are algorithmic and pass through standard enforcement.
+      skip_enforcement: used_template,
+      template_source: used_template
+        ? `Micro-Format Band template (1279000 founding data point, within ±30% of ${anchor_sq_ft_ref} sq ft anchor — used directly, enforcement skipped to preserve AI-validated tier table)`
+        : `Micro-Format Band scaled from $${anchor_psf}/sq ft anchor (outside ±30% of ${anchor_sq_ft_ref} sq ft founding anchor — algorithmic scaling)`,
+    };
   }
 
   function buildPrintLamKitTiers(label_count, sq_ft_per_label, lam_passes, config) {
@@ -3551,6 +3605,20 @@ init();
       };
     }
     if (route === 'single_standard' || route === 'single_sub_scope') {
+      // Sub-0.1 sq ft micro-format band — applies when single_sub_scope is reached
+      // via production override (sq ft ≤ tiny_threshold). Compares against the
+      // micro band anchor ($30.86/sq ft, 1279000 founding), not the singles band.
+      const tinyT = (config.routing && config.routing.tiny_threshold_sq_ft) || 0.1;
+      if (route === 'single_sub_scope' && sq_ft_ref != null && sq_ft_ref <= tinyT
+          && config.bands && config.bands.printed_laminated_micro) {
+        const m = config.bands.printed_laminated_micro;
+        return {
+          active_band_min: m.anchor_psf_qty_20,
+          active_band_max: m.anchor_psf_qty_20,
+          ai_consensus_min: null,
+          ai_consensus_max: null,
+        };
+      }
       const b = config.bands.printed_laminated_singles;
       return {
         active_band_min: b.min_per_sq_ft_qty_20,
@@ -4043,7 +4111,17 @@ init();
     } else if (route === 'kit') {
       tierBuild = buildPrintLamKitTiers(inp.label_count || 1, sq_ft_per_label, lamInfo ? lamInfo.passes : 1, config);
     } else if (route === 'single_standard' || route === 'single_sub_scope') {
-      tierBuild = buildPrintLamSinglesTiers(sq_ft_per_label, config);
+      // Sub-0.1 sq ft production override routes here AND uses the micro band
+      // ($30.86/sq ft anchor, 1279000 founding data point) instead of the singles
+      // band. Detected by sq_ft ≤ tiny_threshold (which only reaches single_sub_scope
+      // when production_override is true) AND the micro band being configured.
+      const tinyT = (config.routing && config.routing.tiny_threshold_sq_ft) || 0.1;
+      if (route === 'single_sub_scope' && sq_ft_per_label <= tinyT
+          && config.bands && config.bands.printed_laminated_micro) {
+        tierBuild = buildPrintLamMicroTiers(sq_ft_per_label, config);
+      } else {
+        tierBuild = buildPrintLamSinglesTiers(sq_ft_per_label, config);
+      }
     } else {
       // no_profile
       tierBuild = { tiers: null, anchor: null, anchor_psf: null, snap: null };
@@ -4052,9 +4130,12 @@ init();
     // 5b. Tier boundary enforcement (HARD constraint — never-pay-more compliance
     // guaranteed before margin calc). Runs on every route that produces real
     // tiers — single_standard, single_sub_scope, kit, cut_vinyl. Skips tiny
-    // (all 6 tiers are flat $55 by design) and no_profile (no tiers).
+    // (all 6 tiers are flat $55 by design), no_profile (no tiers), and any
+    // tier build that sets skip_enforcement=true (currently the Micro-Format Band
+    // when its template is used directly — AI-validated and Nick-locked tier
+    // tables that should not be second-guessed by algorithmic cascade).
     let tier_enforcement = { adjustments: [] };
-    if (tierBuild.tiers && route !== 'tiny' && route !== 'no_profile') {
+    if (tierBuild.tiers && route !== 'tiny' && route !== 'no_profile' && !tierBuild.skip_enforcement) {
       const enforced = enforceTierBoundaries(tierBuild.tiers);
       tierBuild.tiers = enforced.tiers;
       if (tierBuild.kit_totals) tierBuild.kit_totals = enforced.tiers;
@@ -4066,9 +4147,13 @@ init();
     // violations on any tier table that has been through enforcement. If it ever
     // finds a violation here, that is a bug to investigate. The 10-19 autofix
     // path is preserved for the 1210810 historical pattern but should not fire
-    // post-enforcement.
+    // post-enforcement. When skip_enforcement is set (Micro-Format Band template-
+    // direct), we still RUN checkInvoiceProtection to surface cliffs in the brief
+    // as informational context (§26 resolves them at billing time) but disable
+    // the autofix so the AI-validated template is preserved.
     let invoice = { violations: [], all_clear: true, autofix_applied: false, adjusted_tiers: null };
-    const apply_autofix = (route === 'single_standard' || route === 'single_sub_scope' || route === 'kit');
+    const apply_autofix = (route === 'single_standard' || route === 'single_sub_scope' || route === 'kit')
+      && !tierBuild.skip_enforcement;
     if (tierBuild.tiers && tierBuild.snap && route !== 'cut_vinyl') {
       invoice = checkInvoiceProtection(tierBuild.tiers, tierBuild.snap, apply_autofix);
       if (invoice.adjusted_tiers) {
@@ -4224,7 +4309,7 @@ init();
       route_match: overrideResult.route === 'single_sub_scope',
       price_20_49: overrideResult.pricing.tiers ? overrideResult.pricing.tiers.price_20_49 : null,
       kit_price_20: null,
-      expected_price_20: '~$1.50 (algo: 0.0972 × $15.43 = $1.50)',
+      expected_price_20: '~$3.00 (micro-band template, 1279000 founding anchor at 0.097 sq ft; sq ft within ±30% uses template directly)',
       margin_at_qty_20: overrideResult.margins.at_qty_20,
       flags: overrideResult.flags.map(f => f.id + ':' + f.severity),
       has_stop: overrideResult.has_stop_flag,
