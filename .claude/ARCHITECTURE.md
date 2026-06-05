@@ -2,7 +2,7 @@
 
 > **Living document — updated every session that changes structure.**
 >
-> Last Updated: 2026-06-01 (1210810 revalidated under 4-wave atomic AI process; account-wide full bleed ink rule established)
+> Last Updated: 2026-06-05 (3010704 quoted — founding data point for the large-format cut vinyl size class, 5+ sq ft; new 15" Cardinal Red and 30" TransferRite 582U materials added)
 
 ---
 
@@ -27,6 +27,7 @@ All quoted items. Updated when items are added, repriced, or status changes.
 | 3017584 | LBL - PTO Active (smallest item on account) ⚠ one-off, do NOT benchmark | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.00174 | $9.17 (flat — one-off) | $9.17 | ~99% (structural — one-off, $55 program at qty 6) | Quoted | `items/3017584.md` |
 | 1082570 | Load Chart, I70 EZR Mount 3.6K ⚠ color conflict open (samples delivered, awaiting selection) | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.503 | $8 (prod. rate at qty 20) | $8.00 | ~83% (at prod. vol.; current order $42 flat, job economics) | Quoted | `items/1082570.md` |
 | 1210810 | LBL - DANGER FALLING JIB (ANSI Z535) ⚠ do NOT benchmark until production-volume acceptance | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.292 | $4.75 | $4.75 | ~87% (at $0.60 material, full bleed standard) | Quoted — 1-9: $55 flat MOQ floor / 10-19: $5.75 / initial order $57.50 | `items/1210810.md` |
+| 3010704 | LBL-ELLIOTT LRG RED (large-format ELLIOTT wordmark — founding data point for 5+ sq ft band) | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 7.069 | $78 | $78.00 | ~74% | Quoted | `items/3010704.md` |
 
 ---
 
@@ -34,7 +35,7 @@ All quoted items. Updated when items are added, repriced, or status changes.
 
 | Category | Material Family | Category File | Item Count | Profile Status |
 |----------|-----------------|---------------|------------|----------------|
-| Cut Vinyl Lettering | 3M 180mC Cut Vinyl | `categories/cut-vinyl-3m-180mc.md` | 4 | Narrowing — 4 data points at 2.51–2.564 sq ft, all at $35/qty 20 |
+| Cut Vinyl Lettering | 3M 180mC Cut Vinyl | `categories/cut-vinyl-3m-180mc.md` | 5 | **Two independent size-class bands established 2026-06-05.** Band A — Small-Format (2.51–2.56 sq ft): 4 data points (1205720, 1186310, 3017435, 3018378) all at $35/qty 20, $13.65–$13.94/sq ft. Concession-phase per Override on 1205720; January 2027 normalization plan applies to Band A only. Band B — Large-Format (5+ sq ft): 1 founding data point (3010704 at 7.069 sq ft, $78/qty 20, $11.03/sq ft). 19.3% $/sq ft step-down from Band A reflects fixed-labor amortization, simpler weeding geometry per sq ft, and lower material cost per sq ft on large formats. 4-wave AI validated (24 passes, unanimous Wave 4). Bands are INDEPENDENT — do not contaminate or interact. Future cut vinyl items at ≥ 5.0 sq ft validate against Band B; items < 5.0 sq ft validate against Band A. |
 | Printed + Laminated | Orajet 3951 Cast + Polyester Lam | `categories/printed-laminated-orajet.md` | 11 | **MOQ 10 in effect for all new printed/laminated items (established 2026-06-01). $55 minimum order charge on sub-10 orders. Invoice protection applies. Full bleed ink rule ($0.50/sq ft × full label sq ft) in effect account-wide (established 2026-06-01).** Singles (≥0.5 sq ft): Narrowing — 2 confirmed band data points (1230820 at 1.296 sq ft FA Accepted; 1082570 at 0.503 sq ft quoted, $15.91/sq ft — band-consistent, AI validated). Sub-scope single (0.1–0.5 sq ft): 1210810 at 0.292 sq ft, $4.75 ($16.27/sq ft — INTENTIONALLY ABOVE band per Wave 4 verdict; 4-wave atomic AI validated 2026-06-01; small-format premium consistent and defensible at every tier); excluded from band DATA POINTS on dimensional scope until production-volume acceptance. Kits: Moderate (2 data points). Tiny labels (≤0.1 sq ft): 4 one-off outrigger program peers ($55 program total / $2.75 per label) + 2 standalone one-offs (3017583 at 0.026 sq ft and 3017584 at 0.00174 sq ft — smallest item on the account; both $55 program total / $9.17 per label at qty 6) — explicitly excluded from any band; do NOT benchmark |
 | Panel Decals | Convex High Bond + Poly Lam | Not yet created | 0 | No profile — first item establishes it |
 | Polycarbonate | Lexan/Polycarbonate | Not yet created | 0 | No profile — first item establishes it |
@@ -105,11 +106,55 @@ P/N 3017584 (STANDALONE ONE-OFF — $55 program total / $9.17 per label at qty 6
     "Mylar overlay" drawing wording = standard 1-mil polyester laminate (Mylar is a
     polyester trade name). NEVER use as a benchmark for any future Elliott item.
 
-P/N 1205720 (CUT VINYL BASELINE — $35/ea at qty 20, Override: Relationship Concession)
+P/N 1205720 (CUT VINYL BASELINE — Small-Format band, $35/ea at qty 20, Override: Relationship Concession)
 ├── P/N 3017435 (sq ft parity → $35/ea at qty 20)
 ├── P/N 3018378 (sq ft parity → $35/ea at qty 20; new color Olympic Blue)
 ├── P/N 1186310 (direct dimensional + material clone → $35/ea at qty 20; E160 vs E190 content only)
-└── [future cut vinyl items validate against Pricing Profile band]
+└── [future small-format cut vinyl items (< 5 sq ft) validate against Band A]
+
+P/N 3010704 (LARGE-FORMAT CUT VINYL FOUNDING DATA POINT — Band B, $78/ea at qty 20, no override)
+│       7.069 sq ft (70-13/16" × 14-3/8") — 2.76× the small-format cluster scale.
+│       First item on the Elliott account in the large-format cut vinyl size class (5+ sq ft).
+│       Establishes Band B (Large-Format) at $11.03/sq ft at qty 20 — INDEPENDENT band, separate
+│       from the Band A (Small-Format) concession-phase pricing on the 2.51–2.56 sq ft cluster.
+│       19.3% $/sq ft step-down from Band A ($13.67 → $11.03) justified by three structural
+│       advantages of the large-format size class: (1) fixed labor amortization over a larger
+│       area, (2) simpler weeding geometry per sq ft (large block letters with open counters),
+│       (3) lower material cost per sq ft ($2.83/sq ft vs $3.41/sq ft on the benchmark).
+│       VALIDATED 2026-06-05 via 4-wave atomic AI validation (24 independent responses, 6 models × 4 waves):
+│         Wave 1 (Build): $63–$91 at qty 20; central $75–$91, median ~$83. Debate: $/sq ft step-down
+│           at 2.6× the calibrated size. 2 models held band at $13.71/sq ft ($91); 4 models applied
+│           step-downs ($63–$85). All 6 confirmed $20.02 material cost. All 6 confirmed $0 file prep.
+│         Wave 2 (Destruction): 6/6 H severity on Buyer / Competitor / Strategic. Primary finding:
+│           flat $/sq ft across size classes is the structural error. Competitor (Pro Sign) estimate
+│           $55–$68 at qty 20. Strategic: must establish separate large-format size class before
+│           first invoice. 6/6 rejected original table ($91 at qty 20).
+│         Wave 3 (Buyer Sim, all 6 as Sean Finn): All 6 pushed back; none approved $85 as-is.
+│           Pushback threshold $75–$85 (central $80–$82); instant approval $65–$78 (central $78
+│           for 4 of 6); incumbent estimate $55–$70 (all 6 referenced Pro Sign); all 6 held PO and
+│           would send counteroffer email; all 6 confirmed this becomes a permanent data point in
+│           the buyer's pricing model.
+│         Wave 4 (Final Synthesis): UNANIMOUS NO on $85 at qty 20. UNANIMOUS recommendation $78
+│           at qty 20. UNANIMOUS requirement that a separate large-format size class be established
+│           before first invoice.
+│       Nick's decision: Accepted $78 at qty 20 (unanimous Wave 4). Set T1 at $105, T2 at $92
+│         (operational tiers — Sean orders across T1–T3). Set T4–T6 at $68/$60/$52 for structural
+│         completeness. No override type — engine consensus accepted.
+│       Tiers: $105 / $92 / $78 / $68 / $60 / $52. Margin at qty 20: ~74.3%. Margin floor (200+): ~61.5%.
+│       Material cost $20.02/label: vinyl $18.51 (15" × 50yd Cardinal Red roll at $433.77,
+│         feed length 76.8125" = 2.1337 yd, single-across nesting at 14.375" across 15" roll) +
+│         tape $1.51 (30" × 100yd TransferRite 582U at $141.86, 2-up nesting 2 × 14.375" = 28.75"
+│         across 30" tape, feed length 76.8125" = 2.1337 yd, $3.03 ÷ 2 labels = $1.51 per label).
+│       NOTE on validation vs final dimensions: validation was conducted at initial height 13.5"
+│         (6.639 sq ft). Nick corrected the operative height to 14.375" (7.069 sq ft) post-validation.
+│         Material cost is feed-length-driven, not area-driven — the 76.8125" feed length is unchanged,
+│         so vinyl cost ($18.51) and tape cost ($1.51) are unchanged. The 2-up tape nesting still
+│         holds (2 × 14.375" = 28.75" ≤ 30"). All prices and margins are unchanged. $/sq ft was
+│         recalculated with the larger denominator; benchmark step-down recalculated from 14% to 19.3%.
+│         $78 at qty 20 was validated unanimously by all 6 Wave 4 models.
+│       Bands A and B are INDEPENDENT — January 2027 normalization plan applies to Band A only.
+│       Status: Quoted.
+└── [future large-format cut vinyl items (≥ 5 sq ft) validate against Band B]
 ```
 
 ---

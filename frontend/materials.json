@@ -1,6 +1,6 @@
 {
-  "generated": "2026-06-01T22:06:11Z",
-  "material_count": 7,
+  "generated": "2026-06-05T16:09:30Z",
+  "material_count": 9,
   "materials": {
     "1mil-polyester-overlaminate": {
       "frontmatter": {
@@ -42,6 +42,35 @@
         "notes": "Cost verified 2026-05-28 from invoice: 8 rolls, $705.36 material + $124.66 freight = $830.02 total. $830.02 \u00f7 8 rolls = $103.7525/roll. Roll = 13.5\" \u00d7 386 ft = 434.25 sq ft. $103.7525 \u00f7 434.25 = $0.2389/sq ft. Prior rate $0.98/sq ft was unreconciled (FLAG 1 in 2026-05-28 audit) \u2014 retired. 13.5\" is the hard constraint on current laminator. Wider laminator planned after 18 months locked-in orders."
       }
     },
+    "3m-180mc-cardinal-red-15in": {
+      "frontmatter": {
+        "material_id": "3m-180mc-cardinal-red-15in",
+        "material_type": "cut_vinyl",
+        "manufacturer": "3M",
+        "product_name": "Controltac 180mC",
+        "product_code": "180mC-53",
+        "color_name": "Cardinal Red",
+        "color_code": "53",
+        "film_type": "Cast vinyl",
+        "film_thickness_mil": 2,
+        "adhesive_type": "Permanent pressure-sensitive",
+        "roll_width_in": 15,
+        "roll_length_yd": 50,
+        "cost_per_roll": 433.77,
+        "cost_per_linear_yd": 8.6754,
+        "cost_per_sq_ft": 2.3134,
+        "verified_date": "2026-06-05",
+        "distributor": "GRIMCO",
+        "compatible_tapes": [
+          "transferrite-582u",
+          "transferrite-582u-30in"
+        ],
+        "used_in_items": [
+          "3010704"
+        ],
+        "notes": "15\" slit width roll for large-format cut vinyl items where label height fits within 15\" roll width. Length-based material cost method used for nesting calculations. See also 3m-180mc-cardinal-red.md (24\" roll, used for smaller items)."
+      }
+    },
     "3m-180mc-cardinal-red": {
       "frontmatter": {
         "material_id": "3m-180mc-cardinal-red",
@@ -62,7 +91,8 @@
         "verified_date": "2026-05-28",
         "distributor": "GRIMCO",
         "compatible_tapes": [
-          "transferrite-582u"
+          "transferrite-582u",
+          "transferrite-582u-30in"
         ],
         "used_in_items": [
           "1205720",
@@ -191,6 +221,34 @@
         "notes": ""
       }
     },
+    "transferrite-582u-30in": {
+      "frontmatter": {
+        "material_id": "transferrite-582u-30in",
+        "material_type": "tape",
+        "manufacturer": "TransferRite",
+        "product_name": "TransferRite Ultra 582U",
+        "product_code": "582U",
+        "film_type": "Medium-tack paper application tape",
+        "roll_width_in": 30,
+        "roll_length_yd": 100,
+        "cost_per_roll": 141.86,
+        "cost_per_sq_ft": 0.1891,
+        "cost_per_linear_yd": 1.4186,
+        "verified_date": "2026-06-05",
+        "distributor": "GRIMCO",
+        "compatible_cut_vinyls": [
+          "3m-180mc-cardinal-red",
+          "3m-180mc-cardinal-red-15in",
+          "3m-180mc-olympic-blue",
+          "3m-180mc-white-24in",
+          "3m-180mc-white-48in"
+        ],
+        "used_in_items": [
+          "3010704"
+        ],
+        "notes": "30\" roll used for large-format cut vinyl items where 2 labels are applied side by side. For P/N 3010704: 2 \u00d7 14.375\" = 28.75\" across 30\" tape, 1.25\" waste strip. See also transferrite-582u.md (24\" roll, used for smaller items)."
+      }
+    },
     "transferrite-582u": {
       "frontmatter": {
         "material_id": "transferrite-582u",
@@ -208,6 +266,7 @@
         "distributor": "GRIMCO",
         "compatible_cut_vinyls": [
           "3m-180mc-cardinal-red",
+          "3m-180mc-cardinal-red-15in",
           "3m-180mc-olympic-blue",
           "3m-180mc-white-24in",
           "3m-180mc-white-48in"

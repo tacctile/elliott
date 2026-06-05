@@ -2,7 +2,7 @@
 
 > **Equipment specs, material costs, nesting rules, and process details.**
 >
-> Last Updated: 2026-06-01 (account-wide full bleed ink standard hardwired)
+> Last Updated: 2026-06-05 (15" × 50yd Cardinal Red and 30" × 100yd TransferRite 582U added for large-format cut vinyl)
 
 ---
 
@@ -48,17 +48,23 @@ The single most important production constraint on this account.
 | Color | Code | Roll Size | Cost/Roll | Cost/Yard | Cost/Sq Ft | Verified |
 |-------|------|-----------|-----------|-----------|------------|----------|
 | Cardinal Red | 53 | 24" × 50yd | $775.10 | $15.502 | $7.751 | 2026-05-28 |
+| Cardinal Red | 53 | **15" × 50yd** | **$433.77** | **$8.6754** | **$2.3134** | **2026-06-05** |
 | Olympic Blue | 57 | 24" × 10yd | $162.78 | $16.278 | $2.71 | 2026-05-22 |
 | White | 10 | 24" × 10yd | $131.16 | $13.116 | $2.19 | 2026-05-21 |
 | White | 10 | 48" × 10yd | $257.44 | $25.744 | $2.15 | 2026-05-21 |
 
+**Roll selection note (2026-06-05):** The 15" Cardinal Red roll is used for large-format cut vinyl items where label height fits within 15" roll width with single-across nesting (used by P/N 3010704 at 14.375" label height, 0.625" clearance). The 24" Cardinal Red roll continues to be used for the 2.51–2.56 sq ft small-format cluster where 2-across nesting is optimal.
+
 ### Application Tape
 
-| Product | Roll Size | Cost/Roll | Cost/Sq Ft | Verified |
-|---------|-----------|-----------|------------|----------|
-| TransferRite Ultra 582U | 24" × 100yd | $118.21 | $0.5911 | 2026-05-28 |
+| Product | Roll Size | Cost/Roll | Cost/Yard | Cost/Sq Ft | Verified |
+|---------|-----------|-----------|-----------|------------|----------|
+| TransferRite Ultra 582U | 24" × 100yd | $118.21 | $1.1821 | $0.5911 | 2026-05-28 |
+| TransferRite Ultra 582U | **30" × 100yd** | **$141.86** | **$1.4186** | **$0.1891** | **2026-06-05** |
 
-**Process improvement note (2026-05-28):** TransferRite 582U roll width is now 24", matching the 3M 180mC vinyl roll width exactly. The previous 30" roll had 6" of overhang on 24" vinyl stock. The new 24" tape is cleaner — no overhang, no waste strip. No negative application implication.
+**Process improvement note (2026-05-28):** TransferRite 582U roll width is now 24" (for the small-format cluster), matching the 3M 180mC vinyl roll width exactly. The previous 30" roll had 6" of overhang on 24" vinyl stock. The 24" tape is cleaner — no overhang, no waste strip. No negative application implication.
+
+**Roll selection note (2026-06-05):** The 30" TransferRite 582U roll is used for large-format cut vinyl items where 2-up tape nesting is required to amortize the tape feed across two labels (used by P/N 3010704: 2 × 14.375" = 28.75" across 30" tape, 1.25" waste strip). The 24" roll continues to be used for the 2.51–2.56 sq ft small-format cluster where 1 label per tape row matches the vinyl row layout.
 
 ### Printed Labels — Orajet 3951 + Polyester Lam
 
@@ -157,9 +163,16 @@ This is the canonical method on this account. See `PRICING_RULES.md` §25 and `M
 - Ink: ~$0.50
 - **Total per label: ~$2.32–$3.23**
 
-### Cut Vinyl at ~2.51–2.56 sq ft
+### Cut Vinyl at ~2.51–2.56 sq ft (Small-Format Band)
 
 - Cardinal Red, 24" roll: ~$7.23 vinyl + $1.51 tape = **~$8.74/label total** *(at 2.56 sq ft, P/N 1205720 — length-based method)*
 - Olympic Blue, 24" roll: ~$7.43 vinyl + $1.49 tape = **~$8.92/label total** *(at 2.512 sq ft, P/N 3018378 — length-based method)*
 - White, 24" roll: ~$8.00 vinyl + $1.51 tape = **~$9.51/label total** *(at 2.56 sq ft, P/N 3017435 — length-based method)*
 - White, 48" roll: ~$6.28 vinyl + $1.51 tape = **~$7.79/label total** *(at 2.56 sq ft, P/N 3017435)*
+
+### Cut Vinyl at ~7.069 sq ft (Large-Format Band — added 2026-06-05)
+
+- Cardinal Red, **15" roll** + **30" TransferRite tape**: **$18.51 vinyl + $1.51 tape = $20.02/label total** *(at 7.069 sq ft, P/N 3010704 — length-based method)*
+  - Vinyl: 2.1337 yd feed × $8.6754/yd = $18.51 (single-across nesting on 15" roll, 14.375" label height + 0.625" clearance, feed length 70.8125" + 6" spacing = 76.8125" = 2.1337 yd).
+  - Tape: 2.1337 yd feed × $1.4186/yd = $3.03 per row of 2 labels (2-up nesting on 30" tape, 2 × 14.375" = 28.75" across 30" tape with 1.25" waste strip). Per-label tape cost: $3.03 ÷ 2 = $1.51.
+  - Material cost per sq ft: $20.02 ÷ 7.069 = $2.83/sq ft (vs $3.41/sq ft on the small-format band — larger area amortizes the tape feed cost).

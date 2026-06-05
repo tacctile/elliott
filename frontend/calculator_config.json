@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-01T22:06:11Z",
+  "generated": "2026-06-05T16:09:30Z",
   "version": "1.0",
   "account": {
     "floor": 55.0,
@@ -132,6 +132,12 @@
       "cost_per_sq_ft": 0.5911,
       "material_id": "transferrite-582u",
       "verified_date": "2026-05-28"
+    },
+    "transferrite_582u_30in": {
+      "cost_per_sq_ft": 0.1891,
+      "material_id": "transferrite-582u-30in",
+      "verified_date": "2026-06-05",
+      "roll_width_in": 30
     }
   },
   "ink_rates": {
@@ -183,6 +189,17 @@
         24
       ],
       "verified_date": "2026-05-28"
+    },
+    "cardinal_red_15in": {
+      "material_id": "3m-180mc-cardinal-red-15in",
+      "cost_method": "length_based",
+      "cost_per_linear_yd": 8.6754,
+      "roll_width_in": 15,
+      "roll_width_ft": 1.25,
+      "available_widths_in": [
+        15
+      ],
+      "verified_date": "2026-06-05"
     },
     "olympic_blue": {
       "material_id": "3m-180mc-olympic-blue",
