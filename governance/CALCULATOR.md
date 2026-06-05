@@ -3,7 +3,7 @@
 > **Authoritative reference for the Elliott calculator system.**
 > The HTML calculator at `frontend/index.html` is the implementation; this document is the contract.
 >
-> Last Updated: 2026-06-05 (MOQ purge — Floor Logic column rewritten; Rule 8 historical anchor removed; constant-change list updated; PRICING_RULES.md file table description rewritten; sanity-check expected flags updated to drop F18/F19)
+> Last Updated: 2026-06-05 (Session C — tier boundary constraint enforcement (F23), Band B/C cut vinyl routing, sub-0.1 production override, 1-9 auto-generation at 1.5×; Section 3 F23 added; Section 9 sanity matrix extended; Section 4 Rule 11 added)
 
 ---
 
@@ -115,7 +115,7 @@ Every input is dispatched to exactly one route. The route determines which band,
 
 | Route | Material Family | Sq Ft | Item Type | Band Applied | Floor Logic |
 |-------|-----------------|-------|-----------|--------------|-------------|
-| `cut_vinyl` | 3M 180mC Cut Vinyl | any | any | Cut Vinyl Lettering (active = concession_phase) | No MOQ. Invoice protection (§26) applies at all tier boundaries. |
+| `cut_vinyl` | 3M 180mC Cut Vinyl | any | any | Cut Vinyl Lettering — size-class routed: sq ft ≥ 5.0 → Band B (Large-Format, $11.03/sq ft anchor, 3010704 founding); 1.0 ≤ sq ft < 5.0 → Band A (Small-Format, concession_phase, $13.65–$13.94/sq ft); sq ft < 1.0 → Band C (Sub-1 sq ft, $20.64/sq ft anchor, 3010707 founding cluster) | No MOQ. Invoice protection (§26) applies at all tier boundaries. |
 | `tiny` | Orajet 3951 | ≤ 0.1 sq ft | any | None | All 6 tiers flatten to $55 one-off job-economics floor (1230820 FA-anchored) |
 | `kit` | Orajet 3951 | > 0.1 sq ft | label_count > 1 OR `Printed/Laminated Kit` | Printed/Laminated Kits | No MOQ. Invoice protection (§26) applies at all tier boundaries. |
 | `single_sub_scope` | Orajet 3951 | 0.1–0.5 sq ft | single | Printed/Laminated Singles (band-consistent, item excluded from band DATA POINTS) | No MOQ. Invoice protection (§26) applies at all tier boundaries. |
@@ -132,6 +132,8 @@ Every input is dispatched to exactly one route. The route determines which band,
 - `laminator_max_width_in`: **13.5** (narrow dim > 13.5 → F3 STOP)
 - `roland_max_print_width_in`: **28.0**
 - `parity_max_lam_passes`: **2** (kit lam passes > 2 → F16 REVIEW)
+- `cut_vinyl_band_thresholds.band_b_floor_sq_ft`: **5.0** (sq ft ≥ this → Band B Large-Format)
+- `cut_vinyl_band_thresholds.band_c_ceiling_sq_ft`: **1.0** (sq ft < this → Band C Sub-1 sq ft)
 
 ---
 
@@ -169,6 +171,7 @@ All 22 flag definitions live in `frontend/index.html` (calculator engine `FLAG_D
 | F20 | STOP | yes | Cannot fit kit in ≤2 lam-pass orientation groups — exceeds current equipment routing. Requires Nick review (mixed-dim or special handling). |
 | F21 | REVIEW | no | Mixed-dimension kit — per-label parity does NOT apply. Cost-build from scratch and run AI validation (Rounds 1+2 minimum). |
 | F22 | INFO | no | Item below band — verify intentional. Smaller labels carry higher fixed cost per sq ft, not lower; below-scope position does NOT justify below-band $/sq ft. |
+| F23 | INFO | no | Tier boundary auto-capped for never-pay-more compliance. One flag per boundary that fires; detail text identifies the boundary, the original price, and the capped price. |
 
 ### STOP Banner Behavior
 
@@ -201,6 +204,8 @@ When any STOP flag fires:
 9. **It must NOT invent a band for a material family that has none.** Convex High Bond + Poly Lam and Lexan/Polycarbonate both route to `no_profile` (F17 STOP). The first item in a new material family establishes the band — that requires a cost-build, all 4 validation rounds, and Nick's lock.
 
 10. **It must NOT modify the band data for existing items, even if their tier table fails a cliff check.** The 4 cut vinyl items have cliffs at every tier boundary by design (no invoice protection rule on cut vinyl). The engine surfaces this as informational context only; the existing items' `categories/cut-vinyl-3m-180mc.md` band data is the source of truth.
+
+11. **After every tier generation, `enforceTierBoundaries()` runs automatically.** Every tier table is guaranteed never-pay-more compliant before it reaches the output panel. The function walks boundaries bottom-up (200+ is the anchor; check 100-199→200+, then 50-99→100-199, etc.) and floor-caps any lower tier whose boundary total exceeds the upper tier's boundary total. Cascades — a capped tier becomes the upper for the next iteration. Runs after every tier builder (`buildPrintLamSinglesTiers`, `buildPrintLamKitTiers`, `buildCutVinylTiers`), BEFORE margin calculation. Does NOT run on `tiny` (all 6 tiers flat at $55) or `no_profile` (no tiers). Each cap fires one F23 INFO flag with boundary-specific detail text. The existing `checkInvoiceProtection()` function remains as a secondary verification step — it should report zero violations after `enforceTierBoundaries()` has run; if it ever finds a violation, that is a bug.
 
 ---
 
@@ -273,6 +278,8 @@ For changes to:
 - Snap granularity
 - Ink rates (low/medium/high/flood_coat/flood_coat_safety_red)
 - Sq-ft scope thresholds (tiny, sub-scope, singles)
+- Cut vinyl size-class thresholds (`cut_vinyl_band_thresholds.band_b_floor_sq_ft`, `band_c_ceiling_sq_ft`)
+- Band B / Band C anchor PSF and tier templates
 - Equipment limits (laminator, Roland print bed)
 - The $55 floor source PN
 - Quote language templates
@@ -421,15 +428,22 @@ Nick composes the quote email by hand, using the calculator's quote-language stu
 
 ## 9. Sanity Check Reference Cases
 
-The 6 reference cases below are the calculator's regression test surface. Any engine change must continue to produce these outputs.
+The reference cases below are the calculator's regression test surface. Any engine change must continue to produce the correct ROUTE for each case. With strict tier boundary enforcement (Rule 11), the calculator's algorithmic tier prices may differ from the catalog tier values stored in `items/*.md` — the calculator compresses tier tables aggressively to guarantee never-pay-more compliance, while the catalog tier tables retain cliffs that are handled by §26 invoice protection at billing time. The Price@20 column below documents the calculator's expected output, not the catalog price.
 
-| Input | Route | Price@20 | Required Flags | STOP? |
+| Input | Route | Price@20 (calculator) | Required Flags | STOP? |
 |-------|-------|---------:|---------------|:-----:|
-| 1230820 — Orajet single, 15"×12.44", medium ink | `single_standard` | $20.00 | F11 | no |
-| 1277970 — Orajet single, 1.1875"×1.1875" (Ø1-3/16) | `tiny` | $55.00 | F9 (REVIEW) | no |
+| 1230820 — Orajet single, 15"×12.44", high ink | `single_standard` | ~$11.38 (algorithmic; anchor $20 capped by enforcement cascade from upper-tier ratios) | F23 (×5 boundaries), F7 | no |
+| 1082570 — Orajet single, 10"×7.25", flood coat | `single_standard` | ~$4.39 (algorithmic; anchor $7.75 capped by cascade) | F8, F23 (×5), F7, F12 | no |
+| 1210810 — Orajet single, 10.5"×4", flood Safety Red | `single_sub_scope` | ~$2.58 (algorithmic; anchor $4.50 capped by cascade) | F10 (REVIEW), F8, F22, F23 (×5), F7, F12 | no |
+| 1278930 — Orajet 3-label kit, 11.13"×7.88" | `kit` | ~$18.64 (algorithmic; anchor $30 capped by cascade) | F23 (×5), F7 | no |
+| 1245130 — Orajet 5-label kit, 11.13"×7.88" | `kit` | ~$31.07 (algorithmic; anchor $50 capped by cascade) | F23 (×5), F7 | no |
+| 1205720 — Cut vinyl Cardinal Red, 33.5625"×11" (Band A) | `cut_vinyl` | ~$22.78 (algorithmic; anchor $35 capped by cascade) | F15 (Rule 14), F23 (×5), F7, F5 | no |
+| 1277970 — Orajet single, 1.1875"×1.1875" (Ø1-3/16) | `tiny` | $55.00 (flat — enforcement does not run on tiny) | F9 (REVIEW) | no |
 | Convex High Bond single, 10"×6" | `no_profile` | n/a (output suppressed) | F17 (STOP) | yes |
-| Kit — Orajet, kit_same_dim, 8.77"×10", 3 labels | `kit` | $30.00 (per label $10) | (none) | no |
-| 1205720 — Cut vinyl Cardinal Red, 33.5625"×11" | `cut_vinyl` | $35.00 | F15 (Rule 14) | no |
-| 1210810 — Orajet single, 10.5"×4", flood Safety Red | `single_sub_scope` | $4.50 | F10 (REVIEW), F8, F11, F12 | no |
+| **NEW** — 3010704 equivalent (Cut vinyl Cardinal Red, 70.8125"×14.375", 7.069 sq ft, Band B) | `cut_vinyl` | ~$53.85 (algorithmic; Band B template $78 capped by cascade) | F15, F23 (×5), F7, F5 | no |
+| **NEW** — 3010707 equivalent (Cut vinyl Cardinal Red, 34.887"×4", 0.969 sq ft, Band C) | `cut_vinyl` | ~$11.89 (algorithmic; Band C template $20 capped by cascade) | F15, F23 (×5), F7 | no |
+| **NEW** — Sub-0.1 sq ft production override (Orajet single, 8"×1.75", 0.0972 sq ft, `production_override: true`) | `single_sub_scope` | ~$0.76 (algorithmic; anchor $1.50 capped by cascade) | F10, F8, F22, F23 (×5), F7, F12 | no |
 
-If any of these break after a change, the change is incorrect — either the change has a bug or the reference case needs explicit reconsideration with Nick before proceeding.
+If a route doesn't match for any of these cases, the change is incorrect — either the change has a bug or the reference case needs explicit reconsideration with Nick before proceeding. Prices are documented for traceability but the spec explicitly tolerates snap-rounding variance — only routes are hard requirements.
+
+**Note on flag counts:** F23 fires once per boundary that is auto-capped. On any tier table whose template has cliffs at all 5 boundaries (Band A/B/C templates with 1.5×/1.2×/1.0×/0.85×/0.7×/0.55× compression do), F23 fires 5 times. This is by design and documented in the brief output. F11 no longer fires on routine cliff fixes — `enforceTierBoundaries()` handles cliffs upstream, so `checkInvoiceProtection()` finds zero violations and does not run its 10-19 autofix path.

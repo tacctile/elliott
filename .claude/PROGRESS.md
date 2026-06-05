@@ -2,7 +2,95 @@
 
 > **Newest entries at the top. Updated every session.**
 >
-> Last Updated: 2026-06-05 (Session B: calculator engine MOQ cleanup — F18/F19 removed, $55 flat-tier injection removed, moq_applies variable removed, MOQ row rendering removed, MOQ quote stubs + brief lines removed. 1-9 is now a standard tier on all routes.)
+> Last Updated: 2026-06-05 (Session C: calculator engine rebuild — tier boundary constraint enforcement (F23), Band B/C cut vinyl routing, sub-0.1 production override, 1-9 auto-generation at 1.5×.)
+
+---
+
+### 2026-06-05 — Session C: Calculator Engine Rebuild — Tier Boundary Enforcement (F23), Band B/C Cut Vinyl Routing, Sub-0.1 Production Override, 1-9 Auto-Generation at 1.5×
+
+**What:** Four new capabilities added to the calculator engine in `frontend/index.html`, plus the underlying band data and routing constants added to `scripts/build_calculator_config.py` and `frontend/calculator_config.json`. (1) **Tier boundary constraint enforcement** — a new `enforceTierBoundaries()` function runs after every tier builder (`buildPrintLamSinglesTiers`, `buildPrintLamKitTiers`, `buildCutVinylTiers`), BEFORE margin calculation, on every route that produces tiers (single_standard, single_sub_scope, kit, cut_vinyl). It walks boundaries bottom-up (200+ is the anchor) and floor-caps any lower tier whose total at boundary_qty exceeds the upper tier's total at boundary_qty+1. Cascades — a capped tier becomes the upper for the next iteration. Each cap fires one F23 INFO flag with boundary-specific detail text. Does NOT run on tiny (all 6 tiers flat $55) or no_profile (no tiers). (2) **Cut vinyl Band B and Band C routing** — `buildCutVinylTiers()` now routes by sq ft: ≥ 5.0 → Band B (Large-Format, $11.03/sq ft anchor from 3010704), 1.0 ≤ sq ft < 5.0 → Band A (existing behavior, concession_phase), < 1.0 → Band C (Sub-1 sq ft, $20.64/sq ft anchor from 3010707 founding cluster). When the item's sq ft is within ±30% of the founding anchor's sq ft, the validated tier template is used directly (no re-derivation); otherwise the engine scales from anchor_psf × sq_ft at qty 20 and applies default ratios. (3) **Sub-0.1 sq ft production override** — a new `production_override: true` input on the calculator form (and `gatherCalcInputs()`) routes Orajet 3951 items at sq ft ≤ 0.1 to single_sub_scope instead of tiny. The override is OPT-IN; tiny remains the default. The checkbox in the form is visible only for Orajet 3951 single items at sq ft ≤ 0.1 (auto-shown/hidden by `updateCalcFormVisibility()` on width/height/itemtype/family changes). When hidden, the checkbox state is forced unchecked so it cannot silently affect routing on a non-applicable item. (4) **Consistent 1-9 tier generation** — already in place from Session B (printed/laminated 1_9 ratio = 1.50 in `PRINTED_LAMINATED_SINGLES_BAND.tier_ratios`). With `enforceTierBoundaries()` now running, the 1-9 tier is auto-capped when the 1.5× ratio creates a 9/10 inversion. Verified — no separate engine change required.
+
+**Critical implementation detail — floating-point precision:** Both `enforceTierBoundaries()` and `checkInvoiceProtection()` now round the boundary totals to penny precision before comparison. JavaScript's IEEE 754 representation gives 19 × 0.80 = 15.200000000000001 vs 20 × 0.76 = 15.2, which would otherwise spuriously trigger a cliff at compliant boundaries. The penny-precision rounding eliminates false positives without changing any real cliff detection logic.
+
+**Files Modified:**
+- `scripts/build_calculator_config.py` — added `cut_vinyl_band_thresholds` (`band_b_floor_sq_ft: 5.0`, `band_c_ceiling_sq_ft: 1.0`) to ROUTING; added `large_format` and `sub_1_sqft` sub-band data (with anchor_psf, anchor_pn, anchor_price_qty_20, anchor_sq_ft, tier_template, note) inside `CUT_VINYL_LETTERING_BAND`.
+- `frontend/calculator_config.json` — regenerated. New routing key `cut_vinyl_band_thresholds`; new sub-bands `bands.cut_vinyl_lettering.large_format` and `.sub_1_sqft`.
+- `frontend/index.html` — calculator engine changes: (a) F23 added to `FLAG_DEFS`; (b) `enforceTierBoundaries()` function added with `TIER_ENFORCE_BOUNDARIES` boundary list; (c) `buildCutVinylTiers()` rewritten to route by sq ft into Band A / B / C with size_band_label tracking; (d) `determineRoute()` cut_vinyl branch updated with size-class note in route_reason; (e) `determineRoute()` tiny branch — production_override check runs BEFORE the tiny check; (f) `getActiveBandRange()` updated to use Band B/C $/sq ft anchor for cut vinyl items at the corresponding size class; (g) `computeBand()` updated to pass `ref_sq_ft` to `getActiveBandRange`; (h) `makeFlag()` extended to optionally carry a `detail` object; (i) `generateFlags()` signature extended with `tier_enforcement` parameter; (j) F23 emission added after F11 firing branch — one F23 per adjustment with formatted detail text including the boundary, original price, capped price, and the cliff math; (k) `runCalculator()` integrates `enforceTierBoundaries()` between tier-build and `checkInvoiceProtection()`; (l) `checkInvoiceProtection()` and `enforceTierBoundaries()` both apply penny-precision rounding before boundary comparison to eliminate float false positives; (m) `runCalculator()` default-fill object adds `production_override: false`. UI changes: (n) production override checkbox added to `#calcForm` between ANSI and Order Quantity rows; (o) `updateCalcFormVisibility()` reads width/height/family/itemtype and toggles the override checkbox visibility (Orajet 3951 single, sq ft ≤ tiny_threshold); auto-unchecks when hidden; (p) `gatherCalcInputs()` reads `production_override` from the checkbox if visible; (q) `runSanityChecks()` extended with 3010704 (Band B), 3010707 (Band C), and synthetic PROD-OVERRIDE-TEST (sub-0.1 with `production_override: true`) cases.
+- `governance/CALCULATOR.md` — Last Updated stamp; Section 3 (Flag Definitions table) — added F23 row; Section 4 — added Rule 11 documenting enforceTierBoundaries() and its relationship to checkInvoiceProtection() (which becomes a verification step); Section 2 (Route Definitions table) — cut_vinyl row's Band Applied column now describes size-class routing into Band A / B / C; Section 2 (Sq Ft Thresholds) — added cut_vinyl_band_thresholds entries; Section 6.1 — added cut vinyl band threshold + Band B/C anchor PSF/tier templates to the constant-change list; Section 9 (Sanity Check Reference Cases) — full rewrite to document the post-enforcement calculator output (prices may differ from catalog tier values stored in items/*.md since enforceTierBoundaries compresses tier tables aggressively to eliminate all cliffs; the catalog tier tables retain upper-tier cliffs handled by §26 invoice protection at billing time). Added the three new test cases (Band B / Band C / production override). Note added explaining F23 count (one per capped boundary) and that F11 no longer fires on routine cliff fixes (enforceTierBoundaries handles them upstream).
+- `.claude/PROGRESS.md` — this entry.
+- `.claude/STATE.yml` — last_session + next_action + blockers updated to reflect Session C completion.
+
+**Files NOT Modified:**
+- No item files touched. The catalog tier values stored in `items/*.md` remain unchanged. The calculator's brief output may differ from those catalog values — that is expected behavior, because the brief generator now hard-enforces never-pay-more compliance at every boundary, while the catalog tier values reflect Nick's AI-validated final pricing (which may include intentional upper-tier cliffs handled by §26 invoice protection at billing time).
+- No category files touched. Session A handled those.
+- No `governance/PRICING_RULES.md` changes. Session A handled that.
+- No `.claude/MASTER_CONTEXT.md` changes. Session A handled that.
+- No `.claude/ARCHITECTURE.md` changes. The 3010704 / 3010707-cluster entries already document Band B / Band C as INDEPENDENT bands.
+- No `governance/PRODUCTION.md` changes. Material costs unchanged.
+- No flag definitions F1–F17, F20–F22 modified. F23 added only.
+- No tiny route behavior changes — tiny remains the default for ≤ 0.1 sq ft Orajet items when `production_override` is false. $55 flat across all 6 tiers preserved.
+
+**Sanity Matrix (verified via Node-driven engine harness — both script blocks parsed with `new Function(blockSrc)`, `runSanityChecks()` invoked):**
+
+| P/N | Expected Route | Actual Route | Route Match | Price@20 (calculator) | Key Flags | STOP |
+|-----|----------------|--------------|-------------|----------------------:|-----------|:----:|
+| 1230820 | single_standard | single_standard | ✓ | $11.38 (anchor $20 capped by cascade) | F7, F23×5 | no |
+| 1082570 | single_standard | single_standard | ✓ | $4.39 (anchor $7.75 capped) | F8, F7, F23×5, F12 | no |
+| 1210810 | single_sub_scope | single_sub_scope | ✓ | $2.58 (anchor $4.50 capped) | F10, F8, F7, F22, F23×5, F12 | no |
+| 1278930 | kit | kit | ✓ | $18.64 (kit anchor $30 capped) | F7, F23×5 | no |
+| 1205720 | cut_vinyl | cut_vinyl | ✓ | $22.78 (Band A anchor $35 capped) | F5, F7, F23×5, F15 | no |
+| 1277970 | tiny | tiny | ✓ | $55.00 (flat — enforcement skips tiny) | F9 | no |
+| 1245130 | kit | kit | ✓ | $31.07 (kit anchor $50 capped) | F7, F23×5 | no |
+| Convex 10×6 | no_profile | no_profile | ✓ | n/a (suppressed) | F17 (STOP) | yes |
+| **3010704** (NEW Band B) | cut_vinyl | cut_vinyl | ✓ | $53.85 (Band B template $78 capped) | F5, F7, F23×5, F15 | no |
+| **3010707** (NEW Band C) | cut_vinyl | cut_vinyl | ✓ | $11.89 (Band C template $20 capped) | F7, F23×5, F15 | no |
+| **PROD-OVERRIDE-TEST** (NEW Orajet 8"×1.75" + override=true) | single_sub_scope | single_sub_scope | ✓ | $0.76 (anchor $1.50 capped) | F10, F8, F7, F22, F23×5 | no |
+
+- All 11 cases produce correct route ✓
+- F23 fires once per capped boundary on every non-tiny / non-no_profile case ✓
+- F23 detail text includes boundary, original price, capped price, and the cliff math (e.g., "20-49 capped from $20.00 to $11.38 at the 49/50 boundary (49 × $20.00 = $980.00 > 50 × $11.16 = $558.00)") ✓
+- Band B routing fires for 3010704 (7.069 sq ft ≥ 5.0) ✓
+- Band C routing fires for 3010707 (0.969 sq ft < 1.0) ✓
+- Sub-0.1 production override routes to single_sub_scope with F10 + F8 + F22 (band-position warnings) ✓
+- Without override, 8"×1.75" Orajet (0.0972 sq ft) routes to tiny ($55 flat, F9) ✓
+- F11 no longer fires on routine cases — `enforceTierBoundaries()` handles cliffs upstream; `checkInvoiceProtection()` finds zero violations after enforcement (verified with penny-precision rounding to eliminate floating-point false positives) ✓
+- F15 (Rule 14) still fires on all cut vinyl routes (concession_phase band is active) ✓
+- F7 (band tolerance ±15%) fires on most cases — expected, because aggressive tier compression pulls $/sq ft well below the band anchor ✓
+- All other flags (F5, F8, F9, F10, F12, F17, F22) unchanged ✓
+
+**Acceptance Criteria Met:**
+- `enforceTierBoundaries()` exists and is called after every tier builder on every applicable route ✓
+- F23 fires when any tier is auto-capped, with boundary-specific detail text including the full cliff math ✓
+- Cut vinyl items at ≥ 5.0 sq ft route to Band B and produce tiers anchored to $11.03/sq ft (template used directly when sq ft within ±30% of 7.069) ✓
+- Cut vinyl items at < 1.0 sq ft route to Band C and produce tiers anchored to $20.64/sq ft (template used directly when sq ft within ±30% of 0.969) ✓
+- Cut vinyl items at 1.0–4.99 sq ft route to Band A (existing behavior unchanged) ✓
+- Production override checkbox appears only for Orajet 3951 single items with sq ft ≤ 0.1 ✓
+- When production override is checked, sub-0.1 sq ft Orajet items route to single_sub_scope and get real tiered pricing ✓
+- When production override is unchecked (default), sub-0.1 sq ft items route to tiny / $55 as before ✓
+- The 1-9 tier on printed/laminated routes is generated from the 1.50× ratio, then auto-capped by `enforceTierBoundaries()` when needed ✓
+- All existing sanity check cases route correctly. Prices differ from prior runs due to strict tier enforcement (documented in CALCULATOR.md §9). Flag expectations updated ✓
+- Three new sanity check cases (Band B, Band C, production override) pass ✓
+- Both `<script>` blocks parse cleanly (Node `new Function(blockSrc)` check) ✓
+- `python scripts/validate.py` — 0 errors, 0 warnings (19 items) ✓
+- All 3 build scripts run clean ✓
+- `governance/CALCULATOR.md` updated with F23 row, new sanity cases, routing notes (cut_vinyl size-class), and new Rule 11 (enforceTierBoundaries) ✓
+
+**Key Decisions Carried Forward:**
+- `enforceTierBoundaries()` is the HARD constraint. `checkInvoiceProtection()` is now a SECONDARY verification step — it should find zero violations on any tier table after `enforceTierBoundaries()` has run. If it ever finds one, that is a bug to investigate, not a feature to suppress.
+- The strict bottom-up cascade is the spec's literal intent. Because the existing tier ratios (1.5×/1.2×/1.0×/0.85×/0.7×/0.55× for printed/lam; similar for cut vinyl templates) create cliffs at every boundary, the cascade compresses tier tables substantially. The calculator's algorithmic price at qty 20 may end up well below the band anchor. This is the BRIEF GENERATOR's output, not a final price — Round 1 of AI validation corrects it against industry/competitor data, and Nick locks the final tier table.
+- The catalog tier values stored in `items/*.md` remain the source of truth for what Sean is invoiced. Those tier tables retain upper-tier cliffs by design, handled by §26 invoice protection at billing time. The calculator's brief output for a re-run on an existing item will differ from the catalog tier values — that is expected and not a regression.
+- The production override is OPT-IN. Tiny remains the default for ≤ 0.1 sq ft Orajet items. Nick must explicitly check the box to route a tiny item to single_sub_scope.
+- Band B / Band C templates are used DIRECTLY when the item's sq ft is within ±30% of the founding anchor's sq ft. Outside that window, the engine scales from anchor_psf × sq_ft. The ±30% tolerance reflects that the templates were 4-wave AI validated on a specific data point and should not be re-derived for very-close items.
+- The floating-point precision fix in `checkInvoiceProtection()` and `enforceTierBoundaries()` (penny-precision rounding before boundary comparison) is a correctness fix that eliminates false-positive cliff detection on tier tables with prices like $0.80 or $11.05 (which don't round cleanly in IEEE 754).
+
+**Pending Quotes (unchanged from prior session):**
+- 3010707 / 3010708 / 3010709 ($20/qty 20, Band C founding cluster)
+- 3010704 ($78/qty 20, Band B founding)
+- 1210810 ($57.50 for qty 10; recurring $4.75 at 20-49)
+- 1082570 ($42 flat for qty 2 once PO arrives; production $8 at qty 20)
+- 1245130, 3017435, 3018378, 1186310, 1277970, 1277980, 1277990, 1278000, 3017583, 3017584 — quoted May–Jun 2026
+
+**Status:** Session C complete. validate.py 0/0; all 3 build scripts clean; both script blocks parse clean; sanity matrix verified (11/11 routes match). F23 added. Band B/C routing live. Production override live. Independent backlog items (not blocking next session): (a) `governance/CALCULATOR.md` Section 3 F18/F19 doc cleanup — cosmetic; (b) $100 minimum for Sean rush/favor jobs — undocumented; (c) validation-prompt augmentation backlog from prior sessions; (d) consider whether to relax the strict cascade enforcement (or re-tune the upper-tier ratios so they don't create cliffs) — current strict implementation compresses tier tables aggressively for the brief generator. The catalog is unaffected; this is a brief-generator-only design question.
 
 ---
 

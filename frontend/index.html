@@ -1500,6 +1500,11 @@
               <label class="checkbox-label"><input type="checkbox" id="calc-ansi" /> ANSI/Safety Label</label>
             </div>
 
+            <div class="calc-field hidden" id="calc-prodoverride-wrap">
+              <label class="checkbox-label"><input type="checkbox" id="calc-prodoverride" /> Production catalog item (override tiny route)</label>
+              <div class="calc-hint">Default off — sub-0.1 sq ft Orajet items route to tiny ($55 flat). Check this for production catalog items at ≤0.1 sq ft to route to single_sub_scope and get real tiered pricing.</div>
+            </div>
+
             <div class="calc-field">
               <label>Order Quantity</label>
               <input type="number" id="calc-qty" min="0" step="1" placeholder="optional" />
@@ -2423,6 +2428,8 @@ function initCalculatorForm() {
 
   document.getElementById('calc-family').addEventListener('change', updateCalcFormVisibility);
   document.getElementById('calc-itemtype').addEventListener('change', updateCalcFormVisibility);
+  document.getElementById('calc-width').addEventListener('input', updateCalcFormVisibility);
+  document.getElementById('calc-height').addEventListener('input', updateCalcFormVisibility);
   updateCalcFormVisibility();
 }
 
@@ -2432,6 +2439,7 @@ function updateCalcFormVisibility() {
   const isPL = family === 'Orajet 3951 Cast + Polyester Lam';
   const itemType = document.getElementById('calc-itemtype').value;
   const isKit = !isCV && itemType.startsWith('kit_');
+  const isSingle = !isCV && itemType === 'single';
 
   document.getElementById('calc-color-wrap').classList.toggle('hidden', !isCV);
   document.getElementById('calc-cv-itemtype-wrap').classList.toggle('hidden', !isCV);
@@ -2439,6 +2447,20 @@ function updateCalcFormVisibility() {
   document.getElementById('calc-labelcount-wrap').classList.toggle('hidden', !isKit);
   document.getElementById('calc-ink-wrap').classList.toggle('hidden', !isPL);
   document.getElementById('calc-ansi-wrap').classList.toggle('hidden', !isPL);
+
+  // Production override checkbox — Orajet 3951 single items at sq ft ≤ 0.1 only.
+  const widthEl = document.getElementById('calc-width');
+  const heightEl = document.getElementById('calc-height');
+  const w = parseFloat(widthEl.value) || 0;
+  const h = parseFloat(heightEl.value) || 0;
+  const sq_ft = (w * h) / 144;
+  const tiny_threshold = (window.CALCULATOR_CONFIG && window.CALCULATOR_CONFIG.routing
+    && window.CALCULATOR_CONFIG.routing.tiny_threshold_sq_ft) || 0.1;
+  const showOverride = isPL && isSingle && sq_ft > 0 && sq_ft <= tiny_threshold;
+  const overrideWrap = document.getElementById('calc-prodoverride-wrap');
+  const overrideEl = document.getElementById('calc-prodoverride');
+  overrideWrap.classList.toggle('hidden', !showOverride);
+  if (!showOverride) overrideEl.checked = false;
 }
 
 function gatherCalcInputs() {
@@ -2446,6 +2468,9 @@ function gatherCalcInputs() {
   const isCV = family === '3M 180mC Cut Vinyl';
   const itemType = isCV ? 'cut_vinyl' : document.getElementById('calc-itemtype').value;
   const isKit = !isCV && itemType.startsWith('kit_');
+  const overrideWrap = document.getElementById('calc-prodoverride-wrap');
+  const overrideEl = document.getElementById('calc-prodoverride');
+  const overrideVisible = overrideWrap && !overrideWrap.classList.contains('hidden');
   return {
     part_number: document.getElementById('calc-pn').value.trim(),
     description: document.getElementById('calc-desc').value.trim(),
@@ -2458,6 +2483,7 @@ function gatherCalcInputs() {
     cut_vinyl_color: isCV ? document.getElementById('calc-color').value : '',
     ink_coverage: document.getElementById('calc-ink').value,
     is_ansi_safety: document.getElementById('calc-ansi').checked,
+    production_override: overrideVisible && overrideEl ? overrideEl.checked : false,
     order_qty: parseInt(document.getElementById('calc-qty').value, 10) || 0,
     notes: document.getElementById('calc-notes').value.trim(),
   };
@@ -2938,12 +2964,25 @@ init();
     if (isCutVinylInput(inp)) {
       const band = config.bands.cut_vinyl_lettering;
       const active = band[band.active_band];
+      const cvT = t.cut_vinyl_band_thresholds || { band_c_ceiling_sq_ft: 1.0, band_b_floor_sq_ft: 5.0 };
+      let size_class_note;
+      if (sq >= cvT.band_b_floor_sq_ft && band.large_format) {
+        size_class_note = ` Size-class routing: sq ft ${sq.toFixed(3)} ≥ ${cvT.band_b_floor_sq_ft} → Band B (Large-Format) at $${band.large_format.anchor_psf_qty_20}/sq ft.`;
+      } else if (sq < cvT.band_c_ceiling_sq_ft && band.sub_1_sqft) {
+        size_class_note = ` Size-class routing: sq ft ${sq.toFixed(3)} < ${cvT.band_c_ceiling_sq_ft} → Band C (Sub-1 sq ft) at $${band.sub_1_sqft.anchor_psf_qty_20}/sq ft.`;
+      } else {
+        size_class_note = ` Size-class routing: ${cvT.band_c_ceiling_sq_ft} ≤ sq ft ${sq.toFixed(3)} < ${cvT.band_b_floor_sq_ft} → Band A (Small-Format) at ${band.active_band} ($${active.min_per_sq_ft_qty_20}-$${active.max_per_sq_ft_qty_20}/sq ft at qty 20).`;
+      }
       return { route: 'cut_vinyl', route_reason:
-        `Cut vinyl item (${CUT_VINYL_FAMILY}). Active band: ${band.active_band} ($${active.min_per_sq_ft_qty_20}-$${active.max_per_sq_ft_qty_20}/sq ft at qty 20).` };
+        `Cut vinyl item (${CUT_VINYL_FAMILY}).${size_class_note}` };
     }
     if (fam !== PRINTED_LAM_FAMILY) {
       return { route: 'no_profile', route_reason:
         `Material family "${fam}" has no Pricing Profile band yet. First item establishes the band. Cost-build from scratch and run AI validation (Rounds 1+2 minimum).` };
+    }
+    if (sq <= t.tiny_threshold_sq_ft && inp.production_override) {
+      return { route: 'single_sub_scope', route_reason:
+        `Sq ft ${sq.toFixed(4)} ≤ ${t.tiny_threshold_sq_ft} — would normally route to tiny, but production catalog override is set. Routing to single_sub_scope for real tier pricing.` };
     }
     if (sq <= t.tiny_threshold_sq_ft) {
       return { route: 'tiny', route_reason:
@@ -3234,29 +3273,118 @@ init();
 
   function buildCutVinylTiers(sq_ft, config) {
     const band = config.bands.cut_vinyl_lettering;
-    const active = band[band.active_band];
-    const mid_psf = (active.min_per_sq_ft_qty_20 + active.max_per_sq_ft_qty_20) / 2;
     const snap = band.snap_granularity;
-    const tmpl = band.default_tier_template;
-    const ratios = {
-      '1_9': tmpl.price_1_9 / tmpl.price_20_49,
-      '10_19': tmpl.price_10_19 / tmpl.price_20_49,
-      '20_49': 1.0,
-      '50_99': tmpl.price_50_99 / tmpl.price_20_49,
-      '100_199': tmpl.price_100_199 / tmpl.price_20_49,
-      '200_plus': tmpl.price_200_plus / tmpl.price_20_49,
+    const thresholds = (config.routing && config.routing.cut_vinyl_band_thresholds)
+      || { band_c_ceiling_sq_ft: 1.0, band_b_floor_sq_ft: 5.0 };
+
+    let size_band_key, size_band_label, size_band, anchor_psf, ratios, anchor, tiers, used_template, anchor_sq_ft_ref;
+
+    if (sq_ft >= thresholds.band_b_floor_sq_ft && band.large_format) {
+      // Band B — Large-Format
+      size_band = band.large_format;
+      size_band_key = 'large_format';
+      size_band_label = 'Band B (Large-Format)';
+      anchor_psf = size_band.anchor_psf_qty_20;
+      anchor_sq_ft_ref = size_band.anchor_sq_ft;
+      const tmpl = size_band.tier_template;
+      ratios = {
+        '1_9': tmpl.price_1_9 / tmpl.price_20_49,
+        '10_19': tmpl.price_10_19 / tmpl.price_20_49,
+        '20_49': 1.0,
+        '50_99': tmpl.price_50_99 / tmpl.price_20_49,
+        '100_199': tmpl.price_100_199 / tmpl.price_20_49,
+        '200_plus': tmpl.price_200_plus / tmpl.price_20_49,
+      };
+      const within_anchor = anchor_sq_ft_ref > 0 && Math.abs(sq_ft - anchor_sq_ft_ref) / anchor_sq_ft_ref <= 0.30;
+      if (within_anchor) {
+        tiers = Object.assign({}, tmpl);
+        anchor = tmpl.price_20_49;
+        used_template = true;
+      } else {
+        const raw_anchor = sq_ft * anchor_psf;
+        anchor = snapPrice(raw_anchor, snap);
+        tiers = {
+          price_1_9: snapPrice(anchor * ratios['1_9'], snap),
+          price_10_19: snapPrice(anchor * ratios['10_19'], snap),
+          price_20_49: anchor,
+          price_50_99: snapPrice(anchor * ratios['50_99'], snap),
+          price_100_199: snapPrice(anchor * ratios['100_199'], snap),
+          price_200_plus: snapPrice(anchor * ratios['200_plus'], snap),
+        };
+        used_template = false;
+      }
+    } else if (sq_ft < thresholds.band_c_ceiling_sq_ft && band.sub_1_sqft) {
+      // Band C — Sub-1 sq ft
+      size_band = band.sub_1_sqft;
+      size_band_key = 'sub_1_sqft';
+      size_band_label = 'Band C (Sub-1 sq ft)';
+      anchor_psf = size_band.anchor_psf_qty_20;
+      anchor_sq_ft_ref = size_band.anchor_sq_ft;
+      const tmpl = size_band.tier_template;
+      ratios = {
+        '1_9': tmpl.price_1_9 / tmpl.price_20_49,
+        '10_19': tmpl.price_10_19 / tmpl.price_20_49,
+        '20_49': 1.0,
+        '50_99': tmpl.price_50_99 / tmpl.price_20_49,
+        '100_199': tmpl.price_100_199 / tmpl.price_20_49,
+        '200_plus': tmpl.price_200_plus / tmpl.price_20_49,
+      };
+      const within_anchor = anchor_sq_ft_ref > 0 && Math.abs(sq_ft - anchor_sq_ft_ref) / anchor_sq_ft_ref <= 0.30;
+      if (within_anchor) {
+        tiers = Object.assign({}, tmpl);
+        anchor = tmpl.price_20_49;
+        used_template = true;
+      } else {
+        const raw_anchor = sq_ft * anchor_psf;
+        anchor = snapPrice(raw_anchor, snap);
+        tiers = {
+          price_1_9: snapPrice(anchor * ratios['1_9'], snap),
+          price_10_19: snapPrice(anchor * ratios['10_19'], snap),
+          price_20_49: anchor,
+          price_50_99: snapPrice(anchor * ratios['50_99'], snap),
+          price_100_199: snapPrice(anchor * ratios['100_199'], snap),
+          price_200_plus: snapPrice(anchor * ratios['200_plus'], snap),
+        };
+        used_template = false;
+      }
+    } else {
+      // Band A — Small-Format (existing behavior)
+      const active = band[band.active_band];
+      size_band_key = 'band_a_' + band.active_band;
+      size_band_label = 'Band A (Small-Format)';
+      anchor_psf = (active.min_per_sq_ft_qty_20 + active.max_per_sq_ft_qty_20) / 2;
+      const tmpl = band.default_tier_template;
+      ratios = {
+        '1_9': tmpl.price_1_9 / tmpl.price_20_49,
+        '10_19': tmpl.price_10_19 / tmpl.price_20_49,
+        '20_49': 1.0,
+        '50_99': tmpl.price_50_99 / tmpl.price_20_49,
+        '100_199': tmpl.price_100_199 / tmpl.price_20_49,
+        '200_plus': tmpl.price_200_plus / tmpl.price_20_49,
+      };
+      const raw_anchor = sq_ft * anchor_psf;
+      anchor = snapPrice(raw_anchor, snap);
+      tiers = {
+        price_1_9: snapPrice(anchor * ratios['1_9'], snap),
+        price_10_19: snapPrice(anchor * ratios['10_19'], snap),
+        price_20_49: anchor,
+        price_50_99: snapPrice(anchor * ratios['50_99'], snap),
+        price_100_199: snapPrice(anchor * ratios['100_199'], snap),
+        price_200_plus: snapPrice(anchor * ratios['200_plus'], snap),
+      };
+      used_template = false;
+    }
+
+    return {
+      tiers,
+      anchor,
+      anchor_psf,
+      snap,
+      active_band: band.active_band,
+      size_band_key,
+      size_band_label,
+      used_template,
     };
-    const raw_anchor = sq_ft * mid_psf;
-    const anchor = snapPrice(raw_anchor, snap);
-    const tiers = {
-      price_1_9: snapPrice(anchor * ratios['1_9'], snap),
-      price_10_19: snapPrice(anchor * ratios['10_19'], snap),
-      price_20_49: anchor,
-      price_50_99: snapPrice(anchor * ratios['50_99'], snap),
-      price_100_199: snapPrice(anchor * ratios['100_199'], snap),
-      price_200_plus: snapPrice(anchor * ratios['200_plus'], snap),
-    };
-    return { tiers, anchor, anchor_psf: mid_psf, snap, active_band: band.active_band };
   }
 
   function buildTinyTiers(config) {
@@ -3282,6 +3410,51 @@ init();
     { key: 'price_200_plus', label: '200+', min: 200, max: null },
   ];
 
+  // ===== tier boundary enforcement =====
+  // Hard constraint — after any tier table is generated, walk boundaries
+  // bottom-up (200+ is the anchor) and floor-cap any lower tier whose
+  // boundary total exceeds the upper tier's boundary total. Floor to the
+  // penny guarantees compliance even when the upper tier is itself capped
+  // in the same pass. Returns the enforced tiers and a list of adjustments
+  // suitable for F23 detail text.
+  const TIER_ENFORCE_BOUNDARIES = [
+    { lower: 'price_100_199', upper: 'price_200_plus', lower_label: '100-199', upper_label: '200+',   lower_max_qty: 199, upper_min_qty: 200 },
+    { lower: 'price_50_99',   upper: 'price_100_199', lower_label: '50-99',   upper_label: '100-199', lower_max_qty: 99,  upper_min_qty: 100 },
+    { lower: 'price_20_49',   upper: 'price_50_99',   lower_label: '20-49',   upper_label: '50-99',   lower_max_qty: 49,  upper_min_qty: 50  },
+    { lower: 'price_10_19',   upper: 'price_20_49',   lower_label: '10-19',   upper_label: '20-49',   lower_max_qty: 19,  upper_min_qty: 20  },
+    { lower: 'price_1_9',     upper: 'price_10_19',   lower_label: '1-9',     upper_label: '10-19',   lower_max_qty: 9,   upper_min_qty: 10  },
+  ];
+
+  function enforceTierBoundaries(tiers) {
+    const adjustments = [];
+    const out = Object.assign({}, tiers);
+    for (const b of TIER_ENFORCE_BOUNDARIES) {
+      const lowerPrice = out[b.lower];
+      const upperPrice = out[b.upper];
+      if (lowerPrice == null || upperPrice == null) continue;
+      // Penny-precision comparison to avoid floating-point false positives.
+      const loTotal = Math.round(b.lower_max_qty * lowerPrice * 100) / 100;
+      const upTotal = Math.round(b.upper_min_qty * upperPrice * 100) / 100;
+      if (loTotal > upTotal) {
+        const maxPrice = upTotal / b.lower_max_qty;
+        const capped = Math.floor(maxPrice * 100) / 100;
+        adjustments.push({
+          lower_label: b.lower_label,
+          upper_label: b.upper_label,
+          lower_max_qty: b.lower_max_qty,
+          upper_min_qty: b.upper_min_qty,
+          original: r(lowerPrice, 2),
+          capped,
+          original_low_total: r(loTotal, 2),
+          new_low_total: r(b.lower_max_qty * capped, 2),
+          upper_min_total: r(upTotal, 2),
+        });
+        out[b.lower] = capped;
+      }
+    }
+    return { tiers: out, adjustments };
+  }
+
   function checkInvoiceProtection(tiers, snap, apply_autofix) {
     const violations = [];
     let autofix_applied = false;
@@ -3289,8 +3462,10 @@ init();
     for (let i = 0; i < TIER_BOUNDS.length - 1; i++) {
       const lo = TIER_BOUNDS[i];
       const up = TIER_BOUNDS[i + 1];
-      const loMaxTotal = lo.max * adjusted[lo.key];
-      const upMinTotal = up.min * adjusted[up.key];
+      // Round to penny precision before comparing to avoid floating-point
+      // false positives (e.g., 19 × 0.80 = 15.200...1 in IEEE 754).
+      const loMaxTotal = Math.round(lo.max * adjusted[lo.key] * 100) / 100;
+      const upMinTotal = Math.round(up.min * adjusted[up.key] * 100) / 100;
       if (loMaxTotal > upMinTotal) {
         const cliff = loMaxTotal - upMinTotal;
         violations.push({
@@ -3344,9 +3519,29 @@ init();
   }
 
   // ===== band positioning + comparables =====
-  function getActiveBandRange(route, config) {
+  function getActiveBandRange(route, config, sq_ft_ref) {
     if (route === 'cut_vinyl') {
       const band = config.bands.cut_vinyl_lettering;
+      const cvT = (config.routing && config.routing.cut_vinyl_band_thresholds)
+        || { band_c_ceiling_sq_ft: 1.0, band_b_floor_sq_ft: 5.0 };
+      if (sq_ft_ref != null && sq_ft_ref >= cvT.band_b_floor_sq_ft && band.large_format) {
+        const psf = band.large_format.anchor_psf_qty_20;
+        return {
+          active_band_min: psf,
+          active_band_max: psf,
+          ai_consensus_min: null,
+          ai_consensus_max: null,
+        };
+      }
+      if (sq_ft_ref != null && sq_ft_ref < cvT.band_c_ceiling_sq_ft && band.sub_1_sqft) {
+        const psf = band.sub_1_sqft.anchor_psf_qty_20;
+        return {
+          active_band_min: psf,
+          active_band_max: psf,
+          ai_consensus_min: null,
+          ai_consensus_max: null,
+        };
+      }
       const active = band[band.active_band];
       return {
         active_band_min: active.min_per_sq_ft_qty_20,
@@ -3436,9 +3631,9 @@ init();
   }
 
   function computeBand(inp, route, sq_ft_per_label, sq_ft_per_kit, tiers, config) {
-    const range = getActiveBandRange(route, config);
     const price20 = tiers ? tiers.price_20_49 : null;
     const ref_sq_ft = route === 'kit' ? sq_ft_per_kit : sq_ft_per_label;
+    const range = getActiveBandRange(route, config, ref_sq_ft);
     const this_psf = (price20 && ref_sq_ft > 0) ? price20 / ref_sq_ft : null;
     const position = this_psf !== null ? classifyBandPosition(this_psf, range, route) : 'out_of_scope';
     const comparables = comparableItemsFromData(inp, route, sq_ft_per_label, price20, config);
@@ -3475,19 +3670,21 @@ init();
     F20: { severity: 'STOP',   text: 'Cannot fit kit in ≤2 lam-pass orientation groups — exceeds current equipment routing. Requires Nick review (mixed-dim or special handling).', suppresses_output: true },
     F21: { severity: 'REVIEW', text: 'Mixed-dimension kit — per-label parity does NOT apply. Cost-build from scratch and run AI validation (Rounds 1+2 minimum).', suppresses_output: false },
     F22: { severity: 'INFO',   text: 'Item below band — verify intentional. Smaller labels carry higher fixed cost per sq ft, not lower; below-scope position does NOT justify below-band $/sq ft.', suppresses_output: false },
+    F23: { severity: 'INFO',   text: 'Tier boundary auto-capped for never-pay-more compliance.', suppresses_output: false },
   };
 
-  function makeFlag(id, extra) {
+  function makeFlag(id, extra, detail) {
     const def = FLAG_DEFS[id];
     return {
       id,
       severity: def.severity,
       text: extra ? def.text + ' ' + extra : def.text,
       suppresses_output: def.suppresses_output,
+      detail: detail || null,
     };
   }
 
-  function generateFlags(inp, route, material, pricing, margins, band, lamInfo, config) {
+  function generateFlags(inp, route, material, pricing, margins, band, lamInfo, config, tier_enforcement) {
     const flags = [];
 
     // material staleness — derive from material constants verified_date
@@ -3571,6 +3768,16 @@ init();
     // tier-table change, so we don't fire F11 for those.
     if (pricing.invoice_protection && pricing.invoice_protection.autofix_applied) {
       flags.push(makeFlag('F11'));
+    }
+
+    // F23: tier boundary auto-capped by enforceTierBoundaries. One flag per
+    // adjustment, with boundary-specific detail text.
+    if (tier_enforcement && tier_enforcement.adjustments && tier_enforcement.adjustments.length) {
+      for (const adj of tier_enforcement.adjustments) {
+        const upperPrice = adj.upper_min_total / adj.upper_min_qty;
+        const detailText = `${adj.lower_label} capped from $${adj.original.toFixed(2)} to $${adj.capped.toFixed(2)} at the ${adj.lower_max_qty}/${adj.upper_min_qty} boundary (${adj.lower_max_qty} × $${adj.original.toFixed(2)} = $${adj.original_low_total.toFixed(2)} > ${adj.upper_min_qty} × $${upperPrice.toFixed(2)} = $${adj.upper_min_total.toFixed(2)}).`;
+        flags.push(makeFlag('F23', '(' + detailText + ')', adj));
+      }
     }
 
     // F12: ink unverified
@@ -3791,6 +3998,7 @@ init();
       cut_vinyl_color: '',
       ink_coverage: 'medium',
       is_ansi_safety: false,
+      production_override: false,
       order_qty: 0,
       notes: '',
     }, inputs || {});
@@ -3841,9 +4049,24 @@ init();
       tierBuild = { tiers: null, anchor: null, anchor_psf: null, snap: null };
     }
 
-    // 6. Never-pay-more — skip entirely for cut vinyl (no invoice protection on
-    // cut vinyl items at this time). Apply autofix only for printed/lam (where the
-    // 10-19 → 20-49 boundary is customer-facing and policy fixes it).
+    // 5b. Tier boundary enforcement (HARD constraint — never-pay-more compliance
+    // guaranteed before margin calc). Runs on every route that produces real
+    // tiers — single_standard, single_sub_scope, kit, cut_vinyl. Skips tiny
+    // (all 6 tiers are flat $55 by design) and no_profile (no tiers).
+    let tier_enforcement = { adjustments: [] };
+    if (tierBuild.tiers && route !== 'tiny' && route !== 'no_profile') {
+      const enforced = enforceTierBoundaries(tierBuild.tiers);
+      tierBuild.tiers = enforced.tiers;
+      if (tierBuild.kit_totals) tierBuild.kit_totals = enforced.tiers;
+      tier_enforcement = { adjustments: enforced.adjustments };
+    }
+
+    // 6. Never-pay-more — secondary verification step. With enforceTierBoundaries
+    // above guaranteeing compliance, checkInvoiceProtection should report zero
+    // violations on any tier table that has been through enforcement. If it ever
+    // finds a violation here, that is a bug to investigate. The 10-19 autofix
+    // path is preserved for the 1210810 historical pattern but should not fire
+    // post-enforcement.
     let invoice = { violations: [], all_clear: true, autofix_applied: false, adjusted_tiers: null };
     const apply_autofix = (route === 'single_standard' || route === 'single_sub_scope' || route === 'kit');
     if (tierBuild.tiers && tierBuild.snap && route !== 'cut_vinyl') {
@@ -3879,7 +4102,7 @@ init();
     const band = computeBand(inp, route, sq_ft_per_label, sq_ft_per_kit, tierBuild.tiers, config);
 
     // 10. Flags
-    const flags = generateFlags(inp, route, material, pricing, margins, band, lamInfo, config);
+    const flags = generateFlags(inp, route, material, pricing, margins, band, lamInfo, config, tier_enforcement);
 
     // 11. Quote stubs
     const quote_stubs = generateQuoteStubs(inp, route, pricing, sq_ft_per_label, material, config);
@@ -3931,6 +4154,10 @@ init();
       { pn: '1205720', expect_route: 'cut_vinyl', expect_price_20: 35.00, color: 'cardinal_red' },
       { pn: '1277970', expect_route: 'tiny', expect_price_20: 55.00, ink: 'low' },
       { pn: '1245130', expect_route: 'kit', expect_price_20: 50.00, ink: 'medium' },
+      // NEW — Session C: Band B (Large-Format ≥ 5 sq ft) via 3010704
+      { pn: '3010704', expect_route: 'cut_vinyl', expect_price_20: 78.00, color: 'cardinal_red_15in', expect_size_band: 'Band B (Large-Format)' },
+      // NEW — Session C: Band C (Sub-1 sq ft) via 3010707
+      { pn: '3010707', expect_route: 'cut_vinyl', expect_price_20: 20.00, color: 'cardinal_red', expect_size_band: 'Band C (Sub-1 sq ft)' },
     ];
     const out = [];
     for (const tc of cases) {
@@ -3953,6 +4180,7 @@ init();
         cut_vinyl_color: tc.color || '',
         ink_coverage: tc.ink || 'medium',
         is_ansi_safety: false,
+        production_override: false,
         order_qty: 0,
         notes: '',
       };
@@ -3970,6 +4198,38 @@ init();
         has_stop: result.has_stop_flag,
       });
     }
+
+    // NEW — Session C: sub-0.1 sq ft production override (Orajet, 8" × 1.75" = 0.0972 sq ft)
+    const overrideInputs = {
+      part_number: 'PROD-OVERRIDE-TEST',
+      description: 'Production catalog item (sub-0.1 override test)',
+      model: '',
+      material_family: PRINTED_LAM_FAMILY,
+      item_type: 'single',
+      width_in: 8.0,
+      height_in: 1.75,
+      label_count: 1,
+      cut_vinyl_color: '',
+      ink_coverage: 'full_bleed_flood_coat',
+      is_ansi_safety: false,
+      production_override: true,
+      order_qty: 0,
+      notes: 'Session C synthetic test — sub-0.1 sq ft production override',
+    };
+    const overrideResult = runCalculator(overrideInputs);
+    out.push({
+      pn: 'PROD-OVERRIDE-TEST',
+      route: overrideResult.route,
+      expected_route: 'single_sub_scope',
+      route_match: overrideResult.route === 'single_sub_scope',
+      price_20_49: overrideResult.pricing.tiers ? overrideResult.pricing.tiers.price_20_49 : null,
+      kit_price_20: null,
+      expected_price_20: '~$1.50 (algo: 0.0972 × $15.43 = $1.50)',
+      margin_at_qty_20: overrideResult.margins.at_qty_20,
+      flags: overrideResult.flags.map(f => f.id + ':' + f.severity),
+      has_stop: overrideResult.has_stop_flag,
+    });
+
     console.table(out);
     return out;
   };
