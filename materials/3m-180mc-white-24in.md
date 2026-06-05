@@ -18,5 +18,5 @@ verified_date: "2026-05-21"
 distributor: "GRIMCO"
 compatible_tapes: ["transferrite-582u"]
 used_in_items: ["3017435"]
-notes: "Length-based material cost method used for nesting calculations. 24\" roll runs on Roland SG3-300."
+notes: "Length-based material cost method used for nesting calculations. 24\" roll runs on Roland SG3-300. NOTE: A separate 24\" × 50yd White roll exists at materials/3m-180mc-white-24in-50yd.md for production volumes (P/N 3010709 uses that larger roll, not this 10yd roll)."
 ---

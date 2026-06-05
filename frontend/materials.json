@@ -1,6 +1,6 @@
 {
-  "generated": "2026-06-05T16:12:34Z",
-  "material_count": 9,
+  "generated": "2026-06-05T17:53:52Z",
+  "material_count": 11,
   "materials": {
     "1mil-polyester-overlaminate": {
       "frontmatter": {
@@ -40,6 +40,34 @@
           "1210810"
         ],
         "notes": "Cost verified 2026-05-28 from invoice: 8 rolls, $705.36 material + $124.66 freight = $830.02 total. $830.02 \u00f7 8 rolls = $103.7525/roll. Roll = 13.5\" \u00d7 386 ft = 434.25 sq ft. $103.7525 \u00f7 434.25 = $0.2389/sq ft. Prior rate $0.98/sq ft was unreconciled (FLAG 1 in 2026-05-28 audit) \u2014 retired. 13.5\" is the hard constraint on current laminator. Wider laminator planned after 18 months locked-in orders."
+      }
+    },
+    "3m-180mc-black": {
+      "frontmatter": {
+        "material_id": "3m-180mc-black",
+        "material_type": "cut_vinyl",
+        "manufacturer": "3M",
+        "product_name": "Controltac 180mC",
+        "product_code": "180mC-12",
+        "color_name": "Black",
+        "color_code": "12",
+        "film_type": "Cast vinyl",
+        "film_thickness_mil": 2,
+        "adhesive_type": "Permanent pressure-sensitive",
+        "roll_width_in": 24,
+        "roll_length_yd": 50,
+        "cost_per_roll": 659.26,
+        "cost_per_linear_yd": 13.1852,
+        "cost_per_sq_ft": 6.5926,
+        "verified_date": "2026-06-05",
+        "distributor": "GRIMCO",
+        "compatible_tapes": [
+          "transferrite-582u"
+        ],
+        "used_in_items": [
+          "3010708"
+        ],
+        "notes": "Length-based material cost method used for nesting calculations. cost_per_sq_ft derived as cost_per_linear_yd / roll_width_ft ($13.1852 / 2 ft = $6.5926/sq ft), consistent with Cardinal Red derivation method."
       }
     },
     "3m-180mc-cardinal-red-15in": {
@@ -96,7 +124,8 @@
         ],
         "used_in_items": [
           "1205720",
-          "1186310"
+          "1186310",
+          "3010707"
         ],
         "notes": "Length-based material cost method used for nesting calculations. cost_per_sq_ft is derived as cost_per_linear_yd / roll_width_ft ($15.502 / 2 ft = $7.751/sq ft), not the area method used by other 180mC color files. This is intentional \u2014 item pricing uses the length-based method directly, so cost_per_sq_ft reflects that same basis. Numeric value is correct; derivation method differs from Olympic Blue and White."
       }
@@ -129,6 +158,34 @@
         "notes": "Length-based material cost method used for nesting calculations. Olympic Blue is a visual approximation of PMS 2386 C \u2014 NOT a certified Pantone match. Disclose in any quote where drawing specifies PMS 2386 C."
       }
     },
+    "3m-180mc-white-24in-50yd": {
+      "frontmatter": {
+        "material_id": "3m-180mc-white-24in-50yd",
+        "material_type": "cut_vinyl",
+        "manufacturer": "3M",
+        "product_name": "Controltac 180mC",
+        "product_code": "180mC-10",
+        "color_name": "White",
+        "color_code": "10",
+        "film_type": "Cast vinyl",
+        "film_thickness_mil": 2,
+        "adhesive_type": "Permanent pressure-sensitive",
+        "roll_width_in": 24,
+        "roll_length_yd": 50,
+        "cost_per_roll": 619.21,
+        "cost_per_linear_yd": 12.3842,
+        "cost_per_sq_ft": 6.1921,
+        "verified_date": "2026-06-05",
+        "distributor": "GRIMCO",
+        "compatible_tapes": [
+          "transferrite-582u"
+        ],
+        "used_in_items": [
+          "3010709"
+        ],
+        "notes": "24\" \u00d7 50yd White roll for production volumes. Length-based material cost method used for nesting calculations. cost_per_sq_ft derived as cost_per_linear_yd / roll_width_ft ($12.3842 / 2 ft = $6.1921/sq ft), consistent with Cardinal Red derivation method. See also 3m-180mc-white-24in.md (24\" \u00d7 10yd roll, used for smaller production runs on other items)."
+      }
+    },
     "3m-180mc-white-24in": {
       "frontmatter": {
         "material_id": "3m-180mc-white-24in",
@@ -154,7 +211,7 @@
         "used_in_items": [
           "3017435"
         ],
-        "notes": "Length-based material cost method used for nesting calculations. 24\" roll runs on Roland SG3-300."
+        "notes": "Length-based material cost method used for nesting calculations. 24\" roll runs on Roland SG3-300. NOTE: A separate 24\" \u00d7 50yd White roll exists at materials/3m-180mc-white-24in-50yd.md for production volumes (P/N 3010709 uses that larger roll, not this 10yd roll)."
       }
     },
     "3m-180mc-white-48in": {
@@ -269,13 +326,18 @@
           "3m-180mc-cardinal-red-15in",
           "3m-180mc-olympic-blue",
           "3m-180mc-white-24in",
-          "3m-180mc-white-48in"
+          "3m-180mc-white-48in",
+          "3m-180mc-black",
+          "3m-180mc-white-24in-50yd"
         ],
         "used_in_items": [
           "1205720",
           "1186310",
           "3017435",
-          "3018378"
+          "3018378",
+          "3010707",
+          "3010708",
+          "3010709"
         ],
         "notes": ""
       }

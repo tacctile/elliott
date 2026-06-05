@@ -2,7 +2,7 @@
 
 > **Equipment specs, material costs, nesting rules, and process details.**
 >
-> Last Updated: 2026-06-05 (15" × 50yd Cardinal Red and 30" × 100yd TransferRite 582U added for large-format cut vinyl)
+> Last Updated: 2026-06-05 (24" × 50yd Black and 24" × 50yd White 180mC rolls added for sub-1 sq ft cut vinyl Band C)
 
 ---
 
@@ -49,11 +49,17 @@ The single most important production constraint on this account.
 |-------|------|-----------|-----------|-----------|------------|----------|
 | Cardinal Red | 53 | 24" × 50yd | $775.10 | $15.502 | $7.751 | 2026-05-28 |
 | Cardinal Red | 53 | **15" × 50yd** | **$433.77** | **$8.6754** | **$2.3134** | **2026-06-05** |
+| Black | 12 | **24" × 50yd** | **$659.26** | **$13.1852** | **$6.5926** | **2026-06-05** |
 | Olympic Blue | 57 | 24" × 10yd | $162.78 | $16.278 | $2.71 | 2026-05-22 |
 | White | 10 | 24" × 10yd | $131.16 | $13.116 | $2.19 | 2026-05-21 |
+| White | 10 | **24" × 50yd** | **$619.21** | **$12.3842** | **$6.1921** | **2026-06-05** |
 | White | 10 | 48" × 10yd | $257.44 | $25.744 | $2.15 | 2026-05-21 |
 
 **Roll selection note (2026-06-05):** The 15" Cardinal Red roll is used for large-format cut vinyl items where label height fits within 15" roll width with single-across nesting (used by P/N 3010704 at 14.375" label height, 0.625" clearance). The 24" Cardinal Red roll continues to be used for the 2.51–2.56 sq ft small-format cluster where 2-across nesting is optimal.
+
+**Roll selection note (2026-06-05) — Band C sub-1 sq ft program:** The new 24" × 50yd Black ($659.26) and 24" × 50yd White ($619.21) production-volume rolls are used by the Band C sub-1 sq ft cut vinyl program (P/N 3010708 Black, P/N 3010709 White). Band C items at 4" label height nest 5-up on the 24" roll (5 × 4" = 20" across 24" roll, 4" clearance). P/N 3010707 (Cardinal Red Band C variant) uses the existing 24" × 50yd Cardinal Red roll. The existing 24" × 10yd White roll continues to serve P/N 3017435 (Band A small-format) for its smaller production runs.
+
+**Note on Black/White 50yd cost_per_sq_ft derivation:** Cost_per_sq_ft on the new Black and 50yd White materials is derived as `cost_per_linear_yd / roll_width_ft` (Black: $13.1852 / 2 ft = $6.5926/sq ft; White 50yd: $12.3842 / 2 ft = $6.1921/sq ft), consistent with the Cardinal Red 24"×50yd derivation method. This is the length-based method used by all 50yd 24"-roll cut vinyl on this account. Item pricing uses cost_per_linear_yd directly via the length-based nesting calculation.
 
 ### Application Tape
 
@@ -176,3 +182,18 @@ This is the canonical method on this account. See `PRICING_RULES.md` §25 and `M
   - Vinyl: 2.1337 yd feed × $8.6754/yd = $18.51 (single-across nesting on 15" roll, 14.375" label height + 0.625" clearance, feed length 70.8125" + 6" spacing = 76.8125" = 2.1337 yd).
   - Tape: 2.1337 yd feed × $1.4186/yd = $3.03 per row of 2 labels (2-up nesting on 30" tape, 2 × 14.375" = 28.75" across 30" tape with 1.25" waste strip). Per-label tape cost: $3.03 ÷ 2 = $1.51.
   - Material cost per sq ft: $20.02 ÷ 7.069 = $2.83/sq ft (vs $3.41/sq ft on the small-format band — larger area amortizes the tape feed cost).
+
+### Cut Vinyl at ~0.969 sq ft (Sub-1 sq ft Band C — added 2026-06-05)
+
+Three founding data points share identical geometry (34.887" × 4" = 0.969 sq ft) and identical nesting (5-up on 24" × 50yd roll, feed length per row of 5 = 34.887" + 6" spacing = 40.887" = 1.1357 yd). Vinyl and tape cost per row of 5 are divided by 5 to get per-label cost. All three colors use the 24" × 100yd TransferRite 582U tape (matches 24" roll width exactly, no overhang).
+
+| Color | Vinyl Roll | $/Yd | Vinyl/Row | Vinyl/Label | Tape/Label | **Total/Label** | $/Sq Ft |
+|-------|-----------|------|-----------|-------------|------------|------------------|---------|
+| **Cardinal Red** (worst case anchor) | 24" × 50yd ($775.10) | $15.502 | $17.603 | **$3.52** | $0.27 | **$3.79** | $3.91 |
+| **Black** | 24" × 50yd ($659.26) | $13.1852 | $14.972 | **$2.99** | $0.27 | **$3.26** | $3.36 |
+| **White** | 24" × 50yd ($619.21) | $12.3842 | $14.063 | **$2.81** | $0.27 | **$3.08** | $3.18 |
+
+- Vinyl cost per row of 5 = 1.1357 yd × cost_per_linear_yd. Per-label vinyl = row cost ÷ 5.
+- Tape cost per row of 5 = 1.1357 yd × $1.1821/yd = $1.342. Per-label tape = $1.342 ÷ 5 = $0.27.
+- Labels per 50yd roll = floor(50 / 1.1357) = 44 rows × 5 = **220 labels per roll** for all three colors.
+- Cardinal Red anchors the Band C pricing (worst-case material cost). All three P/Ns (3010707, 3010708, 3010709) share identical tier table — color-only difference, no price difference. See `items/3010707.md` for the 4-wave validation record.

@@ -232,6 +232,22 @@ CUT_VINYL_COLORS_STATIC = {
             "available_widths_in": [48],
         },
     },
+    "black": {
+        "material_id": "3m-180mc-black",
+        "extra": {
+            "roll_width_in": 24,
+            "roll_width_ft": 2.0,
+            "available_widths_in": [24],
+        },
+    },
+    "white_24in_50yd": {
+        "material_id": "3m-180mc-white-24in-50yd",
+        "extra": {
+            "roll_width_in": 24,
+            "roll_width_ft": 2.0,
+            "available_widths_in": [24],
+        },
+    },
 }
 
 # ---------------------------------------------------------------------------
