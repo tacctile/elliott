@@ -2,7 +2,119 @@
 
 > **Newest entries at the top. Updated every session.**
 >
-> Last Updated: 2026-06-01
+> Last Updated: 2026-06-05
+
+---
+
+### 2026-06-05 — New Item: P/N 3010704 (LBL-ELLIOTT LRG RED) — Founding Data Point for Large-Format Cut Vinyl Size Class (5+ sq ft) + Two New Material Files
+
+**What:** Three tasks completed in a single session. **Task 1** — Created two new material files for the large-format cut vinyl program: `materials/3m-180mc-cardinal-red-15in.md` (3M Controltac 180mC-53 Cardinal Red, 15" × 50yd at $433.77/roll, $8.6754/yd, $2.3134/sq ft, verified 2026-06-05) and `materials/transferrite-582u-30in.md` (TransferRite Ultra 582U, 30" × 100yd at $141.86/roll, $1.4186/yd, $0.1891/sq ft, verified 2026-06-05). **Task 2** — Created `items/3010704.md` for the LBL-ELLIOTT LRG RED — a large-format "ELLIOTT" brand wordmark at 70-13/16" × 14-3/8" (7.069 sq ft) on Cardinal Red cut vinyl, the first item on the Elliott account in the 5+ sq ft size class. Pricing validated through the full 4-wave AI process (24 independent responses across 6 models × 4 waves) per `governance/VALIDATION_PROMPTS.md`. Final tier table locked by Nick: $105 / $92 / **$78** / $68 / $60 / $52. Material cost: $20.02/label (vinyl $18.51 + tape $1.51). Margin at qty 20: ~74.3%. Status: Quoted. **Task 3** — Established the Large-Format Cut Vinyl size class (5+ sq ft) in `categories/cut-vinyl-3m-180mc.md` as a structurally separate band from the existing 2.51–2.56 sq ft cluster. The two bands are INDEPENDENT — they do not contaminate or interact with each other. The January 2027 normalization plan applies to the 2.51–2.56 sq ft cluster only, not to this large-format class. Decision Tree updated with explicit size-routing at ≥ 5.0 sq ft.
+
+**Items Affected:**
+- **3010704** — NEW. Founding data point for the Large-Format Cut Vinyl band (5+ sq ft). 70.8125" × 14.375" (7.069 sq ft). $105 / $92 / **$78** / $68 / $60 / $52. Material cost $20.02 (vinyl $18.51 from 15" Cardinal Red roll + tape $1.51 from 30" TransferRite tape, 2-up nesting). Margin at qty 20: ~74.3%. No first article requested or offered. No override type — engine consensus accepted. Status: Quoted.
+
+**Materials Affected:**
+- **3m-180mc-cardinal-red-15in** (NEW) — 3M Controltac 180mC-53 Cardinal Red, 15" × 50yd. Used by 3010704.
+- **transferrite-582u-30in** (NEW) — TransferRite Ultra 582U, 30" × 100yd. Used by 3010704.
+- **3m-180mc-cardinal-red** (24" roll, existing) — cross-reference updated: added `"transferrite-582u-30in"` to `compatible_tapes`. No cost figures or `used_in_items` changes.
+- **transferrite-582u** (24" roll, existing) — cross-reference updated: added `"3m-180mc-cardinal-red-15in"` to `compatible_cut_vinyls`. No cost figures or `used_in_items` changes.
+
+**Pricing Profile Changes:**
+- `categories/cut-vinyl-3m-180mc.md` now contains TWO independent size-class bands:
+  - **Band A — Small-Format (2.51–2.56 sq ft):** unchanged. 4 data points (1205720, 1186310, 3017435, 3018378) all at $35/qty 20, $13.65–$13.94/sq ft, concession-phase per Override on 1205720. January 2027 normalization plan applies to Band A only.
+  - **Band B — Large-Format (5+ sq ft):** NEW. 1 founding data point (3010704 at 7.069 sq ft, $78/qty 20, $11.03/sq ft). 19.3% $/sq ft step-down from Band A justified by fixed-labor amortization, simpler weeding geometry per sq ft, and lower material cost per sq ft on large formats.
+- Decision Tree updated with size-class routing as Step 3: if sq ft ≥ 5.0 → Band B; if sq ft < 5.0 → Band A. No interpolation between bands.
+
+**4-Wave Validation Record (3010704):**
+
+> NOTE: Validation was conducted at 13.5" height (6.639 sq ft). Nick corrected the operative height to 14.375" (7.069 sq ft) post-validation. Material cost is feed-length-driven, not area-driven — vinyl cost ($18.51) and tape cost ($1.51) are unchanged. The 2-up tape nesting still holds (2 × 14.375" = 28.75" ≤ 30"). All prices and margins unchanged. $/sq ft recalculated with the larger denominator. Benchmark step-down recalculated from 14% to 19.3%.
+
+| Wave | Process | Outcome |
+|------|---------|---------|
+| Wave 1 (Build) | 6 models, atomic prompts. | Price range $63–$91 at qty 20; central $75–$91, median ~$83. Fundamental debate: $/sq ft step-down at 2.6× the calibrated size. 2 models held band at $13.71/sq ft ($91). 4 models applied step-downs ($63–$85). All 6 confirmed $20.02 material cost. All 6 confirmed $0 file prep. |
+| Wave 2 (Destruction) | 6 models. 4 attack vectors per wave: Buyer/Procurement, Competitor, Cost Auditor, Strategic. | Buyer/Procurement: 6/6 HIGH — flat $/sq ft across size classes is the structural error. Competitor: 6/6 HIGH — regional competitor (Pro Sign) estimate $55–$68 at qty 20, $44–$50 at qty 200+. Cost Auditor: 4/6 MEDIUM, 2/6 HIGH — 6" spacing padding ($0.40–$0.65). Strategic: 6/6 HIGH — must establish separate large-format size class before first invoice. Verdicts: 6/6 rejected original table ($91 at qty 20). |
+| Wave 3 (Buyer Sim) | 6 models simulating Sean Finn (Employee-Owner, $140K/year, $/sq ft mental model). | All 6 pushed back. None approved $85 as-is. Pushback threshold $75–$85 (central $80–$82); instant approval $65–$78 (central $78 for 4 of 6); incumbent estimate $55–$70 (all 6 referenced Pro Sign). All 6 held PO and would send question/counteroffer email. All 6 confirmed this becomes a permanent data point in the buyer's pricing model. |
+| Wave 4 (Final Synthesis) | 6 models, binary verdicts. | UNANIMOUS NO on $85 at qty 20. UNANIMOUS recommendation $78 at qty 20. UNANIMOUS requirement that a separate large-format size class be established before first invoice. |
+
+**Nick's Final Decision:** Accepted $78 at qty 20 (unanimous Wave 4 recommendation). Set T1 at $105, T2 at $92 (operational tiers — Sean orders across T1–T3). Set T4–T6 at $68/$60/$52 for structural completeness. No override type — pricing validated through full 4-wave process.
+
+**Material Cost Build (3010704 at 7.069 sq ft):**
+
+| Component | Calculation | Cost |
+|-----------|-------------|------|
+| Vinyl (3M 180mC-53 Cardinal Red, 15" × 50yd @ $8.6754/yd) | 2.1337 yd feed × $8.6754/yd (1-across nesting, 14.375" across 15" roll, 70.8125" + 6" spacing) | $18.51 |
+| Application tape (TransferRite 582U, 30" × 100yd @ $1.4186/yd) | 2.1337 yd × $1.4186/yd = $3.03 per row of 2 labels (2-up nesting, 2 × 14.375" = 28.75" across 30" tape); per label: $3.03 ÷ 2 | $1.51 |
+| **Total material cost per label** | | **$20.02** |
+
+Per sq ft: $20.02 ÷ 7.069 = $2.83/sq ft (vs $3.41/sq ft on the 2.5 sq ft benchmark — larger area amortizes the tape feed cost).
+
+**Files Created:**
+- `materials/3m-180mc-cardinal-red-15in.md` — frontmatter only, format mirrors existing Cardinal Red 24" file
+- `materials/transferrite-582u-30in.md` — frontmatter only, format mirrors existing TransferRite 582U 24" file
+- `items/3010704.md` — full item file with all 10 required sections and complete frontmatter per `governance/STRUCTURE_RULES.md`
+
+**Files Modified:**
+
+Materials (cross-reference only, no cost figures changed):
+- `materials/3m-180mc-cardinal-red.md` — added `"transferrite-582u-30in"` to `compatible_tapes` list. No other changes. `used_in_items` unchanged (3010704 uses the NEW 15" roll, not this one).
+- `materials/transferrite-582u.md` — added `"3m-180mc-cardinal-red-15in"` to `compatible_cut_vinyls` list. No other changes. `used_in_items` unchanged (3010704 uses the NEW 30" roll, not this one).
+
+Categories:
+- `categories/cut-vinyl-3m-180mc.md` — added 3010704 to Items table. Restructured Pricing Profile into two independent bands (Band A — Small-Format, Band B — Large-Format) with full justification, isolation rules, and material system documentation. Updated Decision Tree to include explicit size-class routing (≥ 5.0 sq ft → Band B; < 5.0 sq ft → Band A).
+
+`.claude/`:
+- `.claude/ARCHITECTURE.md` — added 3010704 to Item Catalog table. Updated Category Registry — Cut Vinyl entry to reflect 5 items and the two independent size-class bands established. Added 3010704 to the Precedent Chain under a NEW large-format cut vinyl branch with full 4-wave validation record, tier table, material cost build, band isolation note, and validation-vs-final-dimensions note. Updated Last Updated stamp.
+- `.claude/PROGRESS.md` — this entry.
+- `.claude/STATE.yml` — last_session, next_action, item_count 15 → 16, pending_quotes updated.
+
+Governance:
+- `governance/PRODUCTION.md` — added 15" × 50yd Cardinal Red roll to Cut Vinyl material costs table with roll selection note. Added 30" × 100yd TransferRite 582U to Application Tape table with roll selection note. Added a Material Cost Quick Reference entry for large-format cut vinyl at ~7.069 sq ft showing the full feed-length build. Updated Last Updated stamp.
+
+Build scripts:
+- `scripts/build_calculator_config.py` — added `cardinal_red_15in` to `CUT_VINYL_COLORS_STATIC` with `material_id: "3m-180mc-cardinal-red-15in"`, `roll_width_in: 15`, `roll_width_ft: 1.25`, `available_widths_in: [15]`. Added new entry `transferrite_582u_30in` in `MATERIAL_CONSTANTS_STATIC` with `material_id: "transferrite-582u-30in"`, `extra: {"roll_width_in": 30}`. No changes to existing entries' fields. No band, ink-rate, routing, or threshold changes.
+
+Frontend (regenerated by build scripts):
+- `frontend/data.json` — regenerated (now 16 items including 3010704)
+- `frontend/materials.json` — regenerated (now 9 materials including the two new ones)
+- `frontend/calculator_config.json` — regenerated (now 4 material constants including transferrite_582u_30in, 5 cut vinyl colors including cardinal_red_15in)
+
+**Files NOT Modified (per session spec):**
+- No existing item prices, margins, statuses, or material costs changed. The 14 existing items are untouched.
+- No existing band values changed on the 2.51–2.56 sq ft cluster (Band A). The override note, concession-phase pricing, AI consensus range, and January 2027 normalization plan are all preserved.
+- Cost fields on `materials/3m-180mc-cardinal-red.md` and `materials/transferrite-582u.md` are unchanged — only the `compatible_*` cross-reference lists were updated. `used_in_items` lists are unchanged (3010704 uses the NEW 15" and 30" rolls).
+- 3010704 is NOT added to the `do_not_benchmark` list — it is a fully validated production item and the founding data point of a new size class.
+- No printed/laminated item files, category files, or governance rules touched.
+- `frontend/index.html` calculator engine unchanged.
+- `governance/PRICING_RULES.md`, `governance/PRICING_VALIDATION.md`, `governance/SPEC_EXTRACTION.md`, `governance/STRUCTURE_RULES.md`, `governance/CALCULATOR.md`, `governance/VALIDATION_PROMPTS.md` unchanged.
+- `.claude/MASTER_CONTEXT.md` unchanged.
+- `.claude/COMPLETION_TEMPLATES.md` unchanged.
+
+**Acceptance Criteria Met:**
+- `items/3010704.md` exists with all required frontmatter fields and all 10 required sections ✓
+- `materials/3m-180mc-cardinal-red-15in.md` exists with correct frontmatter ✓
+- `materials/transferrite-582u-30in.md` exists with correct frontmatter ✓
+- `items/3010704.md` frontmatter: `width_in: 70.8125`, `height_in: 14.375`, `sq_ft_per_label: 7.069`, `sq_ft_per_kit: 7.069`, `price_20_49: 78`, `material_cost_per_unit: 20.02`, `per_label_at_qty_20: 78.00`, `margin_at_qty_20: "~74%"` ✓
+- `categories/cut-vinyl-3m-180mc.md` contains a separate Large-Format section with 3010704 as founding data point, band at $11.03/sq ft ✓
+- `categories/cut-vinyl-3m-180mc.md` Decision Tree includes size-routing for ≥ 5.0 sq ft ✓
+- `.claude/ARCHITECTURE.md` contains 3010704 in the catalog and a large-format precedent chain branch ✓
+- `governance/PRODUCTION.md` contains both new material entries and a large-format quick reference ✓
+- `scripts/build_calculator_config.py` contains the two new material entries ✓
+- Existing material files `3m-180mc-cardinal-red.md` and `transferrite-582u.md` have updated cross-reference lists ✓
+- No existing item prices, margins, statuses, or material costs changed ✓
+- No existing band values changed on the 2.51–2.56 sq ft cluster ✓
+- `python scripts/validate.py` → 0 errors, 0 warnings ✓
+- All 3 build scripts run clean (`build_frontend.py`, `build_materials.py`, `build_calculator_config.py`) ✓
+- `frontend/data.json`, `frontend/materials.json`, `frontend/calculator_config.json` all regenerated ✓
+
+**Key Decisions:**
+- The Large-Format Cut Vinyl band (Band B) is established as a **structurally independent** band from the small-format cluster (Band A), not a footnote or extension. The two bands have different anchors, different $/sq ft, different material cost ratios, and different normalization schedules. Future cut vinyl items route to one or the other based on sq ft (5.0 threshold), and the bands do not interpolate or interact.
+- The 19.3% $/sq ft step-down from Band A to Band B is justified by three structural advantages of the large-format size class (fixed labor amortization, simpler weeding geometry per sq ft, lower material cost per sq ft). This is NOT a relationship concession — it is a structurally warranted size-class adjustment validated unanimously by all 6 Wave 4 AI models.
+- The validation-vs-final-dimensions discrepancy (13.5" → 14.375") was handled by recognizing that material cost is **feed-length-driven**, not area-driven. The 76.8125" feed length is identical at both heights. The 2-up tape nesting still holds at 14.375" (2 × 14.375" = 28.75" ≤ 30"). All prices and margins are unchanged; only $/sq ft denominators and the benchmark step-down percentage were recalculated.
+- 3010704 was deliberately NOT added to the `do_not_benchmark` list. It is the founding data point of Band B and serves as the benchmark for future large-format cut vinyl items. This is different from 1205720's status as a Relationship Concession baseline (which IS used as a benchmark, with the Rule 14 deviation acknowledged) and from the one-off labels (1277970–1278000, 3017583, 3017584, 1210810) which are excluded from benchmarking.
+- The new 15" Cardinal Red roll and 30" TransferRite tape are not retrofits to existing items — they are new materials added specifically for the large-format program. The existing 24" Cardinal Red roll continues to serve the 2.51–2.56 sq ft cluster. The existing 24" TransferRite tape continues to serve the small-format cluster. No existing item's material cost or roll selection changed.
+- All 6 Wave 3 buyer-simulation models confirmed that the $78 price becomes a permanent data point in Sean's pricing model. He will normalize $/sq ft across cut vinyl items going forward and apply this band ($11.03/sq ft at qty 20) to any future large-format requests. The structural separation between Band A and Band B must be explicit in the quote email if Sean asks about the $/sq ft difference.
+
+**Status:** Complete. validate.py 0/0; all 3 build scripts clean. 3010704 quoted at $78/qty 20. Large-format cut vinyl band established as the founding data point structure for the 5+ sq ft size class.
 
 ---
 

@@ -179,6 +179,10 @@ MATERIAL_CONSTANTS_STATIC = {
         "material_id": "transferrite-582u",
         "extra": {},
     },
+    "transferrite_582u_30in": {
+        "material_id": "transferrite-582u-30in",
+        "extra": {"roll_width_in": 30},
+    },
 }
 
 # ---------------------------------------------------------------------------
@@ -193,6 +197,14 @@ CUT_VINYL_COLORS_STATIC = {
             "roll_width_in": 24,
             "roll_width_ft": 2.0,
             "available_widths_in": [24],
+        },
+    },
+    "cardinal_red_15in": {
+        "material_id": "3m-180mc-cardinal-red-15in",
+        "extra": {
+            "roll_width_in": 15,
+            "roll_width_ft": 1.25,
+            "available_widths_in": [15],
         },
     },
     "olympic_blue": {
