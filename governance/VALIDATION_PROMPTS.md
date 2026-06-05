@@ -4,7 +4,7 @@
 >
 > Companion to `governance/PRICING_VALIDATION.md` (methodology) and `governance/CALCULATOR.md` (Round 0 brief generation). This document governs Waves 1–4 — the prompt structure, attack angles, output schemas, and behavioral rules for Claude Chat during a validation session.
 >
-> Last Updated: 2026-06-01
+> Last Updated: 2026-06-05 (MOQ purge — Wave 1 embedded "Account-level order rules" block rewritten: removed MOQ 10 / $55 minimum order charge / required quote language; preserved $55 anchor as one-off job-economics floor only; added §26 invoice protection principle)
 
 ---
 
@@ -148,14 +148,7 @@ P/N **1205720** — E190 Cardinal Red Model Designation. 33-9/16" × 11" (2.56 s
 | Cut vinyl (concession phase) | $13.65–$13.94/sq ft | Active band. All 4 current cut vinyl items inside. |
 | Cut vinyl (AI consensus, normalized) | $14.84–$16.41/sq ft | Would-be normalized band. Normalization planned January 2027. |
 
-**Account-level order rules (printed/laminated only):**
-
-- **MOQ 10** on all printed/laminated catalog items.
-- **1-9 tier = $55.00 flat minimum order charge** — NOT a per-unit rate. Flat total.
-- **Invoice protection:** buyer never invoiced more for a smaller quantity than a larger quantity at the next tier. Required quote language is non-negotiable.
-- **Cut vinyl exception:** MOQ 10 and $55 minimum order charge do NOT apply to 3M 180mC cut vinyl items at this time.
-
-**$55 account floor:** Minimum-worthwhile-charge on any one-off, sub-MOQ, or tiny job. Anchored to 1230820 FA price.
+**$55 account floor:** one-off job-economics floor for field-service rush/one-off requests only. Anchored to 1230820 FA price. Does NOT apply to catalog tier tables — catalog items start at a real 1-9 per-unit price. Invoice protection (§26): buyer never invoiced more for a smaller quantity than a larger quantity at the next tier.
 
 ### Required Output Schema (Enforce This Exactly)
 

@@ -30,24 +30,16 @@ VERSION = "1.0"
 
 # ---------------------------------------------------------------------------
 # ACCOUNT-LEVEL CONSTANTS
-# Source: MASTER_CONTEXT.md (Account-Level Order Rules),
-#         governance/PRICING_RULES.md §26–30
+# Source: governance/PRICING_RULES.md §25 (full bleed ink), §26 (invoice protection)
 # Floor value itself is read dynamically from items/1230820.md.
 # ---------------------------------------------------------------------------
 
 FLOOR_SOURCE_PN = "1230820"
-FLOOR_LABEL = "Account minimum-worthwhile-charge floor (1230820 FA price)"
+FLOOR_LABEL = "One-off job-economics floor (1230820 FA price)"
 
 MOQ_PRINTED_LAMINATED = {
-    "min_units": 10,
-    "sub_moq_charge": 55.00,
-    "applies": True,
-    "note": "Orders <10 units billed at $55.00 flat minimum order charge",
-}
-
-MOQ_CUT_VINYL = {
     "applies": False,
-    "note": "Cut vinyl items are NOT subject to MOQ 10 or $55 minimum order charge at this time",
+    "note": "No MOQ on this account. All items priced at real per-unit rates starting at qty 1.",
 }
 
 # ---------------------------------------------------------------------------
@@ -341,12 +333,10 @@ OVERRIDE_TYPE_PRECEDENT = {
 
 # ---------------------------------------------------------------------------
 # QUOTE LANGUAGE
-# Source: governance/PRICING_RULES.md §29, categories/printed-laminated-orajet.md
-#         Account-Level Order Rules.
+# Source: categories/printed-laminated-orajet.md tiny-label / one-off framing.
 # ---------------------------------------------------------------------------
 
 QUOTE_LANGUAGE = {
-    "moq_printed_laminated": "Minimum order for printed labels is 10 units. Orders below 10 units are subject to a $55.00 minimum order charge. You will never be invoiced more for a smaller quantity.",
     "tiny_one_off_program": "One-time minimum program charge: $55.00 total",
     "anchor_line_template": "Label measures {width}\" × {height}\" ({sq_ft} sq ft) in {material} — priced at ${price} at your projected monthly volume.",
     "pms_caveat_template": "{color} is a visual approximation of {pms_code} — not a certified Pantone match.",
@@ -425,7 +415,6 @@ def build_account_section():
         "floor_label": FLOOR_LABEL,
         "moq": {
             "printed_laminated": MOQ_PRINTED_LAMINATED,
-            "cut_vinyl": MOQ_CUT_VINYL,
         },
     }
 

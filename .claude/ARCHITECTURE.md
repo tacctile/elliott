@@ -2,7 +2,7 @@
 
 > **Living document — updated every session that changes structure.**
 >
-> Last Updated: 2026-06-05 (3010707/3010708/3010709 quoted — founding data point cluster for the sub-1 sq ft cut vinyl size class (Band C); new 24"×50yd Black and 24"×50yd White materials added)
+> Last Updated: 2026-06-05 (MOQ 10 / $55 minimum order charge purged from the account; 1210810 1-9 tier added at $7.25; invoice protection preserved and rewritten as §26; $55 anchor preserved for tiny route with "one-off job-economics floor (1230820 FA-anchored)" label)
 
 ---
 
@@ -26,7 +26,7 @@ All quoted items. Updated when items are added, repriced, or status changes.
 | 3017583 | LBL - PTO Engage Process (ANSI Z535) ⚠ one-off, do NOT benchmark | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.026 | $9.17 (flat — one-off) | $9.17 | ~97% (structural — one-off, $55 program at qty 6) | Quoted | `items/3017583.md` |
 | 3017584 | LBL - PTO Active (smallest item on account) ⚠ one-off, do NOT benchmark | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.00174 | $9.17 (flat — one-off) | $9.17 | ~99% (structural — one-off, $55 program at qty 6) | Quoted | `items/3017584.md` |
 | 1082570 | Load Chart, I70 EZR Mount 3.6K ⚠ color conflict open (samples delivered, awaiting selection) | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.503 | $8 (prod. rate at qty 20) | $8.00 | ~83% (at prod. vol.; current order $42 flat, job economics) | Quoted | `items/1082570.md` |
-| 1210810 | LBL - DANGER FALLING JIB (ANSI Z535) ⚠ do NOT benchmark until production-volume acceptance | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.292 | $4.75 | $4.75 | ~87% (at $0.60 material, full bleed standard) | Quoted — 1-9: $55 flat MOQ floor / 10-19: $5.75 / initial order $57.50 | `items/1210810.md` |
+| 1210810 | LBL - DANGER FALLING JIB (ANSI Z535) ⚠ do NOT benchmark until production-volume acceptance | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.292 | $4.75 | $4.75 | ~87% (at $0.60 material, full bleed standard) | Quoted — 1-9: $7.25 / 10-19: $5.75 / initial order $57.50 | `items/1210810.md` |
 | 3010704 | LBL-ELLIOTT LRG RED (large-format ELLIOTT wordmark — founding data point for 5+ sq ft band) | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 7.069 | $78 | $78.00 | ~74% | Quoted | `items/3010704.md` |
 | 3010707 | ElliottEquip.com URL Wordmark, Cardinal Red (sub-1 sq ft Band C anchor — pricing anchor for color-parity cluster) | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 0.969 | $20 | $20.00 | ~81% | Quoted | `items/3010707.md` |
 | 3010708 | ElliottEquip.com URL Wordmark, Black (sub-1 sq ft Band C — color parity with 3010707) | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 0.969 | $20 | $20.00 | ~84% | Quoted | `items/3010708.md` |
@@ -39,7 +39,7 @@ All quoted items. Updated when items are added, repriced, or status changes.
 | Category | Material Family | Category File | Item Count | Profile Status |
 |----------|-----------------|---------------|------------|----------------|
 | Cut Vinyl Lettering | 3M 180mC Cut Vinyl | `categories/cut-vinyl-3m-180mc.md` | 8 | **Three independent size-class bands established 2026-06-05.** Band A — Small-Format (2.51–2.56 sq ft): 4 data points (1205720, 1186310, 3017435, 3018378) all at $35/qty 20, $13.65–$13.94/sq ft. Concession-phase per Override on 1205720; January 2027 normalization plan applies to Band A only. Band B — Large-Format (5+ sq ft): 1 founding data point (3010704 at 7.069 sq ft, $78/qty 20, $11.03/sq ft). 19.3% $/sq ft step-down from Band A reflects fixed-labor amortization, simpler weeding geometry per sq ft, and lower material cost per sq ft on large formats. 4-wave AI validated (24 passes, unanimous Wave 4). Band C — Sub-1 sq ft (< 1 sq ft): 3 founding data points (3010707 Cardinal Red, 3010708 Black, 3010709 White, all at 0.969 sq ft, $20/qty 20, $20.64/sq ft) — color-parity cluster, pricing anchored to worst-case Cardinal Red ($3.79 material). 51% $/sq ft step-up from Band A reflects fixed-labor dominance on sub-1 sq ft items + elevated weeding complexity (16 mixed-case characters, 4 enclosed counters, 2 dots, tight q-u channel) + higher material cost per sq ft. 4-wave AI validated (24 passes, unanimous Wave 4 YES on full tier table) + final independent 6-model industry-validation audit (6/6 APPROVE, confidence HIGH). All three bands are INDEPENDENT — do not contaminate or interact. Future cut vinyl items route by sq ft: ≥ 5.0 → Band B; 1.0 ≤ sq ft < 5.0 → Band A; < 1.0 → Band C. The January 2027 normalization plan applies to Band A only. |
-| Printed + Laminated | Orajet 3951 Cast + Polyester Lam | `categories/printed-laminated-orajet.md` | 11 | **MOQ 10 in effect for all new printed/laminated items (established 2026-06-01). $55 minimum order charge on sub-10 orders. Invoice protection applies. Full bleed ink rule ($0.50/sq ft × full label sq ft) in effect account-wide (established 2026-06-01).** Singles (≥0.5 sq ft): Narrowing — 2 confirmed band data points (1230820 at 1.296 sq ft FA Accepted; 1082570 at 0.503 sq ft quoted, $15.91/sq ft — band-consistent, AI validated). Sub-scope single (0.1–0.5 sq ft): 1210810 at 0.292 sq ft, $4.75 ($16.27/sq ft — INTENTIONALLY ABOVE band per Wave 4 verdict; 4-wave atomic AI validated 2026-06-01; small-format premium consistent and defensible at every tier); excluded from band DATA POINTS on dimensional scope until production-volume acceptance. Kits: Moderate (2 data points). Tiny labels (≤0.1 sq ft): 4 one-off outrigger program peers ($55 program total / $2.75 per label) + 2 standalone one-offs (3017583 at 0.026 sq ft and 3017584 at 0.00174 sq ft — smallest item on the account; both $55 program total / $9.17 per label at qty 6) — explicitly excluded from any band; do NOT benchmark |
+| Printed + Laminated | Orajet 3951 Cast + Polyester Lam | `categories/printed-laminated-orajet.md` | 11 | **Full bleed ink rule ($0.50/sq ft × full label sq ft) in effect account-wide (established 2026-06-01).** Singles (≥0.5 sq ft): Narrowing — 2 confirmed band data points (1230820 at 1.296 sq ft FA Accepted; 1082570 at 0.503 sq ft quoted, $15.91/sq ft — band-consistent, AI validated). Sub-scope single (0.1–0.5 sq ft): 1210810 at 0.292 sq ft, $4.75 ($16.27/sq ft — INTENTIONALLY ABOVE band per Wave 4 verdict; 4-wave atomic AI validated 2026-06-01; small-format premium consistent and defensible at every tier); excluded from band DATA POINTS on dimensional scope until production-volume acceptance. Kits: Moderate (2 data points). Tiny labels (≤0.1 sq ft): 4 one-off outrigger program peers ($55 program total / $2.75 per label) + 2 standalone one-offs (3017583 at 0.026 sq ft and 3017584 at 0.00174 sq ft — smallest item on the account; both $55 program total / $9.17 per label at qty 6) — explicitly excluded from any band; do NOT benchmark |
 | Panel Decals | Convex High Bond + Poly Lam | Not yet created | 0 | No profile — first item establishes it |
 | Polycarbonate | Lexan/Polycarbonate | Not yet created | 0 | No profile — first item establishes it |
 
@@ -72,15 +72,19 @@ P/N 1230820 (ROOT BENCHMARK — $20/ea at qty 20)
 │           $/sq ft ($18.52). Smaller labels must carry equal or higher $/sq ft. Fix range $5.25–$5.95, center $5.40.
 │         Nick's decision: Raised full table above benchmark $/sq ft at every tier; 20-49 moved $4.50→$4.75
 │           to maintain curve integrity. Small-format premium consistent and defensible at every tier.
-│       Tiers: $55 flat/$5.75/$4.75/$4.00/$3.50/$2.75. Initial order qty 10: $57.50 (10-19 tier).
-│       Material cost $0.60 under account-wide full bleed ink rule established same session (PRICING_RULES.md §25):
+│       Tiers: $7.25/$5.75/$4.75/$4.00/$3.50/$2.75. Initial order qty 10: $57.50 (10-19 tier).
+│       1-9 tier ($7.25) added 2026-06-05 in the MOQ purge — 1.5× anchor pattern preserved
+│         ($7.125 → snapped to $7.25); $/sq ft = $24.83 = +7.3% above benchmark, preserves
+│         Wave 4 small-format premium. Margin at $7.25: 91.7%.
+│       Material cost $0.60 under account-wide full bleed ink rule (PRICING_RULES.md §25):
 │         Orajet 0.292×$1.21=$0.353 + lam 0.292×$0.2389=$0.070 + ink 0.292×$0.50=$0.146 = $0.569
 │         + incidental buffer (conservative round-up) = $0.60. Margin at qty 20-49: ~87.4%.
-│       Invoice protection automatically resolves 19/20 cliff (19×$5.75=$109.25 vs 20×$4.75=$95.00).
+│       §26 invoice protection resolves both the 9/10 cliff (9×$7.25=$65.25 vs 10×$5.75=$57.50 → buyer
+│         charged $57.50) and the 19/20 cliff (19×$5.75=$109.25 vs 20×$4.75=$95.00 → buyer charged $95.00).
+│         Same pattern as 1205720 (9×$45 vs 10×$40) and 3010707 (9×$28 vs 10×$24).
 │       Do NOT benchmark until production-volume acceptance confirmed by Nick.
-│       MOQ 10 — printed/laminated account rule (2026-06-01). $55 min order charge on sub-10 orders.
-│       2028 MOQ plan: full account MOQ structure Jan 1, 2028.
-│       Prior pricing structure (tiers $55/$4.75/$4.50/$3.50/$2.75/$2.50 with $0.67 material at $0.25 ink) SUPERSEDED.
+│       Prior pricing structure (tiers $55 flat MOQ/$4.75/$4.50/$3.50/$2.75/$2.50 with $0.67 material at $0.25 ink)
+│         SUPERSEDED 2026-06-01. Prior $55 flat 1-9 MOQ tier SUPERSEDED 2026-06-05 (MOQ purge).
 │       Status: Quoted.
 └── [future printed/laminated singles validate against Pricing Profile band]
 
@@ -89,12 +93,12 @@ P/N 1277970 (ONE-OFF PROGRAM — $55 program total / $2.75 per label — DO NOT 
 ├── P/N 1277990 (program peer — identical specs, same one-off program)
 └── P/N 1278000 (program peer — identical specs, same one-off program)
     Note: $55 = lowest account FA price (1230820 FA) used as program-level
-    minimum-worthwhile-charge floor, NOT as a per-label comparable.
+    one-off job-economics floor (1230820 FA-anchored), NOT as a per-label comparable.
     NEVER use any of these four items as a benchmark for any future Elliott item.
 
 P/N 3017583 (STANDALONE ONE-OFF — $55 program total / $9.17 per label at qty 6 — DO NOT BENCHMARK)
     LBL - PTO Engage Process, 2.5" × 1.5" ANSI Z535 NOTICE, qty 6 for a unit in the field.
-    Same $55 account minimum-worthwhile-charge floor anchor. Per-label rate is the
+    Same $55 one-off job-economics floor (1230820 FA-anchored). Per-label rate is the
     arithmetic byproduct of $55 ÷ 6 and scales inversely with quantity — not a property
     of the label. Sq ft band inapplicable at 0.026 sq ft. File prep $0 (account rule).
     NEVER use as a benchmark for any future Elliott item.
@@ -103,7 +107,7 @@ P/N 3017584 (STANDALONE ONE-OFF — $55 program total / $9.17 per label at qty 6
     LBL - PTO Active, 0.5" × 0.5" black-text-on-white, qty 6 for a field service request.
     Smallest item on the entire Elliott account at 0.00174 sq ft. Arrived alongside
     P/N 3017583 as part of the same next-day-rush field service request (separate line
-    items, not a kit). Same $55 account minimum-worthwhile-charge floor anchor. Implied
+    items, not a kit). Same $55 one-off job-economics floor (1230820 FA-anchored). Implied
     ~$5,270/sq ft is the most extreme arithmetic artifact on the account — meaningless
     as a reference. Sq ft band structurally inapplicable. File prep $0 (account rule).
     "Mylar overlay" drawing wording = standard 1-mil polyester laminate (Mylar is a

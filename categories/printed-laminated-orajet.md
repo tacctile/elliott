@@ -14,45 +14,11 @@
 |-----|-------------|------------|-------|-----------------|-----------|--------|
 | 1230820 | Load Chart, D105 | 15" × 12.44" | 1.296 | $20 | $20.00 | FA Accepted |
 | 1082570 | Load Chart, I70 EZR Mount 3.6K | 10" × 7.25" | 0.503 | $8 ¹ | $8.00 ¹ | Quoted |
-| 1210810 | LBL - DANGER FALLING JIB (ANSI Z535) | 10.5" × 4" | 0.292 | $4.75 ² | $4.75 ² | Quoted — MOQ 10 / $55 min order charge |
+| 1210810 | LBL - DANGER FALLING JIB (ANSI Z535) | 10.5" × 4" | 0.292 | $4.75 ² | $4.75 ² | Quoted |
 
 ¹ **Production rate at qty 20** ($15.91/sq ft — within singles band). Current order (qty 2, SO 20125600) is **$42.00 flat** — job economics / setup recovery framing; NOT a per-label rate. 4-round, 6-model AI validation complete (24 runs): $55 account floor rejected for this label size vs D105 comparison. Tiers: $16.50 / $10.50 / $8.00 / $6.25 / $5.25 / $4.25. No MOQ — Elliott strategic account. Open color conflict — samples delivered (~26 hours), awaiting Sean's PO selection (Safety Yellow assumed — conservative). See `items/1082570.md` for full documentation.
 
-² **REVALIDATED 2026-06-01 via 4-wave atomic AI validation (24 independent responses).** All prior pricing structure for this item is superseded. **Final tier table locked above benchmark $/sq ft at every tier** — small-format premium consistent and defensible. No inversions. New tiers: $55.00 flat (1-9, minimum order charge — NOT per-unit) / $5.75 (10-19, $19.69/sq ft, +6.3% above benchmark) / $4.75 (20-49, $16.27/sq ft, +5.4% above benchmark) / $4.00 (50-99, $13.70/sq ft, +4.4% above benchmark) / $3.50 (100-199, $11.99/sq ft, +11.0% above benchmark) / $2.75 (200+, $9.42/sq ft, +11.0% above benchmark). Initial order qty 10: **$57.50** (10-19 tier at $5.75). Projected volume ~30/month starting 2027 → recurring at $4.75 (20-49 tier). **Wave 4 unanimous verdict (binding):** A smaller label must carry equal or higher $/sq ft than a larger label at the same tier — Wave 3 table inverted this at 10-19 (8.5% below benchmark $/sq ft); Nick raised the full table above benchmark to ensure correctness at every tier. **Material cost: $0.60/label** under the account-wide full bleed ink rule established this same session (PRICING_RULES.md §25): Orajet 0.292 × $1.21 = $0.353 + lam 0.292 × $0.2389 = $0.070 + ink 0.292 × $0.50 (full bleed) = $0.146 = calculated $0.569 + incidental buffer (conservative round-up) = $0.60. Margin at qty 20-49: ~87.4%. **MOQ 10** — printed/laminated account rule. **$55 minimum order charge** on any order below 10 units (flat total, not per-unit). **Invoice protection** automatically resolves the 19/20 boundary cliff (19 × $5.75 = $109.25 vs 20 × $4.75 = $95.00 — buyer charged the lower of the two). **Dimensional scope exclusion (still applies):** 1210810 at 0.292 sq ft is below the ~0.5 sq ft singles band scope floor. Excluded from band DATA POINTS on dimensional scope. The validated $/sq ft is now INTENTIONALLY ABOVE the band (small-format premium per Wave 4 verdict) — NOT band-consistent as previously framed. Not added to Pricing Profile band until production-volume acceptance confirmed by Nick. See `items/1210810.md` for full 4-wave validation record.
-
----
-
-## Account-Level Order Rules — Printed/Laminated Items
-
-> **Established 2026-06-01. Apply to all printed/laminated catalog items on this account going forward.**
->
-> These rules do NOT apply to 3M 180mC cut vinyl items. Cut vinyl MOQ structure will be addressed separately as that program matures.
-
-### Rule 1 — MOQ 10
-
-All printed/laminated catalog items on this account have a minimum order quantity of **10 units**. This applies to all new items quoted going forward. Existing items are not retroactively restructured — their tier tables remain as quoted.
-
-### Rule 2 — $55 Minimum Order Charge
-
-Any order on a printed/laminated item where the catalog tier pricing produces a total below $55.00 is subject to a **$55.00 minimum order charge**. This applies regardless of quantity. The minimum order charge is a flat total — it is NOT a per-unit rate.
-
-Example: an order of 3 units at $4.50 = $13.50 → billed at $55.00.
-
-The $55.00 floor is the established account minimum-worthwhile-charge, consistent with all prior one-off job handling on this account (3017583, 3017584, outrigger switch program).
-
-### Rule 3 — Invoice Protection
-
-No buyer on this account will ever be invoiced more for ordering a smaller quantity than they would pay for a larger quantity at the next tier. At tier boundaries where the math creates a cliff, invoice protection applies automatically — the buyer is charged whichever total is lower.
-
-### Rule 4 — Sub-10 Handling
-
-Requests for fewer than 10 units of a printed/laminated catalog item are handled as one-off flat-rate jobs at the $55.00 account minimum order charge. Same treatment as all prior field service one-offs (3017583, 3017584, outrigger switches). No per-unit rate applies below MOQ.
-
-### Rule 5 — Required Quote Language
-
-All quotes for printed/laminated items must include the following language:
-
-> "Minimum order for printed labels is 10 units. Orders below 10 units are subject to a $55.00 minimum order charge. You will never be invoiced more for a smaller quantity."
+² **REVALIDATED 2026-06-01 via 4-wave atomic AI validation (24 independent responses).** All prior pricing structure for this item is superseded. **Final tier table locked above benchmark $/sq ft at every tier** — small-format premium consistent and defensible. No inversions. New tiers: **$7.25 (1-9, $24.83/sq ft, +7.3% above benchmark)** / $5.75 (10-19, $19.69/sq ft, +6.3% above benchmark) / $4.75 (20-49, $16.27/sq ft, +5.4% above benchmark) / $4.00 (50-99, $13.70/sq ft, +4.4% above benchmark) / $3.50 (100-199, $11.99/sq ft, +11.0% above benchmark) / $2.75 (200+, $9.42/sq ft, +11.0% above benchmark). The 1-9 tier ($7.25) was set 2026-06-05 in the MOQ purge — 1.5× the $4.75 anchor (= $7.125, snapped up to $7.25), preserving both the 1.5× ratio pattern and the Wave 4 small-format premium ($24.83/sq ft above the benchmark 1-9 $/sq ft). Initial order qty 10: **$57.50** (10-19 tier at $5.75). Projected volume ~30/month starting 2027 → recurring at $4.75 (20-49 tier). **Wave 4 unanimous verdict (binding):** A smaller label must carry equal or higher $/sq ft than a larger label at the same tier — Wave 3 table inverted this at 10-19 (8.5% below benchmark $/sq ft); Nick raised the full table above benchmark to ensure correctness at every tier. **Material cost: $0.60/label** under the account-wide full bleed ink rule established 2026-06-01 (PRICING_RULES.md §25): Orajet 0.292 × $1.21 = $0.353 + lam 0.292 × $0.2389 = $0.070 + ink 0.292 × $0.50 (full bleed) = $0.146 = calculated $0.569 + incidental buffer (conservative round-up) = $0.60. Margin at qty 20-49: ~87.4%. **§26 invoice protection** applies at the 9/10 and 19/20 tier boundaries (where the lower-tier maximum total exceeds the upper-tier minimum total, the buyer is charged the lower of the two — same principle that applies to every other multi-tier item on this account). **Dimensional scope exclusion (still applies):** 1210810 at 0.292 sq ft is below the ~0.5 sq ft singles band scope floor. Excluded from band DATA POINTS on dimensional scope. The validated $/sq ft is now INTENTIONALLY ABOVE the band (small-format premium per Wave 4 verdict) — NOT band-consistent as previously framed. Not added to Pricing Profile band until production-volume acceptance confirmed by Nick. See `items/1210810.md` for full 4-wave validation record.
 
 ---
 
@@ -62,7 +28,7 @@ All quotes for printed/laminated items must include the following language:
 >
 > The four items in this subsection (P/N 1277970, 1277980, 1277990, 1278000) are a single **one-off program** for a custom 18T crane build. Sean Finn verbatim: *"this will be a one off for a custom build we are doing."*
 >
-> Their $2.75/label price (and the $55 program total) is a **minimum-worthwhile-charge floor**, NOT a catalog rate, NOT a comparable, and NOT a benchmark for any future Elliott item — including any future tiny-label or one-off request.
+> Their $2.75/label price (and the $55 program total) is a **one-off job-economics floor (1230820 FA-anchored)**, NOT a catalog rate, NOT a comparable, and NOT a benchmark for any future Elliott item — including any future tiny-label or one-off request.
 >
 > - The per-sq-ft rate implied by this pricing (**~$343/sq ft**) is an arithmetic artifact of minimum-run economics on tiny labels. It is meaningless as a per-sq-ft reference.
 > - The flat $2.75/label tier table on these items is structural padding for frontmatter compliance. There is no volume tier — Sean ordered qty 5 once, will not reorder.
@@ -90,7 +56,7 @@ All quotes for printed/laminated items must include the following language:
 | **Per P/N (qty 5)** | **$13.75** |
 | **Program total (4 P/Ns × qty 5)** | **$55** |
 | Implied per-sq-ft rate (DO NOT USE AS A REFERENCE) | ~$343/sq ft — arithmetic artifact only |
-| Anchor reasoning | $55 = the lowest first article price on the account (P/N 1230820 FA), used here as a program-level minimum-worthwhile-charge floor — NOT as a per-label comparable |
+| Anchor reasoning | $55 = the lowest first article price on the account (P/N 1230820 FA), used here as a program-level one-off job-economics floor (1230820 FA-anchored) — NOT as a per-label comparable |
 
 *One-off custom build for a single 18T crane build. Qty 5 each; no reorder expectation. The flat tier table on each item file exists only for frontmatter completeness; the operational number is the $55 program total.*
 
@@ -101,7 +67,7 @@ All quotes for printed/laminated items must include the following language:
 
 ### Standalone Tiny One-Offs
 
-> Single-P/N one-off orders in the tiny-label size class. Each is priced from job economics anchored to the $55 account minimum-worthwhile-charge floor (P/N 1230820 FA). **Each item below is a one-off — do NOT use any of them as a benchmark for any future Elliott item, including future tiny-label or one-off requests.** Per-label rates are arithmetic byproducts of the $55 floor divided by order quantity and scale inversely with quantity — they are not properties of the labels themselves.
+> Single-P/N one-off orders in the tiny-label size class. Each is priced from job economics anchored to the $55 one-off job-economics floor (1230820 FA-anchored). **Each item below is a one-off — do NOT use any of them as a benchmark for any future Elliott item, including future tiny-label or one-off requests.** Per-label rates are arithmetic byproducts of the $55 floor divided by order quantity and scale inversely with quantity — they are not properties of the labels themselves.
 
 | P/N | Description | Dimensions | Sq Ft | Qty | Per Label | Program Total | Status |
 |-----|-------------|------------|-------|-----|-----------|---------------|--------|
@@ -118,7 +84,7 @@ All quotes for printed/laminated items must include the following language:
 | Production time (file import + print/lam/cut/inspect/package) | ~20-25 min total |
 | **Program total (qty 6)** | **$55** |
 | Per label (arithmetic — do NOT use as a comparable) | $9.17 |
-| Anchor reasoning | $55 = the lowest first article price on the account (P/N 1230820 FA), used here as a program-level minimum-worthwhile-charge floor |
+| Anchor reasoning | $55 = the lowest first article price on the account (P/N 1230820 FA), used here as a program-level one-off job-economics floor (1230820 FA-anchored) |
 
 **3017584 job economics (2026-05-27):**
 
@@ -131,7 +97,7 @@ All quotes for printed/laminated items must include the following language:
 | **Program total (qty 6)** | **$55** |
 | Per label (arithmetic — do NOT use as a comparable) | $9.17 |
 | Implied per-sq-ft rate (DO NOT USE AS A REFERENCE) | ~$5,270/sq ft — most extreme arithmetic artifact on the account |
-| Anchor reasoning | $55 = the lowest first article price on the account (P/N 1230820 FA), used here as a program-level minimum-worthwhile-charge floor |
+| Anchor reasoning | $55 = the lowest first article price on the account (P/N 1230820 FA), used here as a program-level one-off job-economics floor (1230820 FA-anchored) |
 
 *3017584 is the smallest item on the entire Elliott account at 0.00174 sq ft (0.5" × 0.5"). It arrived alongside 3017583 as part of the same next-day-rush field service request (qty 6 each) — they are separate line items, not a kit. Each is priced as its own one-off at the $55 account floor. Drawing wording "1 mil clear Mylar overlay" maps to the standard 1-mil polyester (Mylar is a polyester trade name).*
 
@@ -200,8 +166,7 @@ Beyond 2 lam passes or mixed dimensions → cost-build from scratch. Boundary is
 4. **Kits exceeding 2 lam passes** — cost-build from scratch. Run AI validation.
 5. **Mixed-dimension kits** — see methodology below. Cost-build from scratch.
 6. **The Pricing Profile is the primary validation tool, not the benchmark chain.**
-7. **MOQ 10 (established 2026-06-01)** — all new printed/laminated catalog items start their tier tables at qty 10. The 1-9 tier on new items represents a $55.00 flat minimum order charge (not per-unit). See Account-Level Order Rules block above.
-8. **Invoice protection** — buyer will never be invoiced more for a smaller quantity than a larger quantity at the next tier. Applied automatically at all tier boundaries on all printed/laminated items. Required quote language: "You will never be invoiced more for a smaller quantity."
+7. **Invoice protection** — buyer will never be invoiced more for a smaller quantity than a larger quantity at the next tier. Applied automatically at all tier boundaries. Codified at `governance/PRICING_RULES.md` §26.
 
 ---
 
