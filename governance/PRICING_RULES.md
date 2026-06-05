@@ -2,7 +2,7 @@
 
 > **Non-negotiable constraints. Apply to every pricing decision on this account.**
 >
-> Last Updated: 2026-06-01 (account-wide full bleed ink rule §25 added; prior §25–29 renumbered to §26–30)
+> Last Updated: 2026-06-05 (MOQ 10, $55 minimum order charge, required quote language, and sub-10 handling rules removed; invoice protection principle preserved and rewritten as §26 — MOQ-independent)
 
 ---
 
@@ -53,21 +53,7 @@
 
 §25 — **All printed/laminated items on this account are priced assuming full bleed / full coverage ink at all times.** Rate: **$0.50/sq ft × full label sq ft**. No medium, low, or partial coverage assumptions are permitted on any Elliott printed/laminated item — past, present, or future. An incidental buffer is applied to round the calculated material total conservatively upward, accounting for setup scrap, registration pulls, and minor production waste. The buffer is judgment-applied, not a fixed number. The canonical material cost formula is: `(Orajet 3951 sq ft × $1.21) + (laminate sq ft × $0.2389) + (label sq ft × $0.50) + incidental buffer`. The frontmatter `material_cost_per_unit` field on every printed/laminated item reflects the buffered total, not the pure calculation. Established 2026-06-01. See `governance/PRODUCTION.md` Account-Wide Ink Coverage Standard and `.claude/MASTER_CONTEXT.md` Core Rules.
 
----
-
-## Printed/Laminated MOQ and Minimum Order Rules
-
-> **Established 2026-06-01. Apply to printed/laminated items only. Cut vinyl items are NOT subject to these rules at this time.**
-
-§26 — **MOQ 10 on all printed/laminated catalog items.** All new printed/laminated catalog items quoted on this account have a minimum order quantity of 10 units. The 1-9 tier on new printed/laminated items represents a flat minimum order charge (see §27), not a per-unit rate. This rule applies to all new items going forward; existing item tier tables are not retroactively restructured. Does NOT apply to 3M 180mC cut vinyl items.
-
-§27 — **$55.00 minimum order charge on any printed/laminated order producing a total below $55.00, regardless of quantity.** The minimum order charge is a flat total — it is NOT a per-unit rate and is NOT $55 × quantity. Any order on a printed/laminated catalog item where the buyer orders fewer than 10 units is billed at $55.00 total. The $55.00 floor is the established account minimum-worthwhile-charge, consistent with all prior one-off job handling on this account (3017583, 3017584, outrigger switch program).
-
-§28 — **Invoice protection: buyer never invoiced more for a smaller quantity than a larger quantity at the next tier.** At every tier boundary, the maximum total at the top of the lower tier must never exceed the minimum total at the bottom of the next tier. Where math creates a cliff, invoice protection applies automatically — the buyer is charged whichever total is lower. Applied to all printed/laminated items. New tier structures must verify never-pay-more compliance at all boundaries before quoting.
-
-§29 — **All printed/laminated quotes must include the standard MOQ and invoice protection language.** Required text: "Minimum order for printed labels is 10 units. Orders below 10 units are subject to a $55.00 minimum order charge. You will never be invoiced more for a smaller quantity." This language must appear in every quote for a printed/laminated item on this account, not just for new items.
-
-§30 — **Sub-10 requests on printed/laminated items are handled as one-off flat-rate jobs at the $55 account floor.** Requests for fewer than 10 units of a printed/laminated catalog item are priced as flat-rate one-off jobs at $55.00 total — same treatment as field service one-offs (3017583, 3017584, outrigger switch program). No per-unit rate applies below MOQ. Do not extrapolate from the resulting per-label arithmetic ($55 ÷ qty) as a pricing signal for any future item.
+§26 — **Invoice protection: the buyer will never be invoiced more for ordering a smaller quantity than they would pay for a larger quantity at the next tier.** At tier boundaries where math creates a cliff, the buyer is charged whichever total is lower. This principle applies to all items on this account — printed/laminated and cut vinyl. New tier structures must verify never-pay-more compliance at all boundaries before quoting.
 
 ---
 

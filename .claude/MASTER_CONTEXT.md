@@ -2,7 +2,7 @@
 
 > **Single source of truth. Read first, every session. No exceptions.**
 >
-> Last Updated: 2026-06-01 (account-wide full bleed ink rule established; PRICING_RULES.md §25 added; prior MOQ rules renumbered §26–30)
+> Last Updated: 2026-06-05 (MOQ 10 / $55 minimum order charge purged from this account — Core Rule 8 removed, Core Rule 9 renumbered to 8; Account-Level Order Rules section removed; internal pricing-normalization note relocated to its own section)
 
 ---
 
@@ -91,50 +91,11 @@ Only after reading all eight does pricing begin.
 5. The system stays in sync at all times. See `.claude/COMPLETION_TEMPLATES.md`.
 6. No file is allowed to fall out of sync with any other file. Ever.
 7. **Elliott provides production-ready DWG files for every item on this account, without exception.** File prep, artwork preparation, design time, and pre-press labor are zero-cost, zero-time inputs on every Elliott job — past, present, and future. Step 1 of every process (file import/setup) is a ~5-minute mechanical operation, NOT a billable labor input. Any cost reasoning that uses file prep as a pricing driver on this account is incorrect and must be corrected immediately. This is a permanent account-level truth, not a per-job assumption.
-8. **Printed/laminated items on this account are subject to MOQ 10 and $55 minimum order charge rules.** See Account-Level Order Rules section below. Cut vinyl items are NOT subject to these rules at this time.
-9. **All printed/laminated items are priced at full bleed / full coverage ink ($0.50/sq ft × full label sq ft) at all times.** No partial, medium, or low coverage assumptions are permitted on any Elliott printed/laminated item — past, present, or future. Material cost always includes an incidental buffer rounded conservatively upward to account for setup scrap, registration pulls, and minor waste. Canonical formula: `(Orajet sq ft × $1.21) + (lam sq ft × $0.2389) + (label sq ft × $0.50) + incidental buffer`. The frontmatter `material_cost_per_unit` field reflects the buffered total. Established 2026-06-01. See `governance/PRICING_RULES.md` §25 and `governance/PRODUCTION.md` Account-Wide Ink Coverage Standard.
+8. **All printed/laminated items are priced at full bleed / full coverage ink ($0.50/sq ft × full label sq ft) at all times.** No partial, medium, or low coverage assumptions are permitted on any Elliott printed/laminated item — past, present, or future. Material cost always includes an incidental buffer rounded conservatively upward to account for setup scrap, registration pulls, and minor waste. Canonical formula: `(Orajet sq ft × $1.21) + (lam sq ft × $0.2389) + (label sq ft × $0.50) + incidental buffer`. The frontmatter `material_cost_per_unit` field reflects the buffered total. Established 2026-06-01. See `governance/PRICING_RULES.md` §25 and `governance/PRODUCTION.md` Account-Wide Ink Coverage Standard.
 
 ---
 
-## Account-Level Order Rules
-
-> **Established 2026-06-01. Apply to printed/laminated items (Orajet 3951 + polyester lam). Cut vinyl items (3M 180mC) are NOT subject to these rules at this time.**
->
-> Full rule codification: `governance/PRICING_RULES.md` §26–30 and `categories/printed-laminated-orajet.md` Account-Level Order Rules block.
-
-### Printed/Laminated MOQ: 10 Units
-
-All printed/laminated catalog items on this account have a minimum order quantity of 10 units. This applies to all new items quoted going forward. Existing item tier tables are not retroactively restructured — existing items retain their current pricing structure.
-
-### $55 Minimum Order Charge
-
-Any order on a printed/laminated item where the buyer orders fewer than 10 units is subject to a **$55.00 minimum order charge**. This is a flat total — it is NOT a per-unit rate and NOT $55 × quantity. The $55.00 floor is the established account minimum-worthwhile-charge, consistent with all prior one-off job handling on this account (3017583, 3017584, outrigger switch program).
-
-### Invoice Protection
-
-No buyer on this account will ever be invoiced more for ordering a smaller quantity than they would pay for a larger quantity at the next tier. At tier boundaries where math creates a cliff, invoice protection applies automatically — the buyer is charged whichever total is lower.
-
-### Required Quote Language
-
-All quotes for printed/laminated items must include the following language exactly:
-
-> "Minimum order for printed labels is 10 units. Orders below 10 units are subject to a $55.00 minimum order charge. You will never be invoiced more for a smaller quantity."
-
-### Sub-10 Handling
-
-Requests for fewer than 10 units of a printed/laminated catalog item are handled as one-off flat-rate jobs at the $55.00 account minimum order charge. Same treatment as all prior field service one-offs (3017583, 3017584, outrigger switches). No per-unit rate applies below MOQ.
-
-### Cut Vinyl Exception
-
-3M 180mC cut vinyl items are NOT subject to MOQ 10 or the $55 minimum order charge at this time. Cut vinyl MOQ structure will be addressed separately as that program matures.
-
-### 2028 Context — Beginning of MOQ Formalization Plan
-
-The printed/laminated MOQ 10 rule established in this session is the beginning of Nick's plan to formalize MOQ structure across the full account beginning **January 1, 2028**.
-
-- Business justification: COGS increases and overhead increases anticipated by that date.
-- January 2027: one conversation will cover MOQ formalization, pricing normalization toward industry standard, and full 2028 structure simultaneously.
-- The 2028 date represents full-account MOQ formalization — printed/laminated MOQ 10 is already in effect from this session.
+## Internal Pricing Notes
 
 > **INTERNAL NOTE (DO NOT SURFACE TO BUYER):** The current account band ($15.43–$15.91/sq ft at qty 20) is a relationship concession below industry standard (~$18–$22/sq ft for premium cast vinyl + polyester lam ANSI safety labels at qty 20). Nick's plan is to normalize pricing toward industry standard by January 1, 2027 as Pro Label has established technical partnership status. This is strategic context for future pricing sessions only.
 

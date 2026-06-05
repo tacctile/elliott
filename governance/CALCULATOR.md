@@ -3,7 +3,7 @@
 > **Authoritative reference for the Elliott calculator system.**
 > The HTML calculator at `frontend/index.html` is the implementation; this document is the contract.
 >
-> Last Updated: 2026-06-01
+> Last Updated: 2026-06-05 (MOQ purge — Floor Logic column rewritten; Rule 8 historical anchor removed; constant-change list updated; PRICING_RULES.md file table description rewritten; sanity-check expected flags updated to drop F18/F19)
 
 ---
 
@@ -115,11 +115,11 @@ Every input is dispatched to exactly one route. The route determines which band,
 
 | Route | Material Family | Sq Ft | Item Type | Band Applied | Floor Logic |
 |-------|-----------------|-------|-----------|--------------|-------------|
-| `cut_vinyl` | 3M 180mC Cut Vinyl | any | any | Cut Vinyl Lettering (active = concession_phase) | No MOQ; no $55 floor; cliff check skipped |
-| `tiny` | Orajet 3951 | ≤ 0.1 sq ft | any | None | All 6 tiers flatten to $55 program total |
-| `kit` | Orajet 3951 | > 0.1 sq ft | label_count > 1 OR `Printed/Laminated Kit` | Printed/Laminated Kits | MOQ 10 + $55 floor + invoice protection |
-| `single_sub_scope` | Orajet 3951 | 0.1–0.5 sq ft | single | Printed/Laminated Singles (band-consistent, item excluded from band DATA POINTS) | MOQ 10 + $55 floor + invoice protection |
-| `single_standard` | Orajet 3951 | > 0.5 sq ft | single | Printed/Laminated Singles | MOQ 10 + $55 floor + invoice protection |
+| `cut_vinyl` | 3M 180mC Cut Vinyl | any | any | Cut Vinyl Lettering (active = concession_phase) | No MOQ. Invoice protection (§26) applies at all tier boundaries. |
+| `tiny` | Orajet 3951 | ≤ 0.1 sq ft | any | None | All 6 tiers flatten to $55 one-off job-economics floor (1230820 FA-anchored) |
+| `kit` | Orajet 3951 | > 0.1 sq ft | label_count > 1 OR `Printed/Laminated Kit` | Printed/Laminated Kits | No MOQ. Invoice protection (§26) applies at all tier boundaries. |
+| `single_sub_scope` | Orajet 3951 | 0.1–0.5 sq ft | single | Printed/Laminated Singles (band-consistent, item excluded from band DATA POINTS) | No MOQ. Invoice protection (§26) applies at all tier boundaries. |
+| `single_standard` | Orajet 3951 | > 0.5 sq ft | single | Printed/Laminated Singles | No MOQ. Invoice protection (§26) applies at all tier boundaries. |
 | `no_profile` | Convex High Bond, Lexan/Polycarbonate, or any other | any | any | None | STOP — F17 fires, output suppressed, Required Inputs checklist shown |
 
 ### Sq Ft Thresholds (from `calculator_config.json` `routing`)
@@ -196,7 +196,7 @@ When any STOP flag fires:
 
 7. **It must NOT smooth over `do_not_benchmark` arithmetic.** Tiny-route output suppresses the per-label cost card in favor of a `.oneoff-block` showing "$55 program total / per-label suppressed" — the per-label is a minimum-run artifact, not a catalog rate. Never display tiny-route per-label numbers as if they were a real price.
 
-8. **It must NOT skip never-pay-more verification on printed/laminated routes.** Every adjacent tier pair (1-9→10-19, 10-19→20-49, 20-49→50-99, 50-99→100-199, 100-199→200+) is checked. The engine auto-fixes only the customer-facing 10-19→20-49 boundary per spec (matches 1210810's actual revision pattern). All other cliffs are recorded but not auto-touched. Cut vinyl is exempt from this check (no MOQ, no invoice protection rule at this time).
+8. **It must NOT skip never-pay-more verification.** Every adjacent tier pair (1-9→10-19, 10-19→20-49, 20-49→50-99, 50-99→100-199, 100-199→200+) is checked. If the total at the top of the lower tier exceeds the total at the bottom of the upper tier, the lower tier price is auto-capped.
 
 9. **It must NOT invent a band for a material family that has none.** Convex High Bond + Poly Lam and Lexan/Polycarbonate both route to `no_profile` (F17 STOP). The first item in a new material family establishes the band — that requires a cost-build, all 4 validation rounds, and Nick's lock.
 
@@ -275,7 +275,6 @@ For changes to:
 - Sq-ft scope thresholds (tiny, sub-scope, singles)
 - Equipment limits (laminator, Roland print bed)
 - The $55 floor source PN
-- MOQ rules
 - Quote language templates
 - `do_not_benchmark` list
 - Override type precedent
@@ -416,7 +415,7 @@ Nick composes the quote email by hand, using the calculator's quote-language stu
 | `scripts/build_materials.py` | Build script | Generates `materials.json` |
 | `governance/CALCULATOR.md` | This file | The contract — what the calculator is, is not, and how to extend it |
 | `governance/PRICING_VALIDATION.md` | Companion governance | The 4-round AI validation process the calculator feeds into |
-| `governance/PRICING_RULES.md` | Companion governance | The constraints the calculator encodes (MOQ 10, $55 floor, invoice protection, file prep = $0) |
+| `governance/PRICING_RULES.md` | Companion governance | The constraints the calculator encodes (full bleed ink rule (§25), invoice protection (§26), file prep = $0 (§22-24)) |
 
 ---
 
@@ -426,11 +425,11 @@ The 6 reference cases below are the calculator's regression test surface. Any en
 
 | Input | Route | Price@20 | Required Flags | STOP? |
 |-------|-------|---------:|---------------|:-----:|
-| 1230820 — Orajet single, 15"×12.44", medium ink | `single_standard` | $20.00 | F18, F11 | no |
-| 1277970 — Orajet single, 1.1875"×1.1875" (Ø1-3/16) | `tiny` | $55.00 | F9 (REVIEW), F18 | no |
+| 1230820 — Orajet single, 15"×12.44", medium ink | `single_standard` | $20.00 | F11 | no |
+| 1277970 — Orajet single, 1.1875"×1.1875" (Ø1-3/16) | `tiny` | $55.00 | F9 (REVIEW) | no |
 | Convex High Bond single, 10"×6" | `no_profile` | n/a (output suppressed) | F17 (STOP) | yes |
-| Kit — Orajet, kit_same_dim, 8.77"×10", 3 labels | `kit` | $30.00 (per label $10) | F18 | no |
-| 1205720 — Cut vinyl Cardinal Red, 33.5625"×11" | `cut_vinyl` | $35.00 | F19, F15 (Rule 14) | no |
-| 1210810 — Orajet single, 10.5"×4", flood Safety Red | `single_sub_scope` | $4.50 | F10 (REVIEW), F8, F18, F11, F12 | no |
+| Kit — Orajet, kit_same_dim, 8.77"×10", 3 labels | `kit` | $30.00 (per label $10) | (none) | no |
+| 1205720 — Cut vinyl Cardinal Red, 33.5625"×11" | `cut_vinyl` | $35.00 | F15 (Rule 14) | no |
+| 1210810 — Orajet single, 10.5"×4", flood Safety Red | `single_sub_scope` | $4.50 | F10 (REVIEW), F8, F11, F12 | no |
 
 If any of these break after a change, the change is incorrect — either the change has a bug or the reference case needs explicit reconsideration with Nick before proceeding.

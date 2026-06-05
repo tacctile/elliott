@@ -2,7 +2,96 @@
 
 > **Newest entries at the top. Updated every session.**
 >
-> Last Updated: 2026-06-05 (full system audit — MOQ purge inventory + pricing defensibility matrix + structural consistency check)
+> Last Updated: 2026-06-05 (Session A: MOQ purge executed — governance, categories, items, build script, architecture. Calculator engine cleanup deferred to Session B.)
+
+---
+
+### 2026-06-05 — Session A: MOQ Purge Executed — Governance, Categories, Items, Build Script, Architecture (Calculator Engine Cleanup Deferred to Session B)
+
+**What:** Executed Phase 6 action plan from the 2026-06-05 audit (entry below). Removed all MOQ 10, $55 minimum order charge, required quote language, and sub-10 handling rules from the Elliott account governance, item, category, and build-script layers. Preserved §28 invoice protection as a permanent principle (rewritten and renumbered §26 — MOQ-independent). Preserved the $55 floor as a one-off / tiny-job-economics anchor only (reframed label from "minimum-worthwhile-charge floor" to "one-off job-economics floor (1230820 FA-anchored)"). Added a new 1-9 tier to P/N 1210810 at $7.25 — the only catalog item that previously carried a $55 flat 1-9 MOQ tier. **Calculator engine HTML changes (F18/F19 removal, $55 flat-tier injection removal, MOQ row rendering removal) are deferred to Session B per session-scope split.**
+
+**Nick's Binding Decisions (carried into execution):**
+1. §28 invoice protection — **PRESERVED**, rewritten to be MOQ-independent. New text: "Invoice protection: the buyer will never be invoiced more for ordering a smaller quantity than they would pay for a larger quantity at the next tier." Renumbered to §26 (since §26-§30 removed).
+2. 1210810 1-9 tier — **$7.25** (1.5× the $4.75 anchor = $7.125 → snapped to $7.25). $/sq ft = $24.83 = +7.3% above benchmark, preserving the Wave 4 small-format premium principle. Creates a 9/10 cliff ($65.25 vs $57.50 — $7.75 inversion) resolved automatically by §26 invoice protection — same pattern as 1205720 (9 × $45 = $405 vs 10 × $40 = $400) and 3010707 (9 × $28 = $252 vs 10 × $24 = $240).
+3. $55 floor — **PRESERVED** for tiny route / one-off framing only. Reframed label: "one-off job-economics floor (1230820 FA-anchored)." Independent of MOQ.
+4. $100 minimum (Sean rush/favor jobs) — **NOT IN SCOPE for this session**. Flagged for a future session.
+
+**Files Modified:**
+
+Governance:
+- `governance/PRICING_RULES.md` — removed §26 (MOQ 10), §27 ($55 minimum order charge), §29 (required quote language), §30 (sub-10 handling). Rewrote §28 invoice protection → §26 (MOQ-independent, applies to all items printed/laminated AND cut vinyl). Updated Last Updated stamp.
+- `governance/VALIDATION_PROMPTS.md` — rewrote Wave 1 embedded "Account-level order rules" block: removed MOQ 10 / $55 minimum order charge / required quote language; reframed $55 anchor as one-off job-economics floor only; added §26 invoice protection principle. Updated Last Updated stamp.
+- `governance/CALCULATOR.md` — rewrote Route Definitions table Floor Logic column (kit/single_sub_scope/single_standard rows: "No MOQ. Invoice protection (§26) applies at all tier boundaries"; tiny row: "All 6 tiers flatten to $55 one-off job-economics floor (1230820 FA-anchored)"). Rewrote Section 4 Rule 8 — dropped 1210810 historical anchor; stated cliff-check rule directly. Removed MOQ from Section 6.1 constant-change list. Updated Section 8 file table description for PRICING_RULES.md. Updated Section 9 sanity-check expected flags to match what Session B will produce (F18 removed from 1230820 + 1210810 rows; F19 removed from 1205720 row). Updated Last Updated stamp.
+- `.claude/MASTER_CONTEXT.md` — removed Core Rule 8 (MOQ reference); renumbered Core Rule 9 (full bleed ink) → Core Rule 8. Removed entire Account-Level Order Rules section. RELOCATED the internal pricing-normalization note to a new standalone "Internal Pricing Notes" section (text preserved verbatim). Updated Last Updated stamp.
+
+Categories:
+- `categories/printed-laminated-orajet.md` — removed Account-Level Order Rules block (Rules 1-5). Updated 1210810 Singles row Status column ("Quoted — MOQ 10 / $55 min order charge" → "Quoted"). Rewrote footnote ² with new 1-9 tier at $7.25, removed all MOQ language, preserved 4-wave validation record + above-band $/sq ft framing + material cost + margin. Removed Pricing Rule 7 (MOQ 10); renumbered Rule 8 (invoice protection) → Rule 7, dropped the "Required quote language" sentence. Reframed "minimum-worthwhile-charge floor" → "one-off job-economics floor (1230820 FA-anchored)" in the Tiny Printed Labels callout and the Standalone Tiny One-Offs section (label change only, no price/framing changes).
+
+Items:
+- `items/1210810.md` — full restructure. Frontmatter: `price_1_9` 55.00 → 7.25; rewrote `pricing_logic` and `notes` to remove all MOQ 10 / $55 minimum order charge / required quote language / 2028 MOQ plan / cut vinyl exception references, preserve full-bleed ink rule + 4-wave validation record + dimensional scope exclusion + warehouse caution + normalization-internal note. Body: rewrote Pricing section header (removed MOQ + $55 language), added 1-9 tier row at $7.25 to the tier table with §26 cliff-resolution note. Removed Required Quote Language block. Rewrote Pricing Derivation Step 7 as the new "1-9 Tier Addition (2026-06-05, MOQ Purge)" section explaining the $7.25 derivation, the 1.5× pattern preservation, and the §26 invoice-protection cliff resolution. Rewrote Step 8 (Invoice Protection at Tier Boundaries) to cover BOTH the 9/10 and 19/20 cliffs with §26-only language. Rewrote Step 11 (Account-Level Rule Codification) — removed §26-§30 cross-references; preserved §22-24 + §25 + the new §26. Added 1-9 tier row to Margin Analysis (91.7% margin at $0.60 material). Removed the large MOQ 10 callout block from Notes and Warnings, replaced with a smaller §26 invoice-protection callout covering both cliffs. Removed the standard quote-language sentence from the Initial Order callout. Updated Item Overview "Initial Order" line from "$47.50" (stale) to "$57.50" (matches the qty 10 at 10-19 tier × $5.75).
+- `items/3010704.md` — replaced "Cut vinyl items are NOT subject to the printed/laminated MOQ 10 or $55 minimum order charge rule (see PRICING_RULES.md §26)" with "No MOQ on any item on this account."
+- `items/3010707.md`, `items/3010708.md`, `items/3010709.md` — replaced both the Pricing-section line ("No first article pricing — not requested or offered. No MOQ — cut vinyl is exempt from the printed/laminated MOQ 10 and $55 minimum order charge rule per `governance/PRICING_RULES.md` §26.") and the Notes-and-Warnings line with the no-MOQ phrasing.
+- `items/1277970.md`, `items/1277980.md`, `items/1277990.md`, `items/1278000.md` — replaced every instance of "minimum-worthwhile-charge floor" with "one-off job-economics floor (1230820 FA-anchored)". Pricing/framing unchanged.
+- `items/3017583.md`, `items/3017584.md` — same as 1277970-1278000.
+- `items/1082570.md` — updated `pricing_logic` ("$55 floor rejected by all 6 models" → "Per-label catalog rate at qty 2 rejected by all 6 models — $42 flat adopted for job economics / setup recovery"). Updated AI Validation Key Outcomes summary line ("$55 floor rejected unanimously" → "Per-label catalog rate at qty 2 rejected by all 6 models"). Historical "Option A vs Option B + AI Validation" Round 1-4 record preserved as the AI-validation evidence base.
+
+Build scripts:
+- `scripts/build_calculator_config.py` — updated source comment (lines 33-34) from "Account-Level Order Rules / §26-30" to "§25 (full bleed ink), §26 (invoice protection)". Flipped `MOQ_PRINTED_LAMINATED` to `applies: False` with note "No MOQ on this account. All items priced at real per-unit rates starting at qty 1." Removed `MOQ_CUT_VINYL` constant entirely. Renamed `FLOOR_LABEL` to "One-off job-economics floor (1230820 FA price)". Removed `QUOTE_LANGUAGE.moq_printed_laminated` key. Updated `build_account_section` to drop the cut_vinyl key from the `moq` dict.
+
+Architecture / cross-references:
+- `.claude/ARCHITECTURE.md` — updated 1210810 catalog row Status column (removed "$55 flat MOQ floor", reflected new 1-9 at $7.25). Updated Category Registry — Printed + Laminated row to remove MOQ language; preserved the full-bleed ink rule sentence. Updated Precedent Chain — 1210810 entry: replaced "Tiers: $55 flat/$5.75/..." with new "Tiers: $7.25/$5.75/..." block including 1.5× derivation, margin at 91.7%, §26 cliff-resolution explanation referencing 1205720 and 3010707 patterns. Removed "MOQ 10" / "2028 MOQ plan" lines. Updated outrigger and PTO program notes to use "one-off job-economics floor (1230820 FA-anchored)" phrasing. Updated Last Updated stamp.
+
+Frontend (auto-regenerated by build scripts):
+- `frontend/calculator_config.json` — regenerated. account.moq has `printed_laminated.applies: false` only (cut_vinyl key removed). account.floor_label updated. quote_language.moq_printed_laminated removed.
+- `frontend/data.json` — regenerated with 1210810 frontmatter updates (price_1_9 7.25) and 1082570 pricing_logic update.
+- `frontend/materials.json` — regenerated (timestamp only — no material changes).
+
+`.claude/`:
+- `.claude/PROGRESS.md` — this entry.
+- `.claude/STATE.yml` — last_session + next_action + blockers + pending_quotes updated to reflect Session A completion and Session B handoff.
+
+**Files NOT Modified (per session-scope split — these are Session B's work):**
+- `frontend/index.html` — calculator engine NOT modified. F18 + F19 flag definitions, $55 flat-tier injection in `buildPrintLamSinglesTiers` + `buildPrintLamKitTiers`, `checkInvoiceProtection` 1-9 carve-out, `moq_applies` variable, MOQ row rendering + CSS, quote-stub `moq_line` generation, validation-brief MOQ line, route-reason text MOQ adjustments — all preserved as-is. The governance docs already reflect what Session B will produce (sanity-check table updated to drop F18/F19), but the engine itself still fires F18/F19 and still injects the $55 flat-tier on 1-9. This is intentional — Session B handles the engine in a single coordinated pass.
+- `governance/CALCULATOR.md` Section 3 (Flag Definitions table) — F18 and F19 entries preserved as-is. These describe the current engine behavior, which is unchanged until Session B. Once Session B removes the flags from the engine, these definitions should be removed from Section 3.
+- No item prices changed except 1210810 `price_1_9` (55.00 → 7.25). No material costs changed. No `verified_date` fields changed.
+- No new items or item files created.
+- `categories/cut-vinyl-3m-180mc.md` — not touched (no MOQ language present).
+- Material files (`materials/*.md`) — not touched.
+
+**Acceptance Criteria Met:**
+- `governance/PRICING_RULES.md` contains NO references to MOQ 10, $55 minimum order charge, required quote language, or sub-10 handling. §25 (full bleed) and §26 (rewritten invoice protection) are the only rules in the MOQ-area numbering range ✓
+- `.claude/MASTER_CONTEXT.md` contains NO "Account-Level Order Rules" section. Core Rules has 8 rules (old Rule 9 → Rule 8). Internal pricing-normalization note exists in a standalone "Internal Pricing Notes" section ✓
+- `categories/printed-laminated-orajet.md` contains NO "Account-Level Order Rules" block. 1210810 row shows "Quoted" status only. Footnote ² has new 1-9 tier at $7.25 and no MOQ language. Pricing Rules have no MOQ rule. Tiny/one-off sections use "one-off job-economics floor" label ✓
+- `items/1210810.md` frontmatter shows `price_1_9: 7.25`. Pricing section shows 7 tiers (1-9 through 200+; well, actually 6 catalog tiers — 1-9 / 10-19 / 20-49 / 50-99 / 100-199 / 200+). No MOQ language anywhere in the file other than the historical/audit description of "the MOQ purge" event. Item Overview shows $57.50 initial order ✓
+- `items/3010704.md`, `items/3010707.md`, `items/3010708.md`, `items/3010709.md` contain NO references to "MOQ 10" or "§26" (in the prior MOQ sense). They say "No MOQ on any item on this account." ✓
+- `items/1277970-1278000.md` and `items/3017583-3017584.md` use "one-off job-economics floor (1230820 FA-anchored)" — not "minimum-worthwhile-charge floor" ✓
+- `scripts/build_calculator_config.py` MOQ_PRINTED_LAMINATED has `applies: False`. MOQ_CUT_VINYL is removed. QUOTE_LANGUAGE has no moq_printed_laminated key. FLOOR_LABEL updated ✓
+- `frontend/calculator_config.json` regenerated with MOQ changes reflected ✓
+- `frontend/data.json` regenerated with 1210810 frontmatter changes ✓
+- `.claude/ARCHITECTURE.md` 1210810 row, Category Registry, and Precedent Chain all updated with no MOQ language (other than the "MOQ purge" audit description in the Last Updated stamp) ✓
+- `governance/CALCULATOR.md` Route Definitions, Rule 8, Section 6.1, Section 8, and Section 9 all updated ✓
+- `governance/VALIDATION_PROMPTS.md` Wave 1 context block updated ✓
+- `python scripts/validate.py` passes — 0 errors, 0 warnings (19 items) ✓
+- All 3 build scripts run clean ✓
+- No prices changed on any item EXCEPT 1210810 `price_1_9` (55.00 → 7.25) ✓
+
+**Key Decisions Carried Forward:**
+- The MOQ 10 / $55 minimum order charge rules established 2026-06-01 have been REMOVED from the account. They were never communicated to Sean and never will be. Sub-10 orders are loss-leader cost-of-doing-business on a $140K account.
+- §26 invoice protection is now MOQ-INDEPENDENT — applies to every item on the account (printed/laminated AND cut vinyl), at every tier boundary, automatically. The "never invoiced more for a smaller quantity than a larger quantity at the next tier" principle is permanent and structural. Quote-email language for this principle is NOT required — it is a back-office invoice-time application.
+- The $55 anchor REMAINS valid for tiny / one-off / field-service jobs (outrigger switches, PTO labels). It is now labeled "one-off job-economics floor (1230820 FA-anchored)" — a label change that disambiguates it from the removed MOQ rule. No prices on tiny/one-off items changed.
+- 1210810 1-9 tier is $7.25. Pattern: 1.5× the 20-49 anchor (= $7.125 → snapped to $7.25). $/sq ft = $24.83 (+7.3% above benchmark, preserving small-format premium). The 9/10 cliff ($65.25 vs $57.50) is resolved automatically by §26 — same pattern as every other multi-tier item on the account.
+- Calculator engine HTML (F18, F19, $55 flat-tier injection, invoice-protection 1-9 carve-out, MOQ row rendering, MOQ quote-stub) is deferred to Session B. Governance docs ahead of engine — Session B brings the engine into alignment.
+
+**Pending Quotes (unchanged from prior session, with 1210810 update):**
+- 3010707 ($20/qty 20 Cardinal Red, Band C founding anchor)
+- 3010708 ($20/qty 20 Black, Band C color parity)
+- 3010709 ($20/qty 20 White, Band C color parity)
+- 3010704 ($78/qty 20 Band B founding)
+- 1210810 (revalidated — $57.50 for qty 10 at 10-19 tier of $5.75; recurring $4.75 at 20-49; new 1-9 tier at $7.25 added this session)
+- 1082570 ($42 flat for qty 2 once PO arrives; color selection pending; production rate $8 at qty 20 also valid)
+- 1245130, 3017435, 3018378, 1186310, 1277970, 1277980, 1277990, 1278000, 3017583, 3017584 — quoted May–Jun 2026, awaiting Sean response/PO
+
+**Status:** Session A complete. validate.py 0/0; all 3 build scripts clean. Ready for Session B (calculator engine cleanup — `frontend/index.html` F18/F19 removal, $55 flat-tier injection removal, invoice-protection refactor, MOQ row rendering removal, MOQ quote-stub removal; governance/CALCULATOR.md Section 3 F18/F19 entries removal once engine code is updated).
 
 ---
 
