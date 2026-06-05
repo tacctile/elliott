@@ -57,6 +57,10 @@ ROUTING = {
     "laminator_max_width_in": 13.5,
     "roland_max_print_width_in": 28.0,
     "parity_max_lam_passes": 2,
+    "cut_vinyl_band_thresholds": {
+        "band_c_ceiling_sq_ft": 1.0,
+        "band_b_floor_sq_ft": 5.0,
+    },
 }
 
 # ---------------------------------------------------------------------------
@@ -97,6 +101,38 @@ CUT_VINYL_LETTERING_BAND = {
         "below_10": 0.25,
     },
     "calibration_note": "Band calibrated at 2.51-2.56 sq ft. Items at significantly different sq ft require validation.",
+    "large_format": {
+        "threshold_sq_ft": 5.0,
+        "anchor_psf_qty_20": 11.03,
+        "anchor_pn": "3010704",
+        "anchor_price_qty_20": 78.00,
+        "anchor_sq_ft": 7.069,
+        "tier_template": {
+            "price_1_9": 105,
+            "price_10_19": 92,
+            "price_20_49": 78,
+            "price_50_99": 68,
+            "price_100_199": 60,
+            "price_200_plus": 52,
+        },
+        "note": "Band B — founding data point 3010704 at 7.069 sq ft. 19.3% step-down from Band A. 4-wave AI validated.",
+    },
+    "sub_1_sqft": {
+        "threshold_sq_ft": 1.0,
+        "anchor_psf_qty_20": 20.64,
+        "anchor_pn": "3010707",
+        "anchor_price_qty_20": 20.00,
+        "anchor_sq_ft": 0.969,
+        "tier_template": {
+            "price_1_9": 28,
+            "price_10_19": 24,
+            "price_20_49": 20,
+            "price_50_99": 16.50,
+            "price_100_199": 13.50,
+            "price_200_plus": 11.50,
+        },
+        "note": "Band C — founding data point cluster 3010707/08/09 at 0.969 sq ft. 51% step-up from Band A. 4-wave AI validated + final industry audit.",
+    },
 }
 
 PRINTED_LAMINATED_SINGLES_BAND = {
