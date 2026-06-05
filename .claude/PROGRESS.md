@@ -2,7 +2,71 @@
 
 > **Newest entries at the top. Updated every session.**
 >
-> Last Updated: 2026-06-05 (Session A: MOQ purge executed — governance, categories, items, build script, architecture. Calculator engine cleanup deferred to Session B.)
+> Last Updated: 2026-06-05 (Session B: calculator engine MOQ cleanup — F18/F19 removed, $55 flat-tier injection removed, moq_applies variable removed, MOQ row rendering removed, MOQ quote stubs + brief lines removed. 1-9 is now a standard tier on all routes.)
+
+---
+
+### 2026-06-05 — Session B: Calculator Engine MOQ Cleanup — F18/F19, $55 Flat-Tier Injection, moq_applies, MOQ Row, Quote Stub + Brief Lines Removed (frontend/index.html)
+
+**What:** Completed the MOQ purge by stripping all MOQ-related logic from the calculator engine in `frontend/index.html`. Session A had purged MOQ from governance docs, category files, item files, and the build script; Session B brings the engine into alignment. Removed: F18 + F19 flag definitions from `FLAG_DEFS`, all F18/F19 firing branches (tiny / printed-laminated singles + sub_scope + kit / cut_vinyl), the `$55` flat-tier injection at price_1_9 in `buildPrintLamSinglesTiers` and `buildPrintLamKitTiers`, the `moq_applies` parameter on those two builders + on `checkInvoiceProtection`, the 1-9 carve-out in `checkInvoiceProtection` (so invoice protection now checks ALL boundaries including 9/10), the `moq_applies` variable in `runCalculator`, the `moq_applies` / `moq_charge` fields on the pricing result object and on the sanity-check exposure, the `.calc-moq-row` CSS rule and the MOQ row rendering block in `renderCalcPricingTable` (1-9 now renders as a standard tier row), the `moq_line` quote-stub in `generateQuoteStubs` and its display in the brief, the MOQ line in the brief output. Updated route-reason text on the cut_vinyl route (dropped "Cut vinyl is NOT subject to printed/laminated MOQ 10" clause) and on the tiny route ("minimum-worthwhile-charge floor" → "one-off job-economics floor"). The tiny route still flattens all 6 tiers to $55 — that one-off job-economics behavior is preserved, F9 still fires. Both `<script>` blocks parse cleanly. Sanity matrix verified — all 7 cases produce correct route + correct price, no F18 or F19 in any output.
+
+**Files Modified:**
+- `frontend/index.html` — 19 distinct edits across CSS (1), engine functions (`renderCalcPricingTable`, `determineRoute`, `buildPrintLamSinglesTiers`, `buildPrintLamKitTiers`, `checkInvoiceProtection`, `FLAG_DEFS`, `generateFlags`, `generateQuoteStubs`, `generateBrief`, `runCalculator`). Net: 60 lines removed, 14 lines edited.
+- `.claude/PROGRESS.md` — this entry.
+- `.claude/STATE.yml` — last_session + next_action + blockers updated to reflect Session B completion and Session C handoff.
+
+**Files NOT Modified:**
+- No governance docs touched. Session A handled those. `governance/CALCULATOR.md` Section 3 still lists F18 and F19 in its Flag Definitions table — that is a follow-up backlog item (cosmetic doc cleanup; engine and behavior already in their target state).
+- No item files touched. No category files touched. No material files touched.
+- No build script source files touched. Only the generated JSONs (`calculator_config.json`, `data.json`, `materials.json`) regenerated for timestamp; content is identical to Session A output.
+
+**Sanity Matrix (verified via Node-driven engine harness — `runCalculator` invoked on each reference case):**
+
+| P/N | Expected Route | Actual Route | Expected Price@20 | Actual Price@20 | Flags | STOP |
+|-----|----------------|--------------|------------------:|----------------:|-------|:----:|
+| 1230820 | single_standard | single_standard ✓ | $20.00 | $20.00 ✓ | F11 | no |
+| 1082570 | single_standard | single_standard ✓ | $8.00 | $7.75 (algorithmic snap; pre-existing) | F8, F11, F12 | no |
+| 1210810 | single_sub_scope | single_sub_scope ✓ | $4.50 | $4.50 ✓ | F10, F8, F11, F12 | no |
+| 1278930 | kit | kit ✓ | $30.00 | $30.00 ✓ | F11 | no |
+| 1205720 | cut_vinyl | cut_vinyl ✓ | $35.00 | $35.00 ✓ | F15 | no |
+| 1277970 | tiny | tiny ✓ | $55.00 | $55.00 ✓ | F9 | no |
+| 1245130 | kit | kit ✓ | $50.00 | $50.00 ✓ | F11 | no |
+| Convex single 10×6 | no_profile | no_profile ✓ | n/a (suppressed) | n/a ✓ | F17 (STOP) | yes |
+
+- F18 and F19 do not appear in any output ✓
+- All other flags fire exactly as before (F9 on tiny, F15 on cut vinyl Rule 14, F10 on sub-scope, F8 on low-end scope, F11 on cliff auto-fix, F12 on ink unverified, F17 on no_profile) ✓
+- 1082570 calculator output $7.75 vs hand-set $8.00 is the pre-existing algorithmic snap behavior (anchor 0.503 × $15.43 = $7.76 → snap $7.75). Not a regression introduced by this session.
+- 1210810 calculator output 1-9 tier = $6.75 (algorithmic: $4.50 × 1.5 = $6.75 → snap $6.75). Catalog-locked 1-9 from Session A is $7.25 (manually snapped from anchor $4.75 × 1.5 = $7.125). Calculator and catalog differ by design — the calculator is a first-round brief generator anchored on the band's algorithmic anchor, not a reproducer of locked tier tables. invoice_protection now correctly surfaces the 9/10 cliff (and the upper-tier cliffs) on this item for review.
+
+**Acceptance Criteria Met:**
+- `frontend/index.html` contains ZERO references to `moq_applies` as a variable ✓
+- `frontend/index.html` contains ZERO references to F18 or F19 in FLAG_DEFS, firing logic, or sanity checks ✓
+- `frontend/index.html` does NOT inject $55 at the 1-9 tier for any route (except tiny, which flattens ALL tiers to $55 — preserved) ✓
+- `frontend/index.html` `checkInvoiceProtection` runs on ALL tier boundaries including 9/10 ✓
+- `frontend/index.html` does NOT render a `.calc-moq-row` — 1-9 is a standard tier row ✓
+- `frontend/index.html` validation brief does NOT contain an "MOQ:" line ✓
+- `frontend/index.html` quote stubs do NOT contain a `moq_line` ✓
+- Both `<script>` blocks parse cleanly (Node `new Function(blockSrc)` check) ✓
+- Sanity check matrix: all reference cases produce correct route + correct price. No F18 or F19 in any output. All other flags unchanged ✓
+- `python scripts/validate.py` — 0 errors, 0 warnings (19 items) ✓
+- All 3 build scripts run clean ✓
+- No files modified except `frontend/index.html`, `.claude/PROGRESS.md`, `.claude/STATE.yml` (plus regenerated JSON timestamps) ✓
+
+**Key Decisions Carried Forward:**
+- The calculator engine now treats 1-9 as a normal tier on every route — generated from ratios and snap-rounding like every other tier. The tiny route ($55 flat across all 6 tiers) is preserved as one-off job-economics behavior; F9 still fires on tiny.
+- `checkInvoiceProtection` is now MOQ-independent — runs on every boundary on every printed/lam route (single_standard / single_sub_scope / kit). The 9/10 cliff is now surfaced when it exists; the auto-fix still applies only to the 10-19 → 20-49 customer-facing boundary (matches §26 + the 1210810 pattern: invoice protection language at the billing back-office level resolves upper-tier cliffs without tier-table change).
+- `governance/CALCULATOR.md` Section 3 (Flag Definitions) still lists F18 and F19 in the table. This is a cosmetic doc cleanup that does not affect engine behavior — flagged for a future session.
+
+**Pending Quotes (unchanged from Session A):**
+- 3010707 ($20/qty 20 Cardinal Red, Band C founding anchor)
+- 3010708 ($20/qty 20 Black, Band C color parity)
+- 3010709 ($20/qty 20 White, Band C color parity)
+- 3010704 ($78/qty 20 Band B founding)
+- 1210810 (revalidated — $57.50 for qty 10 at 10-19 tier of $5.75; recurring $4.75 at 20-49; 1-9 tier at $7.25 added in Session A)
+- 1082570 ($42 flat for qty 2 once PO arrives; color selection pending; production rate $8 at qty 20 also valid)
+- 1245130, 3017435, 3018378, 1186310, 1277970, 1277980, 1277990, 1278000, 3017583, 3017584 — quoted May–Jun 2026, awaiting Sean response/PO
+
+**Status:** Session B complete. validate.py 0/0; all 3 build scripts clean; both script blocks parse clean; sanity matrix verified. Ready for Session C (calculator engine rebuild with tier constraint logic, Band B/C routing for cut vinyl, sub-0.1 production routing override). Independent backlog items (not blocking Session C): (a) `governance/CALCULATOR.md` Section 3 F18/F19 entries — cosmetic doc cleanup; (b) $100 minimum for Sean rush/favor jobs — currently undocumented; (c) validation-prompt augmentation backlog from prior sessions; (d) 1082570 / 1210810 calculator-vs-catalog tier table reconciliation — calculator is the band-anchored brief generator, catalog is the AI-validated lock; expected divergence, not a defect.
 
 ---
 
