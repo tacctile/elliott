@@ -2,7 +2,81 @@
 
 > **Newest entries at the top. Updated every session.**
 >
-> Last Updated: 2026-06-05 (Session C: calculator engine rebuild — tier boundary constraint enforcement (F23), Band B/C cut vinyl routing, sub-0.1 production override, 1-9 auto-generation at 1.5×.)
+> Last Updated: 2026-06-05 (Session D: P/N 1279000 added as the founding data point for the sub-0.1 sq ft printed/laminated Micro-Format Band; calculator routing updated so production-override path uses the new micro band ($30.86/sq ft anchor) instead of the singles band ($15.43/sq ft).)
+
+---
+
+### 2026-06-05 — Session D: P/N 1279000 Founding Data Point + Sub-0.1 Sq Ft Printed/Laminated Micro-Format Band Established + Calculator Routing Fix
+
+**What:** Three interconnected tasks landed together. (1) **New item P/N 1279000** — LBL-MAX PLTF CAP 1200 TIP HZRD, a two-zone ANSI Z535.4 WARNING label at 8.00" × 1.75" = 0.097 sq ft (drawing dated 2026-06-05 — brand-new spec). Annual volume ~200 (Sean stated), batch pattern 20–50. First production-volume printed/laminated item below 0.1 sq ft on the Elliott account. Locked tier table: $4.50 / $3.50 / $3.00 / $2.60 / $2.30 / $2.10. Anchor $3.00 at qty 20 = $30.86/sq ft = 2.0× benchmark ($15.43/sq ft). Material cost $0.20 under account-wide full bleed ink rule (PRICING_RULES.md §25). Margin at qty 20: ~93% material-only. Tier compression 53.3% — correctly flatter than the benchmark (63.3%) because material is 6.7% of price and fixed labor dominates. 4-wave atomic AI validation complete (24 independent responses, 6 models × 4 waves) + final 6-model comprehensive review (6/6 send as shown). No override. No MOQ. No first article. (2) **Sub-0.1 sq ft Micro-Format Band established** in `categories/printed-laminated-orajet.md` as a structurally INDEPENDENT band — separate from the singles band ($15.43–$15.91/sq ft, calibrated at 0.5–1.3 sq ft) and from the sub-scope handling (0.1–0.5 sq ft band-consistent $/sq ft, 1210810). Same structural role as cut vinyl Band C (3010707) for the cut vinyl size-class system. The 100% $/sq ft step-up from the singles band ($15.43 → $30.86) is justified by fixed-labor dominance on sub-0.1 sq ft labels — setup, registration, lamination, contour cut, weeding, ANSI compliance inspection, and packaging take approximately the same time per label regardless of size; at 13.3× smaller than the benchmark, fixed costs amortize over dramatically less area. Tier ratios derived from the validated 1279000 table: 1.50× / 1.167× / 1.00× / 0.867× / 0.767× / 0.70× (singles ratios are 1.50× / 1.20× / 1.00× / 0.85× / 0.70× / 0.55× — micro band correctly less compressed). (3) **Calculator routing fix** — when `production_override: true` is set on a sub-0.1 sq ft Orajet 3951 single, the engine now uses the Micro-Format Band anchor ($30.86/sq ft) instead of the singles band anchor ($15.43/sq ft). Previously the production-override path produced ~$0.76 at qty 20 (algorithmic singles-band cascade); it now produces ~$3.00 at qty 20 matching the validated 1279000 tier table when the item's sq ft is within ±30% of the founding anchor (0.097 sq ft, range 0.068–0.126). The tiny route ($55 flat) remains the default for ≤0.1 sq ft one-off / field-service requests — the Micro-Format Band applies only to production catalog items with the override checkbox checked.
+
+**Files Modified:**
+- `items/1279000.md` — NEW. Full structure per `governance/STRUCTURE_RULES.md`: all required frontmatter fields, all 10 required sections (Spec Extraction, Item Overview, Material Specification, Nesting and Material Cost, Production Process, Pricing, Pricing Derivation with 4-wave + final 6-model record, Margin Analysis, Notes and Warnings, Production Debrief). Material cost: $0.20/label (Orajet 0.0972 × $1.21 + lam 0.0972 × $0.2389 + ink full bleed 0.0972 × $0.50 + incidental buffer = $0.1894 → $0.20). Spec extraction reconstructed verbatim from the prompt extraction data.
+- `categories/printed-laminated-orajet.md` — (a) 1279000 row added to Singles items table; (b) new footnote ³ added documenting founding-data-point status, validation record, band anchor, material cost, volume, no-MOQ; (c) singles band scope note rewritten to call out the three INDEPENDENT size classes (Micro-Format, Sub-scope, Singles); (d) new **Sub-0.1 sq ft Printed/Laminated (Micro-Format Band)** Pricing Profile subsection inserted between the Singles Pricing Profile and the Multi-Label Kits section — full band metrics table, anchor, tier ratios, step-up justification, band isolation, per-label floor caution, band width tightening note, override note; (e) Decision Tree — New Single Label updated with Step 1a size-class routing logic (sub-0.1 production catalog item → Micro-Format Band; sub-0.1 one-off → $55 floor; 0.1-0.5 → sub-scope; ≥0.5 → standard singles).
+- `scripts/build_calculator_config.py` — added `PRINTED_LAMINATED_MICRO_BAND` constant block (anchor_psf_qty_20 30.86, anchor_pn 1279000, anchor_price_qty_20 3.00, anchor_sq_ft 0.097, threshold_sq_ft 0.1, margin_floor_warn_pct 85.0, margin_floor_stop_pct 50.0, margin_target_qty_20_min_pct 90.0, margin_target_qty_20_max_pct 95.0, tier_ratios, tier_template, snap_granularity below_10: 0.10, note). Registered in `build_config()` bands dict under key `printed_laminated_micro`.
+- `frontend/calculator_config.json` — regenerated. Now has 4 bands (cut_vinyl_lettering, printed_laminated_singles, **printed_laminated_micro**, printed_laminated_kits).
+- `frontend/index.html` — calculator engine changes: (a) `determineRoute()` production-override branch — `route_reason` now appends micro-band note ("Using sub-0.1 sq ft micro-format band ($30.86/sq ft anchor, 1279000 founding data point)."); (b) new `buildPrintLamMicroTiers()` function added immediately after `buildPrintLamSinglesTiers()` — checks if item's sq ft is within ±30% of the founding anchor and uses the validated template directly (parity with the cut vinyl Band B/C pattern); otherwise scales algorithmically from the $30.86/sq ft anchor using the micro band's tier ratios and snap granularity; includes a defensive fallback to `buildPrintLamSinglesTiers` if the micro band is not configured; (c) `runCalculator()` tier-build dispatch updated — when route is `single_sub_scope` AND sq_ft ≤ `tiny_threshold_sq_ft` AND `config.bands.printed_laminated_micro` is present, calls `buildPrintLamMicroTiers()` instead of `buildPrintLamSinglesTiers()`; otherwise singles band behavior is unchanged; (d) `getActiveBandRange()` updated — `single_sub_scope` path with sq_ft ≤ tiny_threshold now returns the micro band's $30.86/sq ft as the active band min/max (band positioning compares against the micro anchor, not the singles band); singles band behavior for the 0.1–0.5 sq ft sub-scope path is unchanged; (e) `runSanityChecks()` — `PROD-OVERRIDE-TEST` expected_price_20 string updated from "~$1.50 (algo: 0.0972 × $15.43 = $1.50)" to "~$3.00 (micro-band template, 1279000 founding anchor at 0.097 sq ft; sq ft within ±30% uses template directly)" — engine now produces the validated micro-band template price for the synthetic 8" × 1.75" override test case.
+- `.claude/ARCHITECTURE.md` — (a) 1279000 row added to Item Catalog table; (b) Category Registry — Printed + Laminated row rewritten: item count 11 → 12; "Three INDEPENDENT size-class bands now defined (Micro / Sub-scope / Singles)" framing added; Micro-Format Band founding documented with anchor, 2.0× benchmark step-up, 4-wave + 6-model validation record, INDEPENDENT framing, tiny-route preservation note; (c) new Precedent Chain branch added for 1279000 — full structural explanation, validation record summary, dimensional scope, fixed-labor justification, tier table, Pro Sign competitive context, all-6-models Wave-3 mental-model logging, per-label floor caution below ~0.06 sq ft, tiny-route preservation, drawing-dated-today framing, first-run de-facto-internal-FA note; (d) Last Updated stamp.
+- `governance/CALCULATOR.md` — (a) Last Updated stamp; (b) Section 2 Route Definitions table — `single_sub_scope` row updated to document the dual-mode behavior: standard route (0.1–0.5 sq ft) uses singles band; production-override path (≤ 0.1 sq ft) uses Micro-Format Band with template-direct logic when within ±30% of the founding anchor; (c) Sq Ft Thresholds list extended with `bands.printed_laminated_micro.threshold_sq_ft` (0.1) and `bands.printed_laminated_micro.anchor_sq_ft` (0.097); (d) Section 9 Sanity Check Reference Cases — sub-0.1 production-override case updated to expect ~$3.00 (Micro-Format Band template, within ±30% of 1279000 founding anchor) instead of ~$0.76 (prior singles-band cascade output).
+- `materials/orajet-3951-white.md` — `used_in_items` list updated to include "1279000".
+- `materials/1mil-polyester-overlaminate.md` — `used_in_items` list updated to include "1279000".
+- `frontend/data.json` — regenerated (20 items now).
+- `frontend/materials.json` — regenerated (timestamp + new item references in materials).
+- `.claude/PROGRESS.md` — this entry.
+- `.claude/STATE.yml` — last_session + next_action + blockers + item_count (19 → 20) + pending_quotes updated to reflect Session D completion.
+
+**Files NOT Modified:**
+- No existing item prices changed on any item.
+- No existing band values changed (singles $15.43–$15.91/sq ft unchanged; sub-scope handling unchanged; tiny route unchanged; cut vinyl Band A/B/C unchanged).
+- No existing item files touched except via material `used_in_items` cascade (which is metadata-only and doesn't affect pricing).
+- No `governance/PRICING_RULES.md` changes (§25 full bleed and §26 invoice protection both apply unchanged to 1279000).
+- No `governance/PRODUCTION.md` changes (material costs unchanged).
+- No `governance/STRUCTURE_RULES.md` changes (1279000 follows the existing schema).
+- No `governance/PRICING_VALIDATION.md` changes.
+- No `governance/VALIDATION_PROMPTS.md` changes (Wave 1 embedded context already references the three-band structure pattern via cut vinyl precedent; the printed/laminated three-band structure mirrors it).
+- No `.claude/MASTER_CONTEXT.md` changes (Core Rules unchanged; material families table unchanged — Orajet 3951 Cast + Polyester Lam still covers the new micro-format band).
+- No `.claude/CHAT_CONTEXT.md` changes.
+- No `.claude/COMPLETION_TEMPLATES.md` changes.
+- No flag definitions modified (F1–F23 all unchanged).
+- No tiny route behavior change ($55 flat across all 6 tiers preserved; F9 still fires on the tiny route; tiny remains the default for sub-0.1 sq ft Orajet items without production override).
+
+**Acceptance Criteria Met:**
+- `items/1279000.md` exists with all required frontmatter fields and all 10 required sections per `governance/STRUCTURE_RULES.md` ✓
+- Frontmatter: `width_in: 8.00`, `height_in: 1.75`, `sq_ft_per_label: 0.097`, `price_20_49: 3.00`, `material_cost_per_unit: 0.20`, `per_label_at_qty_20: 3.00`, `margin_at_qty_20: "~93%"`, `price_1_9: 4.50` ✓
+- `categories/printed-laminated-orajet.md` contains 1279000 in the Singles table with footnote ³, and the new "Sub-0.1 sq ft Printed/Laminated (Micro-Format Band)" Pricing Profile section ✓
+- Decision Tree updated with sub-0.1 routing (Step 1a size-class routing) ✓
+- `scripts/build_calculator_config.py` contains the `PRINTED_LAMINATED_MICRO_BAND` constant with the correct anchor (30.86), tier ratios, and tier template ✓
+- `frontend/calculator_config.json` contains the regenerated `printed_laminated_micro` band entry ✓
+- `frontend/index.html` calculator engine: when production override is active AND sq ft ≤ 0.1, uses the micro band anchor ($30.86/sq ft) and produces the validated tier table when sq ft is within ±30% of the founding anchor (0.097) — produces $4.50 / $3.50 / $3.00 / $2.60 / $2.30 / $2.10 for an 8" × 1.75" test input ✓
+- `frontend/index.html` sanity check expected price for the production override test case is now ~$3.00 ✓
+- `.claude/ARCHITECTURE.md` contains 1279000 in the catalog, the Category Registry row is updated with Micro-Format Band context, and the new Precedent Chain branch is added ✓
+- `governance/CALCULATOR.md` updated with the micro-band routing note (Section 2), threshold list extension, and the corrected Section 9 sanity case ✓
+- Material files `used_in_items` lists updated ✓
+- `python scripts/validate.py` — 0 errors, 0 warnings (20 items) ✓
+- All 3 build scripts run clean ✓
+- `frontend/data.json` regenerated (20 items) ✓
+- No existing item prices changed ✓
+- No existing band values changed ✓
+
+**Key Decisions Carried Forward:**
+- The sub-0.1 sq ft Micro-Format Band is INDEPENDENT — three printed/laminated size classes now exist (singles ≥0.5, sub-scope 0.1–0.5, micro <0.1), each with its own anchor and tier structure. The three size classes do NOT contaminate or interact. This mirrors the three INDEPENDENT cut vinyl bands established in earlier sessions (Band A small-format / Band B large-format / Band C sub-1 sq ft).
+- Future sub-0.1 sq ft production-volume printed/laminated items validate against the **Micro-Format Band** ($30.86/sq ft anchor), NOT the singles band. One-off / field-service requests at ≤ 0.1 sq ft continue to route to the tiny $55 floor.
+- The production-override checkbox in the calculator is the routing mechanism that distinguishes a production catalog item (uses Micro-Format Band) from a one-off (uses tiny route) at the sub-0.1 sq ft size class. Default off — Nick must check it explicitly.
+- The Micro-Format Band template is used DIRECTLY when the item's sq ft is within ±30% of the founding anchor (0.097 sq ft, range 0.068–0.126). Outside that window, the engine scales algorithmically from the $30.86/sq ft anchor × sq_ft and applies the band's ratios. This is the same ±30% pattern used by cut vinyl Band B and Band C for items near their founding anchors.
+- The $/sq ft anchor ($30.86) should NOT be linearly extrapolated below ~0.06 sq ft — at extreme smallness, a per-label floor (~$2.50–$3.00 at qty 20) overrides $/sq ft scaling because fixed labor per label has a minimum. Items below ~0.06 sq ft require fresh job-economics validation, not linear $/sq ft formulas.
+- 1279000 is the only sub-0.1 sq ft production-volume printed/laminated item on the account. The band tightens as future items are quoted. Items at the boundary (~0.08–0.12 sq ft) still require 4-wave AI validation — do not parity-quote from 1279000 without the full validation process.
+- The high (>90%) margins on this item are an artifact of $0.20 material cost on a labor-driven item — the absolute dollar contribution at qty 20 is $2.80/label (modest). At Sean's stated ~200/year volume, this item contributes roughly $560/year in gross profit at the 20-49 tier. The per-label margin percentage is healthy but the absolute dollar volume is small relative to larger items on the account.
+- All 6 Wave 3 buyer-simulation models confirmed Sean will log $30.86/sq ft as the "small safety label rate" — a permanent account data point. This is the expected and structurally correct outcome — the band is established by Sean's mental model the moment the first invoice goes out.
+
+**Pending Quotes:**
+- **1279000** ($3.00/qty 20, Micro-Format Band founding data point — Session D — quote pending)
+- 3010707 / 3010708 / 3010709 ($20/qty 20, Band C founding cluster)
+- 3010704 ($78/qty 20, Band B founding)
+- 1210810 ($57.50 for qty 10; recurring $4.75 at 20-49; 1-9 tier $7.25 added Session A)
+- 1082570 ($42 flat for qty 2 once PO arrives; production $8 at qty 20)
+- 1245130, 3017435, 3018378, 1186310, 1277970, 1277980, 1277990, 1278000, 3017583, 3017584 — quoted May–Jun 2026, awaiting Sean response/PO
+
+**Status:** Session D complete. validate.py 0/0; all 3 build scripts clean; new item 1279000 + Micro-Format Band + calculator routing fix all landed. Three INDEPENDENT printed/laminated size classes now defined. Ready to send Sean the quote.
 
 ---
 

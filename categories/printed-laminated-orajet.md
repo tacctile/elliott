@@ -15,10 +15,13 @@
 | 1230820 | Load Chart, D105 | 15" × 12.44" | 1.296 | $20 | $20.00 | FA Accepted |
 | 1082570 | Load Chart, I70 EZR Mount 3.6K | 10" × 7.25" | 0.503 | $8 ¹ | $8.00 ¹ | Quoted |
 | 1210810 | LBL - DANGER FALLING JIB (ANSI Z535) | 10.5" × 4" | 0.292 | $4.75 ² | $4.75 ² | Quoted |
+| 1279000 | LBL-MAX PLTF CAP 1200 TIP HZRD (ANSI Z535.4) | 8.00" × 1.75" | 0.097 | $3.00 ³ | $3.00 ³ | Quoted |
 
 ¹ **Production rate at qty 20** ($15.91/sq ft — within singles band). Current order (qty 2, SO 20125600) is **$42.00 flat** — job economics / setup recovery framing; NOT a per-label rate. 4-round, 6-model AI validation complete (24 runs): $55 account floor rejected for this label size vs D105 comparison. Tiers: $16.50 / $10.50 / $8.00 / $6.25 / $5.25 / $4.25. No MOQ — Elliott strategic account. Open color conflict — samples delivered (~26 hours), awaiting Sean's PO selection (Safety Yellow assumed — conservative). See `items/1082570.md` for full documentation.
 
 ² **REVALIDATED 2026-06-01 via 4-wave atomic AI validation (24 independent responses).** All prior pricing structure for this item is superseded. **Final tier table locked above benchmark $/sq ft at every tier** — small-format premium consistent and defensible. No inversions. New tiers: **$7.25 (1-9, $24.83/sq ft, +7.3% above benchmark)** / $5.75 (10-19, $19.69/sq ft, +6.3% above benchmark) / $4.75 (20-49, $16.27/sq ft, +5.4% above benchmark) / $4.00 (50-99, $13.70/sq ft, +4.4% above benchmark) / $3.50 (100-199, $11.99/sq ft, +11.0% above benchmark) / $2.75 (200+, $9.42/sq ft, +11.0% above benchmark). The 1-9 tier ($7.25) was set 2026-06-05 in the MOQ purge — 1.5× the $4.75 anchor (= $7.125, snapped up to $7.25), preserving both the 1.5× ratio pattern and the Wave 4 small-format premium ($24.83/sq ft above the benchmark 1-9 $/sq ft). Initial order qty 10: **$57.50** (10-19 tier at $5.75). Projected volume ~30/month starting 2027 → recurring at $4.75 (20-49 tier). **Wave 4 unanimous verdict (binding):** A smaller label must carry equal or higher $/sq ft than a larger label at the same tier — Wave 3 table inverted this at 10-19 (8.5% below benchmark $/sq ft); Nick raised the full table above benchmark to ensure correctness at every tier. **Material cost: $0.60/label** under the account-wide full bleed ink rule established 2026-06-01 (PRICING_RULES.md §25): Orajet 0.292 × $1.21 = $0.353 + lam 0.292 × $0.2389 = $0.070 + ink 0.292 × $0.50 (full bleed) = $0.146 = calculated $0.569 + incidental buffer (conservative round-up) = $0.60. Margin at qty 20-49: ~87.4%. **§26 invoice protection** applies at the 9/10 and 19/20 tier boundaries (where the lower-tier maximum total exceeds the upper-tier minimum total, the buyer is charged the lower of the two — same principle that applies to every other multi-tier item on this account). **Dimensional scope exclusion (still applies):** 1210810 at 0.292 sq ft is below the ~0.5 sq ft singles band scope floor. Excluded from band DATA POINTS on dimensional scope. The validated $/sq ft is now INTENTIONALLY ABOVE the band (small-format premium per Wave 4 verdict) — NOT band-consistent as previously framed. Not added to Pricing Profile band until production-volume acceptance confirmed by Nick. See `items/1210810.md` for full 4-wave validation record.
+
+³ **FOUNDING DATA POINT** for the sub-0.1 sq ft printed/laminated **Micro-Format Band** established 2026-06-05. 4-wave atomic AI validated (24 independent responses, 6 models × 4 waves) + final 6-model comprehensive review (6/6 send as shown). Tiers: **$4.50 / $3.50 / $3.00 / $2.60 / $2.30 / $2.10**. Band anchor: **$30.86/sq ft at qty 20** = **2.0× benchmark** ($15.43/sq ft). Material cost **$0.20/label** under account-wide full bleed ink rule (PRICING_RULES.md §25). Margin at qty 20: ~93%. Annual volume ~200 (Sean stated). Order pattern: batches of 20–50. No first article. No MOQ. The Micro-Format Band is **INDEPENDENT** of the singles band ($15.43–$15.91/sq ft) and the sub-scope handling (0.1–0.5 sq ft) — see the new "Sub-0.1 sq ft Printed/Laminated (Micro-Format Band)" Pricing Profile section below. Future sub-0.1 sq ft production printed/laminated items validate against this band, not the singles band. Drawing dated 2026-06-05 (today — brand-new spec). See `items/1279000.md` for the full 4-wave validation record + final comprehensive review.
 
 ---
 
@@ -128,11 +131,51 @@ Derived from accepted pricing on real items. Tightens with every new item.
 
 **Band width:** Narrowing — 2 consistent data points at opposite ends of the singles scope (0.503 sq ft and 1.296 sq ft), both landing within 3% of each other on a per-sq-ft basis. Band is converging toward $15.43–$15.91/sq ft at qty 20.
 
-**Band scope:** Applies to printed/laminated singles in the ~0.5–2.0 sq ft range. Items below 0.1 sq ft (tiny printed labels) price on minimum run / job economics, not sq ft — see the Tiny Printed Labels table above and P/N 1277970 (founding data point). These items are NOT included in the band calculation.
+**Band scope:** Applies to printed/laminated singles in the ~0.5–1.3 sq ft range (calibrated at the 0.503–1.296 sq ft data points). Items below 0.1 sq ft with **production volume** use the sub-0.1 sq ft **Micro-Format Band** ($30.86/sq ft anchor, 1279000 founding data point — see section below). Items in the 0.1–0.5 sq ft range use **sub-scope handling** (band-consistent $/sq ft with small-format premium per 1210810; excluded from band DATA POINTS until production-volume acceptance). One-off / field-service requests at ≤ 0.1 sq ft continue to route to the tiny one-off floor (see Tiny Printed Labels table above) — the Micro-Format Band applies only to production catalog items.
 
 Items in the 0.1–0.5 sq ft range (such as P/N 1210810 at 0.292 sq ft) are below the band scope floor but above the tiny-label threshold. Correct approach: price at band-consistent $/sq ft (do NOT use the sub-scope position to justify a below-band rate — smaller labels carry higher fixed cost per sq ft, not lower). Exclude from band DATA POINTS until production-volume acceptance confirmed by Nick.
 
 **Floor-anchored orders do NOT feed the band.** One-off small-run orders priced at the $55 account floor (e.g., 1082570 initial qty 2 order at $27.50/label) are explicitly excluded from band calculations. Only production-volume accepted prices enter the band.
+
+### Sub-0.1 sq ft Printed/Laminated (Micro-Format Band)
+
+> **Established 2026-06-05.** Founding data point: P/N 1279000 at 0.097 sq ft (8.00" × 1.75"), $3.00/label at qty 20. Same structural role as cut vinyl Band C (3010707) and cut vinyl Band B (3010704). 4-wave AI validated (24 passes, 6 models × 4 waves) + final 6-model comprehensive review (6/6 send as shown).
+
+**Data points:** 1 founding data point (1279000 at 0.097 sq ft, $3.00/qty 20, $30.86/sq ft — 2026-06-05).
+
+| Metric | Current Band | Notes |
+|--------|-------------|-------|
+| Material cost / label | $0.20 (1279000) | Orajet 0.0972 × $1.21 = $0.1176 + lam 0.0972 × $0.2389 = $0.0232 + ink full bleed 0.0972 × $0.50 = $0.0486 = $0.1894 + incidental buffer to $0.20. |
+| Material cost / sq ft | ~$2.06/sq ft (1279000) | Consistent with 1210810 ($2.05/sq ft) — the buffer convention scales relatively heavier on small sq ft labels. |
+| Selling price / sq ft at qty 20 | **$30.86/sq ft** (1279000) | **2.0× benchmark ($15.43/sq ft).** Anchor for this band. |
+| Margin at qty 20 | ~93% (1279000) | Material-only. Material is 6.7% of price — labor and overhead are 93.3%. Absolute dollar contribution modest ($2.80/label). |
+| Tier compression (1-9 → 200+) | **53.3%** | $4.50 → $2.10. Correctly flatter than benchmark (63.3%) and singles band — material is negligible, fixed labor dominates, labor doesn't compress as steeply at volume on tiny labels. |
+| Margin floor (200+) | ~90.5% (1279000) | Material-only. Healthy. |
+
+**Band anchor: $30.86/sq ft at qty 20.** Anchored by 1279000. **4-wave AI validated + final 6-model comprehensive review (6/6 send as shown).**
+
+**Tier ratios (band template, derived from the validated 1279000 table):**
+- 1-9: 1.50× anchor
+- 10-19: 1.167× anchor
+- 20-49: 1.00× anchor
+- 50-99: 0.867× anchor
+- 100-199: 0.767× anchor
+- 200+: 0.70× anchor
+
+**Step-up justification (100% $/sq ft step-up from singles band, $15.43 → $30.86):** Reflects **fixed-labor dominance** on sub-0.1 sq ft labels. Setup, registration, lamination pass, contour cut, weeding, ANSI compliance inspection, and packaging take approximately the same time per label regardless of size. At 0.097 sq ft — **13.3× smaller than the 1230820 benchmark** — these fixed costs amortize over dramatically less area. The 100% step-up is the structurally correct premium and is competitive with the Pro Sign incumbent estimate ($2.50–$3.25 at qty 20 for similar ANSI safety labels).
+
+**Band isolation (INDEPENDENT):** This band is INDEPENDENT of the singles band (0.5–1.3 sq ft) and the sub-scope handling (0.1–0.5 sq ft). The three size classes do **NOT** contaminate or interact:
+- **Singles band (≥ 0.5 sq ft):** $15.43–$15.91/sq ft at qty 20. Calibrated 0.5–1.3 sq ft.
+- **Sub-scope (0.1–0.5 sq ft):** band-consistent $/sq ft with small-format premium (1210810 at $16.27/sq ft, +5.4% above band). Excluded from band data points until production-volume acceptance.
+- **Micro-Format Band (< 0.1 sq ft):** $30.86/sq ft at qty 20. Founded by 1279000. 100% $/sq ft step-up from the singles band.
+
+Future sub-0.1 sq ft **production-volume** items validate against THIS band ($30.86/sq ft anchor), NOT the singles band. **The tiny route ($55 flat) remains the default for one-off / field-service requests at ≤ 0.1 sq ft** — the Micro-Format Band applies only to production catalog items.
+
+**Per-label floor caution (DO NOT linearly extrapolate below ~0.06 sq ft):** The $/sq ft anchor ($30.86) should NOT be linearly extrapolated to arbitrarily small labels. At extreme smallness, a per-label floor (~$2.50–$3.00 at qty 20) overrides $/sq ft scaling because fixed labor per label has a minimum regardless of how small the label gets. Items below ~0.06 sq ft require fresh job-economics validation, not a linear $/sq ft formula.
+
+**Band width:** Single founding data point at 0.097 sq ft. Band will tighten as additional sub-0.1 sq ft production items are quoted. Items at the boundary (~0.08–0.12 sq ft) still require **4-wave AI validation** — do not parity-quote from 1279000 without running the validation process.
+
+**Override note:** None. Pricing validated through the full 4-wave process + final comprehensive review. Engine consensus accepted.
 
 ### Multi-Label Kits (Same Dimensions, Same Material)
 
@@ -173,6 +216,11 @@ Beyond 2 lam passes or mixed dimensions → cost-build from scratch. Boundary is
 ## Decision Tree — New Single Label
 
 1. Extract dimensions, calculate sq ft.
+1a. **Size-class routing (FIRST CHECK):**
+    - **If sq ft < 0.1 AND this is a production catalog item (not a one-off):** use the **Sub-0.1 sq ft Micro-Format Band** ($30.86/sq ft anchor, 1279000 founding data point). Run 4-wave AI validation if outside ±30% of the founding anchor sq ft (0.097).
+    - **If sq ft < 0.1 AND this is a one-off / field-service request:** price from job economics at the $55 one-off job-economics floor (1230820 FA-anchored). Do NOT use the Micro-Format Band for one-offs.
+    - **If 0.1 ≤ sq ft < 0.5:** use sub-scope handling — price at band-consistent $/sq ft with the small-format premium per 1210810. Exclude from band data points until production-volume acceptance.
+    - **If sq ft ≥ 0.5:** continue to Step 2 (standard singles band).
 2. Pull this Pricing Profile (singles section).
 2a. Check label dimensions: the narrow dimension must be ≤13.5" to laminate in one pass. If both dimensions exceed 13.5", flag immediately — special handling required.
 3. Scale proportionally by sq ft against the $15.43/sq ft band.
