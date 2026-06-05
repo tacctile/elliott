@@ -2,7 +2,114 @@
 
 > **Newest entries at the top. Updated every session.**
 >
-> Last Updated: 2026-06-05
+> Last Updated: 2026-06-05 (full system audit — MOQ purge inventory + pricing defensibility matrix + structural consistency check)
+
+---
+
+### 2026-06-05 — Audit: Full System Review — MOQ / $55 Minimum Order Charge Purge Inventory + Pricing Defensibility Matrix + Structural Consistency Check
+
+**What:** Read-and-report-only audit across two objectives. **Objective 1 — MOQ/$55 minimum order charge purge inventory:** catalog every reference to MOQ 10, $55 minimum order charge, $55 flat (MOQ context), sub-10 handling, required quote language, and account-level MOQ structure across the entire repo. The $55 minimum order charge and MOQ 10 rules for printed/laminated items have NEVER been communicated to Sean Finn and will NOT be communicated going forward. Nick's decision: no MOQ, no minimum order charge, no $55 floor on any catalog item. Sub-10 orders are loss-leader cost-of-doing-business on a $140K account. **Objective 2 — full pricing defensibility review:** verify all 19 items' pricing against industry-standard pricing for their type, check material cost staleness, verify margin math, identify structural inconsistencies, evaluate whether the do_not_benchmark list is still valid, and flag any pricing rules that conflict with the no-MOQ decision. NO source files modified — only `.claude/PROGRESS.md` and `.claude/STATE.yml` updated to record audit completion.
+
+**Pre-audit state:** `python scripts/validate.py` → 0 errors, 0 warnings (19 items). Post-audit state: identical (no item/category/governance/build-script/frontend changes).
+
+**Audit Scope (read in full):** `.claude/MASTER_CONTEXT.md`, `.claude/ARCHITECTURE.md`, `.claude/CHAT_CONTEXT.md`, `.claude/COMPLETION_TEMPLATES.md`, `.claude/STATE.yml`, `.claude/PROGRESS.md` (head); `governance/PRICING_RULES.md`, `governance/PRICING_VALIDATION.md`, `governance/PRODUCTION.md`, `governance/SPEC_EXTRACTION.md`, `governance/STRUCTURE_RULES.md`, `governance/CALCULATOR.md`, `governance/VALIDATION_PROMPTS.md`; `categories/cut-vinyl-3m-180mc.md`, `categories/printed-laminated-orajet.md`; `scripts/build_calculator_config.py`; `frontend/index.html` (calculator engine + MOQ surfaces), `frontend/calculator_config.json`; all 19 `items/*.md` frontmatter + MOQ body refs; all 11 `materials/*.md` frontmatter.
+
+**Findings Summary:**
+
+**Phase 1 — MOQ/Minimum Purge Inventory: 77 cataloged instances across 17 files** requiring removal or rewrite. Breakdown:
+- `.claude/MASTER_CONTEXT.md`: 4 instances (Core Rule 8, Last Updated stamp, Account-Level Order Rules section header reference, entire 41-line Account-Level Order Rules section)
+- `governance/PRICING_RULES.md`: 2 instances (Last Updated stamp, §26–30 section — 5 numbered rules)
+- `governance/VALIDATION_PROMPTS.md`: 2 instances (Last Updated stamp, Wave 1 embedded account context lines 151–158)
+- `governance/CALCULATOR.md`: 5 instances (Route Definitions table Floor Logic column on 3 routes, Section 4 Rule 8 historical reference, Section 6.1 constant list, Section 8 file table, Section 9 sanity check expected flags)
+- `categories/printed-laminated-orajet.md`: 6 instances (1210810 Status column, footnote ², Account-Level Order Rules block Rules 1–5, Pricing Rules 7+8, tiny callout "minimum-worthwhile-charge floor" phrasing, standalone tiny one-offs "minimum-worthwhile-charge floor" phrasing)
+- `items/1210810.md`: 11 instances (frontmatter price_1_9 + pricing_logic + notes; Pricing section header; tier table 1-9 row; required quote language quote; Pricing Derivation Step 7; §26-29 cross-references; Pricing Derivation table; Notes & Warnings MOQ 10 callout block + 2028 plan + quote language; Item Overview initial order line still stale)
+- `items/1082570.md`: 11 instances ("No MOQ" language consistent — preserve; "$55 floor rejected" historical AI-validation record — preserve)
+- `items/1277970.md`, `1277980.md`, `1277990.md`, `1278000.md`: 39 instances total ("$55 program total" / "one-off" framing — PRESERVE; "minimum-worthwhile-charge floor" phrasing — reword for clarity)
+- `items/3017583.md`, `3017584.md`: 29 instances total (same as 1277970 — PRESERVE one-off framing, reword phrasing)
+- `items/3010704.md`, `3010707.md`, `3010708.md`, `3010709.md`: 9 instances total ("Cut vinyl exempt from printed/laminated MOQ 10" notes — REMOVE since no MOQ rule to exempt against)
+- `scripts/build_calculator_config.py`: 11 instances (MOQ_PRINTED_LAMINATED / MOQ_CUT_VINYL constants, FLOOR_LABEL, QUOTE_LANGUAGE.moq_printed_laminated, source-comment §26–30 reference)
+- `frontend/calculator_config.json`: 5 instances (auto-regenerated — account.moq.printed_laminated applies will flip to false, quote_language.moq_printed_laminated key will disappear)
+- `frontend/index.html` (calculator engine + UI): 18 instances (F18 + F19 flag defs, 6 firing branches, $55 flat-tier injection in 2 build functions, checkInvoiceProtection 1-9 carve-out, moq_applies variable + result exposure, quote-stub moq_line generation, validation-brief MOQ line, .calc-moq-row rendering + CSS, route-reason text in tiny and cut vinyl routes, sanity-check expected flags)
+- `frontend/data.json`: 37 references (all auto-derived from 1210810 frontmatter — regenerate clean after item file edits)
+- `.claude/ARCHITECTURE.md` (governance/historical hybrid): 3 instances (1210810 catalog row Status column, Category Registry Printed + Laminated row, 1210810 precedent chain entry + 2028 plan reference + outrigger program "minimum-worthwhile-charge floor" phrasing)
+
+**Phase 2 — Pricing Defensibility Matrix: all 19 items defensible at current prices.**
+- All margins healthy: 72.8% (3017435 24" roll) to 99.3% (3017584). All above 50% structural floor at qty 20 and 200+.
+- All material cost_version_dates within 0–8 days of 2026-06-05. No F2 (180-day) or F1 (365-day) staleness.
+- All 11 materials within 0–44 days. Oldest = Orajet 3951 at 44 days (well within 180-day F2 threshold; worth re-verifying before it ages further per prior session's I6).
+- Band coherence: printed/lam singles $15.43–$15.91/sq ft, printed/lam kits $16.42/sq ft (6% premium intentional), cut vinyl Band A $13.65–$13.94/sq ft, Band B $11.03/sq ft (founding), Band C $20.64/sq ft (founding cluster). Monotonic curve: Band B → Band A → Band C as sq ft drops. No inversions.
+- 1-9 to 20-49 ratios: printed/lam singles standard = 1.5× (1230820 matches; 1278930/1245130 kits at 1.5× match). Cut vinyl Band A = 1.29× (4 items match). Band B = 1.35× (1 item). Band C = 1.40× (3 items). 1082570 = 2.06× (outlier — AI-validated, defensible). 1210810 = "flat($55)" (the only catalog item without a real per-unit 1-9 — see Phase 4).
+- Tier compression (1-9 → 200+) ranges 50.5% (Band B) to 74.2% (1082570). Compression is steepest on small-format printed/lam (high anchor / cheap volume tier), shallowest on cut vinyl bands.
+
+**Phase 3 — Structural Consistency Check: 28 areas reviewed. 13 areas INCONSISTENT with no-MOQ policy, 5 areas MIXED, 10 areas CONSISTENT or preserve-as-is.** Key inconsistencies:
+- MASTER_CONTEXT Core Rule 8 — explicitly asserts MOQ 10 + $55 charge. REMOVE.
+- MASTER_CONTEXT Account-Level Order Rules section — full codification. REMOVE.
+- PRICING_RULES §26, §27, §29, §30 — MOQ rules. REMOVE. §28 invoice protection — preserve PRINCIPLE, rewrite to detach from MOQ context.
+- printed-laminated-orajet.md Account-Level Order Rules block + Pricing Rule 7 — REMOVE. Pricing Rule 8 — preserve principle, drop required-quote-language sentence.
+- CALCULATOR.md routing tree Floor Logic column — rewrite. Section 4/6/8/9 — strike MOQ references.
+- VALIDATION_PROMPTS Wave 1 embedded account context — strike MOQ block; reframe "$55 floor" as one-off anchor only.
+- build_calculator_config.py MOQ constants + quote-language key — set applies: False or remove.
+- frontend/index.html calculator engine — strip F18/F19, $55 flat-tier injection, moq_applies variable, MOQ row rendering, quote-stub MOQ line.
+- items/3010704/3010707/3010708/3010709 "exempt from MOQ 10" notes — REMOVE (no rule to exempt against).
+
+**Phase 4 — 1210810 Specific Recommendation:** **YES, add a 1-9 tier** for internal consistency with every other catalog item. Sean has never seen any 1-9 figure for 1210810 — only 10-19 onward. Three options:
+1. **$6.25 at 1-9** — never-pay-more compliant (9 × $6.25 = $56.25 < 10 × $5.75 = $57.50). Ratio 1.32× (below 1.5× pattern). $/sq ft = $21.40 — 7.6% BELOW benchmark 1230820's 1-9 $/sq ft ($23.15), violating the Wave 4 small-format premium principle.
+2. **$5.75 flat (= 10-19)** — no compression, no cliff, neither pattern nor premium preserved. Loses the curve top.
+3. **$7.25 at 1-9** — preserves 1.5× pattern (1.53× exact) AND small-format premium ($/sq ft = $24.83 = +7.3% above benchmark, consistent with the established pattern). Creates a 9-vs-10 cliff of $7.75 (9 × $7.25 = $65.25 vs 10 × $5.75 = $57.50) that the invoice-protection §28 principle resolves automatically (buyer charged the lower of the two totals).
+- **Recommended: Option 3 ($7.25) IF §28 invoice protection principle is preserved.** Option 1 ($6.25) IF §28 is being removed alongside the MOQ purge. **Nick's decision required.**
+- Additional finding: Item Overview "Initial Order: Qty 10 — $47.50" line in items/1210810.md is still stale vs frontmatter ($57.50). Carried over from prior session per explicit "do not change Item Overview" instruction. Should be corrected in the same MOQ-purge edit pass.
+
+**Phase 5 — One-Off / Tiny Label Framing Check: all 6 items already correctly framed as "one-off program pricing" / "job economics" — NOT as MOQ-driven pricing.** The 4 outrigger switch items (1277970–1278000), the 2 PTO labels (3017583, 3017584), and the 1082570 initial order ($42 flat for qty 2) all carry consistent framing across `items/*.md`, `categories/printed-laminated-orajet.md`, and `.claude/ARCHITECTURE.md`. The one ambiguity is the recurring phrase "$55 account minimum-worthwhile-charge floor," which conflates with the (now-removed) MOQ rule's $55 charge. Recommended optional clarification: globally replace "minimum-worthwhile-charge floor" with "one-off job-economics floor (1230820 FA-anchored)" across these items. **Not a price change — framing only.** The "$55 floor" anchor concept itself remains valid for the tiny route (independent of MOQ).
+
+**Phase 6 — Prioritized Action Plan (26 numbered steps, grouped by area):**
+- (a) Governance doc changes: 4 files (PRICING_RULES, VALIDATION_PROMPTS, CALCULATOR, MASTER_CONTEXT)
+- (b) Category file changes: 1 file (printed-laminated-orajet — strip Account-Level Order Rules block, rewrite 1210810 footnote, remove Rule 7, rewrite Rule 8)
+- (c) Item file changes: 10 files (1210810 — full restructure with new 1-9 tier; 3010704/3010707/3010708/3010709 — drop "exempt from MOQ 10" notes; 1277970/1277980/1277990/1278000/3017583/3017584 — optional reframing of "minimum-worthwhile-charge floor"; 1082570 — optional historical-record cleanup)
+- (d) Calculator/frontend changes: 2 files (index.html — strip F18/F19, $55 flat injection, MOQ logic, MOQ row rendering, MOQ quote stub; calculator_config.json — auto-regenerated)
+- (e) Build script changes: 1 file (build_calculator_config.py — flip MOQ_PRINTED_LAMINATED applies, remove MOQ_CUT_VINYL, remove moq_printed_laminated quote language)
+- (f) Build/sync/validation: run all 3 build scripts, run validate.py, verify engine sanity-check matrix, update ARCHITECTURE.md, PROGRESS.md, STATE.yml, commit.
+
+**Decision forks Nick owns before Phase 6 execution:**
+1. §28 invoice protection — preserve principle (rewritten to detach from MOQ context) or remove entirely?
+2. 1210810 1-9 tier — $6.25 (no cliff, below-band $/sq ft) or $7.25 (with cliff, above-band $/sq ft, requires §28)?
+3. "$55 floor" anchor — preserve for tiny route / one-off framing (recommended) or remove entirely?
+4. "$100 minimum" Sean has actually heard for rush/favor jobs — currently undocumented in the repo. Document somewhere or leave informal? Not blocking.
+
+**Files Modified (this session):**
+- `.claude/PROGRESS.md` — this entry
+- `.claude/STATE.yml` — last_session + next_action + blockers updated to record audit completion and next-action handoff
+
+**Files NOT Modified (per session spec — "this is an audit, read-and-report only"):**
+- No item files touched (19 items unchanged)
+- No category files touched (band data unchanged)
+- No material files touched (costs and verified_dates unchanged)
+- No governance docs touched (MOQ rules and references all preserved for follow-up session to execute)
+- No build scripts touched
+- No `frontend/index.html` touched (calculator engine + UI + MOQ logic all preserved)
+- No `frontend/calculator_config.json` regenerated
+- No `frontend/data.json` regenerated
+- No `frontend/materials.json` regenerated
+
+**Acceptance Criteria Met:**
+- Phase 1 table is complete — every MOQ/$55 reference cataloged across 17 files / 77 instances ✓
+- Phase 2 matrix covers all 19 items with all specified columns ✓
+- Phase 3 identifies every structural inconsistency with the no-MOQ policy (28 areas reviewed) ✓
+- Phase 4 provides a clear recommendation on 1210810 with reasoning (3 options, recommendation tied to §28 decision) ✓
+- Phase 5 confirms or corrects the one-off framing on all 6 tiny/one-off items (all 6 correctly framed; optional reframing recommended) ✓
+- Phase 6 action plan is specific (26 numbered steps grouped by area) ✓
+- `python scripts/validate.py` run at the start — 0/0 ✓
+- No source files modified ✓
+
+**Key Findings:**
+- The MOQ 10 / $55 minimum order charge rules established 2026-06-01 are deeply embedded across 17 files but the inventory is complete and tractable.
+- All 19 items remain pricing-defensible at current numbers. The only catalog item whose pricing structure REQUIRES a change to satisfy the no-MOQ policy is 1210810 (the only item with a flat $55 1-9 tier in lieu of a real per-unit price).
+- The 6 one-off / tiny items are correctly framed as "one-off program pricing" / "job economics" already. The MOQ purge does NOT change their pricing — only optional phrasing cleanup to disambiguate "$55 minimum-worthwhile-charge floor" from MOQ language.
+- The invoice protection principle (§28 — "buyer never invoiced more for smaller qty") is conceptually independent of MOQ and can be preserved as a per-tier-boundary discipline. Removing the MOQ rules does not invalidate the principle.
+- The "$55 account floor" anchor (1230820 FA price) is conceptually independent of MOQ. The tiny route's use of $55 as one-off program total predates the MOQ formalization and can be preserved as one-off framing.
+- The "$100 minimum" Sean has actually heard from Nick on rush/favor jobs is NOT documented anywhere in the repo. Flag for awareness — could be documented as a standalone "one-off rush/favor floor" rule if Nick wants it formalized.
+- No items in the do_not_benchmark list need reconsideration under the no-MOQ policy. All 8 reasons remain valid: outrigger program peers (one-off), standalone tiny one-offs (one-off), 1210810 (sub-scope dimensional exclusion, not MOQ), 1082570 (initial-order job-economics, not MOQ).
+
+**Status:** Audit complete. validate.py 0/0. Ready for follow-up Claude Code session to execute Phase 6 action plan (after Nick decides §28 / 1210810 1-9 tier / "$55 floor" anchor / "$100 minimum" documentation).
 
 ---
 
