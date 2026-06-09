@@ -2,7 +2,7 @@
 
 > **Living document — updated every session that changes structure.**
 >
-> Last Updated: 2026-06-09 (Session F: P/N 1068270 added — CHART-EZR BASKET JIB 500# / G85 BASKET 500#, printed/laminated load chart label at 7.25" × 10.00" (0.503 sq ft). **Direct parity clone of P/N 1082570** — orientation-flipped W/H pair (7.25 W × 10 H vs 10 W × 7.25 H on 1082570), identical sq ft (0.503), identical material family (Orajet 3951 + Polyester Lam), identical material cost ($1.33), identical tier table ($16.50/$10.50/$8.00/$6.25/$5.25/$4.25), identical margin profile (~83% at qty 20). Direct parity exemption applied per `governance/PRICING_VALIDATION.md` — no multi-round AI validation required; the 4-round / 6-model / 24-run validation on 1082570 is inherited. Artwork content differs (G85 basket jib 500# load chart vs I70 EZR Mount 3.6K load chart). Status Quoted. Item count 20 → 21. Previously Session E: P/N 3010701 added — LBL-ELLIOTT MED RD, Cardinal Red cut vinyl wordmark at 49.16" × 9.38" (3.202 sq ft). First Band A data point outside the 2.51–2.56 sq ft cluster — founds the 3–5 sq ft Band A range and establishes the curve between the cluster and Band B (LRG). Middle member of the confirmed ELLIOTT S/M/L wordmark family (SML undefined, MED = 3010701, LRG = 3010704). $44/qty 20 at $13.74/sq ft — inside Band A range. Tier table $57/$50/$44/$42/$40/$39. 4-wave AI validated (24 passes) + revised Wave 2 with corrected geometry; Wave 4 unanimous YES. No override — engine consensus accepted.)
+> Last Updated: 2026-06-09 (Session G: P/N 1278890 added — 2-LABEL LIFTING CAPACITY CHART KIT, E160 V3 — printed/laminated 2-label matched-set kit at 7.88" × 11.13" per label (0.609 sq ft/label, 1.218 sq ft/kit). **Per-label parity with P/N 1278930 (FA Accepted)** — same dimensions, same material (Orajet 3951 cast vinyl + 1-mil polyester overlaminate), same single-pass lamination geometry, within ≤2 lam pass parity boundary. **4-wave atomic AI validated (24 independent runs, 6 models × 4 waves) — Wave 4 unanimous YES, no modifications, engine consensus accepted, no override.** $10.00/label at qty 20 = $16.42/sq ft — lands exactly on kit band anchor. Tier table $30/$24/$20/$17/$14/$12. Margin at qty 20 ~88% material-only. LABEL-B revised 06/08/26 (ECO# 28830, "UPDATED: LOGO ON TOP OF CHARTS", DJS) — artwork-only change, no impact on dimensions/material/pricing. INTERNAL ONLY: 200+ tier margin compression is structural and inherited from 1278930 and 1245130 — January 2027 normalization argument must anchor to material cost increases or process complexity changes, NOT per-label rate arguments; Sean now has three accepted data points at $10.00/label. Track 200+ cycle time on first production run for the E160/E190 kit-family normalization anchor. Item count 22 → 23. Previously Session F: P/N 1068270 added — CHART-EZR BASKET JIB 500# / G85 BASKET 500#, printed/laminated load chart label at 7.25" × 10.00" (0.503 sq ft), direct parity clone of P/N 1082570.)
 
 ---
 
@@ -13,6 +13,7 @@ All quoted items. Updated when items are added, repriced, or status changes.
 | P/N | Description | Material Family | Item Type | Label Count | Sq Ft/Label | Price (qty 20) | Per Label (qty 20) | Margin (qty 20) | Status | Item File |
 |-----|-------------|-----------------|-----------|-------------|-------------|-----------------|---------------------|------------------|--------|-----------| 
 | 1230820 | Load Chart Label, Model D105 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 1.296 | $20 | $20.00 | ~84% | FA Accepted | `items/1230820.md` |
+| 1278890 | 2-Label Lifting Capacity Chart Kit, E160 V3 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Kit | 2 | 0.609 | $20 | $10.00 | ~88% | Quoted | `items/1278890.md` |
 | 1278930 | 3-Label Lifting Capacity Chart Kit, E190 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Kit | 3 | 0.609 | $30 | $10.00 | ~90% | FA Accepted | `items/1278930.md` |
 | 1245130 | 5-Label Lifting Capacity Chart Kit, E160 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Kit | 5 | 0.609 | $50 | $10.00 | ~90% | Quoted | `items/1245130.md` |
 | 1205720 | E190 Cardinal Red Model Designation | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.56 | $35 | $35.00 | ~75% | FA Accepted | `items/1205720.md` |
@@ -42,7 +43,7 @@ All quoted items. Updated when items are added, repriced, or status changes.
 | Category | Material Family | Category File | Item Count | Profile Status |
 |----------|-----------------|---------------|------------|----------------|
 | Cut Vinyl Lettering | 3M 180mC Cut Vinyl | `categories/cut-vinyl-3m-180mc.md` | 9 | **Three independent size-class bands.** Band A — Small-Format (1.0–5.0 sq ft): **5 data points** — 4 in the original 2.51–2.56 sq ft cluster (1205720, 1186310, 3017435, 3018378) all at $35/qty 20, $13.65–$13.94/sq ft, plus the new MED data point 3010701 at 3.202 sq ft, $44/qty 20, $13.74/sq ft (added 2026-06-09 — first Band A item outside the 2.51–2.56 cluster; establishes the curve between the cluster and Band B; middle member of the confirmed ELLIOTT S/M/L wordmark family). Concession-phase per Override on 1205720; 3010701 inherits the concession-phase context and moves with the band at January 2027 normalization (~9% uplift, $44 → ~$48). January 2027 normalization plan applies to Band A only. Band B — Large-Format (5+ sq ft): 1 founding data point (3010704 at 7.069 sq ft, $78/qty 20, $11.03/sq ft). 19.3% $/sq ft step-down from Band A reflects fixed-labor amortization, simpler weeding geometry per sq ft, and lower material cost per sq ft on large formats. 4-wave AI validated (24 passes, unanimous Wave 4). Band C — Sub-1 sq ft (< 1 sq ft): 3 founding data points (3010707 Cardinal Red, 3010708 Black, 3010709 White, all at 0.969 sq ft, $20/qty 20, $20.64/sq ft) — color-parity cluster, pricing anchored to worst-case Cardinal Red ($3.79 material). 51% $/sq ft step-up from Band A reflects fixed-labor dominance on sub-1 sq ft items + elevated weeding complexity (16 mixed-case characters, 4 enclosed counters, 2 dots, tight q-u channel) + higher material cost per sq ft. 4-wave AI validated (24 passes, unanimous Wave 4 YES on full tier table) + final independent 6-model industry-validation audit (6/6 APPROVE, confidence HIGH). All three bands are INDEPENDENT — do not contaminate or interact. Future cut vinyl items route by sq ft: ≥ 5.0 → Band B; 1.0 ≤ sq ft < 5.0 → Band A; < 1.0 → Band C. The January 2027 normalization plan applies to Band A only. |
-| Printed + Laminated | Orajet 3951 Cast + Polyester Lam | `categories/printed-laminated-orajet.md` | 13 | **Full bleed ink rule ($0.50/sq ft × full label sq ft) in effect account-wide (established 2026-06-01). Three INDEPENDENT size-class bands now defined (Micro / Sub-scope / Singles).** Singles (≥0.5 sq ft, calibrated 0.5–1.3 sq ft): Narrowing — 3 confirmed band data points (1230820 at 1.296 sq ft FA Accepted; 1082570 at 0.503 sq ft quoted, $15.91/sq ft — band-consistent, AI validated; 1068270 at 0.503 sq ft added 2026-06-09 as a direct parity clone of 1082570 — orientation-flipped W/H, identical sq ft / material / tier table / margin profile; inherits 1082570's 4-round / 6-model / 24-run validation per direct parity exemption in PRICING_VALIDATION.md). Sub-scope single (0.1–0.5 sq ft): 1210810 at 0.292 sq ft, $4.75 ($16.27/sq ft — INTENTIONALLY ABOVE band per Wave 4 verdict; 4-wave atomic AI validated 2026-06-01; small-format premium consistent and defensible at every tier); excluded from band DATA POINTS on dimensional scope until production-volume acceptance. **Micro-Format Band (< 0.1 sq ft, production volume) — established 2026-06-05.** 1 founding data point (1279000 at 0.097 sq ft, $3.00/qty 20, **$30.86/sq ft = 2.0× benchmark**). 100% $/sq ft step-up from singles band justified by fixed-labor dominance on sub-0.1 sq ft items. 4-wave AI validated (24 passes, 6 models × 4 waves) + final 6-model comprehensive review (6/6 send as shown). Tier compression 53.3% (correctly flatter than singles — material negligible, labor dominant). INDEPENDENT band — does not contaminate or interact with singles or sub-scope. Future sub-0.1 sq ft production items validate against THIS band; one-off / field-service at ≤0.1 sq ft continues to route to the tiny $55 floor. Kits: Moderate (2 data points). Tiny one-offs (≤0.1 sq ft): 4 one-off outrigger program peers ($55 program total / $2.75 per label) + 2 standalone one-offs (3017583 at 0.026 sq ft and 3017584 at 0.00174 sq ft — smallest item on the account; both $55 program total / $9.17 per label at qty 6) — explicitly excluded from any band; do NOT benchmark |
+| Printed + Laminated | Orajet 3951 Cast + Polyester Lam | `categories/printed-laminated-orajet.md` | 14 | **Full bleed ink rule ($0.50/sq ft × full label sq ft) in effect account-wide (established 2026-06-01). Three INDEPENDENT size-class bands now defined (Micro / Sub-scope / Singles).** Singles (≥0.5 sq ft, calibrated 0.5–1.3 sq ft): Narrowing — 3 confirmed band data points (1230820 at 1.296 sq ft FA Accepted; 1082570 at 0.503 sq ft quoted, $15.91/sq ft — band-consistent, AI validated; 1068270 at 0.503 sq ft added 2026-06-09 as a direct parity clone of 1082570 — orientation-flipped W/H, identical sq ft / material / tier table / margin profile; inherits 1082570's 4-round / 6-model / 24-run validation per direct parity exemption in PRICING_VALIDATION.md). Sub-scope single (0.1–0.5 sq ft): 1210810 at 0.292 sq ft, $4.75 ($16.27/sq ft — INTENTIONALLY ABOVE band per Wave 4 verdict; 4-wave atomic AI validated 2026-06-01; small-format premium consistent and defensible at every tier); excluded from band DATA POINTS on dimensional scope until production-volume acceptance. **Micro-Format Band (< 0.1 sq ft, production volume) — established 2026-06-05.** 1 founding data point (1279000 at 0.097 sq ft, $3.00/qty 20, **$30.86/sq ft = 2.0× benchmark**). 100% $/sq ft step-up from singles band justified by fixed-labor dominance on sub-0.1 sq ft items. 4-wave AI validated (24 passes, 6 models × 4 waves) + final 6-model comprehensive review (6/6 send as shown). Tier compression 53.3% (correctly flatter than singles — material negligible, labor dominant). INDEPENDENT band — does not contaminate or interact with singles or sub-scope. Future sub-0.1 sq ft production items validate against THIS band; one-off / field-service at ≤0.1 sq ft continues to route to the tiny $55 floor. Kits: **3 data points** (1278890 — 2 labels, Quoted, added 2026-06-09 as 4-wave validated kit at $20/kit at qty 20, $10.00/label, $16.42/sq ft — lands exactly on kit band anchor; 1278930 — 3 labels, FA Accepted, $30/kit; 1245130 — 5 labels, Quoted, $50/kit). Three-way per-label parity at $10.00/label at qty 20 holds across the full kit family. Per-label parity boundary (≤2 lam passes, same dimensions, same material) confirmed by 1278890 at 1 lam pass / 2 labels (single-orientation 90°-rotated head-to-toe print layout). 200+ tier margin compression is structural and inherited across all three kit-family members — January 2027 normalization on the kit family must anchor to material cost increases or process complexity changes, NOT per-label rate arguments. Tiny one-offs (≤0.1 sq ft): 4 one-off outrigger program peers ($55 program total / $2.75 per label) + 2 standalone one-offs (3017583 at 0.026 sq ft and 3017584 at 0.00174 sq ft — smallest item on the account; both $55 program total / $9.17 per label at qty 6) — explicitly excluded from any band; do NOT benchmark |
 | Panel Decals | Convex High Bond + Poly Lam | Not yet created | 0 | No profile — first item establishes it |
 | Polycarbonate | Lexan/Polycarbonate | Not yet created | 0 | No profile — first item establishes it |
 
@@ -55,7 +56,105 @@ How prices were originally established. New items validate against Category Pric
 ```
 P/N 1230820 (ROOT BENCHMARK — $20/ea at qty 20)
 ├── P/N 1278930 (1.5x → $30/kit at qty 20)
-│   └── P/N 1245130 (5/3 parity → $50/kit at qty 20)
+│   ├── P/N 1245130 (5/3 parity → $50/kit at qty 20)
+│   └── P/N 1278890 (2-LABEL KIT-FAMILY MEMBER — per-label parity → $20/kit at qty 20, $10.00/label, $16.42/sq ft — lands exactly on kit band anchor)
+│           0.609 sq ft per label, 1.218 sq ft total per kit (2 labels, both 7.88" × 11.13").
+│           Drawing reviewed as TWO uploaded spec sheet images (LABEL-A and LABEL-B) in
+│           Claude Chat on 2026-06-09 and confirmed as a 2-label matched-set kit. Drawing
+│           dated 03/04/26 Rev A on both labels; LABEL-B revised 06/08/26 under ECO# 28830
+│           ("UPDATED: LOGO ON TOP OF CHARTS", DJS) — artwork-only change, no impact on
+│           dimensions, material, corners, lamination, cut, packaging, or pricing.
+│           Engineer DAW (revision DJS).
+│           PER-LABEL PARITY APPLIES per account rule — same dimensions as 1278930 (FA
+│           Accepted, $10.00/label at qty 20) and 1245130 (Quoted, $10.00/label at qty 20),
+│           same material family (Orajet 3951 cast vinyl + 1-mil polyester overlaminate),
+│           same single-pass lamination geometry, well within the ≤2 lam pass parity
+│           boundary. $10.00/label at qty 20 = $16.42/sq ft = exactly on the kit band
+│           anchor at every metric.
+│           Material cost $2.40/kit under account-wide full bleed ink rule (PRICING_RULES.md
+│           §25): Orajet 1.218 × $1.21 = $1.474 + lam 1.218 × $0.2389 = $0.291 + ink full
+│           bleed 1.218 × $0.50 = $0.609 = $2.374 calculated + incidental buffer
+│           (conservative round-up) = $2.40. Margin at qty 20: ~88% material-only.
+│           Production geometry: 90° rotation head-to-toe print layout on the 28" Roland
+│           print bed at ~25" wide overall footprint (3" clearance). Single orientation
+│           group at lamination — both labels at 7.88" feed across the 13.5" laminator
+│           (5.62" clearance) in ONE pass. Single cut run. Most efficient 2-label kit
+│           configuration possible on current equipment — same single-pass efficiency
+│           pattern as 1278930.
+│           VALIDATED 2026-06-09 via 4-wave atomic AI validation (24 independent responses,
+│           6 models × 4 waves):
+│             Wave 1 (Build, NO anchor exposure): 6/6 models independently built the
+│               IDENTICAL tier table ($30 / $24 / $20 / $17 / $14 / $12). Central finding —
+│               $10.00/label at qty 20 lands exactly on the $16.42/sq ft kit band anchor;
+│               invoice protection holds at every tier boundary with no inversions; kit
+│               slots naturally between 1278930 (3-label) and 1245130 (5-label) at every
+│               tier.
+│             Wave 2 (Destruction): 6/6 HIGH severity on all four attack vectors
+│               (Buyer/Procurement, Competitor, Cost Auditor, Strategic). Primary findings —
+│               (1) 200+ tier at $12/kit operates at near-breakeven fully-loaded at $85/hr
+│                   shop rate and realistic 7.5–8.5 min/kit cycle times — accepted as a
+│                   STRUCTURAL condition inherited from 1278930 and 1245130, not a new
+│                   problem introduced by this quote; breaking parity here would corrupt
+│                   the three-way kit-family triangulation that is Pro Label's most
+│                   valuable strategic asset entering the January 2027 normalization;
+│               (2) $17 clean-dollar at 50-99 confirmed correct over $17.34 strict 2/3
+│                   parity number — prevents the buyer from doing cross-reference math on
+│                   the kit family;
+│               (3) Strategic cage confirmed — three accepted data points at $10.00/label
+│                   permanently establishes the per-label rate for this material and size
+│                   on this account; January 2027 normalization argument must be anchored
+│                   to material cost increases or process complexity changes, NOT per-label
+│                   rate arguments.
+│               Verdict: 5/6 Yes with modifications (all modifications targeting 200+);
+│                 1/6 No (same modifications targeting 200+). Wave 3 buyer simulation
+│                 resolved every proposed modification in favor of sending as shown.
+│             Wave 3 (Buyer Sim, all 6 role-playing Sean Finn): 6/6 Sean simulations sent
+│               the PO AS-IS, without question. Instant approval at $20/kit at qty 20 —
+│               rubber stamp across all 6 simulations. 1-9 tier at $30 universally
+│               dismissed as Sean relies on §26 and will never pay $270 for 9 kits.
+│               $17 vs $17.34 at 50-99 — Sean notices the $0.17/label delta, does NOT
+│               push back, clean dollar is correct. 200+ at $12 did not trigger Sean
+│               today — he interpreted the floor as the tier where Pro Label approaches
+│               Pro Sign's historical pricing range, read as a reason to CONSOLIDATE
+│               VOLUME toward Pro Label, NOT as a renegotiation lever. All 6 models
+│               confirmed Sean permanently locks $10.00/label as the account standard for
+│               this material and size. Pushback threshold: above $10.50/label at qty 20.
+│               Quote email anchor line confirmed: "Same material, same process, same
+│               per-label rate at qty 20 as the rest of the kit family."
+│             Wave 4 (Final Synthesis, cold atomic sessions with full dossier): 6/6
+│               UNANIMOUS YES — send as shown. No tier modifications adopted. Every model
+│               independently concluded that the 200+ margin problem is STRUCTURAL and
+│               INHERITED from 1278930 and 1245130 — fixing it by breaking parity here
+│               would corrupt the three-way triangulation that is Pro Label's most
+│               valuable strategic asset entering the January 2027 normalization.
+│           Nick's decision: Accepted Wave 4 unanimous consensus. No modifications. No
+│             override type — engine consensus accepted.
+│           Tiers: $30 / $24 / $20 / $17 / $14 / $12. Margin at qty 20: ~88% material-only.
+│             Margin floor at 200+: ~80% material-only. Tier compression 60% across the
+│             tier table — uniform with 1278930 and 1245130.
+│           §26 invoice protection holds at every tier boundary (9/10, 19/20, 49/50,
+│             99/100, 199/200) — buyer is always charged the lesser of adjacent tier
+│             totals at billing time. Same pattern as 1278930 and 1245130.
+│           No first article requested or offered. No MOQ. The first production run on
+│             this kit functions as a de facto internal QA check on the LABEL-B logo-
+│             position revision (ECO# 28830).
+│           INTERNAL ONLY (do NOT surface to buyer):
+│             (a) January 2027 normalization anchor — 200+ tier ($12/kit, $6.00/label)
+│                 operates at near-breakeven fully-loaded at $85/hr × 7.5–8.5 min/kit
+│                 realistic cycle times. STRUCTURAL condition shared across the full kit
+│                 family (1278890 / 1278930 / 1245130), NOT a new problem here. Sean now
+│                 has THREE accepted data points at $10.00/label for this material and
+│                 size — he will use them. January 2027 normalization argument must be
+│                 built on material cost increases, process complexity changes, or formal
+│                 relationship-phase transition language — NOT per-label rate arguments.
+│                 The $6.00/label floor at 200+ is the hardest number to move in 2027 on
+│                 the kit family.
+│             (b) 200+ cycle time tracking instruction — track actual cycle time on the
+│                 first 200+ unit run for this item. Use it (plus comparable cycle data
+│                 from 1278930 and 1245130) as the documented operational anchor for the
+│                 January 2027 normalization discussion on the entire E160/E190 kit
+│                 family. Operational anchor data — NOT buyer-facing.
+│           Status: Quoted.
 ├── P/N 1082570 (singles band → $8/label at qty 20, $15.91/sq ft — within band)
 │   │   0.503 sq ft — low end of singles scope. Proportional sq ft scaling from 1230820.
 │   │   Current order qty 2 (SO 20125600): $42 flat (job economics, setup recovery).
