@@ -14,6 +14,7 @@
 | 1186310 | E160 Cardinal Red | 33-9/16" × 11" | 2.564 | $35 | Quoted |
 | 3017435 | ELLIOTT White | 43.91" × 8.38" | 2.56 | $35 | Quoted |
 | 3018378 | D115 Olympic Blue | 32.88" × 11.00" | 2.512 | $35 | Quoted |
+| 3010701 | LBL-ELLIOTT MED RD (medium-format wordmark — first Band A item beyond the 2.51–2.56 sq ft cluster) | 49.16" × 9.38" | 3.202 | $44 | Quoted |
 | 3010704 | LBL-ELLIOTT LRG RED (large-format wordmark) | 70-13/16" × 14-3/8" | 7.069 | $78 | Quoted |
 | 3010707 | ElliottEquip.com URL Wordmark, Cardinal Red | 34.887" × 4" | 0.969 | $20 | Quoted |
 | 3010708 | ElliottEquip.com URL Wordmark, Black | 34.887" × 4" | 0.969 | $20 | Quoted |
@@ -27,24 +28,26 @@ Derived from accepted pricing on real items. Tightens with every new item. New i
 
 The category now contains THREE independent size-class bands. They do NOT contaminate or interact with each other. Each band is calibrated on its own data points and normalizes on its own schedule.
 
-### Band A — Small-Format Cut Vinyl (2.51–2.56 sq ft)
+### Band A — Small-Format Cut Vinyl (1.0–5.0 sq ft)
 
-**Data points:** 4 items at ~2.51–2.56 sq ft (1205720, 1186310, 3017435, 3018378)
+**Data points:** 5 items — 4 in the original small-format cluster (~2.51–2.56 sq ft: 1205720, 1186310, 3017435, 3018378) + 1 medium-format Band A data point (3010701 at 3.202 sq ft, 2026-06-09).
 
 | Metric | Current Band | Notes |
 |--------|-------------|-------|
-| Material cost / label | $7.79–$9.51 | Range: 48" roll ($7.79 best nesting) to 24" roll ($8.74, $8.92, $9.51 by color/roll) |
-| Material cost / sq ft | ~$3.04–$3.72 | Vinyl ($2.15–$2.71) + tape ($0.5911/sq ft) + waste |
-| Selling price / sq ft at qty 20 | ~$13.65–$13.94/sq ft | $35 / sq ft — consistent across all 4 items |
-| Margin at qty 20 | ~73–78% | Range driven by material cost, not price variation |
-| Tier compression (1-9 → 200+) | 51% discount | $45 → $22 |
-| Margin floor (200+) | ~57–65% | 24" roll White floor at ~57% — migrate to 48" stock at 200+ volumes |
+| Material cost / label | $7.79–$12.78 | Cluster (~2.5 sq ft): $7.79–$9.51 (color/roll-dependent). MED (3010701 at 3.202 sq ft): $12.78 — higher absolute material cost driven by longer feed length (49.16" cut vs ~33.5" on the cluster). |
+| Material cost / sq ft | ~$3.04–$3.99 | Cluster: ~$3.04–$3.72. MED: ~$3.99 (slightly higher $/sq ft material — the 49.16" cut amortizes the 6" per-row spacing across a wider label, but the feed-length-driven vinyl cost dominates at 2-up nesting). |
+| Selling price / sq ft at qty 20 | ~$13.65–$13.94/sq ft | Cluster: ~$13.65–$13.94 at $35. MED: $13.74 at $44 — lands inside the cluster $/sq ft range. The band is structurally coherent across the 2.51–3.202 sq ft range. |
+| Margin at qty 20 (material-only) | ~70.9–78% | Cluster: ~73–78%. MED: ~70.9% — fractional softness reflects the higher feed-length-driven material cost share at the same $/sq ft. |
+| Tier compression (1-9 → 200+) | 31.6–51% discount | Cluster: 51% ($45 → $22). MED: 31.6% ($57 → $39) — intentionally tighter at the 200+ floor to stay above the LRG inversion floor and reflect fully-burdened margin at high volume per Wave 2. |
+| Margin floor (200+, material-only) | ~57–67% | Cluster: ~57–65% (24" roll White floor at ~57%). MED 200+: ~67% (well above the ~57% warn floor; the tighter compression preserves margin at the floor). |
 
-**Band width:** Narrowing — 4 data points at 2.51–2.564 sq ft all at the same $35 price. Per-sq-ft rate range is $13.65–$13.94 (consistent; lower bound reflects 3-decimal sq ft precision on Cardinal Red E160/E190 dimensions, equivalent to $13.67 at 2-decimal precision). Items at significantly different sq ft (sub-1 or 5+) will still need validation OR a separate size-class band (see Band B).
+**Band width:** Widened with the addition of 3010701. The band now spans **0.5 sq ft of confirmed data** (2.512 → 3.202) and validates against a known LRG anchor at 7.069 sq ft. The 4-item cluster at $13.65–$13.94/sq ft remains the dominant data concentration; the MED data point at $13.74/sq ft confirms the $/sq ft rate is preserved at 25% larger area within the band. Items significantly outside the calibrated range (~4.5–5.5 sq ft Band B boundary, or below ~2.0 sq ft) still require 4-wave AI validation OR a separate size-class band (see Bands B and C).
 
-**Override note:** P/N 1205720 was priced as a Relationship Concession ($35 vs AI consensus of $38–42). The current per-sq-ft band ($13.67–$13.93) reflects concession-phase pricing. AI consensus range would place the band at ~$14.84–$16.41/sq ft. As the relationship matures, the band is expected to shift upward. Until then, $13.67–$13.93 is the accepted market-validated rate.
+**3010701 — first Band A data point outside the 2.51–2.56 sq ft cluster (2026-06-09).** Founding the 3–5 sq ft Band A range. Establishes the curve between the cluster and Band B. Middle member of the confirmed ELLIOTT S/M/L wordmark family (SML undefined, MED = 3010701, LRG = 3010704). Price-to-area ratio ($44/$35 = 1.257) nearly exactly matches area ratio (3.202/2.56 = 1.251) — proportional pricing with a 0.5% fractional width-handling premium for the 49.16" weed/mask span. 4-wave AI validated (24 passes across 6 models × 4 waves) plus a revised Wave 2 with corrected geometry context. Wave 4 unanimous YES (6/6) on the tier table. 200+ raised from $38 to $39 after revised Wave 2 surfaced fully-burdened margin concerns at high volume. No override — engine consensus accepted.
 
-The concession-phase band ($13.67–$13.93/sq ft) is the current operative pricing level. Items priced within this band are not violations of Rule 14 — they are strategic extensions of the concession-phase decision. When the relationship matures enough to normalize pricing, the operative band shifts to the AI consensus range ($14.84–$16.41/sq ft).
+**Override note:** P/N 1205720 was priced as a Relationship Concession ($35 vs AI consensus of $38–42). The current per-sq-ft band ($13.65–$13.94) reflects concession-phase pricing. AI consensus range would place the band at ~$14.84–$16.41/sq ft. As the relationship matures, the band is expected to shift upward. Until then, $13.65–$13.94 is the accepted market-validated rate. **3010701 is consistent with the concession-phase band** ($13.74/sq ft) and inherits the concession-phase context — when the January 2027 normalization occurs, 3010701 moves with the band (estimated ~9% uplift, $44 → ~$48).
+
+The concession-phase band ($13.65–$13.94/sq ft) is the current operative pricing level. Items priced within this band are not violations of Rule 14 — they are strategic extensions of the concession-phase decision. When the relationship matures enough to normalize pricing, the operative band shifts to the AI consensus range ($14.84–$16.41/sq ft).
 
 ### Band B — Large-Format Cut Vinyl (5+ sq ft)
 

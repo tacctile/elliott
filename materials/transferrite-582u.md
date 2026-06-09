@@ -13,6 +13,6 @@ cost_per_linear_yd: 1.1821
 verified_date: "2026-05-28"
 distributor: "GRIMCO"
 compatible_cut_vinyls: ["3m-180mc-cardinal-red", "3m-180mc-cardinal-red-15in", "3m-180mc-olympic-blue", "3m-180mc-white-24in", "3m-180mc-white-48in", "3m-180mc-black", "3m-180mc-white-24in-50yd"]
-used_in_items: ["1205720", "1186310", "3017435", "3018378", "3010707", "3010708", "3010709"]
+used_in_items: ["1205720", "1186310", "3017435", "3018378", "3010701", "3010707", "3010708", "3010709"]
 notes: ""
 ---

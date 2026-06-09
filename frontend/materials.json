@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-05T23:36:22Z",
+  "generated": "2026-06-09T15:34:59Z",
   "material_count": 11,
   "materials": {
     "1mil-polyester-overlaminate": {
@@ -126,6 +126,7 @@
         "used_in_items": [
           "1205720",
           "1186310",
+          "3010701",
           "3010707"
         ],
         "notes": "Length-based material cost method used for nesting calculations. cost_per_sq_ft is derived as cost_per_linear_yd / roll_width_ft ($15.502 / 2 ft = $7.751/sq ft), not the area method used by other 180mC color files. This is intentional \u2014 item pricing uses the length-based method directly, so cost_per_sq_ft reflects that same basis. Numeric value is correct; derivation method differs from Olympic Blue and White."
@@ -337,6 +338,7 @@
           "1186310",
           "3017435",
           "3018378",
+          "3010701",
           "3010707",
           "3010708",
           "3010709"
