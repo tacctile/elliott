@@ -111,8 +111,11 @@
 
 | P/N | Description | Labels | Dimensions (each) | Sq Ft/Kit | Price (qty 20) | Per Label | Lam Passes | Status |
 |-----|-------------|--------|-------------------|-----------|-----------------|-----------|------------|--------|
+| 1278890 | Capacity Chart Kit, E160 V3 | 2 | 7.88" × 11.13" | 1.218 | $20 ⁵ | $10.00 ⁵ | 1 | Quoted |
 | 1278930 | Capacity Chart Kit, E190 | 3 | 11.13" × 7.88" | 1.827 | $30 | $10.00 | 1 | FA Accepted |
 | 1245130 | Capacity Chart Kit, E160 | 5 | 11.13" × 7.88" | 3.045 | $50 | $10.00 | 2 | Quoted |
+
+⁵ **VALIDATED 2026-06-09 via 4-wave atomic AI validation (24 independent responses, 6 models × 4 waves).** 2-label matched-set kit for the Elliott E160 V3 — both labels 7.88" × 11.13" = 0.609 sq ft each, 1.218 sq ft total/kit. Per-label parity with P/N 1278930 (FA Accepted) — same dimensions, same material (Orajet 3951 cast vinyl + 1-mil polyester overlaminate), same single-pass lamination geometry (7.88" across 13.5" laminator, 5.62" clearance), well within the ≤2 lam pass parity boundary. Per-label parity applies per account rule. $10.00/label at qty 20 lands **exactly** on the kit band anchor ($16.42/sq ft). Tier table: **$30 / $24 / $20 / $17 / $14 / $12.** Material cost $2.40/kit under account-wide full bleed ink rule (PRICING_RULES.md §25): Orajet 1.218 × $1.21 = $1.474 + lam 1.218 × $0.2389 = $0.291 + ink 1.218 × $0.50 = $0.609 = $2.374 + incidental buffer = $2.40. Margin at qty 20: ~88% material-only. **Wave 1 (Build, no anchor):** 6/6 models independently built the identical tier table from material+geometry+benchmark context. **Wave 2 (Destruction):** 6/6 High on all four attack vectors. Primary findings — (a) 200+ tier near-breakeven fully-loaded at $85/hr × 7.5–8.5 min/kit accepted as a STRUCTURAL condition inherited from 1278930 and 1245130, not a new problem here; (b) $17 clean-dollar at 50-99 confirmed correct over $17.34 strict 2/3 parity (prevents cross-reference math); (c) strategic cage confirmed — three accepted data points at $10.00/label permanently establish the per-label rate; January 2027 normalization must anchor to material cost increases or process complexity changes, not per-label rate arguments. **Wave 3 (Buyer Sim as Sean Finn):** 6/6 sent PO as-is; instant approval at qty 20; quote email anchor line confirmed: *"Same material, same process, same per-label rate at qty 20 as the rest of the kit family."* **Wave 4 (Final Synthesis, cold atomic):** 6/6 UNANIMOUS YES — send as shown; no tier modifications adopted. Engine consensus accepted, no override. §26 invoice protection holds at every tier boundary (9/10, 19/20, 49/50, 99/100, 199/200). LABEL-B revised 06/08/26 (ECO# 28830, "UPDATED: LOGO ON TOP OF CHARTS", DJS) — artwork-only change, no impact on dimensions/material/pricing. No FA requested or offered. No MOQ. See `items/1278890.md` for the full 4-wave validation record.
 
 ---
 
@@ -182,16 +185,16 @@ Future sub-0.1 sq ft **production-volume** items validate against THIS band ($30
 
 ### Multi-Label Kits (Same Dimensions, Same Material)
 
-**Data points:** 2 items (1278930 — 3 labels, 1245130 — 5 labels)
+**Data points:** 3 items (1278890 — 2 labels (Quoted, added 2026-06-09); 1278930 — 3 labels (FA Accepted); 1245130 — 5 labels (Quoted))
 
 | Metric | Current Band | Notes |
 |--------|-------------|-------|
-| Per-label material cost | ~$1.00–$1.03/label | Canonical: $2.99/3 (1278930) and $5.16/5 (1245130). Component-level estimates overstate due to per-label laminate rounding — use kit totals. Laminate updated 2026-05-28 to $0.2389/sq ft. |
-| Per-label selling price at qty 20 | $10.00/label | Parity across both kits |
-| Kit margin at qty 20 | ~90% | Higher than singles — lower per-label material cost relative to price. Margins improved from ~87–88% following laminate cost correction. |
-| Per-label price / sq ft at qty 20 | ~$16.42/sq ft | Higher than singles — intentional (see below) |
-| Tier compression (1-9 → 200+) | 60% discount | $45→$18 (3-label), $75→$30 (5-label) |
-| Margin floor (200+) | ~83% | Kit margins hold better at volume |
+| Per-label material cost | ~$1.00–$1.20/label | Canonical: $2.40/2 (1278890), $2.99/3 (1278930), $5.16/5 (1245130). Component-level estimates overstate due to per-label laminate rounding — use kit totals. Laminate updated 2026-05-28 to $0.2389/sq ft. 1278890 per-label material slightly higher because the 2-label kit amortizes the per-pass setup over fewer labels — does not affect per-label parity at sell. |
+| Per-label selling price at qty 20 | $10.00/label | Parity across all three kits |
+| Kit margin at qty 20 | ~88–90% (material-only) | Higher than singles — lower per-label material cost relative to price. 1278890 ~88%, 1278930 ~90%, 1245130 ~90%. Margins improved from ~87–88% following laminate cost correction. |
+| Per-label price / sq ft at qty 20 | ~$16.42/sq ft | Higher than singles — intentional (see below). Three-way parity across the kit family. |
+| Tier compression (1-9 → 200+) | 60% discount | $30→$12 (2-label), $45→$18 (3-label), $75→$30 (5-label) — uniform 60% compression across the family |
+| Margin floor (200+) | ~80–83% material-only | Kit margins hold reasonably at volume. 1278890 at ~80% (material-only); 200+ tier on the entire kit family operates at near-breakeven fully-loaded at $85/hr × 7.5–8.5 min/kit — structural condition inherited across all three kit-family members. |
 
 **Per-sq-ft kit premium:** ~$16.42 vs ~$15.43 for singles. This ~6% premium is intentional — matched-set collation, multi-label inspection, controlled-set packaging. Not a pricing error.
 
