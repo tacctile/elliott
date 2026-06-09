@@ -2,7 +2,41 @@
 
 > **Newest entries at the top. Updated every session.**
 >
-> Last Updated: 2026-06-09 (Session G: P/N 1278890 added — 2-LABEL LIFTING CAPACITY CHART KIT, E160 V3, printed/laminated 2-label matched-set kit at 7.88" × 11.13" per label (0.609 sq ft/label, 1.218 sq ft/kit). Per-label parity with 1278930 (FA Accepted) — same dimensions, same material, single-pass lamination geometry. 4-wave atomic AI validated (24 runs, 6 models × 4 waves) — Wave 4 unanimous YES, no modifications, engine consensus accepted, no override. $10.00/label at qty 20 = $16.42/sq ft — lands exactly on kit band anchor. Tier table $30/$24/$20/$17/$14/$12. LABEL-B revised 06/08/26 ECO# 28830 logo-position-only artwork update — no pricing impact. Three-way per-label parity now confirmed across the kit family (1278890 / 1278930 / 1245130).)
+> Last Updated: 2026-06-09 (Full system + calculator audit — read-and-report only. 39 findings: 1 CRITICAL / 5 HIGH / 15 MEDIUM / 11 LOW / 7 INFO, plus 14 WORKING WELL. Catalog layer verified arithmetically perfect (23/23 items recompute exactly; all 6 band anchors synced across all four sources). Calculator brief generator found unfit as Wave-1 input until the cascade design fork is resolved — briefs land 29–46% below catalog on every route with a self-contradictory anchor-vs-table presentation and a "READY: YES" badge. Report: audits/2026-06-09-full-system-audit.md. Seven decision forks queued for Nick. No source files modified.)
+
+---
+
+### 2026-06-09 — Audit: Full System + Calculator Audit — 1 CRITICAL, 5 HIGH, 15 MEDIUM, 11 LOW, 7 INFO
+
+**What:** Hostile, exhaustive, read-and-report audit of the entire system with maximum depth on the calculator. Every number independently recomputed from raw inputs; every prior verification re-run (Node vm harness on both `index.html` script blocks — both parse clean; all 11 documented §9 sanity cases re-executed plus new probes for 1278890 / 1068270 / 3010701, routing-boundary truth table, micro-band probes, and W1–W6 retests). All 23 item files, all 11 material files, both category files, all 7 governance docs, all 5 scripts, all 3 frontend JSONs, CI workflow, and prior audits read in full. Seeded findings S1–S15 all adjudicated with recomputation (12 CONFIRMED, 2 PARTIALLY CONFIRMED, 1 includes a refuted sub-claim — S3's "nothing consumes cut-vinyl cost_per_sq_ft" is false: the engine consumes the 582U 0.5911 pseudo-rate as an area rate). Full report with phase matrices, fix plan, and decision forks: `audits/2026-06-09-full-system-audit.md`.
+
+**Verdict:** SAFE TO QUOTE FROM — WITH CAVEATS. The catalog (items/*.md tier tables, what Sean is invoiced against) is arithmetically immaculate and band-coherent. The calculator brief generator is NOT currently fit as Wave-1 input: do not use calculator tier tables, margins, or quote stubs as price inputs until Decision Fork D1 (cascade design) is resolved; do not run a 4-wave session off VALIDATION_PROMPTS.md §3's embedded band table (3 bands / 5 anchors out of date); margin strings are not cross-comparable while three §25 costing eras coexist.
+
+**Key findings (top of 39):**
+- **C-1 (CRITICAL):** Calculator briefs land 29–46% below locked catalog/band on every standard route (e.g. 1230820 $11.38 vs $20; 1278890 $11.38 vs $20; 3010701 $31.07 vs $44), contradict themselves in one document (anchor line $20.00 above a $11.38 tier table), embed the crushed price in the buyer-language stub, and stamp "READY FOR ROUND 1: YES". F7+F23×5 fire on 11/12 runs — zero flag signal.
+- **H-1:** Kit `per_label_tiers` desync — UI pricing table shows pre-enforcement $10.00/label beside post-enforcement $11.38/kit on the same row, on every kit run.
+- **H-2:** §25 full-bleed is unreachable from the calculator UI (dropdown offers low/medium/high/flood-coat, medium selected); engine defaults to deprecated 'medium' — every UI brief computes material cost in violation of §25.
+- **H-3 (S6):** VALIDATION_PROMPTS.md §3 omits the Micro-Format Band, Band B, Band C, and expanded Band A, plus anchors 3010704/3010707/1279000/3010701/1278890; five sessions violated the COMPLETION_TEMPLATES Section-3 update trigger. One MOQ-language reference survived in §5.
+- **H-4 (S4):** CALCULATOR.md ghost flags F18/F19 still documented; "All 22" miscount; §6.3 regression checklist still expects MOQ-era results contradicting §9; F11 and F16 proven unreachable in the engine; §4 Rule 11 doesn't document the micro-template skip_enforcement exception (which records 5 violations by design).
+- **H-5 (S1):** Mixed §25 costing eras — kit family mixes canonical 1278890 ($2.40) with legacy-understated 1278930 ($2.99 vs canonical ≈$3.56) and 1245130 ($5.16 vs ≈$5.93); 1230820/1082570 legacy-overstated; 1068270 (created post-§25) claims §25 while reproducing 1082570's legacy $1.33 via a ~$0.35 buffer (10× convention); PRODUCTION.md still declares $2.99/$5.16 "canonical" in direct conflict with §25. No sell price affected; zero margin-floor crossings under either basis.
+- **S2 CONFIRMED:** cluster tape filed at area×$0.5911 pseudo-rate (~2.7× overstated, conservative) on 1205720/1186310/3017435/3018378; true length-based margins ~77–78%.
+- **W1–W6 (S8): all six still open** — W5 now actively mislabels every no-override cut vinyl item as "Relationship Concession" in brief comparables.
+- **S12/S15:** Deployed data.json ships INTERNAL ONLY Jan-2027 normalization notes (grep-verified) behind one Vercel password; quote stubs verified clean on every route.
+- **Working well (14 items):** catalog math 23/23 perfect; kit triangulation exact to 4 decimals; band anchors synced across all four sources; enforcement math penny-perfect; routing boundaries exactly as documented; orientation symmetry holds; C1 kit fix intact; do_not_benchmark fence correct and enforced; 1210810's $47.50 staleness verified actually fixed.
+
+**Decision forks for Nick (7):** D1 cascade design (recommend report-only enforcement); D2 rebuild vs grandfather legacy §25 costs (recommend rebuild, documentation-only); D3 tape-method harmonization (recommend length method); D4 data.json internal exposure (recommend strip INTERNAL ONLY sections minimum); D5 codify $100 rush minimum (recommend one-line rule); D6 W1 lam-pass model (recommend advisory label now); D7 1082570/1068270 ink-lineage lockstep re-cost on color selection.
+
+**Files Modified:**
+- `audits/2026-06-09-full-system-audit.md` — NEW (the full report: 8 sections, all phase matrices, S1–S15 adjudication, fix plan, decision forks)
+- `.claude/PROGRESS.md` — this entry
+- `.claude/STATE.yml` — last_session (type: audit), next_action, blockers updated
+
+**Files NOT Modified (read-and-report only):**
+- No item files, category files, material files, governance docs, scripts, `frontend/index.html`, or `.github/` workflow touched — not even typo fixes. All fixes deferred to follow-up sessions gated on Nick's decision-fork resolutions.
+- Frontend JSONs were regenerated during build-script verification and reverted via `git checkout -- frontend/*.json` before commit (timestamp-only diffs).
+- No prices, statuses, margins, frontmatter fields, or band values changed anywhere.
+
+**Status:** Audit complete. validate.py 0 errors / 0 warnings at session start and end. Both script blocks parse clean. Engine harness executed: 11 documented sanity cases + 1278890/1068270/3010701 probes + boundary truth table + micro-band probes + W1–W6 retests, actual outputs in the report. Next: Nick reviews `audits/2026-06-09-full-system-audit.md` and resolves decision forks D1–D7 before any fix session.
 
 ---
 
