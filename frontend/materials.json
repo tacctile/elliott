@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-09T20:07:24Z",
+  "generated": "2026-06-09T20:48:17Z",
   "material_count": 11,
   "materials": {
     "1mil-polyester-overlaminate": {
@@ -347,7 +347,7 @@
           "3010708",
           "3010709"
         ],
-        "notes": ""
+        "notes": "USAGE METHOD (2026-06-09): The correct usage method for per-label nesting calculations is LENGTH-BASED \u2014 feed_length_yd \u00d7 cost_per_linear_yd ($1.1821/yd) \u00f7 labels_per_row \u2014 NOT area \u00d7 cost_per_sq_ft. The cost_per_sq_ft field on this material ($0.5911 = $/yd \u00f7 roll_width_ft) is a derived convenience value and should not be used for per-label cost builds; using it as a true area rate overstates tape cost ~2.7\u00d7. All cut vinyl items harmonized to the length-based method 2026-06-09 (audit D3)."
       }
     }
   }

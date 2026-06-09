@@ -2,7 +2,7 @@
 
 > **Non-negotiable constraints. Apply to every pricing decision on this account.**
 >
-> Last Updated: 2026-06-05 (MOQ 10, $55 minimum order charge, required quote language, and sub-10 handling rules removed; invoice protection principle preserved and rewritten as §26 — MOQ-independent)
+> Last Updated: 2026-06-09 (§27 rush/favor job floor added — $50 per job, separate from and non-stacking with the $55 one-off job-economics floor; audit decision fork D5)
 
 ---
 
@@ -54,6 +54,8 @@
 §25 — **All printed/laminated items on this account are priced assuming full bleed / full coverage ink at all times.** Rate: **$0.50/sq ft × full label sq ft**. No medium, low, or partial coverage assumptions are permitted on any Elliott printed/laminated item — past, present, or future. An incidental buffer is applied to round the calculated material total conservatively upward, accounting for setup scrap, registration pulls, and minor production waste. The buffer is judgment-applied, not a fixed number. The canonical material cost formula is: `(Orajet 3951 sq ft × $1.21) + (laminate sq ft × $0.2389) + (label sq ft × $0.50) + incidental buffer`. The frontmatter `material_cost_per_unit` field on every printed/laminated item reflects the buffered total, not the pure calculation. Established 2026-06-01. See `governance/PRODUCTION.md` Account-Wide Ink Coverage Standard and `.claude/MASTER_CONTEXT.md` Core Rules.
 
 §26 — **Invoice protection: the buyer will never be invoiced more for ordering a smaller quantity than they would pay for a larger quantity at the next tier.** At tier boundaries where math creates a cliff, the buyer is charged whichever total is lower. This principle applies to all items on this account — printed/laminated and cut vinyl. New tier structures must verify never-pay-more compliance at all boundaries before quoting.
+
+§27 — **Rush / Favor Job Floor.** One-off rush requests or favor jobs for existing accounts that fall outside normal catalog pricing are subject to a **$50 rush/favor floor**. This applies regardless of label size, material cost, or quantity. The $50 floor is separate from the $55 one-off job-economics floor (1230820 FA-anchored) — rush/favor jobs that would otherwise be quoted at the $55 one-off floor are not subject to an additional $50 rush charge; the $55 floor governs. The $50 rush floor applies to jobs that have a real catalog rate but are being expedited or handled as a favor outside the normal order cycle. Document any rush charge applied as a One-Time Exception override in the item file or order notes. Codified 2026-06-09 (Session I / audit D5 — updated from the originally undocumented $100 figure).
 
 ---
 
