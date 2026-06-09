@@ -280,6 +280,7 @@
 
   /* === MAIN CONTENT === */
   .main {
+    position: relative; /* anchors .drop-overlay and .spec-attach-btn */
     display: flex;
     flex-direction: column;
     min-height: 0;
@@ -1624,35 +1625,66 @@
     border: none;
   }
 
-  /* === SPEC SHEET DROP ZONE (Session J) === */
-  .dropzone {
-    position: fixed;
-    left: 0; right: 0; bottom: 0;
-    height: 80px;
-    z-index: 900;
-    display: flex;
+  /* === SPEC SHEET DROP ZONE (Session J; scoped to main panel — Session K) === */
+  /* Default: invisible, non-interactive, takes no space. The overlay covers
+   * the MAIN PANEL ONLY (never the sidebar, never fixed to the viewport). */
+  .drop-overlay {
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    border-top: 2px dashed var(--border-medium);
-    background: var(--surface-2);
-    opacity: 0.4;
-    cursor: pointer;
-    transition: opacity 0.2s, background 0.2s, border-color 0.2s, color 0.2s;
+    border: 2px dashed var(--border-medium);
+    background: color-mix(in srgb, var(--surface-3) 85%, transparent);
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
     font-size: 13px;
     color: var(--text-secondary);
     user-select: none;
   }
-  .dropzone:hover { opacity: 0.7; }
-  .dropzone.drag-over {
-    border-top: 2px solid var(--brand-red);
-    opacity: 1;
-    background: var(--surface-3);
+  /* Shown only during an active file drag over the window — and kept up
+   * while an upload is in flight / reporting its result. */
+  .main.drag-active .drop-overlay,
+  .drop-overlay.busy, .drop-overlay.done, .drop-overlay.error {
+    display: flex;
+    pointer-events: all;
+  }
+  /* Visual feedback when dragging directly over the zone */
+  .drop-overlay.drag-over {
+    border-color: var(--brand-red);
+    background: color-mix(in srgb, var(--surface-3) 95%, transparent);
     color: var(--text-primary);
   }
-  .dropzone.busy, .dropzone.done, .dropzone.error { opacity: 1; cursor: default; }
-  .dropzone.done { color: var(--flag-ready); border-top-color: var(--flag-ready); }
-  .dropzone.error { color: var(--flag-stop); border-top-color: var(--flag-stop); }
+  .drop-overlay.done { color: var(--flag-ready); border-color: var(--flag-ready); }
+  .drop-overlay.error { color: var(--flag-stop); border-color: var(--flag-stop); }
+
+  /* Always-visible click-to-browse affordance — bottom-right of the main
+   * panel, absolute within it (never overlaps the sidebar or fixed UI). */
+  .spec-attach-btn {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    z-index: 50;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    background: var(--surface-2);
+    border: 1px solid var(--border-medium);
+    border-radius: 50%;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+  }
+  .spec-attach-btn:hover {
+    background: var(--surface-3);
+    border-color: var(--brand-red);
+    color: var(--text-primary);
+  }
   .dz-spinner {
     width: 16px; height: 16px;
     border: 2px solid var(--surface-4);
@@ -2032,6 +2064,14 @@
           <div id="matNotesContainer"></div>
         </div>
       </div>
+
+      <!-- SPEC SHEET DROP OVERLAY (Session K) — covers the main panel only;
+           visible only during an active file drag or upload -->
+      <div class="drop-overlay" id="specDropZone">
+        <span id="dzIcon">⤓</span><span id="dzText">Drop spec sheet here — or click to browse</span>
+      </div>
+      <!-- Always-visible click-to-browse affordance -->
+      <button class="spec-attach-btn" id="specAttachBtn" type="button" title="Attach spec sheet — click to browse" aria-label="Attach spec sheet">📎</button>
     </div>
   </div>
 </div>
@@ -2050,10 +2090,7 @@
   <div class="lightbox-content" id="lightboxContent"></div>
 </div>
 
-<!-- SPEC SHEET DROP ZONE (Session J) — global, works on every tab -->
-<div class="dropzone" id="specDropZone">
-  <span id="dzIcon">⤓</span><span id="dzText">Drop spec sheet here — or click to browse</span>
-</div>
+<!-- SPEC SHEET FILE INPUT (Session J) — opened by the 📎 attach buttons -->
 <input type="file" id="specFileInput" accept="*" multiple style="display:none" />
 
 <!-- Priority-3 fallback: no item context — ask which P/N -->
@@ -4897,27 +4934,55 @@ async function refreshCalcSpecUI() {
 function initSpecDropZone() {
   const dz = document.getElementById('specDropZone');
   const fi = document.getElementById('specFileInput');
+  const mainPanel = document.getElementById('main');
 
-  window.addEventListener('dragover', e => {
-    e.preventDefault();
-    if (dzState.busy) return;
-    dz.classList.add('drag-over');
-    document.getElementById('dzText').textContent = 'Release to upload';
+  // The overlay is invisible until a file drag is in progress. dragleave
+  // fires when moving between child elements, so a counter tracks whether
+  // the drag is still inside the window.
+  let dragCounter = 0;
+
+  window.addEventListener('dragenter', e => {
+    if (!e.dataTransfer || !Array.from(e.dataTransfer.types || []).includes('Files')) return;
+    dragCounter++;
+    if (!dzState.busy) mainPanel.classList.add('drag-active');
   });
-  window.addEventListener('dragleave', e => {
-    if (e.relatedTarget) return; // still inside the window
-    if (dzState.busy) return;
-    dzSet(null);
+  window.addEventListener('dragover', e => {
+    e.preventDefault(); // required for the window to accept the drop
+  });
+  window.addEventListener('dragleave', () => {
+    if (dragCounter > 0) dragCounter--;
+    if (dragCounter === 0) {
+      mainPanel.classList.remove('drag-active');
+      if (!dzState.busy) dzSet(null);
+    }
   });
   window.addEventListener('drop', e => {
-    e.preventDefault();
+    e.preventDefault(); // a drop outside the overlay must never navigate
+    dragCounter = 0;
+    mainPanel.classList.remove('drag-active');
     if (dzState.busy) return;
     dzSet(null);
     if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) {
       handleSpecFiles(e.dataTransfer.files);
     }
   });
+
+  // Red-border feedback while hovering directly over the overlay
+  dz.addEventListener('dragover', () => {
+    if (dzState.busy) return;
+    dz.classList.add('drag-over');
+    document.getElementById('dzText').textContent = 'Release to upload';
+  });
+  dz.addEventListener('dragleave', () => {
+    if (dzState.busy) return;
+    dz.classList.remove('drag-over');
+    document.getElementById('dzText').textContent = 'Drop spec sheet here — or click to browse';
+  });
+
   dz.addEventListener('click', () => { if (!dzState.busy) fi.click(); });
+  document.getElementById('specAttachBtn').addEventListener('click', () => {
+    if (!dzState.busy) fi.click();
+  });
   fi.addEventListener('change', () => {
     if (fi.files && fi.files.length) handleSpecFiles(fi.files);
     fi.value = '';
