@@ -2,7 +2,70 @@
 
 > **Newest entries at the top. Updated every session.**
 >
-> Last Updated: 2026-06-09 (Session E: P/N 3010701 added as the first Band A data point outside the 2.51–2.56 sq ft cluster. MED member of the confirmed ELLIOTT S/M/L wordmark family. 3.202 sq ft, $44/qty 20, $13.74/sq ft — inside Band A range. 4-wave AI validated + revised Wave 2; Wave 4 unanimous YES.)
+> Last Updated: 2026-06-09 (Session F: P/N 1068270 added — CHART-EZR BASKET JIB 500# / G85 BASKET 500#, direct parity clone of 1082570. Orientation-flipped W/H, identical sq ft (0.503), identical material family, identical material cost ($1.33), identical tier table ($16.50/$10.50/$8.00/$6.25/$5.25/$4.25), identical margin profile (~83% at qty 20). Direct parity exemption applied per PRICING_VALIDATION.md — no multi-round AI validation required.)
+
+---
+
+### 2026-06-09 — Session F: P/N 1068270 Added as Direct Parity Clone of 1082570
+
+**What:** **New item P/N 1068270** — CHART-EZR BASKET JIB 500 # / G85 BASKET 500# (two-line description exactly as on spec sheet), a printed/laminated load chart label at 7.25" × 10.00" = 0.503 sq ft. **Direct parity clone of P/N 1082570** — orientation-flipped W/H pair (7.25 W × 10 H vs 10 W × 7.25 H on 1082570), identical sq ft (0.503), identical material family (Orajet 3951 Cast + Polyester Lam), identical material cost ($1.33/label, full bleed per PRICING_RULES.md §25), identical process (Print/Lam/Cut, 1 pass), identical tier table ($16.50 / $10.50 / $8.00 / $6.25 / $5.25 / $4.25), identical margin profile (~92% / ~87% / ~83% / ~79% / ~75% / ~69%). Artwork content differs (G85 basket jib 500# load chart vs I70 EZR Mount 3.6K load chart). **Direct parity exemption applied per `governance/PRICING_VALIDATION.md`** — "Items dimensionally and materially identical to something already quoted. Match the existing structure and move on." No multi-round AI validation was run; the 4-round / 6-model / 24-run validation on 1082570 is inherited by this clone. Rule 15 (Pricing Profile band check) still applies and is satisfied — $15.91/sq ft at qty 20 lands cleanly within the singles band ($15.43–$15.91/sq ft). Status Quoted. No first article requested or offered. No MOQ. §26 invoice protection inherited from 1082570 — applies at every tier boundary at billing time. Drawing reviewed as uploaded spec sheet image in Claude Chat 2026-06-09 and confirmed as a single printed/laminated label at 7.25" × 10.00".
+
+**Files Modified:**
+- `items/1068270.md` — NEW. Full structure per `governance/STRUCTURE_RULES.md`: all required frontmatter fields, all 10 required sections (Spec Extraction with extraction source note for the uploaded image, Item Overview, Material Specification, Nesting and Material Cost with material cost breakdown matching 1082570, Production Process, Pricing with full tier table, Pricing Derivation documenting the direct parity exemption + parity comparison table + Rule 15 band check + explicit explanation of why no AI validation was run, Margin Analysis, Notes and Warnings including direct parity clone declaration + dimensional orientation note + no-MOQ + full bleed standard + artwork prep $0, Production Debrief placeholder).
+- `categories/printed-laminated-orajet.md` — 1068270 row added to Single Labels table between 1082570 and 1210810; new footnote ⁴ added documenting direct parity clone status, orientation flip, identical material/process/tier/margin, direct parity exemption per PRICING_VALIDATION.md, Rule 15 band check satisfied.
+- `materials/orajet-3951-white.md` — `used_in_items` list updated to include "1068270".
+- `materials/1mil-polyester-overlaminate.md` — `used_in_items` list updated to include "1068270".
+- `.claude/ARCHITECTURE.md` — (a) Last Updated stamp; (b) 1068270 row added to Item Catalog table immediately after 1082570; (c) Printed + Laminated Category Registry row updated: item count 12 → 13, singles section updated to "3 confirmed band data points" with new 1068270 entry; (d) new Precedent Chain branch nested under 1082570 — "P/N 1068270 (DIRECT PARITY CLONE of 1082570 → $8/label at qty 20, $15.91/sq ft — within band)" with full structural explanation, orientation-flip note, material cost identity, validation exemption rationale, Rule 15 band check confirmation, and permanent parity-link declaration.
+- `.claude/PROGRESS.md` — this entry.
+- `.claude/STATE.yml` — last_session + next_action + item_count (21 → 22) + pending_quotes updated to reflect Session F completion.
+
+**Files NOT Modified:**
+- No existing item prices changed on any item.
+- No existing band anchor values changed (singles $15.43–$15.91/sq ft unchanged; sub-scope handling unchanged; Micro-Format Band $30.86/sq ft unchanged; cut vinyl Band A/B/C unchanged).
+- No 1082570 changes — the parity clone derives FROM 1082570; the source item is unchanged.
+- No new material files created — all materials already exist on the account (Orajet 3951 white + 1-mil polyester overlaminate); only `used_in_items` metadata updated.
+- No `governance/PRICING_RULES.md` changes (§25 full bleed and §26 invoice protection both apply unchanged to 1068270).
+- No `governance/PRODUCTION.md` changes (material costs unchanged).
+- No `governance/STRUCTURE_RULES.md` changes (1068270 follows the existing schema).
+- No `governance/PRICING_VALIDATION.md` changes (1068270 invokes the existing direct parity exemption without modifying it).
+- No `governance/VALIDATION_PROMPTS.md` or `governance/CALCULATOR.md` changes — direct parity clones do not require routing or validation engine changes.
+- No `.claude/MASTER_CONTEXT.md` changes.
+- No calculator engine, build script source, or `calculator_config.json` band-data changes — direct parity is metadata-only on the existing singles band routing.
+
+**Acceptance Criteria Met:**
+- `items/1068270.md` exists with all required frontmatter fields and all 10 required sections per `governance/STRUCTURE_RULES.md` ✓
+- Frontmatter: `width_in: 7.25`, `height_in: 10.00`, `sq_ft_per_label: 0.503`, `sq_ft_per_kit: 0.503`, `label_count: 1` ✓
+- Frontmatter: `price_1_9: 16.50`, `price_10_19: 10.50`, `price_20_49: 8.00`, `price_50_99: 6.25`, `price_100_199: 5.25`, `price_200_plus: 4.25` ✓
+- Frontmatter: `material_cost_per_unit: 1.33`, `per_label_at_qty_20: 8.00`, `margin_at_qty_20: "~83%"` ✓
+- Frontmatter: `first_article_price: ""`, `status: "Quoted"`, `override_type: ""`, `benchmark_item: "1082570"` ✓
+- Frontmatter: `material_family: "Orajet 3951 Cast + Polyester Lam"`, `item_type: "Printed/Laminated Label"`, `process: "Print/Lam/Cut (1 pass)"`, `lamination_passes: 1`, `cut_runs: 1` ✓
+- Spec Extraction section notes the drawing was reviewed as an uploaded image in Claude Chat and confirmed as a single printed/laminated label at 7.25" × 10.00" ✓
+- Pricing Derivation section clearly documents the direct parity exemption, references 1082570 as the benchmark, notes that no multi-round AI validation was required, and confirms Rule 15 band check is still satisfied ✓
+- 1068270 appears in the Single Labels table in `categories/printed-laminated-orajet.md` with footnote ⁴ ✓
+- 1068270 appears in the Item Catalog in `.claude/ARCHITECTURE.md` and the new Precedent Chain branch under 1082570 ✓
+- `item_count` in STATE.yml = 22 (Session E had brought it to 21; Session F adds 1068270 → 22) ✓
+- Material files `used_in_items` lists updated ✓
+- `python scripts/validate.py` → 0 errors, 0 warnings ✓
+- All 3 build scripts run clean ✓
+
+**Key Decisions Carried Forward:**
+- 1068270 is a permanent structural parity clone of 1082570. The parity link is a structural connection, not a one-time copy — if any material cost, process, or band-anchor parameter changes on 1082570 in a future session, 1068270 should be updated in lockstep.
+- The direct parity exemption in `governance/PRICING_VALIDATION.md` is a clean, repeatable pattern: when an item is dimensionally and materially identical to an existing item (with the dimensional pair possibly flipped, sq ft identical), the existing item's AI-validated tier table is inherited and no new multi-round validation is required. Rule 15 (Pricing Profile band check) still applies and must be satisfied.
+- Orientation-flipped W/H pairs (7.25 × 10 vs 10 × 7.25) qualify as "dimensionally identical" for the parity exemption — sq ft, material cost, nesting, and per-label labor are all unchanged.
+- The singles band is now confirmed by 3 data points (1230820 at 1.296 sq ft, 1082570 at 0.503 sq ft, 1068270 at 0.503 sq ft as direct parity clone). 1068270 does not represent a new band data point in the structural sense — it inherits 1082570's data-point status — but the band's coverage at the 0.503 sq ft end is now reinforced by a second item at that exact sq ft.
+- No new pending quote workflow changes — 1068270 follows the same quoting cadence as 1082570 once Sean issues a PO or RFQ.
+
+**Pending Quotes:**
+- **1068270** ($8.00/qty 20, direct parity clone of 1082570 — Session F — quote pending)
+- 3010701 ($44/qty 20, Band A 3–5 sq ft founding data point — Session E)
+- 1279000 ($3.00/qty 20, Micro-Format Band founding data point — Session D)
+- 3010707 / 3010708 / 3010709 ($20/qty 20, Band C founding cluster)
+- 3010704 ($78/qty 20, Band B founding)
+- 1210810 ($57.50 for qty 10; recurring $4.75 at 20-49; 1-9 tier $7.25 added Session A)
+- 1082570 ($42 flat for qty 2 once PO arrives; production $8 at qty 20)
+- 1245130, 3017435, 3018378, 1186310, 1277970, 1277980, 1277990, 1278000, 3017583, 3017584 — quoted May–Jun 2026, awaiting Sean response/PO
+
+**Status:** Session F complete. validate.py 0/0; all 3 build scripts clean; new item 1068270 created as direct parity clone of 1082570 and integrated into the singles band. Item count 21 → 22 (prompt's stated target of 21 was based on a stale assumption that the prior count was 20 — Session E had already brought the count to 21; Session F brings it to 22). No multi-round AI validation required — direct parity exemption applied. Ready to send Sean the quote.
 
 ---
 

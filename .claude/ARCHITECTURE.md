@@ -2,7 +2,7 @@
 
 > **Living document — updated every session that changes structure.**
 >
-> Last Updated: 2026-06-09 (Session E: P/N 3010701 added — LBL-ELLIOTT MED RD, Cardinal Red cut vinyl wordmark at 49.16" × 9.38" (3.202 sq ft). First Band A data point outside the 2.51–2.56 sq ft cluster — founds the 3–5 sq ft Band A range and establishes the curve between the cluster and Band B (LRG). Middle member of the confirmed ELLIOTT S/M/L wordmark family (SML undefined, MED = 3010701, LRG = 3010704). $44/qty 20 at $13.74/sq ft — inside Band A range. Tier table $57/$50/$44/$42/$40/$39. 4-wave AI validated (24 passes) + revised Wave 2 with corrected geometry; Wave 4 unanimous YES. No override — engine consensus accepted.)
+> Last Updated: 2026-06-09 (Session F: P/N 1068270 added — CHART-EZR BASKET JIB 500# / G85 BASKET 500#, printed/laminated load chart label at 7.25" × 10.00" (0.503 sq ft). **Direct parity clone of P/N 1082570** — orientation-flipped W/H pair (7.25 W × 10 H vs 10 W × 7.25 H on 1082570), identical sq ft (0.503), identical material family (Orajet 3951 + Polyester Lam), identical material cost ($1.33), identical tier table ($16.50/$10.50/$8.00/$6.25/$5.25/$4.25), identical margin profile (~83% at qty 20). Direct parity exemption applied per `governance/PRICING_VALIDATION.md` — no multi-round AI validation required; the 4-round / 6-model / 24-run validation on 1082570 is inherited. Artwork content differs (G85 basket jib 500# load chart vs I70 EZR Mount 3.6K load chart). Status Quoted. Item count 20 → 21. Previously Session E: P/N 3010701 added — LBL-ELLIOTT MED RD, Cardinal Red cut vinyl wordmark at 49.16" × 9.38" (3.202 sq ft). First Band A data point outside the 2.51–2.56 sq ft cluster — founds the 3–5 sq ft Band A range and establishes the curve between the cluster and Band B (LRG). Middle member of the confirmed ELLIOTT S/M/L wordmark family (SML undefined, MED = 3010701, LRG = 3010704). $44/qty 20 at $13.74/sq ft — inside Band A range. Tier table $57/$50/$44/$42/$40/$39. 4-wave AI validated (24 passes) + revised Wave 2 with corrected geometry; Wave 4 unanimous YES. No override — engine consensus accepted.)
 
 ---
 
@@ -26,6 +26,7 @@ All quoted items. Updated when items are added, repriced, or status changes.
 | 3017583 | LBL - PTO Engage Process (ANSI Z535) ⚠ one-off, do NOT benchmark | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.026 | $9.17 (flat — one-off) | $9.17 | ~97% (structural — one-off, $55 program at qty 6) | Quoted | `items/3017583.md` |
 | 3017584 | LBL - PTO Active (smallest item on account) ⚠ one-off, do NOT benchmark | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.00174 | $9.17 (flat — one-off) | $9.17 | ~99% (structural — one-off, $55 program at qty 6) | Quoted | `items/3017584.md` |
 | 1082570 | Load Chart, I70 EZR Mount 3.6K ⚠ color conflict open (samples delivered, awaiting selection) | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.503 | $8 (prod. rate at qty 20) | $8.00 | ~83% (at prod. vol.; current order $42 flat, job economics) | Quoted | `items/1082570.md` |
+| 1068270 | Chart-EZR Basket Jib 500#, G85 Basket 500# (direct parity clone of 1082570 — orientation-flipped W/H, identical sq ft / material / tier table) | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.503 | $8 | $8.00 | ~83% | Quoted | `items/1068270.md` |
 | 1210810 | LBL - DANGER FALLING JIB (ANSI Z535) ⚠ do NOT benchmark until production-volume acceptance | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 0.292 | $4.75 | $4.75 | ~87% (at $0.60 material, full bleed standard) | Quoted — 1-9: $7.25 / 10-19: $5.75 / initial order $57.50 | `items/1210810.md` |
 | 3010701 | LBL-ELLIOTT MED RD (medium-format ELLIOTT wordmark — first Band A data point beyond 2.51–2.56 sq ft cluster; MED member of S/M/L family) | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 3.202 | $44 | $44.00 | ~71% | Quoted | `items/3010701.md` |
 | 3010704 | LBL-ELLIOTT LRG RED (large-format ELLIOTT wordmark — founding data point for 5+ sq ft band) | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 7.069 | $78 | $78.00 | ~74% | Quoted | `items/3010704.md` |
@@ -41,7 +42,7 @@ All quoted items. Updated when items are added, repriced, or status changes.
 | Category | Material Family | Category File | Item Count | Profile Status |
 |----------|-----------------|---------------|------------|----------------|
 | Cut Vinyl Lettering | 3M 180mC Cut Vinyl | `categories/cut-vinyl-3m-180mc.md` | 9 | **Three independent size-class bands.** Band A — Small-Format (1.0–5.0 sq ft): **5 data points** — 4 in the original 2.51–2.56 sq ft cluster (1205720, 1186310, 3017435, 3018378) all at $35/qty 20, $13.65–$13.94/sq ft, plus the new MED data point 3010701 at 3.202 sq ft, $44/qty 20, $13.74/sq ft (added 2026-06-09 — first Band A item outside the 2.51–2.56 cluster; establishes the curve between the cluster and Band B; middle member of the confirmed ELLIOTT S/M/L wordmark family). Concession-phase per Override on 1205720; 3010701 inherits the concession-phase context and moves with the band at January 2027 normalization (~9% uplift, $44 → ~$48). January 2027 normalization plan applies to Band A only. Band B — Large-Format (5+ sq ft): 1 founding data point (3010704 at 7.069 sq ft, $78/qty 20, $11.03/sq ft). 19.3% $/sq ft step-down from Band A reflects fixed-labor amortization, simpler weeding geometry per sq ft, and lower material cost per sq ft on large formats. 4-wave AI validated (24 passes, unanimous Wave 4). Band C — Sub-1 sq ft (< 1 sq ft): 3 founding data points (3010707 Cardinal Red, 3010708 Black, 3010709 White, all at 0.969 sq ft, $20/qty 20, $20.64/sq ft) — color-parity cluster, pricing anchored to worst-case Cardinal Red ($3.79 material). 51% $/sq ft step-up from Band A reflects fixed-labor dominance on sub-1 sq ft items + elevated weeding complexity (16 mixed-case characters, 4 enclosed counters, 2 dots, tight q-u channel) + higher material cost per sq ft. 4-wave AI validated (24 passes, unanimous Wave 4 YES on full tier table) + final independent 6-model industry-validation audit (6/6 APPROVE, confidence HIGH). All three bands are INDEPENDENT — do not contaminate or interact. Future cut vinyl items route by sq ft: ≥ 5.0 → Band B; 1.0 ≤ sq ft < 5.0 → Band A; < 1.0 → Band C. The January 2027 normalization plan applies to Band A only. |
-| Printed + Laminated | Orajet 3951 Cast + Polyester Lam | `categories/printed-laminated-orajet.md` | 12 | **Full bleed ink rule ($0.50/sq ft × full label sq ft) in effect account-wide (established 2026-06-01). Three INDEPENDENT size-class bands now defined (Micro / Sub-scope / Singles).** Singles (≥0.5 sq ft, calibrated 0.5–1.3 sq ft): Narrowing — 2 confirmed band data points (1230820 at 1.296 sq ft FA Accepted; 1082570 at 0.503 sq ft quoted, $15.91/sq ft — band-consistent, AI validated). Sub-scope single (0.1–0.5 sq ft): 1210810 at 0.292 sq ft, $4.75 ($16.27/sq ft — INTENTIONALLY ABOVE band per Wave 4 verdict; 4-wave atomic AI validated 2026-06-01; small-format premium consistent and defensible at every tier); excluded from band DATA POINTS on dimensional scope until production-volume acceptance. **Micro-Format Band (< 0.1 sq ft, production volume) — established 2026-06-05.** 1 founding data point (1279000 at 0.097 sq ft, $3.00/qty 20, **$30.86/sq ft = 2.0× benchmark**). 100% $/sq ft step-up from singles band justified by fixed-labor dominance on sub-0.1 sq ft items. 4-wave AI validated (24 passes, 6 models × 4 waves) + final 6-model comprehensive review (6/6 send as shown). Tier compression 53.3% (correctly flatter than singles — material negligible, labor dominant). INDEPENDENT band — does not contaminate or interact with singles or sub-scope. Future sub-0.1 sq ft production items validate against THIS band; one-off / field-service at ≤0.1 sq ft continues to route to the tiny $55 floor. Kits: Moderate (2 data points). Tiny one-offs (≤0.1 sq ft): 4 one-off outrigger program peers ($55 program total / $2.75 per label) + 2 standalone one-offs (3017583 at 0.026 sq ft and 3017584 at 0.00174 sq ft — smallest item on the account; both $55 program total / $9.17 per label at qty 6) — explicitly excluded from any band; do NOT benchmark |
+| Printed + Laminated | Orajet 3951 Cast + Polyester Lam | `categories/printed-laminated-orajet.md` | 13 | **Full bleed ink rule ($0.50/sq ft × full label sq ft) in effect account-wide (established 2026-06-01). Three INDEPENDENT size-class bands now defined (Micro / Sub-scope / Singles).** Singles (≥0.5 sq ft, calibrated 0.5–1.3 sq ft): Narrowing — 3 confirmed band data points (1230820 at 1.296 sq ft FA Accepted; 1082570 at 0.503 sq ft quoted, $15.91/sq ft — band-consistent, AI validated; 1068270 at 0.503 sq ft added 2026-06-09 as a direct parity clone of 1082570 — orientation-flipped W/H, identical sq ft / material / tier table / margin profile; inherits 1082570's 4-round / 6-model / 24-run validation per direct parity exemption in PRICING_VALIDATION.md). Sub-scope single (0.1–0.5 sq ft): 1210810 at 0.292 sq ft, $4.75 ($16.27/sq ft — INTENTIONALLY ABOVE band per Wave 4 verdict; 4-wave atomic AI validated 2026-06-01; small-format premium consistent and defensible at every tier); excluded from band DATA POINTS on dimensional scope until production-volume acceptance. **Micro-Format Band (< 0.1 sq ft, production volume) — established 2026-06-05.** 1 founding data point (1279000 at 0.097 sq ft, $3.00/qty 20, **$30.86/sq ft = 2.0× benchmark**). 100% $/sq ft step-up from singles band justified by fixed-labor dominance on sub-0.1 sq ft items. 4-wave AI validated (24 passes, 6 models × 4 waves) + final 6-model comprehensive review (6/6 send as shown). Tier compression 53.3% (correctly flatter than singles — material negligible, labor dominant). INDEPENDENT band — does not contaminate or interact with singles or sub-scope. Future sub-0.1 sq ft production items validate against THIS band; one-off / field-service at ≤0.1 sq ft continues to route to the tiny $55 floor. Kits: Moderate (2 data points). Tiny one-offs (≤0.1 sq ft): 4 one-off outrigger program peers ($55 program total / $2.75 per label) + 2 standalone one-offs (3017583 at 0.026 sq ft and 3017584 at 0.00174 sq ft — smallest item on the account; both $55 program total / $9.17 per label at qty 6) — explicitly excluded from any band; do NOT benchmark |
 | Panel Decals | Convex High Bond + Poly Lam | Not yet created | 0 | No profile — first item establishes it |
 | Polycarbonate | Lexan/Polycarbonate | Not yet created | 0 | No profile — first item establishes it |
 
@@ -56,12 +57,40 @@ P/N 1230820 (ROOT BENCHMARK — $20/ea at qty 20)
 ├── P/N 1278930 (1.5x → $30/kit at qty 20)
 │   └── P/N 1245130 (5/3 parity → $50/kit at qty 20)
 ├── P/N 1082570 (singles band → $8/label at qty 20, $15.91/sq ft — within band)
-│       0.503 sq ft — low end of singles scope. Proportional sq ft scaling from 1230820.
-│       Current order qty 2 (SO 20125600): $42 flat (job economics, setup recovery).
-│       4-round, 6-model AI validation complete (24 runs): $55 floor rejected, $42 adopted.
-│       Tiers: $16.50/$10.50/$8.00/$6.25/$5.25/$4.25. No MOQ — Elliott strategic account.
-│       Open color conflict — samples delivered (~26 hrs), awaiting Sean's PO selection.
-│       Status: Quoted.
+│   │   0.503 sq ft — low end of singles scope. Proportional sq ft scaling from 1230820.
+│   │   Current order qty 2 (SO 20125600): $42 flat (job economics, setup recovery).
+│   │   4-round, 6-model AI validation complete (24 runs): $55 floor rejected, $42 adopted.
+│   │   Tiers: $16.50/$10.50/$8.00/$6.25/$5.25/$4.25. No MOQ — Elliott strategic account.
+│   │   Open color conflict — samples delivered (~26 hrs), awaiting Sean's PO selection.
+│   │   Status: Quoted.
+│   └── P/N 1068270 (DIRECT PARITY CLONE of 1082570 — $8/label at qty 20, $15.91/sq ft — within band)
+│           0.503 sq ft (7.25" × 10.00") — orientation-flipped W/H pair vs 1082570 (10" × 7.25");
+│           sq ft is identical at 0.503. Drawing reviewed as uploaded spec sheet image in
+│           Claude Chat 2026-06-09 and confirmed as a single printed/laminated label.
+│           Drawing title: CHART-EZR BASKET JIB 500 # / G85 BASKET 500# (two-line description
+│           exactly as on spec sheet). Artwork content differs from 1082570 (G85 basket jib
+│           500# load chart vs I70 EZR Mount 3.6K load chart).
+│           Identical material family (Orajet 3951 Cast + Polyester Lam). Identical material
+│           cost ($1.33/label, full bleed per PRICING_RULES.md §25). Identical process
+│           (Print/Lam/Cut, 1 pass). Identical nesting (both dimensions fit 13.5" laminator
+│           and 28" Roland print bed in either orientation). Identical tier table
+│           ($16.50 / $10.50 / $8.00 / $6.25 / $5.25 / $4.25). Identical margin profile
+│           (~92% / ~87% / ~83% / ~79% / ~75% / ~69%). No first article requested or offered.
+│           No MOQ. §26 invoice protection inherited from 1082570 — applies at every tier
+│           boundary at billing time.
+│           DIRECT PARITY EXEMPTION applied per `governance/PRICING_VALIDATION.md`:
+│             "Items dimensionally and materially identical to something already quoted.
+│              Match the existing structure and move on. Note: this exempts multi-round AI
+│              validation only — Rule 15 (validate against category Pricing Profile band)
+│              still applies to every new item regardless."
+│           No multi-round AI validation was run. The 4-round / 6-model / 24-run validation
+│           on 1082570 is inherited by this clone. Rule 15 (Pricing Profile band check) is
+│           satisfied: $15.91/sq ft at qty 20 lands cleanly within the singles band
+│           ($15.43–$15.91/sq ft).
+│           Parity link is structural and permanent: if any material cost, process, or
+│           band-anchor parameter changes on 1082570 in a future session, 1068270 should
+│           be updated in lockstep.
+│           Status: Quoted.
 ├── P/N 1210810 (sub-scope single → $4.75/label at qty 20, $16.27/sq ft — INTENTIONALLY ABOVE band)
 │       0.292 sq ft — BELOW singles band scope (~0.5 sq ft floor). Band exclusion is DIMENSIONAL,
 │       not pricing. Validated $/sq ft ($16.27 at qty 20-49) is INTENTIONALLY ABOVE the singles band
