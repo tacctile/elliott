@@ -28,6 +28,22 @@ NOTE: the CI auto-rebuild regenerates these JSONs from repo .md state —
 if Supabase has records the repo lacks, run the backfill session before
 pushing .md changes, or the fallback files will revert to repo state.
 
+INTERNAL-FIELD SECURITY (Session I, 2026-06-09 / audit D4):
+This script does not WRITE anything to Supabase — it only reads. The
+internal strategy fields `pricing_logic` and `notes` are handled as
+follows account-wide:
+  - data.json: STRIPPED by build_frontend.STRIP_FIELDS (this script
+    inherits the strip — the field-overlay loops skip STRIP_FIELDS).
+  - Supabase: the anon-readable `elliott_items` columns pricing_logic /
+    notes are kept blank ('' — the columns are NOT NULL). The content
+    lives in `elliott_items_internal`
+    (part_number, pricing_logic, notes) — RLS enabled with NO anon
+    policies, so it is readable/writable by service_role only.
+    `scripts/migrate_to_supabase.py` routes those two fields there and
+    nulls them on the public row; the deployed app (anon key) never
+    receives internal strategy text.
+  - Ground truth for the prose remains items/*.md in this repo.
+
 Auth: reads SUPABASE_URL + SUPABASE_ANON_KEY (anon is sufficient — all
 elliott_* tables grant anon SELECT) or SUPABASE_SERVICE_ROLE_KEY from the
 environment / .env, or --url/--key args. --from-file <dump.json> skips the

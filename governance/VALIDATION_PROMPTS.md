@@ -4,7 +4,7 @@
 >
 > Companion to `governance/PRICING_VALIDATION.md` (methodology) and `governance/CALCULATOR.md` (Round 0 brief generation). This document governs Waves 1–4 — the prompt structure, attack angles, output schemas, and behavioral rules for Claude Chat during a validation session.
 >
-> Last Updated: 2026-06-09 (Session H / audit H-3 — Section 3 band fence rebuilt to embed ALL SIX bands (added Micro-Format Band, cut vinyl Band B and Band C, expanded Band A 1.0–5.0 sq ft with the 3010701 data point) and all current benchmark anchors (added 3010701, 3010704, 3010707 cluster, 1279000, kit member 1278890); Section 5 stale "MOQ language" stub reference replaced — MOQ language no longer exists post-purge)
+> Last Updated: 2026-06-09 (Session I — §3: $50 rush/favor floor note added under the $55 account floor (PRICING_RULES.md §27); 1230820 root-benchmark anchor verified — its embedded tier table is correct and §3 cites no margin figure for it; the canonical margin reference is now ~87% per the §25 cost normalization should any future edit embed one. Previously Session H / audit H-3 — Section 3 band fence rebuilt to embed ALL SIX bands (added Micro-Format Band, cut vinyl Band B and Band C, expanded Band A 1.0–5.0 sq ft with the 3010701 data point) and all current benchmark anchors (added 3010701, 3010704, 3010707 cluster, 1279000, kit member 1278890); Section 5 stale "MOQ language" stub reference replaced — MOQ language no longer exists post-purge)
 
 ---
 
@@ -162,6 +162,8 @@ For kits, also include (three-way per-label parity at $10.00/label at qty 20):
 All bands are INDEPENDENT — they do not contaminate or interact. Route the item to its band by family and size class FIRST, then embed that band (plus the adjacent bands as context for step-up/step-down sanity).
 
 **$55 account floor:** one-off job-economics floor for field-service rush/one-off requests only. Anchored to 1230820 FA price. Does NOT apply to catalog tier tables — catalog items start at a real 1-9 per-unit price. Invoice protection (§26): buyer never invoiced more for a smaller quantity than a larger quantity at the next tier.
+
+**Rush/favor floor: $50 per job (§27).** Separate from and does not stack with the $55 one-off floor. Applies to jobs with a real catalog rate that are expedited or handled as a favor outside the normal order cycle.
 
 ### Required Output Schema (Enforce This Exactly)
 

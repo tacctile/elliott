@@ -2,7 +2,7 @@
 
 > **Equipment specs, material costs, nesting rules, and process details.**
 >
-> Last Updated: 2026-06-09 (Session H — kit-family material costs normalized to the §25 canonical formula: 1278930 $2.99 → $3.60, 1245130 $5.16 → $5.95, documentation-only, no sell prices changed; Material Cost Quick Reference kit section rewritten — the legacy per-pass laminate amortization method is retired as "canonical")
+> Last Updated: 2026-06-09 (Session I — singles costing normalized to §25 canonical: 1230820 quick-reference entry now $2.60; small-format cut vinyl quick reference tape figures corrected from the area pseudo-rate to the length-based method (audit D3) — documentation-only, no sell prices changed. Previously Session H: kit-family §25 normalization — 1278930 $2.99 → $3.60, 1245130 $5.16 → $5.95)
 
 ---
 
@@ -175,17 +175,24 @@ Canonical per the §25 formula (`kit sq ft × ($1.21 + $0.2389 + $0.50) + incide
 
 ### At 15" × 12.44" (single load chart label)
 
-- Vinyl: 1.296 sq ft × $1.21 = $1.57
-- Laminate: ~$0.25
-- Ink: ~$0.50
-- **Total per label: ~$2.32–$3.23**
+Canonical per the §25 formula (`sq ft × ($1.21 + $0.2389 + $0.50) + incidental buffer`):
+
+- Vinyl: 1.296 sq ft × $1.21 = $1.568
+- Laminate (1-mil polyester): 1.296 sq ft × $0.2389 = $0.310
+- Ink (full bleed per §25): 1.296 sq ft × $0.50 = $0.648
+- Calculated: $2.526 + incidental buffer (conservative round-up)
+- **Per-label material cost: $2.60** (canonical §25 — P/N 1230820, normalized 2026-06-09; the prior $2.32–$3.23 range carried a legacy pre-§25 waste/setup line, retired)
 
 ### Cut Vinyl at ~2.51–2.56 sq ft (Small-Format Band)
 
-- Cardinal Red, 24" roll: ~$7.23 vinyl + $1.51 tape = **~$8.74/label total** *(at 2.56 sq ft, P/N 1205720 — length-based method)*
-- Olympic Blue, 24" roll: ~$7.43 vinyl + $1.49 tape = **~$8.92/label total** *(at 2.512 sq ft, P/N 3018378 — length-based method)*
-- White, 24" roll: ~$8.00 vinyl + $1.51 tape = **~$9.51/label total** *(at 2.56 sq ft, P/N 3017435 — length-based method)*
-- White, 48" roll: ~$6.28 vinyl + $1.51 tape = **~$7.79/label total** *(at 2.56 sq ft, P/N 3017435)*
+Vinyl AND tape are both length-based (tape harmonized 2026-06-09, audit D3): `feed length (label length + 6" spacing) in yd × cost_per_linear_yd ÷ labels per row`.
+
+- Cardinal Red, 24" roll: ~$7.23 vinyl + $0.65 tape = **~$7.88/label total** *(at 2.56 sq ft, P/N 1205720 / 1186310 — 2-up, feed 39.5625" = 1.0990 yd)*
+- Olympic Blue, 24" roll: ~$7.43 vinyl + $0.64 tape = **~$8.07/label total** *(at 2.512 sq ft, P/N 3018378 — 2-up, feed 38.88" = 1.0800 yd)*
+- White, 24" roll: ~$8.00 vinyl + $0.82 tape = **~$8.82/label total** *(at 2.56 sq ft, P/N 3017435 — 2-up, feed 49.91" = 1.3864 yd)*
+- White, 48" roll: ~$6.28 vinyl + $0.33 tape = **~$6.61/label total** *(at 2.56 sq ft, P/N 3017435 — 5-up on 48" roll)*
+
+> **Tape method note (2026-06-09):** The prior tape figures (~$1.49–$1.51/label) used `label area × $0.5911/sq ft` — a pseudo-rate ($1.1821/yd ÷ 2 ft roll width) that is not a true area rate and overstated tape ~2.7×. Retired. Tape amortizes per row exactly like vinyl. The 582U `cost_per_sq_ft` field is a derived convenience value — never use it in a per-label cost build.
 
 ### Cut Vinyl at ~7.069 sq ft (Large-Format Band — added 2026-06-05)
 

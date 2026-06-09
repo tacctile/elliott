@@ -34,12 +34,14 @@ The category now contains THREE independent size-class bands. They do NOT contam
 
 | Metric | Current Band | Notes |
 |--------|-------------|-------|
-| Material cost / label | $7.79–$12.78 | Cluster (~2.5 sq ft): $7.79–$9.51 (color/roll-dependent). MED (3010701 at 3.202 sq ft): $12.78 — higher absolute material cost driven by longer feed length (49.16" cut vs ~33.5" on the cluster). |
-| Material cost / sq ft | ~$3.04–$3.99 | Cluster: ~$3.04–$3.72. MED: ~$3.99 (slightly higher $/sq ft material — the 49.16" cut amortizes the 6" per-row spacing across a wider label, but the feed-length-driven vinyl cost dominates at 2-up nesting). |
+| Material cost / label | $6.61–$12.78 | Cluster (~2.5 sq ft): $7.88–$8.82 on 24" rolls, $6.61 on the 48" White roll (color/roll-dependent; tape corrected to length-based method 2026-06-09 — see method note below). MED (3010701 at 3.202 sq ft): $12.78 — higher absolute material cost driven by longer feed length (49.16" cut vs ~33.5" on the cluster). |
+| Material cost / sq ft | ~$2.58–$3.99 | Cluster: ~$2.58 (48" White) to ~$3.45 (24" White); Cardinal Red 24" ~$3.08. MED: ~$3.99 (slightly higher $/sq ft material — the 49.16" cut amortizes the 6" per-row spacing across a wider label, but the feed-length-driven vinyl cost dominates at 2-up nesting). |
 | Selling price / sq ft at qty 20 | ~$13.65–$13.94/sq ft | Cluster: ~$13.65–$13.94 at $35. MED: $13.74 at $44 — lands inside the cluster $/sq ft range. The band is structurally coherent across the 2.51–3.202 sq ft range. |
-| Margin at qty 20 (material-only) | ~70.9–78% | Cluster: ~73–78%. MED: ~70.9% — fractional softness reflects the higher feed-length-driven material cost share at the same $/sq ft. |
+| Margin at qty 20 (material-only) | ~70.9–81% | Cluster: ~75–77% on 24" rolls (~81% on 48" White). MED: ~70.9% — fractional softness reflects the higher feed-length-driven material cost share at the same $/sq ft. (Cluster margins restated 2026-06-09 under the corrected length-based tape costing; prior ~73–78% range reflected the area-method tape overstatement.) |
 | Tier compression (1-9 → 200+) | 31.6–51% discount | Cluster: 51% ($45 → $22). MED: 31.6% ($57 → $39) — intentionally tighter at the 200+ floor to stay above the LRG inversion floor and reflect fully-burdened margin at high volume per Wave 2. |
-| Margin floor (200+, material-only) | ~57–67% | Cluster: ~57–65% (24" roll White floor at ~57%). MED 200+: ~67% (well above the ~57% warn floor; the tighter compression preserves margin at the floor). |
+| Margin floor (200+, material-only) | ~60–70% | Cluster: ~60% (24" White floor) to ~64%; 48" White ~70%. MED 200+: ~67%. All above the ~57% warn floor under the corrected tape costing (the old ~57% White floor was an area-method artifact). |
+
+> **Tape cost method note (2026-06-09, Session I / audit D3):** The four cluster items (1205720, 1186310, 3017435, 3018378) previously computed tape as `label area × $0.5911/sq ft` — a pseudo-rate ($/yd ÷ roll-width-ft, not a true area rate) that overstated tape ~2.7×. All four are now harmonized to the **length-based method** used by Band B, Band C, and 3010701: `feed length (label length + 6" spacing) in yd × $1.1821/yd ÷ labels per row`. Documentation-only — no sell prices changed; margins restated upward ~2 points.
 
 **Band width:** Widened with the addition of 3010701. The band now spans **0.5 sq ft of confirmed data** (2.512 → 3.202) and validates against a known LRG anchor at 7.069 sq ft. The 4-item cluster at $13.65–$13.94/sq ft remains the dominant data concentration; the MED data point at $13.74/sq ft confirms the $/sq ft rate is preserved at 25% larger area within the band. Items significantly outside the calibrated range (~4.5–5.5 sq ft Band B boundary, or below ~2.0 sq ft) still require 4-wave AI validation OR a separate size-class band (see Bands B and C).
 
@@ -67,7 +69,7 @@ The concession-phase band ($13.65–$13.94/sq ft) is the current operative prici
 **Step-down justification:** 19.3% step-down from the small-format band reflects three structural advantages of the large-format size class:
 1. **Fixed labor amortization** — file import, machine setup, inspection, packaging are roughly constant per label regardless of physical size. Fixed-labor share of cost per sq ft drops as label area grows.
 2. **Simpler weeding geometry per sq ft** — large block letters with open counters weed faster per sq ft than dense small-format text. The 3010704 "ELLIOTT" wordmark (7 characters, open counters E ×3 + O ×1) is geometrically simpler than a comparable area of small-format model designations.
-3. **Lower material cost per sq ft** — $2.83/sq ft on 3010704 vs $3.41/sq ft on the 2.5 sq ft benchmark. The 30" application tape amortizes 2-up against the 15" single-label vinyl feed, reducing tape cost per sq ft.
+3. **Lower material cost per sq ft** — $2.83/sq ft on 3010704 vs ~$3.08/sq ft on the 2.5 sq ft benchmark (benchmark figure restated 2026-06-09 under length-based tape costing; was quoted as $3.41 under the retired area-method tape). The 30" application tape amortizes 2-up against the 15" single-label vinyl feed, reducing tape cost per sq ft.
 
 **Band isolation:** This band is INDEPENDENT of the small-format band (Band A). The two bands do NOT contaminate or interact with each other.
 
@@ -99,7 +101,7 @@ The concession-phase band ($13.65–$13.94/sq ft) is the current operative prici
 **Step-up justification:** 51% $/sq ft step-up from Band A ($13.67 → $20.64) reflects three structural drivers:
 1. **Fixed-labor dominance on sub-1 sq ft items** — setup, weeding, masking, inspection, and packaging take approximately the same time per label regardless of size. At 0.969 sq ft (2.64× smaller than Band A), these fixed costs amortize over much less area. Fixed-labor share of $/sq ft is structurally higher on sub-1 sq ft items.
 2. **Elevated weeding complexity per sq ft** — the "ElliottEquip.com" wordmark has 16 mixed-case characters with 4 enclosed counters (e ×2, o ×1, p ×1), 2 isolated dots, and a tight q-u channel. Band A's "E190" / "E160" / "D115" / "ELLIOTT" designations have 3–7 uppercase block characters with open geometry — much faster weeding per sq ft.
-3. **Higher material cost per sq ft** — $3.91/sq ft (Cardinal Red worst case) vs ~$3.41/sq ft on Band A. The 5-across nesting is efficient, but the smaller label area produces a higher $/sq ft material rate.
+3. **Higher material cost per sq ft** — $3.91/sq ft (Cardinal Red worst case) vs ~$3.08/sq ft on Band A (Band A figure restated 2026-06-09 under length-based tape costing). The 5-across nesting is efficient, but the smaller label area produces a higher $/sq ft material rate.
 
 **Color-parity pricing:** All three Band C items (3010707 Cardinal Red, 3010708 Black, 3010709 White) carry the identical tier table. Material cost differs by color; margin differs by color; price does NOT differ by color. Confirmed by the final 6-model industry-validation audit as universal industry standard for multi-color variants of identical geometry. Pricing is anchored to the worst-case material (Cardinal Red); the other colors yield better margins at every tier.
 

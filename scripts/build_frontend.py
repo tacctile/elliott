@@ -36,11 +36,19 @@ IMAGE_EXTS = {'.png', '.jpg', '.jpeg', '.webp', '.svg', '.gif', '.bmp', '.tiff'}
 DOC_EXTS = {'.pdf'}
 ALL_EXTS = IMAGE_EXTS | DOC_EXTS
 
-# Internal fields that must never be exposed in the public data.json
+# Internal fields that must never be exposed in the public data.json.
+# pricing_logic + notes added 2026-06-09 (Session I / audit D4): they carry
+# internal strategy text — normalization plans, relationship-concession
+# reasoning, competitor analysis, internal margin reasoning, D7-type
+# operational flags. They have no business in a static fallback JSON
+# deployed to Vercel; internal context lives in items/*.md (repo) and the
+# service-role-only elliott_items_internal table (Supabase).
 STRIP_FIELDS = {
     'benchmark_item',
     'downstream_items',
     'override_type',
+    'pricing_logic',
+    'notes',
 }
 
 

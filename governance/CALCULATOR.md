@@ -3,7 +3,7 @@
 > **Authoritative reference for the Elliott calculator system.**
 > The HTML calculator at `frontend/index.html` is the implementation; this document is the contract.
 >
-> Last Updated: 2026-06-09 (Session H — audit C-1/H-1/H-2/H-4/H-5 + W1–W6 remediation: tier-boundary enforcement is now REPORT-ONLY (briefs are band-anchored; F23 reports cliffs, §26 resolves at billing, tables are never mutated); ink coverage is full-bleed-only per §25 (dropdown removed); kit material costing uses the §25 canonical formula (legacy $2.99/$5.16 hardcodes removed); F18/F19 ghost rows deleted and the flag table corrected (23 definitions, F24/F25 added, F11/F12/F16 documented unreachable); §6.3 regression checklist rewritten to current truth; singles routing ceiling corrected to 1.5 sq ft; data source is Supabase-first with static-JSON fallback; the material-family/color dropdowns are replaced by the material-combination selector)
+> Last Updated: 2026-06-09 (Session I — §7 Step 9: §27 $50 rush/favor floor reference added. Previously Session H — audit C-1/H-1/H-2/H-4/H-5 + W1–W6 remediation: tier-boundary enforcement is now REPORT-ONLY (briefs are band-anchored; F23 reports cliffs, §26 resolves at billing, tables are never mutated); ink coverage is full-bleed-only per §25 (dropdown removed); kit material costing uses the §25 canonical formula (legacy $2.99/$5.16 hardcodes removed); F18/F19 ghost rows deleted and the flag table corrected (23 definitions, F24/F25 added, F11/F12/F16 documented unreachable); §6.3 regression checklist rewritten to current truth; singles routing ceiling corrected to 1.5 sq ft; data source is Supabase-first with static-JSON fallback; the material-family/color dropdowns are replaced by the material-combination selector)
 
 ---
 
@@ -427,7 +427,7 @@ Claude Code then:
 
 ### Step 9 — Quote to Sean
 
-Nick composes the quote email by hand, using the calculator's quote-language stubs (anchor line + PMS caveat where applicable — MOQ language no longer exists on this account, purged 2026-06-05) as a starting point but applying judgment for account context, recent conversations, and the strategic framing this item needs. The calculator output is internal scratch — Sean never sees a route name, a flag ID, or a "validation brief" reference.
+Nick composes the quote email by hand, using the calculator's quote-language stubs (anchor line + PMS caveat where applicable — MOQ language no longer exists on this account, purged 2026-06-05) as a starting point but applying judgment for account context, recent conversations, and the strategic framing this item needs. For rush or favor jobs, apply the §27 $50 rush/favor floor if applicable (`governance/PRICING_RULES.md` §27 — separate from and non-stacking with the $55 one-off floor). Document as One-Time Exception. The calculator output is internal scratch — Sean never sees a route name, a flag ID, or a "validation brief" reference.
 
 ---
 

@@ -75,10 +75,9 @@ S25_BUFFER_MAX = 0.15
 # Documented §25 exceptions (audit 2026-06-09 H-5/S1 adjudication). Listed
 # items are reported informationally; any UNLISTED printed/lam item outside
 # the buffer window is an ERROR — new costing-era mixing cannot land silently.
+# 1230820 / 1082570 / 1068270 removed 2026-06-09 (Session I): rebuilt to the
+# §25 canonical formula (D2-full + D7) — they now pass the compliance check.
 S25_EXCEPTIONS = {
-    "1230820": "legacy-overstated (+$0.70 vs canonical) — conservative; pending full D2 normalization",
-    "1082570": "legacy-overstated (+$0.35, Safety Yellow ink lineage) — pending D2/D7 lockstep re-cost",
-    "1068270": "legacy-overstated (+$0.35) — direct parity clone of 1082570; D7 lockstep applies",
     "1277970": "job-based one-off costing (production-footprint method, documented)",
     "1277980": "job-based one-off costing (production-footprint method, documented)",
     "1277990": "job-based one-off costing (production-footprint method, documented)",

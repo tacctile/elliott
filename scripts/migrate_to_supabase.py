@@ -8,8 +8,14 @@ the repo's source-of-truth files:
   1. materials/*.md (11 files)  -> elliott_materials
      (+ 1 synthetic row for eco-solvent ink so combinations can carry an
       `ink` component — ink is a rate in governance, not a repo file)
-  2. items/*.md (23 files)      -> elliott_items (frontmatter mirrored
-     exactly; band_class + do_not_benchmark derived)
+  2. items/*.md (23 files)      -> elliott_items (frontmatter mirrored;
+     band_class + do_not_benchmark derived). EXCEPTION (Session I,
+     2026-06-09 / audit D4): the internal strategy fields pricing_logic
+     and notes are NOT written to the anon-readable elliott_items columns
+     (they are nulled there) — they are routed to elliott_items_internal
+     (part_number, pricing_logic, notes), which has RLS enabled with NO
+     anon policies (service_role only). Never write internal strategy
+     text to any anon-readable column.
   3. build_calculator_config.py constants -> elliott_pricing_bands
      (6 rows: cut_vinyl_a/b/c, printed_lam_singles/micro/kits)
   4. build_calculator_config.py constants -> elliott_account_settings
@@ -257,7 +263,7 @@ def derive_band_class(fm):
 
 
 def build_item_rows():
-    rows, skipped = [], []
+    rows, internal_rows, skipped = [], [], []
     dnb = dict(bcc.DO_NOT_BENCHMARK)
     for f in sorted(ITEMS_DIR.glob("*.md")):
         fm = parse_frontmatter(f, (), ITEM_NUMERIC_FIELDS)
@@ -265,6 +271,13 @@ def build_item_rows():
             skipped.append((f.name, "no frontmatter"))
             continue
         pn = fm.get("part_number", f.stem)
+        # Internal strategy fields -> service-role-only side table (D4).
+        internal_rows.append({
+            "account_id": ACCOUNT_ID,
+            "part_number": pn,
+            "pricing_logic": fm.get("pricing_logic", ""),
+            "notes": fm.get("notes", ""),
+        })
         rows.append({
             "account_id": ACCOUNT_ID,
             "part_number": pn,
@@ -288,7 +301,10 @@ def build_item_rows():
             "first_article_price": fm.get("first_article_price"),
             "per_label_at_qty_20": fm.get("per_label_at_qty_20"),
             "margin_at_qty_20": fm.get("margin_at_qty_20", ""),
-            "pricing_logic": fm.get("pricing_logic", ""),
+            # pricing_logic / notes deliberately blanked on the anon-readable
+            # row (columns are NOT NULL) — content lives in
+            # elliott_items_internal (D4).
+            "pricing_logic": "",
             "benchmark_item": fm.get("benchmark_item", ""),
             "downstream_items": fm.get("downstream_items", ""),
             "process": fm.get("process", ""),
@@ -299,13 +315,13 @@ def build_item_rows():
             "status": fm.get("status", "Quoted"),
             "date_quoted": fm.get("date_quoted") or None,
             "override_type": fm.get("override_type", ""),
-            "notes": fm.get("notes", ""),
+            "notes": "",
             "band_class": derive_band_class(fm),
             "do_not_benchmark": pn in dnb,
             "do_not_benchmark_reason": dnb.get(pn, ""),
             "is_active": True,
         })
-    return rows, skipped
+    return rows, internal_rows, skipped
 
 
 def build_band_rows():
@@ -543,10 +559,14 @@ def multirow_upsert(table, rows, conflict_key):
             f"on conflict ({conflict_key}) do update set {sets};")
 
 
-def emit_sql(material_rows, item_rows, band_rows, settings_row, combos, item_combo):
+def emit_sql(material_rows, item_rows, internal_rows, band_rows, settings_row,
+             combos, item_combo):
     out = ["begin;"]
     out.append(multirow_upsert("elliott_materials", material_rows, "material_key"))
     out.append(multirow_upsert("elliott_items", item_rows, "part_number"))
+    # Internal strategy fields -> service-role-only table (D4). RLS on
+    # elliott_items_internal has NO anon policies; only service_role reads.
+    out.append(multirow_upsert("elliott_items_internal", internal_rows, "part_number"))
     out.append(multirow_upsert(
         "elliott_pricing_bands",
         [dict(b, account_id=ACCOUNT_ID, is_active=True) for b in band_rows],
@@ -583,7 +603,8 @@ def emit_sql(material_rows, item_rows, band_rows, settings_row, combos, item_com
 # Live run via supabase-py
 # ---------------------------------------------------------------------------
 
-def run_live(material_rows, item_rows, band_rows, settings_row, combos, item_combo):
+def run_live(material_rows, item_rows, internal_rows, band_rows, settings_row,
+             combos, item_combo):
     import os
     url = os.environ.get("SUPABASE_URL")
     key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
@@ -607,6 +628,8 @@ def run_live(material_rows, item_rows, band_rows, settings_row, combos, item_com
     sb.table("elliott_materials").upsert(material_rows, on_conflict="material_key").execute()
     sb.table("elliott_items").upsert(
         [dict(r) for r in item_rows], on_conflict="part_number").execute()
+    sb.table("elliott_items_internal").upsert(
+        [dict(r) for r in internal_rows], on_conflict="part_number").execute()
     sb.table("elliott_pricing_bands").upsert(
         [dict(b, account_id=ACCOUNT_ID, is_active=True) for b in band_rows],
         on_conflict="band_key").execute()
@@ -680,18 +703,20 @@ def main():
         mode = "dry-run"
 
     material_rows, skipped_m = build_material_rows()
-    item_rows, skipped_i = build_item_rows()
+    item_rows, internal_rows, skipped_i = build_item_rows()
     band_rows = build_band_rows()
     settings_row = build_account_settings_row()
     combos, item_combo = build_combinations(material_rows, item_rows)
 
     if mode == "emit-sql":
-        print(emit_sql(material_rows, item_rows, band_rows, settings_row, combos, item_combo))
+        print(emit_sql(material_rows, item_rows, internal_rows, band_rows,
+                       settings_row, combos, item_combo))
         print_report(material_rows, item_rows, band_rows, combos, item_combo,
                      skipped_m, skipped_i, mode, out=sys.stderr)
         return
     if mode == "live":
-        run_live(material_rows, item_rows, band_rows, settings_row, combos, item_combo)
+        run_live(material_rows, item_rows, internal_rows, band_rows,
+                 settings_row, combos, item_combo)
     print_report(material_rows, item_rows, band_rows, combos, item_combo,
                  skipped_m, skipped_i, mode)
 
