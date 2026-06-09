@@ -2,7 +2,7 @@
 
 > **Living document — updated every session that changes structure.**
 >
-> Last Updated: 2026-06-09 (Session G: P/N 1278890 added — 2-LABEL LIFTING CAPACITY CHART KIT, E160 V3 — printed/laminated 2-label matched-set kit at 7.88" × 11.13" per label (0.609 sq ft/label, 1.218 sq ft/kit). **Per-label parity with P/N 1278930 (FA Accepted)** — same dimensions, same material (Orajet 3951 cast vinyl + 1-mil polyester overlaminate), same single-pass lamination geometry, within ≤2 lam pass parity boundary. **4-wave atomic AI validated (24 independent runs, 6 models × 4 waves) — Wave 4 unanimous YES, no modifications, engine consensus accepted, no override.** $10.00/label at qty 20 = $16.42/sq ft — lands exactly on kit band anchor. Tier table $30/$24/$20/$17/$14/$12. Margin at qty 20 ~88% material-only. LABEL-B revised 06/08/26 (ECO# 28830, "UPDATED: LOGO ON TOP OF CHARTS", DJS) — artwork-only change, no impact on dimensions/material/pricing. INTERNAL ONLY: 200+ tier margin compression is structural and inherited from 1278930 and 1245130 — January 2027 normalization argument must anchor to material cost increases or process complexity changes, NOT per-label rate arguments; Sean now has three accepted data points at $10.00/label. Track 200+ cycle time on first production run for the E160/E190 kit-family normalization anchor. Item count 22 → 23. Previously Session F: P/N 1068270 added — CHART-EZR BASKET JIB 500# / G85 BASKET 500#, printed/laminated load chart label at 7.25" × 10.00" (0.503 sq ft), direct parity clone of P/N 1082570.)
+> Last Updated: 2026-06-09 (Session H: Supabase data layer + Materials Manager + calculator overhaul. The system now reads from Supabase first (elliott_* tables in the `prolabel` project: materials, items, pricing bands, account settings, material combinations, audit log) with the static frontend JSONs retained as the offline fallback. Kit-family material costs normalized to the §25 canonical formula (1278930 $2.99 → $3.60, 1245130 $5.16 → $5.95 — documentation-only, margin columns ~90% → ~88%, no sell prices changed). Audit findings C-1 (report-only tier enforcement), H-1–H-5, and W1–W6 resolved. Previously Session G: P/N 1278890 added — 2-LABEL LIFTING CAPACITY CHART KIT, E160 V3 — printed/laminated 2-label matched-set kit at 7.88" × 11.13" per label (0.609 sq ft/label, 1.218 sq ft/kit). **Per-label parity with P/N 1278930 (FA Accepted)** — same dimensions, same material (Orajet 3951 cast vinyl + 1-mil polyester overlaminate), same single-pass lamination geometry, within ≤2 lam pass parity boundary. **4-wave atomic AI validated (24 independent runs, 6 models × 4 waves) — Wave 4 unanimous YES, no modifications, engine consensus accepted, no override.** $10.00/label at qty 20 = $16.42/sq ft — lands exactly on kit band anchor. Tier table $30/$24/$20/$17/$14/$12. Margin at qty 20 ~88% material-only. LABEL-B revised 06/08/26 (ECO# 28830, "UPDATED: LOGO ON TOP OF CHARTS", DJS) — artwork-only change, no impact on dimensions/material/pricing. INTERNAL ONLY: 200+ tier margin compression is structural and inherited from 1278930 and 1245130 — January 2027 normalization argument must anchor to material cost increases or process complexity changes, NOT per-label rate arguments; Sean now has three accepted data points at $10.00/label. Track 200+ cycle time on first production run for the E160/E190 kit-family normalization anchor. Item count 22 → 23. Previously Session F: P/N 1068270 added — CHART-EZR BASKET JIB 500# / G85 BASKET 500#, printed/laminated load chart label at 7.25" × 10.00" (0.503 sq ft), direct parity clone of P/N 1082570.)
 
 ---
 
@@ -14,8 +14,8 @@ All quoted items. Updated when items are added, repriced, or status changes.
 |-----|-------------|-----------------|-----------|-------------|-------------|-----------------|---------------------|------------------|--------|-----------| 
 | 1230820 | Load Chart Label, Model D105 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Label | 1 | 1.296 | $20 | $20.00 | ~84% | FA Accepted | `items/1230820.md` |
 | 1278890 | 2-Label Lifting Capacity Chart Kit, E160 V3 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Kit | 2 | 0.609 | $20 | $10.00 | ~88% | Quoted | `items/1278890.md` |
-| 1278930 | 3-Label Lifting Capacity Chart Kit, E190 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Kit | 3 | 0.609 | $30 | $10.00 | ~90% | FA Accepted | `items/1278930.md` |
-| 1245130 | 5-Label Lifting Capacity Chart Kit, E160 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Kit | 5 | 0.609 | $50 | $10.00 | ~90% | Quoted | `items/1245130.md` |
+| 1278930 | 3-Label Lifting Capacity Chart Kit, E190 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Kit | 3 | 0.609 | $30 | $10.00 | ~88% | FA Accepted | `items/1278930.md` |
+| 1245130 | 5-Label Lifting Capacity Chart Kit, E160 | Orajet 3951 Cast + Polyester Lam | Printed/Laminated Kit | 5 | 0.609 | $50 | $10.00 | ~88% | Quoted | `items/1245130.md` |
 | 1205720 | E190 Cardinal Red Model Designation | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.56 | $35 | $35.00 | ~75% | FA Accepted | `items/1205720.md` |
 | 3017435 | ELLIOTT White Vinyl Cut Lettering | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.56 | $35 | $35.00 | ~73% (24" roll) / ~78% (48" roll) | Quoted | `items/3017435.md` |
 | 3018378 | Label D115 Blue — Model Designation | 3M 180mC Cut Vinyl | Vinyl Cut Lettering | 1 | 2.512 | $35 | $35.00 | ~75% | Quoted | `items/3018378.md` |
@@ -39,6 +39,20 @@ All quoted items. Updated when items are added, repriced, or status changes.
 ---
 
 ## Category Registry
+
+> **Data layer note (Session H, 2026-06-09):** The frontend now reads from
+> **Supabase first** — `elliott_materials`, `elliott_items`,
+> `elliott_pricing_bands`, `elliott_account_settings`,
+> `elliott_material_combinations` (+ components), and `elliott_audit_log` in
+> the shared `prolabel` project (tables prefixed `elliott_` because the
+> project hosts other apps). The static JSONs (`frontend/data.json`,
+> `materials.json`, `calculator_config.json`, `combinations.json`) are the
+> offline fallback, regenerated by the build scripts (repo state) or
+> `scripts/sync_from_supabase.py` (live DB state). The Materials Manager tab
+> writes materials/combinations to Supabase directly; items, bands, and
+> settings change only through governed Claude Code sessions
+> (`scripts/migrate_to_supabase.py`). The category files below remain the
+> governance source of truth for band definitions.
 
 | Category | Material Family | Category File | Item Count | Profile Status |
 |----------|-----------------|---------------|------------|----------------|

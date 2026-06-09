@@ -2,7 +2,7 @@
 
 > **Mandatory. Runs BEFORE any pricing. No exceptions.**
 >
-> Last Updated: 2026-05-22
+> Last Updated: 2026-06-09 (Session H — Ink Coverage default corrected to full bleed per §25; the stale "Assumed: medium coverage" default contradicted the 2026-06-01 account-wide rule)
 
 ---
 
@@ -65,7 +65,7 @@ If any field is tagged Blocked, pricing does not proceed. Period.
 | Field | Source | Default Rule If Missing |
 |-------|--------|------------------------|
 | Color Count / Description | Artwork, color callouts | Printed: Assumed full-color CMYK. Cut vinyl: Confirmed single color from material spec. |
-| Ink Coverage Estimate | Visual assessment | Assumed: medium coverage. Flag if heavy flood coat or photo-quality. |
+| Ink Coverage Estimate | Account rule — not a per-drawing assessment | Assumed: full bleed ($0.50/sq ft) — account standard per PRICING_RULES.md §25, always. No medium/low/partial coverage assumption is permitted on any Elliott printed/laminated item. |
 | White Ink / Backer Required | Substrate + artwork analysis | Assumed: no (white substrate). **Blocked** if clear substrate or reverse-print indicated. |
 | Barcode / QR / Variable Data | Artwork or general notes | Assumed: none. Flag if variable data detected — changes production process. |
 
@@ -98,6 +98,7 @@ These defaults apply unless the drawing explicitly states otherwise:
 | Printed substrate | Orajet 3951 cast vinyl | Established material family |
 | Overlaminate (printed) | 1-mil clear polyester | Established material family |
 | Application tape (cut vinyl) | TransferRite Ultra 582U | Established material family |
+| Ink coverage (printed/laminated) | Full bleed ($0.50/sq ft × full label sq ft) | Account-wide standard per `PRICING_RULES.md` §25 (established 2026-06-01) — applies always; never assume medium/low/partial |
 | Corners | Square unless radiused | Elliott drawings specify radius when needed |
 | Durability | 5-7 year outdoor industrial | Account standard |
 | Application | Hand-applied on equipment | Elliott production process |
@@ -137,7 +138,7 @@ Material:
 
 Print:
   Colors: [description] — Confirmed / Assumed
-  Coverage: [low/medium/high] — Assumed
+  Coverage: Full bleed ($0.50/sq ft) — account standard per §25 — Assumed/Confirmed
   Variable Data: [none/yes — describe] — Confirmed / Assumed
 
 Environment:

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-09T17:00:26Z",
+  "generated": "2026-06-09T20:01:01Z",
   "item_count": 23,
   "items": {
     "1068270": {
@@ -111,7 +111,7 @@
         "first_article_price": "",
         "per_label_at_qty_20": 35.0,
         "margin_at_qty_20": "~75%",
-        "pricing_logic": "Direct sq ft parity with P/N 1205720 (cut vinyl baseline, FA Accepted). Dimensions identical (33-9/16\\\" \u00d7 11\\\"), material identical (3M 180mC-53 Cardinal Red), process identical (Cut/Weed/Mask). Same tier structure applied. Validates within Cut Vinyl Pricing Profile band ($13.67\u2013$13.93/sq ft at qty 20) at $13.65/sq ft \u2014 equivalent to the 1205720 baseline once carried to 3-decimal sq ft precision (rounding artifact only, dimensions are identical to the baseline).",
+        "pricing_logic": "Direct sq ft parity with P/N 1205720 (cut vinyl baseline, FA Accepted). Dimensions identical (33-9/16\" \u00d7 11\"), material identical (3M 180mC-53 Cardinal Red), process identical (Cut/Weed/Mask). Same tier structure applied. Validates within Cut Vinyl Pricing Profile band ($13.67\u2013$13.93/sq ft at qty 20) at $13.65/sq ft \u2014 equivalent to the 1205720 baseline once carried to 3-decimal sq ft precision (rounding artifact only, dimensions are identical to the baseline).",
         "process": "Cut/Weed/Mask",
         "lamination_passes": 0,
         "cut_runs": 1,
@@ -165,7 +165,7 @@
         "cut_runs": 1,
         "status": "FA Accepted",
         "date_quoted": "2026-04-22",
-        "notes": "First item quoted to Elliott. Sean ordered FA next morning without pushback. 3M 180mC-53 Cardinal Red on 24\\\" roll."
+        "notes": "First item quoted to Elliott. Sean ordered FA next morning without pushback. 3M 180mC-53 Cardinal Red on 24\" roll."
       },
       "image": null,
       "sections": {
@@ -208,7 +208,7 @@
         "cut_runs": 1,
         "status": "Quoted",
         "date_quoted": "2026-06-01",
-        "notes": "REVALIDATED 2026-06-01 UNDER 4-WAVE ATOMIC AI VALIDATION PROCESS. 1-9 tier added 2026-06-05 in the MOQ purge: $7.25 (= 1.5\u00d7 anchor, $24.83/sq ft, +7.3% above benchmark \u2014 preserves the Wave 4 small-format premium at the 1-9 tier). The 9/10 cliff (9 \u00d7 $7.25 = $65.25 vs 10 \u00d7 $5.75 = $57.50) is resolved by \u00a726 invoice protection \u2014 same pattern as 1205720 and 3010707. ACCOUNT-WIDE FULL BLEED INK RULE (established 2026-06-01, codified PRICING_RULES.md \u00a725): material_cost_per_unit = $0.60 = (Orajet 0.292 \u00d7 $1.21 = $0.353) + (1-mil poly lam 0.292 \u00d7 $0.2389 = $0.070) + (ink full bleed 0.292 \u00d7 $0.50 = $0.146) + incidental buffer (conservative round-up from calculated $0.569). No more $0.25 placeholder \u2014 full bleed is the account default at all times for all Elliott printed/laminated items. Incidental buffer convention: judgment-applied conservative round-up; not a fixed number. INVOICE PROTECTION (\u00a726): buyer never invoiced more for a smaller quantity than a larger quantity at the next tier. Applied automatically at all tier boundaries \u2014 the 9 \u00d7 $7.25 = $65.25 vs 10 \u00d7 $5.75 = $57.50 boundary and the 19 \u00d7 $5.75 = $109.25 vs 20 \u00d7 $4.75 = $95.00 boundary are both automatically resolved by invoice protection (buyer charged the lower of the two). QUOTE EMAIL ANCHOR (validated Wave 3): 'Label measures 10.5\\\" \u00d7 4\\\" (0.292 sq ft) in cast vinyl with polyester overlaminate \u2014 priced at $4.75 at your projected monthly volume.' PRICING NORMALIZATION (INTERNAL ONLY \u2014 DO NOT SURFACE TO BUYER): current account band ($15.43\u2013$15.91/sq ft) is a relationship concession below industry standard (~$18\u2013$22/sq ft for premium cast vinyl + polyester lam ANSI safety labels at qty 20). Nick's plan is to normalize pricing toward industry standard by January 1, 2027. The 1210810 final table at $16.27/sq ft (20-49) is intentionally above the band \u2014 the small-format premium per Wave 4 verdict, NOT a normalization step. 200+ WAREHOUSE CAUTION: Nick will caution Sean against warehouse accumulation \u2014 label integrity degrades in non-climate-controlled storage. The 200+ tier exists for structural completeness only; 30/month recurring volume never organically reaches 200+ on a single order. BAND EXCLUSION STILL APPLIES: 1210810 (0.292 sq ft) remains below the ~0.5 sq ft singles band scope floor. Excluded from band DATA POINTS on dimensional scope until production-volume acceptance confirmed by Nick. The exclusion is dimensional, not pricing \u2014 the validated $/sq ft is INTENTIONALLY ABOVE the band ($16.27 vs $15.43\u2013$15.91), reflecting the structurally required small-format premium. PRIOR PRICING SUPERSEDED: all references to the prior $4.50 / $4.75 tier structure with $0.67 material cost and $0.25 placeholder ink, and the prior $55 flat 1-9 MOQ structure, are obsolete \u2014 replaced by the 4-wave-validated final table with the new $7.25 1-9 tier and $0.60 material cost under the full bleed account-wide rule."
+        "notes": "REVALIDATED 2026-06-01 UNDER 4-WAVE ATOMIC AI VALIDATION PROCESS. 1-9 tier added 2026-06-05 in the MOQ purge: $7.25 (= 1.5\u00d7 anchor, $24.83/sq ft, +7.3% above benchmark \u2014 preserves the Wave 4 small-format premium at the 1-9 tier). The 9/10 cliff (9 \u00d7 $7.25 = $65.25 vs 10 \u00d7 $5.75 = $57.50) is resolved by \u00a726 invoice protection \u2014 same pattern as 1205720 and 3010707. ACCOUNT-WIDE FULL BLEED INK RULE (established 2026-06-01, codified PRICING_RULES.md \u00a725): material_cost_per_unit = $0.60 = (Orajet 0.292 \u00d7 $1.21 = $0.353) + (1-mil poly lam 0.292 \u00d7 $0.2389 = $0.070) + (ink full bleed 0.292 \u00d7 $0.50 = $0.146) + incidental buffer (conservative round-up from calculated $0.569). No more $0.25 placeholder \u2014 full bleed is the account default at all times for all Elliott printed/laminated items. Incidental buffer convention: judgment-applied conservative round-up; not a fixed number. INVOICE PROTECTION (\u00a726): buyer never invoiced more for a smaller quantity than a larger quantity at the next tier. Applied automatically at all tier boundaries \u2014 the 9 \u00d7 $7.25 = $65.25 vs 10 \u00d7 $5.75 = $57.50 boundary and the 19 \u00d7 $5.75 = $109.25 vs 20 \u00d7 $4.75 = $95.00 boundary are both automatically resolved by invoice protection (buyer charged the lower of the two). QUOTE EMAIL ANCHOR (validated Wave 3): 'Label measures 10.5\" \u00d7 4\" (0.292 sq ft) in cast vinyl with polyester overlaminate \u2014 priced at $4.75 at your projected monthly volume.' PRICING NORMALIZATION (INTERNAL ONLY \u2014 DO NOT SURFACE TO BUYER): current account band ($15.43\u2013$15.91/sq ft) is a relationship concession below industry standard (~$18\u2013$22/sq ft for premium cast vinyl + polyester lam ANSI safety labels at qty 20). Nick's plan is to normalize pricing toward industry standard by January 1, 2027. The 1210810 final table at $16.27/sq ft (20-49) is intentionally above the band \u2014 the small-format premium per Wave 4 verdict, NOT a normalization step. 200+ WAREHOUSE CAUTION: Nick will caution Sean against warehouse accumulation \u2014 label integrity degrades in non-climate-controlled storage. The 200+ tier exists for structural completeness only; 30/month recurring volume never organically reaches 200+ on a single order. BAND EXCLUSION STILL APPLIES: 1210810 (0.292 sq ft) remains below the ~0.5 sq ft singles band scope floor. Excluded from band DATA POINTS on dimensional scope until production-volume acceptance confirmed by Nick. The exclusion is dimensional, not pricing \u2014 the validated $/sq ft is INTENTIONALLY ABOVE the band ($16.27 vs $15.43\u2013$15.91), reflecting the structurally required small-format premium. PRIOR PRICING SUPERSEDED: all references to the prior $4.50 / $4.75 tier structure with $0.67 material cost and $0.25 placeholder ink, and the prior $55 flat 1-9 MOQ structure, are obsolete \u2014 replaced by the 4-wave-validated final table with the new $7.25 1-9 tier and $0.60 material cost under the full bleed account-wide rule."
       },
       "image": null,
       "sections": {
@@ -277,8 +277,8 @@
         "height_in": 7.88,
         "sq_ft_per_label": 0.609,
         "sq_ft_per_kit": 3.045,
-        "material_cost_per_unit": 5.16,
-        "cost_version_date": "2026-05-28",
+        "material_cost_per_unit": 5.95,
+        "cost_version_date": "2026-06-09",
         "price_1_9": 75,
         "price_10_19": 60,
         "price_20_49": 50,
@@ -287,14 +287,14 @@
         "price_200_plus": 30,
         "first_article_price": "",
         "per_label_at_qty_20": 10.0,
-        "margin_at_qty_20": "~90%",
+        "margin_at_qty_20": "~88%",
         "pricing_logic": "5/3 parity with P/N 1278930. Per-label = $10.00 at qty 20, identical to 3-label kit. Validated across 30 model runs / 4 rounds. 1.8x was rejected \u2014 buyer psychology won over cost modeling. Validates within Printed + Laminated kit Pricing Profile band.",
         "process": "Print/Lam/Cut (2 pass)",
         "lamination_passes": 2,
         "cut_runs": 2,
         "status": "Quoted",
         "date_quoted": "2026-05-21",
-        "notes": "2 lam passes due to 13.5\\\" laminator constraint. Parity boundary is tied to lamination passes (\u22642), not label count. FA not requested by buyer for this item."
+        "notes": "2 lam passes due to 13.5\" laminator constraint. Parity boundary is tied to lamination passes (\u22642), not label count. FA not requested by buyer for this item."
       },
       "image": [
         {
@@ -305,10 +305,10 @@
       "sections": {
         "item_overview": "- **Part Number:** 1245130\n- **Description:** Lifting Capacity Chart, Model E160\n- **Type:** Printed full-color kit (5 labels: A through E)\n- **Dimensions:** All 11.13\" \u00d7 7.88\" each (0.609 sq ft/label, ~3.045 sq ft total/kit)\n- **Corners:** Rounded (R.13)\n- **Tolerance:** \u00b1.063\"\n- **Material Note (from drawing):** Cast 2-mil vinyl (5-7 yr), adhesive back, peel-off backing slit at middle, 1-mil clear Mylar overlay\n- **DWG Date:** 05/24/19, Rev A (02/02/21 \u2014 changed 50,000 to 34,000)\n- **Status:** Quoted May 2026\n\n---",
         "material_spec": "- **Substrate:** Orajet 3951 cast vinyl, white, adhesive back (~2 mil)\n- **Adhesive:** Permanent pressure-sensitive\n- **Laminate:** 1-mil clear polyester (Mylar) overlaminate \u2014 gloss finish\n- **Ink:** Eco-solvent, ANSI Z535.1 safety colors, Helvetica Bold lettering\n- **Layout:** ANSI Z535.4 compliant\n\n---",
-        "nesting": "- **Laminator Feed:** 7.88\" feeds through 13.5\" laminator. Cannot fit all 5 in one pass \u2014 **2 lamination passes** (3 in pass 1, 2 in pass 2).\n- **Print Layout:** All 5 fit in one print run on Roland SG3-300 (28\" max). Three at 7.88\" wide, two rotated to 11.13\" wide.\n- 2 lamination passes required because the Roland SG3-300's 28\" print width forces mixed orientation groups. 3 labels print at 7.88\" wide, 2 labels rotated to 11.13\" wide. Each orientation group requires its own lamination pass.\n- **Material Cost Breakdown (per kit):**\n  - Vinyl (Orajet 3951): 5 \u00d7 0.609 sq ft \u00d7 $1.21/sq ft = ~$3.68\n  - Laminate (1-mil polyester): ~$0.28 (1.173 sq ft implied \u00d7 $0.2389/sq ft \u2014 updated 2026-05-28)\n  - Ink (eco-solvent): 5 \u00d7 ~$0.27 = ~$1.35\n  - Waste/setup allowance: included\n  - **Total material cost per kit: ~$5.16** (per frontmatter canonical value)\n  - **Per-label material cost: ~$1.03**\n\n---",
+        "nesting": "- **Laminator Feed:** 7.88\" feeds through 13.5\" laminator. Cannot fit all 5 in one pass \u2014 **2 lamination passes** (3 in pass 1, 2 in pass 2).\n- **Print Layout:** All 5 fit in one print run on Roland SG3-300 (28\" max). Three at 7.88\" wide, two rotated to 11.13\" wide.\n- 2 lamination passes required because the Roland SG3-300's 28\" print width forces mixed orientation groups. 3 labels print at 7.88\" wide, 2 labels rotated to 11.13\" wide. Each orientation group requires its own lamination pass.\n- **Material Cost Breakdown (per kit) \u2014 \u00a725 canonical formula (rebuilt 2026-06-09, Session H / audit D2):**\n  - Vinyl (Orajet 3951): 3.045 sq ft \u00d7 $1.21/sq ft = $3.684\n  - Laminate (1-mil polyester): 3.045 sq ft \u00d7 $0.2389/sq ft = $0.727\n  - Ink (eco-solvent, full bleed per \u00a725): 3.045 sq ft \u00d7 $0.50/sq ft = $1.523\n  - Calculated total: $5.934\n  - Incidental buffer (conservative round-up): + $0.016\n  - **Total material cost per kit: $5.95** (canonical per PRICING_RULES.md \u00a725)\n  - **Per-label material cost: $1.19**\n  - *Costing-era note:* the prior filed value ($5.16) was a legacy pre-\u00a725 build\n    (laminate amortized per pass at ~$0.28, ink at ~$0.27/label) whose component\n    lines summed to $5.31, not $5.16. Rebuilt under the \u00a725 canonical formula\n    2026-06-09 \u2014 documentation-only normalization; no sell price changed.\n    The kit family (1278890 $2.40 / 1278930 $3.60 / 1245130 $5.95) now shares\n    one costing basis.\n\n---",
         "production": "1. File import/setup \u2014 open the Elliott-supplied production-ready DWG (5 pages already laid out with registration marks), send to RIP. ~5 min mechanical. NOT billable labor (see `PRICING_RULES.md` \u00a722).\n2. Print \u2014 1 run, all 5 labels on Roland SG3-300\n3. Laminate \u2014 **2 passes** (13.5\" max width constraint)\n4. Contour cut \u2014 **2 runs** (matching the 2 lam groups)\n5. Weed, inspect, package as matched set (A through E)\n\n- **Lamination Passes:** 2\n- **Cut Runs:** 2\n- **Key constraint:** Double lam pass is the sole production inefficiency. Wider laminator collapses to single-pass.\n\n---",
         "pricing_derivation": "",
-        "margin_analysis": "| Qty Tier | Kit Price | Per Label | Material Cost | Gross Profit | Margin |\n|----------|-----------|-----------|---------------|-------------|--------|\n| 1-9 | $75.00 | $15.00 | $5.16 | $69.84 | ~93% |\n| 10-19 | $60.00 | $12.00 | $5.16 | $54.84 | ~91% |\n| 20-49 | $50.00 | $10.00 | $5.16 | $44.84 | ~90% |\n| 50-99 | $43.00 | $8.60 | $5.16 | $37.84 | ~88% |\n| 100-199 | $35.00 | $7.00 | $5.16 | $29.84 | ~85% |\n| 200+ | $30.00 | $6.00 | $5.16 | $24.84 | ~83% |\n\nExceeds internal P&L benchmark at every tier. Dollar profit at qty 20 ($44.84) is higher than the 3-label kit ($27.01). Margin curve mirrors 3-label kit exactly \u2014 confirms parity logic holds structurally. (Material cost updated 2026-05-28 \u2014 laminate rate corrected to $0.2389/sq ft from Flexcon FLX000233 invoice.)\n\n---",
+        "margin_analysis": "| Qty Tier | Kit Price | Per Label | Material Cost | Gross Profit | Margin |\n|----------|-----------|-----------|---------------|-------------|--------|\n| 1-9 | $75.00 | $15.00 | $5.95 | $69.05 | ~92% |\n| 10-19 | $60.00 | $12.00 | $5.95 | $54.05 | ~90% |\n| 20-49 | $50.00 | $10.00 | $5.95 | $44.05 | ~88% |\n| 50-99 | $43.00 | $8.60 | $5.95 | $37.05 | ~86% |\n| 100-199 | $35.00 | $7.00 | $5.95 | $29.05 | ~83% |\n| 200+ | $30.00 | $6.00 | $5.95 | $24.05 | ~80% |\n\nExceeds internal P&L benchmark at every tier. Dollar profit at qty 20 ($44.05) is higher than the 3-label kit ($26.40). Margin curve mirrors the 3-label kit exactly \u2014 confirms parity logic holds structurally. (Material cost rebuilt 2026-06-09 under the \u00a725 canonical formula \u2014 documentation-only; no sell price changed. Prior legacy basis was $5.16 with margins ~93%\u2192~83%; margin strings are now cross-comparable across the kit family.)\n\n---",
         "notes": "- **Parity boundary is production-based.** Per-label parity applies at \u22642 lam passes, same dimensions, same material. Beyond 2 passes or mixed dimensions \u2192 cost-build.\n- **Dollar profit per kit is the metric that matters.** $43.97 at qty 20 is excellent despite absorbing the double-pass.\n- **Wider laminator upgrade** collapses to single-pass and improves margins without pricing change.\n- **50\u201399 tier: $43 is $43.33 rounded down.** Exact 5/3 parity at this tier would be $43.33.\n\n---",
         "production_debrief": "*No production debrief yet. Update after first production run. Capture: actual material usage, time per kit, whether 2-pass lamination worked as planned, actual scrap on double-pass, and critically \u2014 does the 2-pass add meaningful time or is it negligible?*"
       }
@@ -514,7 +514,7 @@
         "cut_runs": 1,
         "status": "Quoted",
         "date_quoted": "2026-06-09",
-        "notes": "Single lamination pass \u2014 both labels at 7.88\\\" feed across 13.5\\\" laminator (5.62\\\" clearance), single orientation group. Head-to-toe print layout ~25\\\" wide on 28\\\" Roland print bed (3\\\" clearance). Most efficient 2-label kit configuration on current equipment. LABEL-B revised 06/08/26 (ECO# 28830, 'UPDATED: LOGO ON TOP OF CHARTS', DJS) \u2014 no impact on dimensions, material, or pricing. INTERNAL ONLY (do NOT surface to buyer): 200+ tier margin compression is structural and inherited from kit-band peers (1278930, 1245130); January 2027 normalization must anchor to material cost increases or process complexity changes, NOT per-label rate arguments \u2014 Sean now has three accepted data points at $10.00/label. Track actual cycle time on the first 200+ unit run."
+        "notes": "Single lamination pass \u2014 both labels at 7.88\" feed across 13.5\" laminator (5.62\" clearance), single orientation group. Head-to-toe print layout ~25\" wide on 28\" Roland print bed (3\" clearance). Most efficient 2-label kit configuration on current equipment. LABEL-B revised 06/08/26 (ECO# 28830, 'UPDATED: LOGO ON TOP OF CHARTS', DJS) \u2014 no impact on dimensions, material, or pricing. INTERNAL ONLY (do NOT surface to buyer): 200+ tier margin compression is structural and inherited from kit-band peers (1278930, 1245130); January 2027 normalization must anchor to material cost increases or process complexity changes, NOT per-label rate arguments \u2014 Sean now has three accepted data points at $10.00/label. Track actual cycle time on the first 200+ unit run."
       },
       "image": null,
       "sections": {
@@ -540,8 +540,8 @@
         "height_in": 7.88,
         "sq_ft_per_label": 0.609,
         "sq_ft_per_kit": 1.827,
-        "material_cost_per_unit": 2.99,
-        "cost_version_date": "2026-05-28",
+        "material_cost_per_unit": 3.6,
+        "cost_version_date": "2026-06-09",
         "price_1_9": 45,
         "price_10_19": 36,
         "price_20_49": 30,
@@ -550,23 +550,23 @@
         "price_200_plus": 18,
         "first_article_price": 65,
         "per_label_at_qty_20": 10.0,
-        "margin_at_qty_20": "~90%",
-        "pricing_logic": "1.5x multiplier off P/N 1230820 (root benchmark). Validated across 25 model runs / 6 rounds. Validates within Printed + Laminated kit Pricing Profile at $10.00/label ($16.42/sq ft). Frame as 'three separately finished safety labels supplied as one controlled matched set.",
+        "margin_at_qty_20": "~88%",
+        "pricing_logic": "1.5x multiplier off P/N 1230820 (root benchmark). Validated across 25 model runs / 6 rounds. Validates within Printed + Laminated kit Pricing Profile at $10.00/label ($16.42/sq ft). Frame as 'three separately finished safety labels supplied as one controlled matched set.'",
         "process": "Print/Lam/Cut (1 pass)",
         "lamination_passes": 1,
         "cut_runs": 1,
         "status": "FA Accepted",
         "date_quoted": "2026-04-28",
-        "notes": "3 labels feed end-to-end (11.13\\\" each = 33.39\\\" total feed length); 7.88\\\" feeds across the 13.5\\\" width \u2014 1 pass. Most efficient kit configuration on current equipment."
+        "notes": "3 labels feed end-to-end (11.13\" each = 33.39\" total feed length); 7.88\" feeds across the 13.5\" width \u2014 1 pass. Most efficient kit configuration on current equipment."
       },
       "image": null,
       "sections": {
         "item_overview": "- **Part Number:** 1278930\n- **Description:** CHRT-E190 V3, Integrated Platform Lifting Capacity Chart\n- **Type:** Printed/Laminated Kit (3 labels: A, B, C)\n- **Content:** Three separate lifting capacity charts for the E190 crane model. Each label contains rated capacity data, boom angle/radius diagrams, ANSI safety color coding, and model-specific operating parameters. Supplied as a matched set.\n- **Dimensions:** All 11.13\" \u00d7 7.88\" each (0.609 sq ft/label, ~1.83 sq ft total/kit)\n- **Corners:** Rounded, R.25 (4 corners)\n- **Tolerances:** \u00b11/16\" (assumed account default)\n- **DWG Date:** V3 revision\n- **Status:** FA Accepted\n\n---",
         "material_spec": "- **Substrate:** Orajet 3951 cast vinyl, white, adhesive back (~2 mil)\n- **Adhesive:** Permanent pressure-sensitive\n- **Laminate:** 1-mil clear polyester (Mylar) overlaminate \u2014 gloss finish\n- **Laminate Max Width:** 13.5\" on current equipment \u2014 all 3 labels fit in one pass (7.88\" feeds through)\n- **Application Tape:** N/A\n- **Ink:** Eco-solvent (Roland TR2), ANSI Z535.1 safety colors + full-color diagrams\n\n---",
-        "nesting": "- **Laminator Feed:** 3 labels feed end-to-end (11.13\" each = 33.39\" total feed length); 7.88\" feeds across the 13.5\" width \u2014 1 pass.\n- **Print Layout:** All 3 labels in one print run on Roland SG3-300.\n- **Material Cost Breakdown (per kit):**\n  - Vinyl (Orajet 3951): 3 \u00d7 0.609 sq ft \u00d7 $1.21/sq ft = ~$2.21\n  - Laminate (1-mil polyester): ~$0.21 (0.867 sq ft implied \u00d7 $0.2389/sq ft \u2014 updated 2026-05-28)\n  - Ink (eco-solvent): 3 \u00d7 ~$0.27 = ~$0.81\n  - Waste/setup allowance: included\n  - **Total material cost per kit: ~$2.99** (per frontmatter canonical value)\n  - **Per-label material cost: ~$1.00**\n\n---",
+        "nesting": "- **Laminator Feed:** 3 labels feed end-to-end (11.13\" each = 33.39\" total feed length); 7.88\" feeds across the 13.5\" width \u2014 1 pass.\n- **Print Layout:** All 3 labels in one print run on Roland SG3-300.\n- **Material Cost Breakdown (per kit) \u2014 \u00a725 canonical formula (rebuilt 2026-06-09, Session H / audit D2):**\n  - Vinyl (Orajet 3951): 1.827 sq ft \u00d7 $1.21/sq ft = $2.211\n  - Laminate (1-mil polyester): 1.827 sq ft \u00d7 $0.2389/sq ft = $0.437\n  - Ink (eco-solvent, full bleed per \u00a725): 1.827 sq ft \u00d7 $0.50/sq ft = $0.914\n  - Calculated total: $3.561\n  - Incidental buffer (conservative round-up): + $0.039\n  - **Total material cost per kit: $3.60** (canonical per PRICING_RULES.md \u00a725)\n  - **Per-label material cost: $1.20**\n  - *Costing-era note:* the prior filed value ($2.99) was a legacy pre-\u00a725 build\n    (laminate amortized per pass at ~$0.21, ink at ~$0.27/label) whose component\n    lines summed to $3.23, not $2.99. Rebuilt under the \u00a725 canonical formula\n    2026-06-09 \u2014 documentation-only normalization; no sell price changed.\n    The kit family (1278890 $2.40 / 1278930 $3.60 / 1245130 $5.95) now shares\n    one costing basis.\n\n---",
         "production": "1. File import/setup \u2014 open the Elliott-supplied production-ready DWG (3 pages already tiled with registration marks), send to RIP. ~5 min mechanical. NOT billable labor (see `PRICING_RULES.md` \u00a722).\n2. Print \u2014 Roland SG3-300, full-color eco-solvent on Orajet 3951. All 3 in one run.\n3. Laminate \u2014 1-mil polyester. **ONE pass \u2014 all 3 fit.**\n4. Contour cut \u2014 **ONE run** following registration marks. R.25 corners.\n5. Weed \u2014 remove excess around all 3 labels\n6. Inspect \u2014 print quality, lam adhesion, cut accuracy, label-to-label consistency\n7. Package \u2014 collate A, B, C as matched set\n\n- **Lamination Passes:** 1\n- **Cut Runs:** 1\n- **Constraints:** None \u2014 most efficient kit configuration on current equipment.\n\n---",
         "pricing_derivation": "- **Methodology:** Full multi-round AI model validation \u2014 25 independent model runs across 6 rounds.\n- **Benchmark Item:** P/N 1230820 (root benchmark, single label at $20 qty 20). This kit is 1.5x.\n- **Multiplier Logic:** 1.5x consensus from Round 1. Reflects three separately finished labels produced, inspected, and packaged as a controlled matched set.\n- **FA Pricing:** Debated $55-$90 across models. Consensus ~$75. Nick set $65 as trust-building move. Override: Relationship Concession on FA only. Production tiers are engine-validated.\n- **200+ Tier:** Debated $17 vs $18. Destruction round tipped to $18 \u2014 permanent anchor risk + laminate upgrade absorption margin.\n- **Profile Validation:** $10.00/label at qty 20 = $16.42/sq ft. Within the Printed + Laminated kit Pricing Profile band.\n\n---",
-        "margin_analysis": "| Qty Tier | Kit Price | Per Label | Material Cost | Gross Profit | Margin |\n|----------|-----------|-----------|---------------|-------------|--------|\n| 1-9 | $45.00 | $15.00 | $2.99 | $42.01 | ~93% |\n| 10-19 | $36.00 | $12.00 | $2.99 | $33.01 | ~92% |\n| 20-49 | $30.00 | $10.00 | $2.99 | $27.01 | ~90% |\n| 50-99 | $26.00 | $8.67 | $2.99 | $23.01 | ~88% |\n| 100-199 | $21.00 | $7.00 | $2.99 | $18.01 | ~86% |\n| 200+ | $18.00 | $6.00 | $2.99 | $15.01 | ~83% |\n\nExceeds internal P&L benchmark (~79.7%) at every tier including 200+. Margin compression 93% \u2192 83%. 200+ floor at 83% is strong. (Material cost updated 2026-05-28 \u2014 laminate rate corrected to $0.2389/sq ft from Flexcon FLX000233 invoice.)\n\n---",
+        "margin_analysis": "| Qty Tier | Kit Price | Per Label | Material Cost | Gross Profit | Margin |\n|----------|-----------|-----------|---------------|-------------|--------|\n| 1-9 | $45.00 | $15.00 | $3.60 | $41.40 | ~92% |\n| 10-19 | $36.00 | $12.00 | $3.60 | $32.40 | ~90% |\n| 20-49 | $30.00 | $10.00 | $3.60 | $26.40 | ~88% |\n| 50-99 | $26.00 | $8.67 | $3.60 | $22.40 | ~86% |\n| 100-199 | $21.00 | $7.00 | $3.60 | $17.40 | ~83% |\n| 200+ | $18.00 | $6.00 | $3.60 | $14.40 | ~80% |\n\nExceeds internal P&L benchmark (~79.7%) at every tier including 200+. Margin compression 92% \u2192 80%. 200+ floor at 80% matches the kit-family structural floor (1278890 at ~80%, 1245130 at ~80%). (Material cost rebuilt 2026-06-09 under the \u00a725 canonical formula \u2014 documentation-only; no sell price changed. Prior legacy basis was $2.99 with margins ~93%\u2192~83%; margin strings are now cross-comparable across the kit family.)\n\n---",
         "notes": "- **BRIDGE ITEM.** Links root benchmark (1230820) to all future kit pricing. The 1.5x multiplier established here is the basis for 5/3 parity on 1245130.\n- **Single-pass efficiency.** Most efficient kit configuration possible on current equipment. Any kit exceeding 13.5\" lam capacity in one pass is less efficient.\n- **Per-label parity.** $10.00/label at qty 20 matches the 5-label kit. Intentional and documented.\n- **Defense:** Frame as process value (matched-set collation, multi-label inspection, controlled packaging), never as multiplier math.\n- **Parity boundary:** Per-label parity applies when \u22642 lamination passes, same dimensions, same material. Beyond that, cost-build from scratch.\n\n---",
         "production_debrief": "*No production debrief yet. Update after first real production run (not FA). Capture: actual material usage vs estimated, time per kit, whether single-pass nesting worked as planned, scrap rate, whether pricing assumptions held.*"
       }
@@ -637,7 +637,7 @@
         "first_article_price": "",
         "per_label_at_qty_20": 44.0,
         "margin_at_qty_20": "~71%",
-        "pricing_logic": "Middle member of the S/M/L ELLIOTT wordmark family. Band A (Small-Format, 1.0\u20135.0 sq ft) at $13.74/sq ft at qty 20 \u2014 first Band A data point outside the 2.51\u20132.56 sq ft cluster, establishing the curve between the cluster and Band B (LRG at $11.03/sq ft). Price ratio to small-format anchor ($44/$35 = 1.257) nearly matches area ratio (3.202/2.56 = 1.251) \u2014 proportional pricing with a 0.5% fractional width-handling premium for the 49.16\\\" weed/mask span. 4-wave AI validation (24 passes across 6 models \u00d7 4 waves) plus a revised Wave 2 with corrected geometry context. Wave 4 was unanimous YES (6/6) on $57/$50/$44/$42/$40/$38; 200+ raised to $39 after revised Wave 2 surfaced fully-burdened margin concerns at high volume. No override \u2014 engine consensus accepted.",
+        "pricing_logic": "Middle member of the S/M/L ELLIOTT wordmark family. Band A (Small-Format, 1.0\u20135.0 sq ft) at $13.74/sq ft at qty 20 \u2014 first Band A data point outside the 2.51\u20132.56 sq ft cluster, establishing the curve between the cluster and Band B (LRG at $11.03/sq ft). Price ratio to small-format anchor ($44/$35 = 1.257) nearly matches area ratio (3.202/2.56 = 1.251) \u2014 proportional pricing with a 0.5% fractional width-handling premium for the 49.16\" weed/mask span. 4-wave AI validation (24 passes across 6 models \u00d7 4 waves) plus a revised Wave 2 with corrected geometry context. Wave 4 was unanimous YES (6/6) on $57/$50/$44/$42/$40/$38; 200+ raised to $39 after revised Wave 2 surfaced fully-burdened margin concerns at high volume. No override \u2014 engine consensus accepted.",
         "process": "Cut/Weed/Mask",
         "lamination_passes": 0,
         "cut_runs": 1,
@@ -686,7 +686,7 @@
         "cut_runs": 1,
         "status": "Quoted",
         "date_quoted": "2026-06-05",
-        "notes": "First item in the large-format cut vinyl size class (5+ sq ft). Founding data point. Separate band from the 2.51\u20132.56 sq ft cluster. Uses 15\\\" \u00d7 50yd Cardinal Red roll (materials/3m-180mc-cardinal-red-15in.md) and 30\\\" \u00d7 100yd TransferRite 582U (materials/transferrite-582u-30in.md). Validation conducted at initial height 13.5\\\" (6.639 sq ft); corrected to 14.375\\\" (7.069 sq ft) post-validation \u2014 prices and margins unchanged, $/sq ft recalculated."
+        "notes": "First item in the large-format cut vinyl size class (5+ sq ft). Founding data point. Separate band from the 2.51\u20132.56 sq ft cluster. Uses 15\" \u00d7 50yd Cardinal Red roll (materials/3m-180mc-cardinal-red-15in.md) and 30\" \u00d7 100yd TransferRite 582U (materials/transferrite-582u-30in.md). Validation conducted at initial height 13.5\" (6.639 sq ft); corrected to 14.375\" (7.069 sq ft) post-validation \u2014 prices and margins unchanged, $/sq ft recalculated."
       },
       "image": null,
       "sections": {
@@ -851,14 +851,14 @@
         "price_200_plus": 22,
         "first_article_price": "",
         "per_label_at_qty_20": 35.0,
-        "margin_at_qty_20": "~73% (24\\\" roll) / ~78% (48\\\" roll)",
-        "pricing_logic": "Sq ft parity with P/N 1205720. Same ~2.56 sq ft, same process. Validates within Cut Vinyl Pricing Profile at ~$13.67/sq ft (concession-phase band). Material cost varies by roll width: $9.51 on 24\\\", $7.79 on 48\\\".",
+        "margin_at_qty_20": "~73% (24\" roll) / ~78% (48\" roll)",
+        "pricing_logic": "Sq ft parity with P/N 1205720. Same ~2.56 sq ft, same process. Validates within Cut Vinyl Pricing Profile at ~$13.67/sq ft (concession-phase band). Material cost varies by roll width: $9.51 on 24\", $7.79 on 48\".",
         "process": "Cut/Weed/Mask",
         "lamination_passes": 0,
         "cut_runs": 1,
         "status": "Quoted",
         "date_quoted": "2026-05-21",
-        "notes": "LBL-ELLIOTT 8.38 WHT. 48\\\" roll dramatically better yield (5 across vs 2). Material cost: $9.51 on 24\\\" stock, $7.79 on 48\\\" stock. FA not requested by buyer for this item."
+        "notes": "LBL-ELLIOTT 8.38 WHT. 48\" roll dramatically better yield (5 across vs 2). Material cost: $9.51 on 24\" stock, $7.79 on 48\" stock. FA not requested by buyer for this item."
       },
       "image": [
         {
@@ -900,7 +900,7 @@
         "first_article_price": "",
         "per_label_at_qty_20": 9.17,
         "margin_at_qty_20": "~97%",
-        "pricing_logic": "ONE-OFF JOB ECONOMICS. $55 program total for qty 6 of a single 2.5\\\" \u00d7 1.5\\\" ANSI Z535 NOTICE label for a unit in the field. $9.17/label is the arithmetic per-label slice of the $55 program total ($55 \u00f7 6 = $9.17), NOT a catalog rate. Anchors to the $55 account one-off job-economics floor (1230820 FA-anchored) (P/N 1230820 FA). Sq ft band is inapplicable at this size \u2014 0.026 sq ft is well outside the ~0.5\u20132.0 sq ft singles band. File prep is $0 per account rule (PRICING_RULES.md \u00a722). Material $1.33 for the 6-label job ($0.22/label, per material_cost_per_unit); production time ~20-25 min. Never use as benchmark.",
+        "pricing_logic": "ONE-OFF JOB ECONOMICS. $55 program total for qty 6 of a single 2.5\" \u00d7 1.5\" ANSI Z535 NOTICE label for a unit in the field. $9.17/label is the arithmetic per-label slice of the $55 program total ($55 \u00f7 6 = $9.17), NOT a catalog rate. Anchors to the $55 account one-off job-economics floor (1230820 FA-anchored) (P/N 1230820 FA). Sq ft band is inapplicable at this size \u2014 0.026 sq ft is well outside the ~0.5\u20132.0 sq ft singles band. File prep is $0 per account rule (PRICING_RULES.md \u00a722). Material $1.33 for the 6-label job ($0.22/label, per material_cost_per_unit); production time ~20-25 min. Never use as benchmark.",
         "process": "Print/Lam/Cut (1 pass)",
         "lamination_passes": 1,
         "cut_runs": 1,
@@ -943,13 +943,13 @@
         "first_article_price": "",
         "per_label_at_qty_20": 9.17,
         "margin_at_qty_20": "~99%",
-        "pricing_logic": "ONE-OFF JOB ECONOMICS. $55 program total for qty 6 of a single 0.5\\\" \u00d7 0.5\\\" PTO ACTIVE label for a field service request. $9.17/label is the arithmetic per-label slice of the $55 program total ($55 \u00f7 6 = $9.17), NOT a catalog rate. Anchors to the $55 account one-off job-economics floor (1230820 FA-anchored) (P/N 1230820 FA). Sq ft band is inapplicable at this size \u2014 0.00174 sq ft is the smallest item on the account and is far below the ~0.5\u20132.0 sq ft singles band scope. File prep is $0 per account rule (PRICING_RULES.md \u00a722). Material $0.35 for the 6-label job ($0.06/label, per material_cost_per_unit) \u2014 effectively zero relative to the job floor. Production time ~20-25 min. Never use as benchmark.",
+        "pricing_logic": "ONE-OFF JOB ECONOMICS. $55 program total for qty 6 of a single 0.5\" \u00d7 0.5\" PTO ACTIVE label for a field service request. $9.17/label is the arithmetic per-label slice of the $55 program total ($55 \u00f7 6 = $9.17), NOT a catalog rate. Anchors to the $55 account one-off job-economics floor (1230820 FA-anchored) (P/N 1230820 FA). Sq ft band is inapplicable at this size \u2014 0.00174 sq ft is the smallest item on the account and is far below the ~0.5\u20132.0 sq ft singles band scope. File prep is $0 per account rule (PRICING_RULES.md \u00a722). Material $0.35 for the 6-label job ($0.06/label, per material_cost_per_unit) \u2014 effectively zero relative to the job floor. Production time ~20-25 min. Never use as benchmark.",
         "process": "Print/Lam/Cut (1 pass)",
         "lamination_passes": 1,
         "cut_runs": 1,
         "status": "Quoted",
         "date_quoted": "2026-05-27",
-        "notes": "ONE-OFF. Qty 6 for a field service request (arrived alongside P/N 3017583 as part of the same field service request, next-day rush \u2014 separate line items, not a kit). Smallest item on the account at 0.00174 sq ft (0.5\\\" \u00d7 0.5\\\"). The $9.17/label per-label number is an arithmetic byproduct of dividing the $55 program floor by 6 labels \u2014 it is NOT a catalog rate and must NEVER be used to anchor future pricing for tiny labels, mid-size labels, or any other Elliott item. Drawing callout 'Cast vinyl (5-7 yr vinyl) adhesive back, with peel off backing slit at middle' maps to Orajet 3951 (account standard); drawing callout '1 mil clear Mylar overlay' is brand terminology for the standard 1-mil polyester overlaminate (Mylar is a polyester trade name) used across the Orajet 3951 material family. Future one-off jobs at similar scale rebuild job economics from scratch \u2014 material footprint + production time on the actual job \u2014 then anchor to whichever account floor is appropriate at the time."
+        "notes": "ONE-OFF. Qty 6 for a field service request (arrived alongside P/N 3017583 as part of the same field service request, next-day rush \u2014 separate line items, not a kit). Smallest item on the account at 0.00174 sq ft (0.5\" \u00d7 0.5\"). The $9.17/label per-label number is an arithmetic byproduct of dividing the $55 program floor by 6 labels \u2014 it is NOT a catalog rate and must NEVER be used to anchor future pricing for tiny labels, mid-size labels, or any other Elliott item. Drawing callout 'Cast vinyl (5-7 yr vinyl) adhesive back, with peel off backing slit at middle' maps to Orajet 3951 (account standard); drawing callout '1 mil clear Mylar overlay' is brand terminology for the standard 1-mil polyester overlaminate (Mylar is a polyester trade name) used across the Orajet 3951 material family. Future one-off jobs at similar scale rebuild job economics from scratch \u2014 material footprint + production time on the actual job \u2014 then anchor to whichever account floor is appropriate at the time."
       },
       "image": null,
       "sections": {
@@ -986,7 +986,7 @@
         "first_article_price": "",
         "per_label_at_qty_20": 35.0,
         "margin_at_qty_20": "~75%",
-        "pricing_logic": "Sq ft parity with P/N 1205720 (cut vinyl baseline). 2.512 sq ft vs 2.56 sq ft benchmark \u2014 <2% difference, same tier structure. Validates within Cut Vinyl Pricing Profile at ~$13.94/sq ft at qty 20 (concession-phase band ~$13.67/sq ft \u2014 within acceptable range). New color: 3M 180mC-57 Olympic Blue ($162.78/roll) vs Cardinal Red (24\\\"\u00d750yd $775.10), yielding slightly higher material cost per label ($8.92 vs $8.74). Weeding complexity: low \u2014 4 large block characters, no fine detail.",
+        "pricing_logic": "Sq ft parity with P/N 1205720 (cut vinyl baseline). 2.512 sq ft vs 2.56 sq ft benchmark \u2014 <2% difference, same tier structure. Validates within Cut Vinyl Pricing Profile at ~$13.94/sq ft at qty 20 (concession-phase band ~$13.67/sq ft \u2014 within acceptable range). New color: 3M 180mC-57 Olympic Blue ($162.78/roll) vs Cardinal Red (24\"\u00d750yd $775.10), yielding slightly higher material cost per label ($8.92 vs $8.74). Weeding complexity: low \u2014 4 large block characters, no fine detail.",
         "process": "Cut/Weed/Mask",
         "lamination_passes": 0,
         "cut_runs": 1,

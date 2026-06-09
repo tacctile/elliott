@@ -8,6 +8,15 @@ Checks:
 3. Every item appears in ARCHITECTURE.md catalog
 4. Every item appears in its category file
 5. No orphaned items (in catalog but missing file, or vice versa)
+6. Tier monotonicity — every tier ladder is non-increasing (Session H)
+7. §25 canonical material-cost compliance for printed/laminated items,
+   with a documented-exception list for legacy/job-based costings (Session H)
+8. Material cross-reference bidirectionality (used_in_items ↔ item files;
+   combination components ↔ material files when combinations.json exists)
+   (Session H)
+9. Band membership — every item's $/sq ft at qty 20 lands in its band
+   (reads bands from frontend/calculator_config.json) or is a documented
+   exception (Session H)
 """
 
 import os
@@ -52,6 +61,42 @@ REQUIRED_SECTIONS = [
 
 errors = []
 warnings = []
+info = []
+
+TIER_FIELDS = ["price_1_9", "price_10_19", "price_20_49", "price_50_99",
+               "price_100_199", "price_200_plus"]
+
+# §25 canonical rate: Orajet $1.21 + laminate $0.2389 + full-bleed ink $0.50
+S25_RATE_PER_SQFT = 1.21 + 0.2389 + 0.50
+# Buffer must round UP and stay modest: filed − canonical raw in [-0.005, +0.15]
+S25_BUFFER_MIN = -0.005
+S25_BUFFER_MAX = 0.15
+
+# Documented §25 exceptions (audit 2026-06-09 H-5/S1 adjudication). Listed
+# items are reported informationally; any UNLISTED printed/lam item outside
+# the buffer window is an ERROR — new costing-era mixing cannot land silently.
+S25_EXCEPTIONS = {
+    "1230820": "legacy-overstated (+$0.70 vs canonical) — conservative; pending full D2 normalization",
+    "1082570": "legacy-overstated (+$0.35, Safety Yellow ink lineage) — pending D2/D7 lockstep re-cost",
+    "1068270": "legacy-overstated (+$0.35) — direct parity clone of 1082570; D7 lockstep applies",
+    "1277970": "job-based one-off costing (production-footprint method, documented)",
+    "1277980": "job-based one-off costing (production-footprint method, documented)",
+    "1277990": "job-based one-off costing (production-footprint method, documented)",
+    "1278000": "job-based one-off costing (production-footprint method, documented)",
+    "3017583": "job-based one-off costing (production-footprint method, documented)",
+    "3017584": "job-based one-off costing (production-footprint method, documented)",
+}
+
+# Documented band-membership exceptions
+BAND_EXCEPTIONS = {
+    "1210810": "sub-scope single — intentionally ABOVE singles band (Wave 4 small-format premium); excluded from band data points",
+    "1277970": "one-off job-economics floor — excluded from all bands",
+    "1277980": "one-off job-economics floor — excluded from all bands",
+    "1277990": "one-off job-economics floor — excluded from all bands",
+    "1278000": "one-off job-economics floor — excluded from all bands",
+    "3017583": "one-off job-economics floor — excluded from all bands",
+    "3017584": "one-off job-economics floor — excluded from all bands",
+}
 
 
 def parse_frontmatter(filepath):
@@ -195,6 +240,206 @@ def check_category_registry():
             )
 
 
+def check_tier_monotonicity(filepath, fm):
+    """Tier ladder must be non-increasing (price_1_9 >= ... >= price_200_plus)."""
+    pn = filepath.stem
+    prices = []
+    for f in TIER_FIELDS:
+        v = fm.get(f, "")
+        if v in ("", None):
+            continue
+        try:
+            prices.append((f, float(v)))
+        except ValueError:
+            errors.append(f"[{pn}] Non-numeric tier value {f}: '{v}'")
+            return
+    for (fa, a), (fb, b) in zip(prices, prices[1:]):
+        if b > a + 1e-9:
+            errors.append(
+                f"[{pn}] Tier monotonicity violation: {fb} (${b}) > {fa} (${a})")
+
+
+def check_s25_compliance(filepath, fm):
+    """Printed/laminated items: filed material cost vs §25 canonical formula."""
+    pn = filepath.stem
+    if fm.get("material_family") != "Orajet 3951 Cast + Polyester Lam":
+        return
+    try:
+        kit_sqft = float(fm.get("sq_ft_per_kit", 0))
+        filed = float(fm.get("material_cost_per_unit", 0))
+    except ValueError:
+        return
+    canonical = kit_sqft * S25_RATE_PER_SQFT
+    diff = filed - canonical
+    if S25_BUFFER_MIN <= diff <= S25_BUFFER_MAX:
+        return
+    if pn in S25_EXCEPTIONS:
+        info.append(f"[{pn}] §25 exception (filed ${filed:.2f} vs canonical "
+                    f"${canonical:.2f}): {S25_EXCEPTIONS[pn]}")
+        return
+    errors.append(
+        f"[{pn}] §25 canonical compliance: material_cost_per_unit ${filed:.2f} "
+        f"vs canonical ${canonical:.2f} (diff ${diff:+.2f} outside "
+        f"[{S25_BUFFER_MIN:+.3f}, {S25_BUFFER_MAX:+.2f}]) — costing-era mixing; "
+        f"rebuild under §25 or add a documented exception")
+
+
+def parse_material_frontmatter(filepath):
+    """Material frontmatter incl. inline lists (used_in_items etc.)."""
+    content = filepath.read_text()
+    match = re.match(r'^---\s*\n(.*?)\n---', content, re.DOTALL)
+    if not match:
+        return None
+    fm = {}
+    for line in match.group(1).strip().split('\n'):
+        if ':' not in line:
+            continue
+        key = line.split(':', 1)[0].strip()
+        raw = line.split(':', 1)[1].strip()
+        if raw.startswith('[') and raw.endswith(']'):
+            inner = raw[1:-1].strip()
+            fm[key] = ([x.strip().strip('"').strip("'") for x in inner.split(',') if x.strip()]
+                       if inner else [])
+        else:
+            fm[key] = raw.strip('"').strip("'")
+    return fm
+
+
+def check_material_crossrefs():
+    """used_in_items <-> item files bidirectionality + combinations.json refs."""
+    material_files = sorted((REPO_ROOT / "materials").glob("*.md"))
+    item_pns = {f.stem for f in ITEMS_DIR.glob("*.md")}
+    mats = {}
+    for fp in material_files:
+        fm = parse_material_frontmatter(fp)
+        if fm is None:
+            continue
+        mats[fm.get("material_id", fp.stem)] = fm
+        for pn in fm.get("used_in_items", []):
+            if pn not in item_pns:
+                errors.append(
+                    f"[{fp.stem}] used_in_items references P/N {pn} with no item file")
+
+    # every item must be reachable from its family's component materials
+    for fp in sorted(ITEMS_DIR.glob("*.md")):
+        fm, _ = parse_frontmatter(fp)
+        if fm is None:
+            continue
+        pn = fp.stem
+        fam = fm.get("material_family", "")
+        if fam == "Orajet 3951 Cast + Polyester Lam":
+            for mid in ("orajet-3951-white", "1mil-polyester-overlaminate"):
+                if pn not in mats.get(mid, {}).get("used_in_items", []):
+                    errors.append(f"[{pn}] not listed in materials/{mid}.md used_in_items")
+        elif fam == "3M 180mC Cut Vinyl":
+            in_vinyl = any(pn in m.get("used_in_items", []) for m in mats.values()
+                           if m.get("material_type") == "cut_vinyl")
+            in_tape = any(pn in m.get("used_in_items", []) for m in mats.values()
+                          if m.get("material_type") == "tape")
+            if not in_vinyl:
+                errors.append(f"[{pn}] cut vinyl item not in any cut_vinyl material's used_in_items")
+            if not in_tape:
+                errors.append(f"[{pn}] cut vinyl item not in any tape material's used_in_items")
+
+    # combinations.json (Supabase sync artifact) — components must resolve
+    combos_path = REPO_ROOT / "frontend" / "combinations.json"
+    if combos_path.exists():
+        try:
+            combos = __import__("json").loads(combos_path.read_text())
+        except Exception as e:
+            warnings.append(f"combinations.json unreadable: {e}")
+            return
+        synthetic = {"eco-solvent-ink-full-bleed"}
+        for c in combos.get("combinations", []):
+            roles = set()
+            for comp in c.get("components", []):
+                mk = comp.get("material_key")
+                roles.add(comp.get("component_role"))
+                if mk not in mats and mk not in synthetic:
+                    errors.append(
+                        f"[combination '{c.get('name')}'] component material "
+                        f"'{mk}' has no materials/*.md file and is not a "
+                        f"documented synthetic rate")
+            if "substrate" not in roles:
+                errors.append(f"[combination '{c.get('name')}'] has no substrate component")
+    else:
+        warnings.append("frontend/combinations.json missing — run "
+                        "scripts/sync_from_supabase.py (combination cross-ref skipped)")
+
+
+def check_band_membership():
+    """Every item's $/sq ft at qty 20 lands in its band or is a documented exception."""
+    config_path = REPO_ROOT / "frontend" / "calculator_config.json"
+    if not config_path.exists():
+        warnings.append("frontend/calculator_config.json missing — band membership check skipped")
+        return
+    import json as _json
+    cfg = _json.loads(config_path.read_text())
+    bands = cfg["bands"]
+    cv = bands["cut_vinyl_lettering"]
+    tol = 0.015  # ±1.5% covers documented rounding presentation (e.g. 1279000 30.93 vs 30.86)
+
+    def in_range(psf, lo, hi):
+        return lo * (1 - tol) <= psf <= hi * (1 + tol)
+
+    for fp in sorted(ITEMS_DIR.glob("*.md")):
+        fm, _ = parse_frontmatter(fp)
+        if fm is None:
+            continue
+        pn = fp.stem
+        if pn in BAND_EXCEPTIONS:
+            info.append(f"[{pn}] band exception: {BAND_EXCEPTIONS[pn]}")
+            continue
+        try:
+            price20 = float(fm.get("price_20_49", 0))
+            sqft = float(fm.get("sq_ft_per_label", 0))
+            kit_sqft = float(fm.get("sq_ft_per_kit", 0))
+            label_count = int(fm.get("label_count", 1))
+        except ValueError:
+            continue
+        fam = fm.get("material_family", "")
+        if fam == "3M 180mC Cut Vinyl":
+            psf = price20 / sqft if sqft else 0
+            if sqft >= 5.0:
+                anchor = cv["large_format"]["anchor_psf_qty_20"]
+                ok, label = in_range(psf, anchor, anchor), "Band B"
+            elif sqft >= 1.0:
+                a = cv["concession_phase"]
+                ok = in_range(psf, a["min_per_sq_ft_qty_20"], a["max_per_sq_ft_qty_20"])
+                label = "Band A"
+            else:
+                anchor = cv["sub_1_sqft"]["anchor_psf_qty_20"]
+                ok, label = in_range(psf, anchor, anchor), "Band C"
+        elif fam == "Orajet 3951 Cast + Polyester Lam":
+            if label_count > 1:
+                per_label = price20 / label_count
+                k = bands["printed_laminated_kits"]
+                ok = (abs(per_label - k["per_label_qty_20"]) < 0.01
+                      or in_range(price20 / kit_sqft if kit_sqft else 0,
+                                  k["per_sq_ft_qty_20"], k["per_sq_ft_qty_20"]))
+                label, psf = "Kit band", price20 / kit_sqft if kit_sqft else 0
+            elif sqft < 0.1:
+                anchor = bands["printed_laminated_micro"]["anchor_psf_qty_20"]
+                psf = price20 / sqft if sqft else 0
+                ok, label = in_range(psf, anchor, anchor), "Micro band"
+            elif sqft <= 0.5:
+                # sub-scope items must be documented exceptions (above-band premium)
+                psf = price20 / sqft if sqft else 0
+                errors.append(f"[{pn}] sub-scope single (${psf:.2f}/sq ft) without a "
+                              f"documented band exception — add to BAND_EXCEPTIONS with rationale")
+                continue
+            else:
+                s = bands["printed_laminated_singles"]
+                psf = price20 / sqft if sqft else 0
+                ok = in_range(psf, s["min_per_sq_ft_qty_20"], s["max_per_sq_ft_qty_20"])
+                label = "Singles band"
+        else:
+            continue
+        if not ok:
+            errors.append(f"[{pn}] band membership: ${psf:.2f}/sq ft at qty 20 outside "
+                          f"{label} — document the exception or fix the data")
+
+
 def check_state_item_count():
     """Verify STATE.yml item_count matches actual item file count."""
     if not STATE_FILE.exists():
@@ -236,9 +481,13 @@ def main():
         check_math(filepath, fm)
         check_sections(filepath, content)
         check_status_values(fm, filepath)
+        check_tier_monotonicity(filepath, fm)
+        check_s25_compliance(filepath, fm)
 
     check_architecture_registry()
     check_category_registry()
+    check_material_crossrefs()
+    check_band_membership()
     check_state_item_count()
 
     # Print results
@@ -251,6 +500,10 @@ def main():
         print(f"\nWARNINGS ({len(warnings)}):")
         for w in warnings:
             print(f"  ⚠ {w}")
+    if info:
+        print(f"\nDOCUMENTED EXCEPTIONS ({len(info)}):")
+        for i in info:
+            print(f"  ℹ {i}")
     if not errors and not warnings:
         print("✓ All checks passed.")
 

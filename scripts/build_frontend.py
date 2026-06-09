@@ -5,6 +5,14 @@ Elliott Equipment Pricing Engine — Frontend Data Builder
 Reads all item YAML frontmatter, detects all files in items/images/,
 copies them into frontend/images/, and writes frontend/data.json.
 
+SUPABASE-PRIMARY ARCHITECTURE (Session H, 2026-06-09): the deployed
+frontend now reads item data from Supabase (elliott_items) first.
+frontend/data.json is a SECONDARY artifact — the offline fallback (used
+when Supabase is unreachable, with a visible banner), the source of prose
+sections/images for the Items tab, and the validate.py / audit
+compatibility surface. Keep it current via this script or
+scripts/sync_from_supabase.py.
+
 Run after any item or file change. Also runs via GitHub Action on push.
 
 Usage:
@@ -105,7 +113,14 @@ def parse_frontmatter(filepath):
     for line in match.group(1).strip().split('\n'):
         if ':' in line:
             key = line.split(':', 1)[0].strip()
-            val = line.split(':', 1)[1].strip().strip('"').strip("'")
+            raw = line.split(':', 1)[1].strip()
+            # Strip only a matching OUTER quote pair, then unescape \" — the
+            # old .strip('"').strip("'") ate trailing apostrophes inside
+            # values and shipped literal \" sequences to the UI (audit L-3).
+            if (raw.startswith('"') and raw.endswith('"')) or (raw.startswith("'") and raw.endswith("'")):
+                val = raw[1:-1].replace('\\"', '"').replace("\\'", "'")
+            else:
+                val = raw
             fm[key] = val
     return fm
 

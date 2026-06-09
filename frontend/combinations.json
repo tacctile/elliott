@@ -1,0 +1,299 @@
+{
+  "generated": "2026-06-09T20:01:01Z",
+  "combination_count": 8,
+  "combinations": [
+    {
+      "id": "ae73820e-96d0-4e00-a434-9f1d2e7e3939",
+      "name": "Controltac 180mC Black 24\" \u00d7 50yd + 582U 24\" \u2014 Cut Vinyl",
+      "process_type": "cut_vinyl",
+      "description": "Cut/Weed/Mask: Controltac 180mC Black 24\" \u00d7 50yd with TransferRite 582U 24\" application tape.",
+      "is_active": true,
+      "components": [
+        {
+          "material_key": "3m-180mc-black",
+          "engine_key": "black",
+          "component_role": "substrate",
+          "usage_sq_ft_multiplier": 1.0,
+          "material_family": "cut_vinyl",
+          "product_name": "Controltac 180mC",
+          "color_name": "Black",
+          "roll_width_in": 24,
+          "cost_per_sq_ft": 6.5926,
+          "cost_per_linear_yd": 13.1852,
+          "verified_date": "2026-06-05"
+        },
+        {
+          "material_key": "transferrite-582u",
+          "engine_key": "transferrite_582u",
+          "component_role": "tape",
+          "usage_sq_ft_multiplier": 1.0,
+          "material_family": "tape",
+          "product_name": "TransferRite Ultra 582U",
+          "color_name": "",
+          "roll_width_in": 24,
+          "cost_per_sq_ft": 0.5911,
+          "cost_per_linear_yd": 1.1821,
+          "verified_date": "2026-05-28"
+        }
+      ]
+    },
+    {
+      "id": "2413f298-2efe-4bcc-b380-ab8994b106e8",
+      "name": "Controltac 180mC Cardinal Red 15\" \u00d7 50yd + 582U 30\" \u2014 Cut Vinyl",
+      "process_type": "cut_vinyl",
+      "description": "Cut/Weed/Mask: Controltac 180mC Cardinal Red 15\" \u00d7 50yd with TransferRite 582U 30\" application tape.",
+      "is_active": true,
+      "components": [
+        {
+          "material_key": "3m-180mc-cardinal-red-15in",
+          "engine_key": "cardinal_red_15in",
+          "component_role": "substrate",
+          "usage_sq_ft_multiplier": 1.0,
+          "material_family": "cut_vinyl",
+          "product_name": "Controltac 180mC",
+          "color_name": "Cardinal Red",
+          "roll_width_in": 15,
+          "cost_per_sq_ft": 2.3134,
+          "cost_per_linear_yd": 8.6754,
+          "verified_date": "2026-06-05"
+        },
+        {
+          "material_key": "transferrite-582u-30in",
+          "engine_key": "transferrite_582u_30in",
+          "component_role": "tape",
+          "usage_sq_ft_multiplier": 1.0,
+          "material_family": "tape",
+          "product_name": "TransferRite Ultra 582U",
+          "color_name": "",
+          "roll_width_in": 30,
+          "cost_per_sq_ft": 0.1891,
+          "cost_per_linear_yd": 1.4186,
+          "verified_date": "2026-06-05"
+        }
+      ]
+    },
+    {
+      "id": "f3f9e3ab-ff4c-41d4-ba92-54d30388c462",
+      "name": "Controltac 180mC Cardinal Red 24\" \u00d7 50yd + 582U 24\" \u2014 Cut Vinyl",
+      "process_type": "cut_vinyl",
+      "description": "Cut/Weed/Mask: Controltac 180mC Cardinal Red 24\" \u00d7 50yd with TransferRite 582U 24\" application tape.",
+      "is_active": true,
+      "components": [
+        {
+          "material_key": "3m-180mc-cardinal-red",
+          "engine_key": "cardinal_red",
+          "component_role": "substrate",
+          "usage_sq_ft_multiplier": 1.0,
+          "material_family": "cut_vinyl",
+          "product_name": "Controltac 180mC",
+          "color_name": "Cardinal Red",
+          "roll_width_in": 24,
+          "cost_per_sq_ft": 7.751,
+          "cost_per_linear_yd": 15.502,
+          "verified_date": "2026-05-28"
+        },
+        {
+          "material_key": "transferrite-582u",
+          "engine_key": "transferrite_582u",
+          "component_role": "tape",
+          "usage_sq_ft_multiplier": 1.0,
+          "material_family": "tape",
+          "product_name": "TransferRite Ultra 582U",
+          "color_name": "",
+          "roll_width_in": 24,
+          "cost_per_sq_ft": 0.5911,
+          "cost_per_linear_yd": 1.1821,
+          "verified_date": "2026-05-28"
+        }
+      ]
+    },
+    {
+      "id": "5073c601-c3dd-431e-9905-3dfe83c43cfc",
+      "name": "Controltac 180mC Olympic Blue 24\" \u00d7 10yd + 582U 24\" \u2014 Cut Vinyl",
+      "process_type": "cut_vinyl",
+      "description": "Cut/Weed/Mask: Controltac 180mC Olympic Blue 24\" \u00d7 10yd with TransferRite 582U 24\" application tape.",
+      "is_active": true,
+      "components": [
+        {
+          "material_key": "3m-180mc-olympic-blue",
+          "engine_key": "olympic_blue",
+          "component_role": "substrate",
+          "usage_sq_ft_multiplier": 1.0,
+          "material_family": "cut_vinyl",
+          "product_name": "Controltac 180mC",
+          "color_name": "Olympic Blue",
+          "roll_width_in": 24,
+          "cost_per_sq_ft": 2.71,
+          "cost_per_linear_yd": 16.278,
+          "verified_date": "2026-05-22"
+        },
+        {
+          "material_key": "transferrite-582u",
+          "engine_key": "transferrite_582u",
+          "component_role": "tape",
+          "usage_sq_ft_multiplier": 1.0,
+          "material_family": "tape",
+          "product_name": "TransferRite Ultra 582U",
+          "color_name": "",
+          "roll_width_in": 24,
+          "cost_per_sq_ft": 0.5911,
+          "cost_per_linear_yd": 1.1821,
+          "verified_date": "2026-05-28"
+        }
+      ]
+    },
+    {
+      "id": "fce86c2f-de8b-4195-be35-fd03fd051281",
+      "name": "Controltac 180mC White 24\" \u00d7 10yd + 582U 24\" \u2014 Cut Vinyl",
+      "process_type": "cut_vinyl",
+      "description": "Cut/Weed/Mask: Controltac 180mC White 24\" \u00d7 10yd with TransferRite 582U 24\" application tape.",
+      "is_active": true,
+      "components": [
+        {
+          "material_key": "3m-180mc-white-24in",
+          "engine_key": "white_24in",
+          "component_role": "substrate",
+          "usage_sq_ft_multiplier": 1.0,
+          "material_family": "cut_vinyl",
+          "product_name": "Controltac 180mC",
+          "color_name": "White",
+          "roll_width_in": 24,
+          "cost_per_sq_ft": 2.19,
+          "cost_per_linear_yd": 13.116,
+          "verified_date": "2026-05-21"
+        },
+        {
+          "material_key": "transferrite-582u",
+          "engine_key": "transferrite_582u",
+          "component_role": "tape",
+          "usage_sq_ft_multiplier": 1.0,
+          "material_family": "tape",
+          "product_name": "TransferRite Ultra 582U",
+          "color_name": "",
+          "roll_width_in": 24,
+          "cost_per_sq_ft": 0.5911,
+          "cost_per_linear_yd": 1.1821,
+          "verified_date": "2026-05-28"
+        }
+      ]
+    },
+    {
+      "id": "e2d484f0-8b97-4428-b661-4031ddd25dcd",
+      "name": "Controltac 180mC White 24\" \u00d7 50yd + 582U 24\" \u2014 Cut Vinyl",
+      "process_type": "cut_vinyl",
+      "description": "Cut/Weed/Mask: Controltac 180mC White 24\" \u00d7 50yd with TransferRite 582U 24\" application tape.",
+      "is_active": true,
+      "components": [
+        {
+          "material_key": "3m-180mc-white-24in-50yd",
+          "engine_key": "white_24in_50yd",
+          "component_role": "substrate",
+          "usage_sq_ft_multiplier": 1.0,
+          "material_family": "cut_vinyl",
+          "product_name": "Controltac 180mC",
+          "color_name": "White",
+          "roll_width_in": 24,
+          "cost_per_sq_ft": 6.1921,
+          "cost_per_linear_yd": 12.3842,
+          "verified_date": "2026-06-05"
+        },
+        {
+          "material_key": "transferrite-582u",
+          "engine_key": "transferrite_582u",
+          "component_role": "tape",
+          "usage_sq_ft_multiplier": 1.0,
+          "material_family": "tape",
+          "product_name": "TransferRite Ultra 582U",
+          "color_name": "",
+          "roll_width_in": 24,
+          "cost_per_sq_ft": 0.5911,
+          "cost_per_linear_yd": 1.1821,
+          "verified_date": "2026-05-28"
+        }
+      ]
+    },
+    {
+      "id": "5cf12691-6b2e-4ac6-9c24-48e8ac7e62c6",
+      "name": "Controltac 180mC White 48\" \u00d7 10yd + 582U 24\" \u2014 Cut Vinyl",
+      "process_type": "cut_vinyl",
+      "description": "Cut/Weed/Mask: Controltac 180mC White 48\" \u00d7 10yd with TransferRite 582U 24\" application tape.",
+      "is_active": true,
+      "components": [
+        {
+          "material_key": "3m-180mc-white-48in",
+          "engine_key": "white_48in",
+          "component_role": "substrate",
+          "usage_sq_ft_multiplier": 1.0,
+          "material_family": "cut_vinyl",
+          "product_name": "Controltac 180mC",
+          "color_name": "White",
+          "roll_width_in": 48,
+          "cost_per_sq_ft": 2.15,
+          "cost_per_linear_yd": 25.744,
+          "verified_date": "2026-05-21"
+        },
+        {
+          "material_key": "transferrite-582u",
+          "engine_key": "transferrite_582u",
+          "component_role": "tape",
+          "usage_sq_ft_multiplier": 1.0,
+          "material_family": "tape",
+          "product_name": "TransferRite Ultra 582U",
+          "color_name": "",
+          "roll_width_in": 24,
+          "cost_per_sq_ft": 0.5911,
+          "cost_per_linear_yd": 1.1821,
+          "verified_date": "2026-05-28"
+        }
+      ]
+    },
+    {
+      "id": "7c0a3750-c2b1-48e4-9195-33017a642428",
+      "name": "Orajet 3951 + 1-mil Poly Lam \u2014 Printed/Laminated",
+      "process_type": "printed_laminated",
+      "description": "Account-standard printed/laminated stack: Orajet 3951 white cast vinyl + Flexcon 1-mil polyester overlaminate + full-bleed eco-solvent ink ($0.50/sq ft per \u00a725).",
+      "is_active": true,
+      "components": [
+        {
+          "material_key": "orajet-3951-white",
+          "engine_key": "orajet_3951",
+          "component_role": "substrate",
+          "usage_sq_ft_multiplier": 1.0,
+          "material_family": "print_media",
+          "product_name": "Orajet 3951",
+          "color_name": "White",
+          "roll_width_in": 30,
+          "cost_per_sq_ft": 1.21,
+          "cost_per_linear_yd": null,
+          "verified_date": "2026-04-22"
+        },
+        {
+          "material_key": "1mil-polyester-overlaminate",
+          "engine_key": "polyester_lam_1mil",
+          "component_role": "laminate",
+          "usage_sq_ft_multiplier": 1.0,
+          "material_family": "laminate",
+          "product_name": "1-mil Polyester Overlaminate",
+          "color_name": "",
+          "roll_width_in": 13.5,
+          "cost_per_sq_ft": 0.2389,
+          "cost_per_linear_yd": 0.8063,
+          "verified_date": "2026-05-28"
+        },
+        {
+          "material_key": "eco-solvent-ink-full-bleed",
+          "engine_key": "eco_solvent_ink",
+          "component_role": "ink",
+          "usage_sq_ft_multiplier": 1.0,
+          "material_family": "other",
+          "product_name": "Eco-Solvent Ink \u2014 Full Bleed (\u00a725)",
+          "color_name": "",
+          "roll_width_in": null,
+          "cost_per_sq_ft": 0.5,
+          "cost_per_linear_yd": null,
+          "verified_date": "2026-06-01"
+        }
+      ]
+    }
+  ]
+}

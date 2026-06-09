@@ -4,9 +4,18 @@ Elliott Equipment Pricing Engine — Calculator Config Builder
 
 Reads governance documents, category files, item frontmatter, and material
 frontmatter; extracts all calculator constants; and writes
-frontend/calculator_config.json. This file is the single source of truth
-for the calculator's logic — no calculator constants are hardcoded in the
-HTML.
+frontend/calculator_config.json.
+
+SUPABASE-PRIMARY ARCHITECTURE (Session H, 2026-06-09): the deployed
+calculator now reads its constants from Supabase first
+(elliott_pricing_bands + elliott_account_settings + elliott_materials).
+frontend/calculator_config.json is a SECONDARY artifact — the offline
+fallback the frontend uses when Supabase is unreachable, and the audit /
+validate.py compatibility surface. Keep it current via this script (repo
+constants) or scripts/sync_from_supabase.py (live DB state). The named
+constants below are also imported by scripts/migrate_to_supabase.py as the
+seed source of truth, so a constant change here propagates to both the JSON
+fallback and the next migration run.
 
 When pricing rules change, update the named constants at the top of this
 file (or update the upstream material/item files for fields that are read
@@ -53,7 +62,14 @@ ROUTING = {
     "sub_scope_floor_sq_ft": 0.1,
     "sub_scope_ceiling_sq_ft": 0.5,
     "singles_band_floor_sq_ft": 0.5,
-    "singles_band_ceiling_sq_ft": 2.0,
+    # singles_band_ceiling_sq_ft is a ROUTING THRESHOLD, not the band's
+    # calibrated data-point range. The singles band is calibrated on data
+    # points at 0.503–1.296 sq ft (1082570/1068270 and 1230820). 1.5 covers
+    # both confirmed data points plus a safe buffer; items above it still
+    # route single_standard (the route is unbounded above) but must NOT be
+    # treated as band-confirmed without 4-wave validation. Was 2.0 until
+    # 2026-06-09 (audit H-5/M-4 — overstated the calibrated coverage).
+    "singles_band_ceiling_sq_ft": 1.5,
     "laminator_max_width_in": 13.5,
     "roland_max_print_width_in": 28.0,
     "parity_max_lam_passes": 2,
@@ -73,7 +89,7 @@ CUT_VINYL_LETTERING_BAND = {
         "min_per_sq_ft_qty_20": 13.65,
         "max_per_sq_ft_qty_20": 13.94,
         "anchor_pn": "1205720",
-        "note": "Relationship Concession phase — Rule 14 deviation acknowledged. All 4 current cut vinyl items priced within this band by design.",
+        "note": "Relationship Concession phase — Rule 14 deviation acknowledged. All 5 Band A cut vinyl items (1205720, 1186310, 3017435, 3018378, 3010701) priced within this band by design; Band B/C items have their own independent bands.",
     },
     "ai_consensus": {
         "min_per_sq_ft_qty_20": 14.84,
@@ -100,7 +116,7 @@ CUT_VINYL_LETTERING_BAND = {
         "10_to_25": 1,
         "below_10": 0.25,
     },
-    "calibration_note": "Band calibrated at 2.51-2.56 sq ft. Items at significantly different sq ft require validation.",
+    "calibration_note": "Band A calibrated 1.0-5.0 sq ft on data points at 2.512-3.202 sq ft (cluster + 3010701 MED). Items near band boundaries (~0.8-1.2 or ~4.5-5.5 sq ft) require 4-wave validation.",
     "large_format": {
         "threshold_sq_ft": 5.0,
         "anchor_psf_qty_20": 11.03,
@@ -158,7 +174,7 @@ PRINTED_LAMINATED_SINGLES_BAND = {
         "10_to_25": 0.50,
         "below_10": 0.25,
     },
-    "note": "Band anchored at 1230820 ($15.43/sq ft). 1082570 AI-validated at $15.91/sq ft. Band is narrowing.",
+    "note": "Band anchored at 1230820 ($15.43/sq ft). 1082570 AI-validated at $15.91/sq ft; 1068270 is its direct parity clone at $15.91/sq ft. Band is narrowing.",
 }
 
 PRINTED_LAMINATED_MICRO_BAND = {
@@ -267,7 +283,10 @@ CUT_VINYL_COLORS_STATIC = {
         "extra": {
             "roll_width_in": 15,
             "roll_width_ft": 1.25,
-            "available_widths_in": [15],
+            # own width + wider same-color rolls (24" CR exists). Inert for
+            # engine efficiency scenarios (gated by CUT_VINYL_ALT_LOOKUP);
+            # kept in sync with scripts/sync_from_supabase.py derivation.
+            "available_widths_in": [15, 24],
         },
     },
     "olympic_blue": {
@@ -308,7 +327,9 @@ CUT_VINYL_COLORS_STATIC = {
         "extra": {
             "roll_width_in": 24,
             "roll_width_ft": 2.0,
-            "available_widths_in": [24],
+            # own width + wider same-color rolls (48" White exists). Inert for
+            # engine efficiency scenarios (gated by CUT_VINYL_ALT_LOOKUP).
+            "available_widths_in": [24, 48],
         },
     },
 }
