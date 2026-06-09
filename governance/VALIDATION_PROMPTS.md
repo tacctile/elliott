@@ -4,7 +4,7 @@
 >
 > Companion to `governance/PRICING_VALIDATION.md` (methodology) and `governance/CALCULATOR.md` (Round 0 brief generation). This document governs Waves 1–4 — the prompt structure, attack angles, output schemas, and behavioral rules for Claude Chat during a validation session.
 >
-> Last Updated: 2026-06-05 (MOQ purge — Wave 1 embedded "Account-level order rules" block rewritten: removed MOQ 10 / $55 minimum order charge / required quote language; preserved $55 anchor as one-off job-economics floor only; added §26 invoice protection principle)
+> Last Updated: 2026-06-09 (Session H / audit H-3 — Section 3 band fence rebuilt to embed ALL SIX bands (added Micro-Format Band, cut vinyl Band B and Band C, expanded Band A 1.0–5.0 sq ft with the 3010701 data point) and all current benchmark anchors (added 3010701, 3010704, 3010707 cluster, 1279000, kit member 1278890); Section 5 stale "MOQ language" stub reference replaced — MOQ language no longer exists post-purge)
 
 ---
 
@@ -115,7 +115,7 @@ The following must be true before Wave 1 starts. Claude Chat verifies all items 
 - **File prep:** Elliott provides production-ready DWG files for every item on this account. File prep cost is always $0. Never a cost driver. (`governance/PRICING_RULES.md` §22–24.)
 - **Equipment constraint:** 13.5" max laminator width. Never expose this to the buyer — frame as process language only.
 
-### Benchmark Anchor to Embed — Printed / Laminated
+### Benchmark Anchors to Embed — Printed / Laminated
 
 P/N **1230820** — Load Chart Label D105, 15" × 12.44" (1.296 sq ft), Orajet 3951 cast vinyl + 1-mil polyester overlaminate. **ROOT BENCHMARK. FA Accepted. $20/ea at qty 20 ($15.43/sq ft).**
 
@@ -130,23 +130,36 @@ Full tier table:
 | 100-199 | $14 |
 | 200+ | $11 |
 
-For kits, also include:
+For sub-0.1 sq ft production items, also include:
 
-- P/N **1278930** — 3-Label Lifting Capacity Chart Kit, E190. Same-dim, 11.13" × 7.88" per label (1.827 sq ft/kit). $30/kit at qty 20 ($10.00/label). FA Accepted.
-- P/N **1245130** — 5-Label Lifting Capacity Chart Kit, E160. Same-dim, 11.13" × 7.88" per label (3.045 sq ft/kit). $50/kit at qty 20 ($10.00/label). Quoted.
+- P/N **1279000** — LBL-MAX PLTF CAP 1200 TIP HZRD, 8.00" × 1.75" (0.097 sq ft). **Micro-Format Band founding data point. $3.00/ea at qty 20 ($30.86/sq ft = 2.0× benchmark).** Tiers $4.50 / $3.50 / $3.00 / $2.60 / $2.30 / $2.10. Quoted.
 
-### Benchmark Anchor to Embed — Cut Vinyl
+For kits, also include (three-way per-label parity at $10.00/label at qty 20):
 
-P/N **1205720** — E190 Cardinal Red Model Designation. 33-9/16" × 11" (2.56 sq ft). 3M Controltac 180mC cut vinyl. **CUT VINYL BASELINE. FA Accepted. $35/ea at qty 20 ($13.67/sq ft).** Priced as Relationship Concession (AI consensus was $38–$42 — Rule 14 deviation).
+- P/N **1278890** — 2-Label Lifting Capacity Chart Kit, E160 V3. Same-dim, 7.88" × 11.13" per label (1.218 sq ft/kit). $20/kit at qty 20 ($10.00/label, $16.42/sq ft). Quoted. Tiers $30 / $24 / $20 / $17 / $14 / $12.
+- P/N **1278930** — 3-Label Lifting Capacity Chart Kit, E190. Same-dim, 11.13" × 7.88" per label (1.827 sq ft/kit). $30/kit at qty 20 ($10.00/label). FA Accepted. Tiers $45 / $36 / $30 / $26 / $21 / $18.
+- P/N **1245130** — 5-Label Lifting Capacity Chart Kit, E160. Same-dim, 11.13" × 7.88" per label (3.045 sq ft/kit). $50/kit at qty 20 ($10.00/label). Quoted. Tiers $75 / $60 / $50 / $43 / $35 / $30.
 
-### Current Pricing Bands to Embed
+### Benchmark Anchors to Embed — Cut Vinyl
 
-| Band | Range at qty 20 | Notes |
-|------|------------------|-------|
-| Printed/laminated singles | $15.43–$15.91/sq ft | Concession phase. Anchor: 1230820 at $15.43. Band narrowing. |
-| Printed/laminated kits | $10.00/label, ~$16.42/sq ft | Same-dim parity. Kit premium ~6% over singles — intentional. |
-| Cut vinyl (concession phase) | $13.65–$13.94/sq ft | Active band. All 4 current cut vinyl items inside. |
-| Cut vinyl (AI consensus, normalized) | $14.84–$16.41/sq ft | Would-be normalized band. Normalization planned January 2027. |
+- P/N **1205720** — E190 Cardinal Red Model Designation. 33-9/16" × 11" (2.56 sq ft). 3M Controltac 180mC cut vinyl. **CUT VINYL BASELINE (Band A). FA Accepted. $35/ea at qty 20 ($13.67/sq ft).** Priced as Relationship Concession (AI consensus was $38–$42 — Rule 14 deviation). Tiers $45 / $40 / $35 / $30 / $26 / $22.
+- P/N **3010701** — LBL-ELLIOTT MED RD. 49.16" × 9.38" (3.202 sq ft). **Band A 3–5 sq ft data point (no override). $44/ea at qty 20 ($13.74/sq ft).** Tiers $57 / $50 / $44 / $42 / $40 / $39. Quoted.
+- P/N **3010704** — LBL-ELLIOTT LRG RED. 70-13/16" × 14-3/8" (7.069 sq ft). **Band B (Large-Format) founding data point. $78/ea at qty 20 ($11.03/sq ft).** Tiers $105 / $92 / $78 / $68 / $60 / $52. Quoted.
+- P/N **3010707** — ElliottEquip.com URL Wordmark, Cardinal Red. 34.887" × 4" (0.969 sq ft). **Band C (Sub-1 sq ft) founding anchor (worst-case Cardinal Red material; 3010708 Black and 3010709 White share the identical tier table). $20/ea at qty 20 ($20.64/sq ft).** Tiers $28 / $24 / $20 / $16.50 / $13.50 / $11.50. Quoted.
+
+### Current Pricing Bands to Embed (ALL SIX — every wave prompt embeds the bands relevant to the item's family and size class)
+
+| Band | Scope | Range at qty 20 | Anchor(s) | Notes |
+|------|-------|------------------|-----------|-------|
+| Printed/laminated singles | ≥ 0.5 sq ft (calibrated 0.503–1.296) | $15.43–$15.91/sq ft | 1230820; 1082570/1068270 at $15.91 | Concession phase. Band narrowing. Sub-scope 0.1–0.5 sq ft items price band-consistent WITH small-format premium (1210810 at $16.27/sq ft — intentionally above band, do NOT benchmark until production-volume acceptance). |
+| Printed/laminated Micro-Format | < 0.1 sq ft, production volume | $30.86/sq ft (2.0× benchmark) | 1279000 | INDEPENDENT band (est. 2026-06-05). One-off/field-service ≤0.1 sq ft requests route to the $55 one-off floor instead. |
+| Printed/laminated kits | same-dim, ≤2 lam passes | $10.00/label, ~$16.42/sq ft | 1278890 / 1278930 / 1245130 | Three-way per-label parity. Kit premium ~6% over singles — intentional. |
+| Cut vinyl Band A (Small-Format, concession phase) | 1.0–5.0 sq ft (calibrated 2.512–3.202) | $13.65–$13.94/sq ft | 1205720 cluster + 3010701 | Active band — all 5 Band A items inside. January 2027 normalization applies to Band A only. |
+| Cut vinyl Band A (AI consensus, normalized) | 1.0–5.0 sq ft | $14.84–$16.41/sq ft | — | Would-be normalized band. Normalization planned January 2027. |
+| Cut vinyl Band B (Large-Format) | ≥ 5.0 sq ft | $11.03/sq ft | 3010704 | INDEPENDENT band (est. 2026-06-05). 19.3% step-down from Band A. Exempt from Jan 2027 normalization. |
+| Cut vinyl Band C (Sub-1 sq ft) | < 1.0 sq ft | $20.64/sq ft | 3010707/08/09 | INDEPENDENT band (est. 2026-06-05). 51% step-up from Band A. Exempt from Jan 2027 normalization. |
+
+All bands are INDEPENDENT — they do not contaminate or interact. Route the item to its band by family and size class FIRST, then embed that band (plus the adjacent bands as context for step-up/step-down sanity).
 
 **$55 account floor:** one-off job-economics floor for field-service rush/one-off requests only. Anchored to 1230820 FA price. Does NOT apply to catalog tier tables — catalog items start at a real 1-9 per-unit price. Invoice protection (§26): buyer never invoiced more for a smaller quantity than a larger quantity at the next tier.
 
@@ -232,7 +245,7 @@ This item becomes a data point in the account's pricing structure. Every future 
 - The benchmark anchor tier tables side by side.
 - Sean's profile (above) verbatim.
 - The account relationship context (Section 3).
-- The quote language stub from the calculator: anchor line + MOQ language (printed/laminated) or Rule 14 note (cut vinyl) + PMS caveat where applicable.
+- The quote language stub from the calculator: anchor line + Rule 14 note (cut vinyl) + PMS caveat where applicable. (MOQ language no longer exists on this account — purged 2026-06-05.)
 
 ### Required Output Schema (Enforce This Exactly)
 

@@ -189,12 +189,12 @@ Future sub-0.1 sq ft **production-volume** items validate against THIS band ($30
 
 | Metric | Current Band | Notes |
 |--------|-------------|-------|
-| Per-label material cost | ~$1.00–$1.20/label | Canonical: $2.40/2 (1278890), $2.99/3 (1278930), $5.16/5 (1245130). Component-level estimates overstate due to per-label laminate rounding — use kit totals. Laminate updated 2026-05-28 to $0.2389/sq ft. 1278890 per-label material slightly higher because the 2-label kit amortizes the per-pass setup over fewer labels — does not affect per-label parity at sell. |
+| Per-label material cost | ~$1.19–$1.20/label | §25 canonical across the full kit family (normalized 2026-06-09, Session H / audit D2 — documentation-only, no sell prices changed): $2.40/2 (1278890), $3.60/3 (1278930), $5.95/5 (1245130). All three derive from `kit sq ft × $1.9489 + incidental buffer` per PRICING_RULES.md §25 — one costing basis, margin strings cross-comparable. |
 | Per-label selling price at qty 20 | $10.00/label | Parity across all three kits |
-| Kit margin at qty 20 | ~88–90% (material-only) | Higher than singles — lower per-label material cost relative to price. 1278890 ~88%, 1278930 ~90%, 1245130 ~90%. Margins improved from ~87–88% following laminate cost correction. |
+| Kit margin at qty 20 | ~88% (material-only) | Higher than singles — lower per-label material cost relative to price. Uniform across the family under §25 canonical costing: 1278890 ~88%, 1278930 ~88%, 1245130 ~88%. (Prior ~90% figures on 1278930/1245130 were a legacy pre-§25 costing artifact.) |
 | Per-label price / sq ft at qty 20 | ~$16.42/sq ft | Higher than singles — intentional (see below). Three-way parity across the kit family. |
 | Tier compression (1-9 → 200+) | 60% discount | $30→$12 (2-label), $45→$18 (3-label), $75→$30 (5-label) — uniform 60% compression across the family |
-| Margin floor (200+) | ~80–83% material-only | Kit margins hold reasonably at volume. 1278890 at ~80% (material-only); 200+ tier on the entire kit family operates at near-breakeven fully-loaded at $85/hr × 7.5–8.5 min/kit — structural condition inherited across all three kit-family members. |
+| Margin floor (200+) | ~80% material-only | Uniform under §25 canonical costing (1278890 80.0%, 1278930 80.0%, 1245130 80.2%). 200+ tier on the entire kit family operates at near-breakeven fully-loaded at $85/hr × 7.5–8.5 min/kit — structural condition inherited across all three kit-family members. |
 
 **Per-sq-ft kit premium:** ~$16.42 vs ~$15.43 for singles. This ~6% premium is intentional — matched-set collation, multi-label inspection, controlled-set packaging. Not a pricing error.
 

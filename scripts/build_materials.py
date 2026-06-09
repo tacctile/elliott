@@ -5,6 +5,14 @@ Elliott Equipment Pricing Engine — Materials Data Builder
 Reads all material YAML frontmatter from materials/*.md and writes
 frontend/materials.json.
 
+SUPABASE-PRIMARY ARCHITECTURE (Session H, 2026-06-09): the deployed
+frontend now reads material data from Supabase (elliott_materials) first;
+the Materials Manager tab writes to Supabase directly. frontend/
+materials.json is a SECONDARY artifact — the offline fallback (used when
+Supabase is unreachable, with a visible banner) and the validate.py /
+audit compatibility surface. Keep it current via this script (repo state)
+or scripts/sync_from_supabase.py (live DB state).
+
 Usage:
     python scripts/build_materials.py
 """
@@ -21,8 +29,8 @@ OUTPUT_FILE = REPO_ROOT / "frontend" / "materials.json"
 
 NUMERIC_FIELDS = {
     'film_thickness_mil', 'thickness_mil', 'roll_width_in', 'roll_length_yd',
-    'cost_per_roll', 'cost_per_sq_ft', 'cost_per_linear_yd', 'cost_per_msi',
-    'max_laminator_width_in',
+    'roll_length_ft', 'cost_per_roll', 'cost_per_sq_ft', 'cost_per_linear_yd',
+    'cost_per_linear_ft', 'cost_per_msi', 'max_laminator_width_in',
 }
 
 LIST_FIELDS = {

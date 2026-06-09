@@ -2,7 +2,7 @@
 
 > **Equipment specs, material costs, nesting rules, and process details.**
 >
-> Last Updated: 2026-06-05 (24" × 50yd Black and 24" × 50yd White 180mC rolls added for sub-1 sq ft cut vinyl Band C)
+> Last Updated: 2026-06-09 (Session H — kit-family material costs normalized to the §25 canonical formula: 1278930 $2.99 → $3.60, 1245130 $5.16 → $5.95, documentation-only, no sell prices changed; Material Cost Quick Reference kit section rewritten — the legacy per-pass laminate amortization method is retired as "canonical")
 
 ---
 
@@ -153,14 +153,25 @@ This is the canonical method on this account. See `PRICING_RULES.md` §25 and `M
 
 ### At 11.13" × 7.88" (standard capacity chart label)
 
-- Vinyl: 0.609 sq ft × $1.21/sq ft = ~$0.74
-- Laminate (1-mil polyester): amortized across the full lamination pass — not a per-label charge
-- Ink: ~$0.27
-- **Per-label material cost: ~$1.21** (canonical)
-- **3-label kit (1278930): ~$2.99** (1 lamination pass — all 3 labels fit across 13.5")
-- **5-label kit (1245130): ~$5.16** (2 lamination passes required)
+Canonical per the §25 formula (`kit sq ft × ($1.21 + $0.2389 + $0.50) + incidental buffer`):
 
-> **Note:** A per-label laminate estimate of ~$0.15 (at $0.2389/sq ft × 0.609 sq ft) produces a component total of ~$1.16/label. This overstates the actual cost because the laminate roll covers the full 13.5" pass width — the cost is amortized across all labels in the pass, not charged per label. Always use the kit-level totals ($2.99 and $5.16) as canonical material costs. These derive from frontmatter `material_cost_per_unit` values, which are ground truth.
+- Vinyl: 0.609 sq ft × $1.21/sq ft = ~$0.74/label
+- Laminate (1-mil polyester): 0.609 sq ft × $0.2389/sq ft = ~$0.15/label
+- Ink (full bleed per §25): 0.609 sq ft × $0.50/sq ft = ~$0.30/label
+- **Per-label material cost: ~$1.19–$1.20** (canonical §25)
+- **2-label kit (1278890): $2.40** (1.218 sq ft × $1.9489 = $2.374 + buffer)
+- **3-label kit (1278930): $3.60** (1.827 sq ft × $1.9489 = $3.561 + buffer)
+- **5-label kit (1245130): $5.95** (3.045 sq ft × $1.9489 = $5.934 + buffer)
+
+> **Costing-era note (2026-06-09, Session H):** The prior kit totals ($2.99 and
+> $5.16) were a legacy pre-§25 build that amortized laminate per lamination
+> pass instead of charging the §25 per-sq-ft rate, and used a ~$0.27/label ink
+> estimate instead of the §25 full-bleed $0.50/sq ft. That method is RETIRED as
+> "canonical." The §25 canonical formula (PRICING_RULES.md §25, Account-Wide Ink
+> Coverage Standard above) is the single costing method for every printed/
+> laminated item — kits included. Frontmatter `material_cost_per_unit` values
+> are ground truth and now carry the §25 canonical totals on the full kit
+> family. No sell prices changed in the normalization.
 
 ### At 15" × 12.44" (single load chart label)
 

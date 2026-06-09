@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-09T17:00:26Z",
+  "generated": "2026-06-09T20:01:01Z",
   "material_count": 11,
   "materials": {
     "1mil-polyester-overlaminate": {
@@ -14,11 +14,11 @@
         "thickness_mil": 1,
         "finish": "Gloss clear",
         "roll_width_in": 13.5,
-        "roll_length_ft": "386",
+        "roll_length_ft": 386,
         "cost_per_roll": 103.7525,
         "cost_per_sq_ft": 0.2389,
         "cost_per_msi": 1.6592,
-        "cost_per_linear_ft": "0.2688",
+        "cost_per_linear_ft": 0.2688,
         "cost_per_linear_yd": 0.8063,
         "verified_date": "2026-05-28",
         "distributor": "Flexcon",

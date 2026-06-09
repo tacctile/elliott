@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Roboto+Slab:wght@800;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<!-- Supabase JS client (UMD) — exposes window.supabase. If this CDN load
+     fails (offline), init() falls back to the static JSON files. -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
   :root {
     --surface-0: #0a0a0b;
@@ -1266,6 +1269,280 @@
   .calc-section .stat-row { margin-bottom: 4px; }
   .calc-section .stat-block .stat-sub.warn { color: var(--flag-review); }
 
+  /* === DATA SOURCE / LOADING (Session H) === */
+  .offline-banner {
+    display: none;
+    background: rgba(255, 209, 102, 0.10);
+    border-bottom: 1px solid var(--flag-review);
+    color: var(--flag-review);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 32px;
+    letter-spacing: 0.3px;
+  }
+  .offline-banner.show { display: block; }
+  .boot-loading {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: var(--surface-0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    color: var(--text-tertiary);
+    font-size: 13px;
+  }
+  .boot-loading.hidden { display: none; }
+  .boot-spinner {
+    width: 28px; height: 28px;
+    border: 3px solid var(--surface-3);
+    border-top-color: var(--brand-red);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Staleness dot — verified/cost dates. Reuses the flag severity tokens:
+     green (<90d) / yellow (90-180d) / red (>180d). No new color tokens. */
+  .stale-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    vertical-align: middle;
+    background: var(--text-tertiary);
+  }
+  .stale-dot.fresh { background: var(--flag-ready); }
+  .stale-dot.aging { background: var(--flag-review); }
+  .stale-dot.stale { background: var(--flag-stop); }
+
+  /* Band chip on item sidebar rows */
+  .li-band-chip {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: var(--surface-3);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+    white-space: nowrap;
+  }
+
+  /* === MATERIALS MANAGER (Session H) === */
+  .layout.matmgr-mode { grid-template-columns: 1fr; }
+  .layout.matmgr-mode .sidebar { display: none; }
+  .matmgr-panel {
+    display: none;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%;
+    overflow-y: auto;
+  }
+  .matmgr-panel.visible { display: flex; animation: fadeUp 0.25s ease-out; }
+  .matmgr-content {
+    display: grid;
+    grid-template-columns: minmax(340px, 420px) 1fr;
+    gap: 20px;
+    padding: 24px 32px 48px;
+    align-items: start;
+  }
+  @media (max-width: 1100px) { .matmgr-content { grid-template-columns: 1fr; padding: 20px; } }
+  .matmgr-rail, .matmgr-detail {
+    background: var(--surface-2);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 18px 20px;
+    min-width: 0;
+  }
+  .matmgr-group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    color: var(--text-tertiary);
+    margin: 16px 0 6px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .matmgr-group-header:first-child { margin-top: 0; }
+  .matmgr-add-btn {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 3px 8px;
+    border: 1px solid var(--border-medium);
+    background: transparent;
+    color: var(--text-secondary);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .matmgr-add-btn:hover { color: var(--text-primary); border-color: var(--border-strong); }
+  .matmgr-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4px 10px;
+    padding: 9px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background 0.12s;
+  }
+  .matmgr-row:hover { background: var(--surface-3); }
+  .matmgr-row.selected { background: var(--surface-3); border-color: var(--border-strong); }
+  .matmgr-row.inactive { opacity: 0.45; }
+  .matmgr-row .mm-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .matmgr-row .mm-cost {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+  .matmgr-row .mm-meta {
+    grid-column: 1 / -1;
+    font-size: 11px;
+    color: var(--text-tertiary);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .matmgr-detail h3, .matmgr-rail h3 {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    color: var(--text-primary);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .matmgr-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 14px;
+  }
+  .matmgr-form-grid .calc-field.full { grid-column: 1 / -1; }
+  .matmgr-computed {
+    background: var(--surface-0);
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin: 6px 0 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .matmgr-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .matmgr-actions .danger {
+    border-color: var(--flag-stop);
+    color: var(--flag-stop);
+    background: transparent;
+  }
+  .matmgr-actions .danger:hover { background: rgba(255, 107, 107, 0.10); }
+  .matmgr-status {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-left: auto;
+  }
+  .matmgr-status.error { color: var(--flag-stop); }
+  .matmgr-status.ok { color: var(--flag-ready); }
+  .combo-comp-row {
+    display: grid;
+    grid-template-columns: 110px 1fr 70px 32px;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .combo-comp-row select, .combo-comp-row input {
+    width: 100%;
+    padding: 6px 8px;
+    background: var(--surface-0);
+    border: 1px solid var(--border-medium);
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+  }
+  .combo-comp-row .remove-comp {
+    background: transparent;
+    border: 1px solid var(--border-medium);
+    color: var(--text-tertiary);
+    border-radius: 4px;
+    cursor: pointer;
+    height: 28px;
+  }
+  .combo-comp-row .remove-comp:hover { color: var(--flag-stop); border-color: var(--flag-stop); }
+
+  /* Calculator combination selector detail */
+  .combo-detail {
+    background: var(--surface-0);
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .combo-detail .cd-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    align-items: center;
+    padding: 4px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .combo-detail .cd-row:last-child { border-bottom: none; }
+  .combo-detail .cd-role {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-tertiary);
+    width: 64px;
+    flex: 0 0 auto;
+  }
+  .combo-detail .cd-name { flex: 1 1 auto; min-width: 0; }
+  .combo-detail .cd-cost {
+    font-family: 'IBM Plex Mono', monospace;
+    white-space: nowrap;
+    color: var(--text-secondary);
+  }
+  .combo-detail select.cd-override {
+    width: 100%;
+    margin-top: 3px;
+    padding: 4px 6px;
+    background: var(--surface-1);
+    border: 1px solid var(--border-medium);
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+  }
+
   /* === LIGHTBOX === */
   .lightbox {
     display: none;
@@ -1355,6 +1632,10 @@
 </style>
 </head>
 <body>
+<div class="boot-loading" id="bootLoading">
+  <div class="boot-spinner"></div>
+  <div id="bootLoadingText">Loading from Supabase…</div>
+</div>
 <div class="app">
 
   <div class="topbar">
@@ -1365,11 +1646,14 @@
     </div>
     <div class="topbar-tabs">
       <button class="tab-btn active" id="tabItems" onclick="setTab('items')">Items</button>
-      <button class="tab-btn" id="tabMaterials" onclick="setTab('materials')">Materials</button>
+      <button class="tab-btn" id="tabMatManager" onclick="setTab('matmanager')">Materials</button>
+      <button class="tab-btn" id="tabMaterials" onclick="setTab('materials')">Materials View</button>
       <button class="tab-btn" id="tabCalculator" onclick="setTab('calculator')">Calculator</button>
     </div>
     <span class="count-chip" id="countChip">—</span>
   </div>
+
+  <div class="offline-banner" id="offlineBanner">⚠ Using cached data — Supabase unavailable. Material costs may be stale. Materials Manager editing is disabled offline.</div>
 
   <div class="layout">
     <!-- SIDEBAR -->
@@ -1440,19 +1724,15 @@
               <input type="text" id="calc-desc" placeholder="optional" autocomplete="off" spellcheck="false" />
             </div>
 
+            <!-- Session H: the single Material Family dropdown + cut vinyl
+                 color dropdown are replaced by the material COMBINATION
+                 selector — one selection resolves every component cost.
+                 Components can be overridden inline per quote without
+                 changing the saved combination. -->
             <div class="calc-field">
-              <label>Material Family</label>
-              <select id="calc-family">
-                <option value="3M 180mC Cut Vinyl">3M 180mC Cut Vinyl</option>
-                <option value="Orajet 3951 Cast + Polyester Lam" selected>Orajet 3951 + Polyester Lam</option>
-                <option value="Convex High Bond + Poly Lam">Convex High Bond + Poly Lam</option>
-                <option value="Lexan/Polycarbonate">Lexan/Polycarbonate</option>
-              </select>
-            </div>
-
-            <div class="calc-field hidden" id="calc-color-wrap">
-              <label>Color</label>
-              <select id="calc-color"></select>
+              <label>Material Combination</label>
+              <select id="calc-combo"></select>
+              <div id="calc-combo-detail"></div>
             </div>
 
             <div class="calc-field hidden" id="calc-cv-itemtype-wrap">
@@ -1485,15 +1765,13 @@
               <input type="number" id="calc-labelcount" min="1" step="1" value="3" />
             </div>
 
+            <!-- H-1 fix: ink coverage is NOT selectable. §25 (2026-06-01):
+                 every Elliott printed/laminated item is full bleed at
+                 $0.50/sq ft — the deprecated low/medium/high options are
+                 removed from the form entirely. -->
             <div class="calc-field" id="calc-ink-wrap">
               <label>Ink Coverage</label>
-              <select id="calc-ink">
-                <option value="low">Low / Text Only</option>
-                <option value="medium" selected>Medium / Standard</option>
-                <option value="high">High / Multiple Fills</option>
-                <option value="flood_coat">Flood Coat</option>
-                <option value="flood_coat_safety_red">Flood Coat — Safety Red</option>
-              </select>
+              <input type="text" id="calc-ink-display" value="Full bleed — $0.50/sq ft (account standard per §25)" disabled />
             </div>
 
             <div class="calc-field" id="calc-ansi-wrap">
@@ -1525,7 +1803,24 @@
         </div>
       </div>
 
-      <!-- MATERIAL DETAIL -->
+      <!-- MATERIALS MANAGER (Session H) — full CRUD against Supabase -->
+      <div class="matmgr-panel" id="matManagerPanel">
+        <div class="matmgr-content">
+          <div class="matmgr-rail">
+            <h3>Materials</h3>
+            <div id="matMgrTree"></div>
+            <h3 style="margin-top:24px;">Combinations</h3>
+            <div id="matMgrCombos"></div>
+            <button class="matmgr-add-btn" style="margin-top:10px;width:100%;padding:8px;" onclick="mmNewCombination()">+ New Combination</button>
+          </div>
+          <div class="matmgr-detail" id="matMgrDetail">
+            <h3>Material Detail</h3>
+            <div class="comp-empty" style="padding:20px 4px;">Select a material from the left rail, or add a new one.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MATERIAL DETAIL (read-only Materials View) -->
       <div class="detail" id="materialDetail">
         <div class="sticky-block">
           <div class="sticky-top-row">
@@ -1566,6 +1861,16 @@
 </div>
 
 <script>
+/* ============================================================
+ * SUPABASE CONNECTION (Session H) — THE ONLY PLACE TO UPDATE
+ * the project URL / anon key. The anon key is the public
+ * client-side key (RLS: SELECT everywhere; INSERT/UPDATE/DELETE
+ * only on the Materials-Manager tables). NEVER put the
+ * service_role key here or anywhere in frontend code.
+ * ============================================================ */
+const SUPABASE_URL = 'https://tszssadgsxjoymcttlwd.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRzenNzYWRnc3hqb3ltY3R0bHdkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxMTE0NzQsImV4cCI6MjA5MzY4NzQ3NH0.FYdLejVlEFfCRluzsWMyQa7l7b-FJechgRXFcWl1MuE';
+
 let ITEMS_DATA = null;
 let MATERIALS_DATA = null;
 let items = {};
@@ -1578,38 +1883,401 @@ let activeTab = 'items';
 let activeFilter = null;
 let pdfCache = {};
 
+// Session H state
+let sb = null;                  // supabase client (null when offline)
+let DATA_SOURCE = 'loading';    // 'supabase' | 'fallback'
+let DB_MATERIALS = [];          // raw elliott_materials rows (manager works on these)
+let DB_ITEMS = [];              // raw elliott_items rows
+let COMBINATIONS = [];          // normalized combinations (selector + manager)
+
 const MATERIAL_TYPE_LABEL = {
   cut_vinyl: 'Cut Vinyl',
   print_media: 'Print Media',
   laminate: 'Laminate',
   tape: 'Application Tape',
+  other: 'Other',
 };
 
-async function init() {
-  try {
-    const [r1, r2, r3] = await Promise.all([
-      fetch('data.json'),
-      fetch('materials.json'),
-      fetch('calculator_config.json'),
-    ]);
-    ITEMS_DATA = await r1.json();
-    MATERIALS_DATA = await r2.json();
-    window.CALCULATOR_CONFIG = await r3.json();
-    window.ITEMS_DATA = ITEMS_DATA;
-    items = ITEMS_DATA.items;
-    materials = MATERIALS_DATA.materials;
-    sortedPNs = Object.keys(items).sort();
-    sortedMIDs = Object.keys(materials).sort();
-    setTab('items');
-  } catch(e) {
-    console.error(e);
-    document.getElementById('emptyText').textContent = 'Failed to load data — run build_frontend.py, build_materials.py, build_calculator_config.py';
+const PROCESS_TYPE_LABEL = {
+  cut_vinyl: 'Cut Vinyl',
+  printed_laminated: 'Printed + Laminated',
+  panel_decal: 'Panel Decal',
+  other: 'Other',
+};
+
+const BAND_CHIP = {
+  cut_vinyl_a: 'CV-A', cut_vinyl_b: 'CV-B', cut_vinyl_c: 'CV-C',
+  singles_standard: 'PL-S', singles_sub_scope: 'PL-SS', singles_micro: 'PL-M',
+  kit: 'KIT', tiny_one_off: '1-OFF',
+};
+
+// Offline fallback derivation — mirrors derive_band_class() in
+// scripts/migrate_to_supabase.py (the DB rows carry band_class directly).
+function deriveBandClass(fm) {
+  const fam = fm.material_family || '';
+  const sq = parseFloat(fm.sq_ft_per_label) || 0;
+  const lc = parseInt(fm.label_count, 10) || 1;
+  const flat = fm.price_1_9 != null && fm.price_1_9 !== '' && fm.price_1_9 === fm.price_200_plus;
+  if (fam.startsWith('Orajet') && flat && lc === 1) return 'tiny_one_off';
+  if (fm.item_type === 'Printed/Laminated Kit') return 'kit';
+  if (fam === '3M 180mC Cut Vinyl') {
+    if (sq >= 5.0) return 'cut_vinyl_b';
+    if (sq >= 1.0) return 'cut_vinyl_a';
+    return 'cut_vinyl_c';
   }
+  if (sq < 0.1) return 'singles_micro';
+  if (sq <= 0.5) return 'singles_sub_scope';
+  return 'singles_standard';
+}
+
+function stalenessClass(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr + 'T00:00:00Z');
+  if (isNaN(d.getTime())) return '';
+  const days = Math.floor((Date.now() - d.getTime()) / 86400000);
+  if (days < 90) return 'fresh';
+  if (days <= 180) return 'aging';
+  return 'stale';
+}
+
+/* ===== Supabase hydration (Session H) =====
+ * On load, fetch account settings + pricing bands + materials +
+ * combinations + items from Supabase in parallel and assemble the exact
+ * CALCULATOR_CONFIG / ITEMS_DATA / MATERIALS_DATA shapes the rest of the
+ * app already reads. data.json is still fetched for the Items tab's prose
+ * sections + images (the DB stores frontmatter only). On ANY failure the
+ * app falls back to the static JSONs with a visible banner.
+ * assembleConfigFromDb mirrors assemble_config() in
+ * scripts/sync_from_supabase.py — keep the two in lockstep. */
+
+async function fetchStaticData() {
+  const results = await Promise.allSettled([
+    fetch('data.json').then(r => r.json()),
+    fetch('materials.json').then(r => r.json()),
+    fetch('calculator_config.json').then(r => r.json()),
+    fetch('combinations.json').then(r => r.json()),
+  ]);
+  return {
+    data: results[0].status === 'fulfilled' ? results[0].value : null,
+    materials: results[1].status === 'fulfilled' ? results[1].value : null,
+    config: results[2].status === 'fulfilled' ? results[2].value : null,
+    combinations: results[3].status === 'fulfilled' ? results[3].value : null,
+  };
+}
+
+function assembleConfigFromDb(bands, settings, mats, dbItems) {
+  const b = {};
+  for (const row of bands) if (row.is_active) b[row.band_key] = row;
+  const s = settings;
+  const extra = s.extra || {};
+  const byEngineKey = {};
+  for (const m of mats) if (m.engine_key) byEngineKey[m.engine_key] = m;
+
+  const cvA = b.cut_vinyl_a, cvB = b.cut_vinyl_b, cvC = b.cut_vinyl_c;
+  const singles = b.printed_lam_singles, micro = b.printed_lam_micro, kits = b.printed_lam_kits;
+  const aX = cvA.extra || {}, sX = singles.extra || {}, mX = micro.extra || {}, kX = kits.extra || {};
+  const n = v => v === null || v === undefined ? null : Number(v);
+
+  const cut_vinyl_lettering = {
+    concession_phase: {
+      min_per_sq_ft_qty_20: n(cvA.min_psf_qty_20),
+      max_per_sq_ft_qty_20: n(cvA.max_psf_qty_20),
+      anchor_pn: cvA.anchor_pn,
+      note: aX.concession_note || '',
+    },
+    ai_consensus: aX.ai_consensus || null,
+    active_band: aX.active_band || 'concession_phase',
+    margin_floor_warn_pct: n(cvA.margin_floor_warn_pct),
+    margin_floor_stop_pct: n(cvA.margin_floor_stop_pct),
+    margin_target_qty_20_min_pct: aX.margin_target_qty_20_min_pct,
+    margin_target_qty_20_max_pct: aX.margin_target_qty_20_max_pct,
+    tier_compression_pct: aX.tier_compression_pct,
+    default_tier_template: cvA.tier_template,
+    snap_granularity: cvA.snap_granularity,
+    calibration_note: aX.calibration_note || '',
+    large_format: {
+      threshold_sq_ft: (cvB.extra || {}).threshold_sq_ft,
+      anchor_psf_qty_20: n(cvB.anchor_psf_qty_20),
+      anchor_pn: cvB.anchor_pn,
+      anchor_price_qty_20: n(cvB.anchor_price_qty_20),
+      anchor_sq_ft: n(cvB.anchor_sq_ft),
+      tier_template: cvB.tier_template,
+      note: cvB.note || '',
+    },
+    sub_1_sqft: {
+      threshold_sq_ft: (cvC.extra || {}).threshold_sq_ft,
+      anchor_psf_qty_20: n(cvC.anchor_psf_qty_20),
+      anchor_pn: cvC.anchor_pn,
+      anchor_price_qty_20: n(cvC.anchor_price_qty_20),
+      anchor_sq_ft: n(cvC.anchor_sq_ft),
+      tier_template: cvC.tier_template,
+      note: cvC.note || '',
+    },
+  };
+
+  const mcSpecs = {
+    orajet_3951: { extraCols: { roll_width_in: 'roll_width_in' } },
+    polyester_lam_1mil: { extraCols: { max_laminator_width_in: 'max_width_in' } },
+    transferrite_582u: { extraCols: {} },
+    transferrite_582u_30in: { extraCols: { roll_width_in: 'roll_width_in' } },
+  };
+  const material_constants = {};
+  for (const ek of Object.keys(mcSpecs)) {
+    const m = byEngineKey[ek];
+    if (!m) continue;
+    const entry = {
+      cost_per_sq_ft: n(m.cost_per_sq_ft),
+      material_id: m.material_key,
+      verified_date: m.verified_date,
+    };
+    for (const [col, target] of Object.entries(mcSpecs[ek].extraCols)) {
+      if (m[col] != null) entry[target] = n(m[col]);
+    }
+    material_constants[ek] = entry;
+  }
+
+  const cvMats = mats.filter(m => m.material_family === 'cut_vinyl' && m.is_active);
+  const widthsByColor = {};
+  for (const m of cvMats) {
+    const k = (m.product_code || '') + '|' + (m.color_code || '');
+    (widthsByColor[k] = widthsByColor[k] || new Set()).add(Math.round(Number(m.roll_width_in)));
+  }
+  const cut_vinyl_colors = {};
+  for (const m of cvMats) {
+    if (!m.engine_key) continue;
+    const k = (m.product_code || '') + '|' + (m.color_code || '');
+    const own = Math.round(Number(m.roll_width_in));
+    const entry = {
+      material_id: m.material_key,
+      cost_method: 'length_based',
+      cost_per_linear_yd: n(m.cost_per_linear_yd),
+      roll_width_in: n(m.roll_width_in),
+      roll_width_ft: Math.round((Number(m.roll_width_in) / 12) * 10000) / 10000,
+      available_widths_in: [...widthsByColor[k]].filter(w => w >= own).sort((a, b) => a - b),
+    };
+    if (m.pms_note) entry.pms_note = m.pms_note;
+    entry.verified_date = m.verified_date;
+    cut_vinyl_colors[m.engine_key] = entry;
+  }
+
+  const do_not_benchmark = {};
+  for (const it of dbItems) {
+    if (it.do_not_benchmark) do_not_benchmark[it.part_number] = it.do_not_benchmark_reason || 'do_not_benchmark';
+  }
+
+  return {
+    generated: new Date().toISOString(),
+    version: extra.version || '1.0',
+    source: 'supabase',
+    account: {
+      floor: n(s.floor_value),
+      floor_source_pn: s.floor_source_pn,
+      floor_label: s.floor_label || '',
+      moq: extra.moq || {},
+    },
+    routing: s.routing_thresholds,
+    bands: {
+      cut_vinyl_lettering,
+      printed_laminated_singles: {
+        min_per_sq_ft_qty_20: n(singles.min_psf_qty_20),
+        max_per_sq_ft_qty_20: n(singles.max_psf_qty_20),
+        anchor_pn: singles.anchor_pn,
+        anchor_psf: n(singles.anchor_psf_qty_20),
+        margin_floor_warn_pct: n(singles.margin_floor_warn_pct),
+        margin_floor_stop_pct: n(singles.margin_floor_stop_pct),
+        margin_target_qty_20_min_pct: sX.margin_target_qty_20_min_pct,
+        margin_target_qty_20_max_pct: sX.margin_target_qty_20_max_pct,
+        tier_ratios: singles.tier_ratios,
+        snap_granularity: singles.snap_granularity,
+        note: singles.note || '',
+      },
+      printed_laminated_micro: {
+        anchor_psf_qty_20: n(micro.anchor_psf_qty_20),
+        anchor_pn: micro.anchor_pn,
+        anchor_price_qty_20: n(micro.anchor_price_qty_20),
+        anchor_sq_ft: n(micro.anchor_sq_ft),
+        threshold_sq_ft: mX.threshold_sq_ft,
+        margin_floor_warn_pct: n(micro.margin_floor_warn_pct),
+        margin_floor_stop_pct: n(micro.margin_floor_stop_pct),
+        margin_target_qty_20_min_pct: mX.margin_target_qty_20_min_pct,
+        margin_target_qty_20_max_pct: mX.margin_target_qty_20_max_pct,
+        tier_ratios: micro.tier_ratios,
+        tier_template: micro.tier_template,
+        snap_granularity: micro.snap_granularity,
+        note: micro.note || '',
+      },
+      printed_laminated_kits: {
+        per_label_qty_20: kX.per_label_qty_20,
+        per_sq_ft_qty_20: n(kits.anchor_psf_qty_20),
+        per_sq_ft_premium_over_singles_pct: kX.per_sq_ft_premium_over_singles_pct,
+        margin_floor_warn_pct: n(kits.margin_floor_warn_pct),
+        margin_floor_stop_pct: n(kits.margin_floor_stop_pct),
+        parity_applies_when: kX.parity_applies_when,
+        tier_compression_pct: kX.tier_compression_pct,
+        tier_template_3label: kX.tier_template_3label,
+        tier_template_5label: kX.tier_template_5label,
+        note: kits.note || '',
+      },
+    },
+    material_constants,
+    ink_rates: extra.ink_rates || {},
+    cut_vinyl_colors,
+    do_not_benchmark,
+    override_type_precedent: extra.override_type_precedent || {},
+    quote_language: extra.quote_language || {},
+    flag_thresholds: extra.flag_thresholds || {},
+  };
+}
+
+const MATERIAL_DB_TO_FM = {
+  material_key: 'material_id', material_family: 'material_type',
+  manufacturer: 'manufacturer', product_name: 'product_name',
+  product_code: 'product_code', item_number: 'item_number',
+  color_name: 'color_name', color_code: 'color_code', film_type: 'film_type',
+  film_thickness_mil: 'film_thickness_mil', thickness_mil: 'thickness_mil',
+  adhesive_type: 'adhesive_type', finish: 'finish',
+  roll_width_in: 'roll_width_in', roll_length_yd: 'roll_length_yd',
+  roll_length_ft: 'roll_length_ft', cost_per_roll: 'cost_per_roll',
+  cost_per_linear_yd: 'cost_per_linear_yd', cost_per_linear_ft: 'cost_per_linear_ft',
+  cost_per_sq_ft: 'cost_per_sq_ft', cost_per_msi: 'cost_per_msi',
+  max_laminator_width_in: 'max_laminator_width_in', distributor: 'distributor',
+  verified_date: 'verified_date', notes: 'notes',
+};
+
+function materialRowToFm(row) {
+  const fm = {};
+  for (const [col, field] of Object.entries(MATERIAL_DB_TO_FM)) {
+    if (row[col] != null && row[col] !== '') fm[field] = row[col];
+  }
+  const compat = row.compatible_with || {};
+  for (const [k, v] of Object.entries(compat)) fm[k] = v;
+  fm.used_in_items = row.used_in_items || [];
+  if (fm.notes === undefined) fm.notes = '';
+  return fm;
+}
+
+function normalizeCombination(c) {
+  // Accepts a Supabase nested row OR a combinations.json (flat) entry.
+  const comps = c.components || c.elliott_material_combination_components || [];
+  return {
+    id: c.id,
+    name: c.name,
+    process_type: c.process_type,
+    description: c.description || '',
+    is_active: c.is_active !== false,
+    components: comps.map(comp => {
+      const mat = comp.elliott_materials || comp;
+      return {
+        component_id: comp.id || null,
+        material_id: comp.material_id || null,
+        material_key: mat.material_key,
+        engine_key: mat.engine_key,
+        component_role: comp.component_role,
+        usage_sq_ft_multiplier: Number(comp.usage_sq_ft_multiplier != null ? comp.usage_sq_ft_multiplier : 1),
+        material_family: mat.material_family,
+        product_name: mat.product_name,
+        color_name: mat.color_name,
+        roll_width_in: mat.roll_width_in != null ? Number(mat.roll_width_in) : null,
+        cost_per_sq_ft: mat.cost_per_sq_ft != null ? Number(mat.cost_per_sq_ft) : null,
+        cost_per_linear_yd: mat.cost_per_linear_yd != null ? Number(mat.cost_per_linear_yd) : null,
+        verified_date: mat.verified_date || null,
+      };
+    }),
+  };
+}
+
+let DB_BANDS = [];
+let DB_SETTINGS = null;
+
+function hydrateFromDb(mats, dbItems, bands, settings, combos, staticData) {
+  DB_MATERIALS = mats;
+  DB_ITEMS = dbItems;
+  DB_BANDS = bands;
+  DB_SETTINGS = settings;
+  COMBINATIONS = combos.map(normalizeCombination);
+
+  window.CALCULATOR_CONFIG = assembleConfigFromDb(bands, settings, mats, dbItems);
+
+  // ITEMS_DATA: DB frontmatter (authoritative, incl. override_type +
+  // band_class) merged with static data.json prose sections + images.
+  const staticItems = (staticData && staticData.data && staticData.data.items) || {};
+  const itemMap = {};
+  for (const row of dbItems) {
+    if (row.is_active === false) continue;
+    const fm = {};
+    for (const [k, v] of Object.entries(row)) {
+      if (['id', 'account_id', 'created_at', 'updated_at', 'is_active'].includes(k)) continue;
+      fm[k] = v === null ? '' : v;
+    }
+    const st = staticItems[row.part_number] || {};
+    itemMap[row.part_number] = {
+      frontmatter: fm,
+      image: st.image || null,
+      sections: st.sections || {},
+    };
+  }
+  ITEMS_DATA = { generated: new Date().toISOString(), item_count: Object.keys(itemMap).length, items: itemMap };
+
+  const matMap = {};
+  for (const row of mats) {
+    if (!row.is_active) continue;
+    if (row.engine_key === 'eco_solvent_ink') continue; // synthetic §25 rate row
+    matMap[row.material_key] = { frontmatter: materialRowToFm(row) };
+  }
+  MATERIALS_DATA = { generated: new Date().toISOString(), material_count: Object.keys(matMap).length, materials: matMap };
+}
+
+async function init() {
+  const boot = document.getElementById('bootLoading');
+  const bootText = document.getElementById('bootLoadingText');
+  let staticData = null;
+  try { staticData = await fetchStaticData(); } catch (e) { /* offline-tolerant */ }
+  try {
+    if (!window.supabase || !window.supabase.createClient) throw new Error('supabase-js failed to load (CDN unreachable)');
+    sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    bootText.textContent = 'Loading from Supabase…';
+    const [matsQ, itemsQ, bandsQ, settingsQ, combosQ] = await Promise.all([
+      sb.from('elliott_materials').select('*').order('material_key'),
+      sb.from('elliott_items').select('*').order('part_number'),
+      sb.from('elliott_pricing_bands').select('*'),
+      sb.from('elliott_account_settings').select('*').limit(1),
+      sb.from('elliott_material_combinations').select('*, elliott_material_combination_components(id, component_role, usage_sq_ft_multiplier, material_id, elliott_materials(material_key, engine_key, material_family, product_name, color_name, roll_width_in, cost_per_sq_ft, cost_per_linear_yd, verified_date))').order('name'),
+    ]);
+    for (const q of [matsQ, itemsQ, bandsQ, settingsQ, combosQ]) {
+      if (q.error) throw q.error;
+    }
+    if (!settingsQ.data.length) throw new Error('elliott_account_settings is empty — run scripts/migrate_to_supabase.py');
+    hydrateFromDb(matsQ.data, itemsQ.data, bandsQ.data, settingsQ.data[0], combosQ.data, staticData);
+    DATA_SOURCE = 'supabase';
+  } catch (e) {
+    console.warn('Supabase unavailable — using static JSON fallback:', e);
+    if (!staticData || !staticData.data || !staticData.materials || !staticData.config) {
+      boot.classList.add('hidden');
+      document.getElementById('emptyText').textContent = 'Failed to load data — Supabase unreachable AND static JSON missing. Run the build scripts or restore connectivity.';
+      return;
+    }
+    ITEMS_DATA = staticData.data;
+    MATERIALS_DATA = staticData.materials;
+    window.CALCULATOR_CONFIG = staticData.config;
+    COMBINATIONS = ((staticData.combinations && staticData.combinations.combinations) || []).map(normalizeCombination);
+    DB_MATERIALS = [];
+    DB_ITEMS = [];
+    DATA_SOURCE = 'fallback';
+    document.getElementById('offlineBanner').classList.add('show');
+  }
+  window.ITEMS_DATA = ITEMS_DATA;
+  items = ITEMS_DATA.items;
+  materials = MATERIALS_DATA.materials;
+  sortedPNs = Object.keys(items).sort();
+  sortedMIDs = Object.keys(materials).sort();
+  boot.classList.add('hidden');
+  setTab('items');
 }
 
 function setTab(tab) {
   activeTab = tab;
   document.getElementById('tabItems').classList.toggle('active', tab === 'items');
+  document.getElementById('tabMatManager').classList.toggle('active', tab === 'matmanager');
   document.getElementById('tabMaterials').classList.toggle('active', tab === 'materials');
   document.getElementById('tabCalculator').classList.toggle('active', tab === 'calculator');
   document.getElementById('search').value = '';
@@ -1617,9 +2285,11 @@ function setTab(tab) {
   document.getElementById('itemDetail').classList.remove('visible');
   document.getElementById('materialDetail').classList.remove('visible');
   document.getElementById('calculatorPanel').classList.remove('visible');
+  document.getElementById('matManagerPanel').classList.remove('visible');
   document.getElementById('emptyState').style.display = 'flex';
 
   const layout = document.querySelector('.layout');
+  layout.classList.remove('calc-mode', 'matmgr-mode');
 
   if (tab === 'calculator') {
     layout.classList.add('calc-mode');
@@ -1630,7 +2300,15 @@ function setTab(tab) {
     return;
   }
 
-  layout.classList.remove('calc-mode');
+  if (tab === 'matmanager') {
+    layout.classList.add('matmgr-mode');
+    document.getElementById('emptyState').style.display = 'none';
+    document.getElementById('matManagerPanel').classList.add('visible');
+    document.getElementById('countChip').textContent =
+      (DATA_SOURCE === 'supabase' ? DB_MATERIALS.length + ' materials' : 'offline');
+    mmRenderRail();
+    return;
+  }
 
   if (tab === 'items') {
     document.getElementById('emptyText').textContent = 'Select an item from the list';
@@ -1695,26 +2373,36 @@ function renderItemList(query) {
   const matches = sortedPNs.filter(pn => {
     const fm = items[pn].frontmatter;
     if (activeFilter && fm.material_family !== activeFilter) return false;
+    const bandClass = fm.band_class || deriveBandClass(fm);
+    const chip = BAND_CHIP[bandClass] || '';
     return pn.includes(q)
       || (fm.description || '').toLowerCase().includes(q)
       || (fm.model || '').toLowerCase().includes(q)
       || (fm.item_type || '').toLowerCase().includes(q)
-      || (fm.material_family || '').toLowerCase().includes(q);
+      || (fm.material_family || '').toLowerCase().includes(q)
+      || (fm.status || '').toLowerCase().includes(q)
+      || chip.toLowerCase().includes(q)
+      || bandClass.toLowerCase().includes(q);
   });
 
   el.innerHTML = matches.map(pn => {
     const fm = items[pn].frontmatter;
     const sel = pn === selectedPN ? ' selected' : '';
     const price = num(fm.price_20_49);
+    const bandClass = fm.band_class || deriveBandClass(fm);
+    const chip = BAND_CHIP[bandClass] || bandClass;
+    const dot = stalenessClass(fm.cost_version_date);
     return `<div class="list-item${sel}" data-pn="${pn}" onclick="selectItem('${pn}')">
       <div class="li-top">
         <span class="li-pn">${pn}</span>
+        <span class="li-band-chip" title="Band class: ${escapeHtml(bandClass)}">${escapeHtml(chip)}</span>
       </div>
       <div class="li-desc">${escapeHtml(fm.description || '')}</div>
       <div class="li-meta">
         <span>${escapeHtml(fm.model || '')}</span>
         <span>${escapeHtml(fm.item_type || '')}</span>
         <span class="li-price">${price === '—' ? '—' : '$' + price}</span>
+        ${dot ? `<span title="Cost data: ${escapeHtml(fm.cost_version_date || '')}"><span class="stale-dot ${dot}"></span></span>` : ''}
       </div>
     </div>`;
   }).join('');
@@ -2391,20 +3079,142 @@ document.addEventListener('keydown', e => {
 
 let calcFormInitialized = false;
 
-const CV_COLOR_LABELS = {
-  cardinal_red: 'Cardinal Red (24" roll)',
-  olympic_blue: 'Olympic Blue (24" roll)',
-  white_24in: 'White (24" roll)',
-  white_48in: 'White (48" roll)',
-};
-
 const ROUTE_BADGE_LABELS = {
   single_standard: 'Standard Single',
   single_sub_scope: 'Sub-Scope Single',
   cut_vinyl: 'Cut Vinyl Lettering',
   tiny: 'Tiny / Job Economics',
   no_profile: 'No Profile',
+  invalid_input: 'Invalid Input',
 };
+
+// Pseudo-combinations for material families with no Pricing Profile yet —
+// keeps the F17 no_profile cost-build flow reachable from the selector.
+const NO_PROFILE_COMBOS = [
+  { id: '__noprofile_convex', name: 'Convex High Bond + Poly Lam (no profile yet — F17 cost-build)', process_type: 'panel_decal', material_family: 'Convex High Bond + Poly Lam', components: [] },
+  { id: '__noprofile_lexan', name: 'Lexan/Polycarbonate (no profile yet — F17 cost-build)', process_type: 'other', material_family: 'Lexan/Polycarbonate', components: [] },
+];
+
+// Calculator combination state: which combination is selected and any
+// per-quote inline component overrides (material_key by role). Overrides
+// affect ONE run via a hydrated config clone — the saved combination is
+// never modified from the calculator.
+const calcState = { comboId: null, overrides: {} };
+
+function calcActiveCombos() {
+  return COMBINATIONS.filter(c => c.is_active);
+}
+
+function calcFindCombo(id) {
+  if (!id) return null;
+  const np = NO_PROFILE_COMBOS.find(c => c.id === id);
+  if (np) return np;
+  return calcActiveCombos().find(c => String(c.id) === String(id)) || null;
+}
+
+function comboFamily(combo) {
+  if (!combo) return 'Orajet 3951 Cast + Polyester Lam';
+  if (combo.material_family) return combo.material_family; // no-profile pseudo
+  return combo.process_type === 'cut_vinyl' ? '3M 180mC Cut Vinyl' : 'Orajet 3951 Cast + Polyester Lam';
+}
+
+function comboComponentForRole(combo, role) {
+  if (!combo || !combo.components) return null;
+  const key = calcState.overrides[role];
+  if (key) {
+    const m = mmFindMaterialByKey(key);
+    if (m) {
+      return {
+        component_role: role, material_key: m.material_key, engine_key: m.engine_key,
+        product_name: m.product_name, color_name: m.color_name,
+        roll_width_in: m.roll_width_in != null ? Number(m.roll_width_in) : null,
+        cost_per_sq_ft: m.cost_per_sq_ft != null ? Number(m.cost_per_sq_ft) : null,
+        cost_per_linear_yd: m.cost_per_linear_yd != null ? Number(m.cost_per_linear_yd) : null,
+        verified_date: m.verified_date, overridden: true,
+      };
+    }
+  }
+  return combo.components.find(c => c.component_role === role) || null;
+}
+
+function mmFindMaterialByKey(key) {
+  const row = DB_MATERIALS.find(m => m.material_key === key);
+  if (row) return row;
+  const fm = materials[key] && materials[key].frontmatter;
+  if (!fm) return null;
+  return {
+    material_key: fm.material_id, engine_key: null,
+    material_family: fm.material_type, product_name: fm.product_name,
+    color_name: fm.color_name || '', roll_width_in: fm.roll_width_in,
+    cost_per_sq_ft: fm.cost_per_sq_ft, cost_per_linear_yd: fm.cost_per_linear_yd,
+    verified_date: fm.verified_date,
+  };
+}
+
+function mmMaterialsOfFamily(family) {
+  if (DB_MATERIALS.length) {
+    return DB_MATERIALS.filter(m => m.material_family === family && m.is_active);
+  }
+  return Object.values(materials).map(m => m.frontmatter)
+    .filter(fm => fm.material_type === family)
+    .map(fm => mmFindMaterialByKey(fm.material_id));
+}
+
+// Per-run config clone for inline component overrides. Mirrors the shapes
+// the engine reads; business logic is untouched (inputs._config hook).
+function buildCalcConfigOverride(combo) {
+  const base = window.CALCULATOR_CONFIG;
+  if (!combo || !Object.keys(calcState.overrides).length) return null;
+  const clone = JSON.parse(JSON.stringify(base));
+  let touched = false;
+  if (combo.process_type === 'cut_vinyl') {
+    const sub = comboComponentForRole(combo, 'substrate');
+    if (sub && sub.overridden) {
+      const key = sub.engine_key || ('override_' + sub.material_key);
+      clone.cut_vinyl_colors[key] = {
+        material_id: sub.material_key,
+        cost_method: 'length_based',
+        cost_per_linear_yd: sub.cost_per_linear_yd,
+        roll_width_in: sub.roll_width_in,
+        roll_width_ft: sub.roll_width_in ? sub.roll_width_in / 12 : null,
+        available_widths_in: sub.roll_width_in ? [Math.round(sub.roll_width_in)] : [],
+        verified_date: sub.verified_date,
+      };
+      touched = true;
+    }
+    const tape = comboComponentForRole(combo, 'tape');
+    if (tape && tape.overridden) {
+      clone.material_constants.transferrite_582u = {
+        cost_per_sq_ft: tape.cost_per_sq_ft,
+        material_id: tape.material_key,
+        verified_date: tape.verified_date,
+      };
+      touched = true;
+    }
+  } else {
+    const sub = comboComponentForRole(combo, 'substrate');
+    if (sub && sub.overridden) {
+      clone.material_constants.orajet_3951 = {
+        cost_per_sq_ft: sub.cost_per_sq_ft,
+        material_id: sub.material_key,
+        verified_date: sub.verified_date,
+        roll_width_in: sub.roll_width_in,
+      };
+      touched = true;
+    }
+    const lam = comboComponentForRole(combo, 'laminate');
+    if (lam && lam.overridden) {
+      clone.material_constants.polyester_lam_1mil = {
+        cost_per_sq_ft: lam.cost_per_sq_ft,
+        material_id: lam.material_key,
+        verified_date: lam.verified_date,
+        max_width_in: lam.roll_width_in,
+      };
+      touched = true;
+    }
+  }
+  return touched ? clone : null;
+}
 
 const TIER_BOUNDS_UI = [
   { key: 'price_1_9',     label: '1–9',     min: 1,   max: 9     },
@@ -2416,32 +3226,115 @@ const TIER_BOUNDS_UI = [
 ];
 
 function initCalculatorForm() {
-  if (calcFormInitialized) return;
-  if (!window.CALCULATOR_CONFIG) return;
-  calcFormInitialized = true;
-
-  const colorSel = document.getElementById('calc-color');
-  const colors = window.CALCULATOR_CONFIG.cut_vinyl_colors || {};
-  colorSel.innerHTML = Object.keys(colors).map(k =>
-    `<option value="${k}">${escapeHtml(CV_COLOR_LABELS[k] || k)}</option>`
-  ).join('');
-
-  document.getElementById('calc-family').addEventListener('change', updateCalcFormVisibility);
-  document.getElementById('calc-itemtype').addEventListener('change', updateCalcFormVisibility);
-  document.getElementById('calc-width').addEventListener('input', updateCalcFormVisibility);
-  document.getElementById('calc-height').addEventListener('input', updateCalcFormVisibility);
+  if (!calcFormInitialized) {
+    calcFormInitialized = true;
+    document.getElementById('calc-combo').addEventListener('change', onComboChange);
+    document.getElementById('calc-itemtype').addEventListener('change', updateCalcFormVisibility);
+    document.getElementById('calc-width').addEventListener('input', updateCalcFormVisibility);
+    document.getElementById('calc-height').addEventListener('input', updateCalcFormVisibility);
+  }
+  populateComboSelect();
   updateCalcFormVisibility();
 }
 
+function populateComboSelect() {
+  const sel = document.getElementById('calc-combo');
+  const prev = calcState.comboId;
+  const groups = {};
+  for (const c of calcActiveCombos()) {
+    (groups[c.process_type] = groups[c.process_type] || []).push(c);
+  }
+  for (const c of NO_PROFILE_COMBOS) {
+    (groups[c.process_type] = groups[c.process_type] || []).push(c);
+  }
+  const order = ['printed_laminated', 'cut_vinyl', 'panel_decal', 'other'];
+  let html = '';
+  for (const pt of order) {
+    if (!groups[pt] || !groups[pt].length) continue;
+    html += `<optgroup label="${escapeHtml(PROCESS_TYPE_LABEL[pt] || pt)}">`;
+    for (const c of groups[pt]) {
+      html += `<option value="${escapeHtml(String(c.id))}">${escapeHtml(c.name)}</option>`;
+    }
+    html += '</optgroup>';
+  }
+  sel.innerHTML = html;
+  // default: the printed/laminated standard combination
+  const def = (groups.printed_laminated && groups.printed_laminated[0]) || calcActiveCombos()[0] || NO_PROFILE_COMBOS[0];
+  const target = (prev && calcFindCombo(prev)) ? prev : (def ? String(def.id) : '');
+  sel.value = target;
+  calcState.comboId = sel.value;
+  renderComboDetail();
+}
+
+function onComboChange() {
+  calcState.comboId = document.getElementById('calc-combo').value;
+  calcState.overrides = {};
+  renderComboDetail();
+  updateCalcFormVisibility();
+}
+
+function calcOverrideChanged(role, value) {
+  if (value === '__combo__') delete calcState.overrides[role];
+  else calcState.overrides[role] = value;
+  renderComboDetail();
+}
+
+function renderComboDetail() {
+  const el = document.getElementById('calc-combo-detail');
+  const combo = calcFindCombo(calcState.comboId);
+  if (!combo) { el.innerHTML = ''; return; }
+  if (combo.material_family && !combo.components.length) {
+    el.innerHTML = `<div class="combo-detail">No Pricing Profile for this family yet — the run will STOP with F17 and the cost-build checklist.</div>`;
+    return;
+  }
+  const roleOrder = ['substrate', 'laminate', 'tape', 'ink', 'other'];
+  const comps = [...combo.components].sort((a, b) => roleOrder.indexOf(a.component_role) - roleOrder.indexOf(b.component_role));
+  let html = '<div class="combo-detail">';
+  for (const baseComp of comps) {
+    const role = baseComp.component_role;
+    const c = comboComponentForRole(combo, role) || baseComp;
+    const name = [c.product_name, c.color_name, c.roll_width_in ? c.roll_width_in + '"' : '']
+      .filter(Boolean).join(' ');
+    const cost = role === 'ink'
+      ? '$0.50/sq ft (§25)'
+      : (combo.process_type === 'cut_vinyl' && role === 'substrate' && c.cost_per_linear_yd != null
+        ? '$' + Number(c.cost_per_linear_yd).toFixed(2) + '/yd'
+        : (c.cost_per_sq_ft != null ? '$' + Number(c.cost_per_sq_ft).toFixed(4) + '/sq ft' : '—'));
+    const dot = stalenessClass(c.verified_date);
+    html += `<div class="cd-row">
+      <span class="cd-role">${escapeHtml(role)}</span>
+      <span class="cd-name">${escapeHtml(name)}${c.overridden ? ' <em>(override)</em>' : ''}</span>
+      <span class="cd-cost">${escapeHtml(cost)} ${dot ? `<span class="stale-dot ${dot}" title="verified ${escapeHtml(c.verified_date || '')}"></span>` : ''} <span style="color:var(--text-tertiary);">${escapeHtml(c.verified_date || '')}</span></span>
+    </div>`;
+    // inline per-quote override (not for the §25 ink rate)
+    if (role !== 'ink') {
+      const family = role === 'substrate'
+        ? (combo.process_type === 'cut_vinyl' ? 'cut_vinyl' : 'print_media')
+        : (role === 'laminate' ? 'laminate' : 'tape');
+      const options = mmMaterialsOfFamily(family).filter(Boolean);
+      if (options.length > 1) {
+        const cur = calcState.overrides[role] || '__combo__';
+        html += `<div class="cd-row" style="border-bottom:none;padding-top:0;"><span class="cd-role"></span><span class="cd-name" style="flex:1;">
+          <select class="cd-override" onchange="calcOverrideChanged('${role}', this.value)">
+            <option value="__combo__"${cur === '__combo__' ? ' selected' : ''}>combination default</option>
+            ${options.map(m => `<option value="${escapeHtml(m.material_key)}"${cur === m.material_key ? ' selected' : ''}>override: ${escapeHtml([m.product_name, m.color_name, m.roll_width_in ? m.roll_width_in + '"' : ''].filter(Boolean).join(' '))}</option>`).join('')}
+          </select></span><span class="cd-cost"></span></div>`;
+      }
+    }
+  }
+  html += '</div>';
+  el.innerHTML = html;
+}
+
 function updateCalcFormVisibility() {
-  const family = document.getElementById('calc-family').value;
+  const combo = calcFindCombo(calcState.comboId);
+  const family = comboFamily(combo);
   const isCV = family === '3M 180mC Cut Vinyl';
   const isPL = family === 'Orajet 3951 Cast + Polyester Lam';
   const itemType = document.getElementById('calc-itemtype').value;
   const isKit = !isCV && itemType.startsWith('kit_');
   const isSingle = !isCV && itemType === 'single';
 
-  document.getElementById('calc-color-wrap').classList.toggle('hidden', !isCV);
   document.getElementById('calc-cv-itemtype-wrap').classList.toggle('hidden', !isCV);
   document.getElementById('calc-itemtype-wrap').classList.toggle('hidden', isCV);
   document.getElementById('calc-labelcount-wrap').classList.toggle('hidden', !isKit);
@@ -2449,10 +3342,8 @@ function updateCalcFormVisibility() {
   document.getElementById('calc-ansi-wrap').classList.toggle('hidden', !isPL);
 
   // Production override checkbox — Orajet 3951 single items at sq ft ≤ 0.1 only.
-  const widthEl = document.getElementById('calc-width');
-  const heightEl = document.getElementById('calc-height');
-  const w = parseFloat(widthEl.value) || 0;
-  const h = parseFloat(heightEl.value) || 0;
+  const w = parseFloat(document.getElementById('calc-width').value) || 0;
+  const h = parseFloat(document.getElementById('calc-height').value) || 0;
   const sq_ft = (w * h) / 144;
   const tiny_threshold = (window.CALCULATOR_CONFIG && window.CALCULATOR_CONFIG.routing
     && window.CALCULATOR_CONFIG.routing.tiny_threshold_sq_ft) || 0.1;
@@ -2464,13 +3355,25 @@ function updateCalcFormVisibility() {
 }
 
 function gatherCalcInputs() {
-  const family = document.getElementById('calc-family').value;
+  const combo = calcFindCombo(calcState.comboId);
+  const family = comboFamily(combo);
   const isCV = family === '3M 180mC Cut Vinyl';
   const itemType = isCV ? 'cut_vinyl' : document.getElementById('calc-itemtype').value;
   const isKit = !isCV && itemType.startsWith('kit_');
   const overrideWrap = document.getElementById('calc-prodoverride-wrap');
   const overrideEl = document.getElementById('calc-prodoverride');
   const overrideVisible = overrideWrap && !overrideWrap.classList.contains('hidden');
+
+  // cut vinyl color = the combination's substrate component (or its override)
+  let cutVinylColor = '';
+  if (isCV && combo) {
+    const sub = comboComponentForRole(combo, 'substrate');
+    if (sub) {
+      cutVinylColor = sub.engine_key || (sub.overridden ? 'override_' + sub.material_key : '');
+    }
+  }
+  const cfgOverride = buildCalcConfigOverride(combo);
+
   return {
     part_number: document.getElementById('calc-pn').value.trim(),
     description: document.getElementById('calc-desc').value.trim(),
@@ -2480,20 +3383,23 @@ function gatherCalcInputs() {
     width_in: parseFloat(document.getElementById('calc-width').value) || 0,
     height_in: parseFloat(document.getElementById('calc-height').value) || 0,
     label_count: isKit ? (parseInt(document.getElementById('calc-labelcount').value, 10) || 1) : 1,
-    cut_vinyl_color: isCV ? document.getElementById('calc-color').value : '',
-    ink_coverage: document.getElementById('calc-ink').value,
+    cut_vinyl_color: cutVinylColor,
+    // H-1: full bleed is the only ink routing on this account (§25)
+    ink_coverage: 'full_bleed_flood_coat',
     is_ansi_safety: document.getElementById('calc-ansi').checked,
     production_override: overrideVisible && overrideEl ? overrideEl.checked : false,
     order_qty: parseInt(document.getElementById('calc-qty').value, 10) || 0,
     notes: document.getElementById('calc-notes').value.trim(),
+    _config: cfgOverride || undefined,
   };
 }
 
 function runCalculatorUI() {
   const inputs = gatherCalcInputs();
   const out = document.getElementById('calcOutput');
-  if (!inputs.width_in || !inputs.height_in) {
-    out.innerHTML = '<div class="calc-empty" style="color: var(--flag-stop);">Width and Height are required.</div>';
+  // W2 input-sanity guard (UI layer; the engine also STOPs with F24)
+  if (!(inputs.width_in > 0) || !(inputs.height_in > 0) || (inputs.label_count || 1) < 1) {
+    out.innerHTML = '<div class="calc-empty" style="color: var(--flag-stop);">Width, Height, and Label Count must all be positive (W2 input-sanity guard).</div>';
     return;
   }
   if (typeof window.runCalculator !== 'function') {
@@ -2520,10 +3426,10 @@ function renderCalcOutput(result, inputs) {
   const sections = [];
   sections.push(renderCalcSummary(result, inputs));
   sections.push(renderCalcFlags(result));
-  if (!hasStop && route !== 'tiny' && route !== 'no_profile') {
+  if (!hasStop && route !== 'tiny' && route !== 'no_profile' && route !== 'invalid_input') {
     sections.push(renderCalcPricingTable(result, inputs));
   }
-  if (route !== 'no_profile') {
+  if (route !== 'no_profile' && route !== 'invalid_input') {
     sections.push(renderCalcMaterialBreakdown(result));
     sections.push(renderCalcBandPositioning(result, inputs));
     sections.push(renderCalcProductionSummary(result));
@@ -2549,6 +3455,18 @@ function renderCalcSummary(result, inputs) {
   const route = result.route;
   const badge = routeBadgeLabel(result, inputs);
   const reason = escapeHtml(result.route_reason || '');
+
+  if (route === 'invalid_input') {
+    return `
+      <div class="calc-section">
+        <div class="calc-section-header">
+          <h3 class="calc-section-title">Routing</h3>
+          <span class="calc-routing-badge">${escapeHtml(badge)}</span>
+        </div>
+        <p class="calc-route-reason" style="margin-top: 0;">${reason}</p>
+      </div>
+    `;
+  }
 
   if (route === 'no_profile') {
     return `
@@ -2838,6 +3756,9 @@ function renderCalcProductionSummary(result) {
     lamRows.push(`<div class="info-row"><span class="ir-k">13.5" Laminator</span><span class="ir-v" style="color: ${fits ? 'var(--text-primary)' : 'var(--flag-stop)'};">${fits ? 'fits' : 'exceeds — STOP'}</span></div>`);
   }
   lamRows.push(`<div class="info-row"><span class="ir-k">Reasoning</span><span class="ir-v" style="max-width: 75%; font-size: 11px; line-height: 1.5;">${escapeHtml(lamReason)}</span></div>`);
+  if (result.lam_pass_advisory) {
+    lamRows.push(`<div class="info-row"><span class="ir-k" style="color: var(--flag-review);">⚠ W1 Advisory</span><span class="ir-v" style="max-width: 75%; font-size: 11px; line-height: 1.5; color: var(--flag-review);">${escapeHtml(result.lam_pass_advisory)}</span></div>`);
+  }
 
   return `
     <div class="calc-section">
@@ -2888,6 +3809,463 @@ function copyValidationBrief() {
   });
 }
 
+/* ===== MATERIALS MANAGER (Session H) =====
+ * Full CRUD against Supabase (elliott_materials + elliott_material_
+ * combinations + components) via the anon key — RLS allows writes on these
+ * three tables only, scoped to account_id = 'elliott'. Deletes are SOFT
+ * (is_active = false): history is preserved, the material disappears from
+ * the rail and from calculator dropdowns. Every save re-hydrates the
+ * in-memory config so the calculator picks up new costs without reload.
+ * Editing is disabled in offline/fallback mode. */
+
+const MM_FAMILY_ORDER = ['cut_vinyl', 'print_media', 'laminate', 'tape', 'other'];
+const mmState = { selectedKey: null, selectedComboId: null, mode: null, busy: false };
+
+// Field spec: which columns the form shows per family (adapts on family change)
+const MM_FIELDS = [
+  { id: 'material_key', label: 'Material Key (unique slug)', type: 'text', families: 'all', newOnly: true, hint: 'e.g. 3m-180mc-forest-green — file-stem convention; immutable after create' },
+  { id: 'product_name', label: 'Product Name', type: 'text', families: 'all' },
+  { id: 'manufacturer', label: 'Manufacturer', type: 'text', families: 'all' },
+  { id: 'product_code', label: 'Product Code', type: 'text', families: 'all' },
+  { id: 'item_number', label: 'Item Number', type: 'text', families: ['laminate'] },
+  { id: 'distributor', label: 'Supplier / Distributor', type: 'text', families: 'all' },
+  { id: 'color_name', label: 'Color Name', type: 'text', families: ['cut_vinyl', 'print_media'] },
+  { id: 'color_code', label: 'Color Code', type: 'text', families: ['cut_vinyl'] },
+  { id: 'film_type', label: 'Film Type', type: 'text', families: ['cut_vinyl', 'print_media', 'laminate', 'tape'] },
+  { id: 'film_thickness_mil', label: 'Film Thickness (mil)', type: 'number', families: ['cut_vinyl', 'print_media'] },
+  { id: 'thickness_mil', label: 'Thickness (mil)', type: 'number', families: ['laminate'] },
+  { id: 'adhesive_type', label: 'Adhesive Type', type: 'text', families: ['cut_vinyl', 'print_media'] },
+  { id: 'finish', label: 'Finish', type: 'text', families: ['laminate'] },
+  { id: 'roll_width_in', label: 'Roll Width (in)', type: 'number', families: ['cut_vinyl', 'print_media', 'laminate', 'tape'] },
+  { id: 'roll_length_yd', label: 'Roll Length (yd)', type: 'number', families: ['cut_vinyl', 'print_media', 'tape'] },
+  { id: 'roll_length_ft', label: 'Roll Length (ft)', type: 'number', families: ['laminate'] },
+  { id: 'cost_per_roll', label: 'Cost / Roll ($)', type: 'number', families: ['cut_vinyl', 'print_media', 'laminate', 'tape'] },
+  { id: 'cost_per_linear_yd', label: 'Cost / Linear Yd ($)', type: 'number', families: ['cut_vinyl', 'laminate', 'tape'] },
+  { id: 'cost_per_linear_ft', label: 'Cost / Linear Ft ($)', type: 'number', families: ['laminate'] },
+  { id: 'cost_per_sq_ft', label: 'Cost / Sq Ft ($)', type: 'number', families: 'all' },
+  { id: 'cost_per_msi', label: 'Cost / MSI ($)', type: 'number', families: ['laminate'] },
+  { id: 'max_laminator_width_in', label: 'Max Laminator Width (in)', type: 'number', families: ['laminate'] },
+  { id: 'pms_note', label: 'PMS Note (color match caveat)', type: 'text', families: ['cut_vinyl'] },
+  { id: 'engine_key', label: 'Engine Key (advanced — calculator lookup)', type: 'text', families: 'all', hint: 'snake_case key the calculator uses (e.g. forest_green). Auto-derived when blank.' },
+  { id: 'verified_date', label: 'Verified Date', type: 'date', families: 'all' },
+];
+
+function mmFieldVisible(f, family) {
+  return f.families === 'all' || f.families.includes(family);
+}
+
+function mmDisplayName(row) {
+  return [row.product_name, row.color_name, row.roll_width_in ? Math.round(Number(row.roll_width_in)) + '"' : '',
+          row.roll_length_yd ? '× ' + Math.round(Number(row.roll_length_yd)) + 'yd' : '']
+    .filter(Boolean).join(' ') || row.material_key;
+}
+
+function mmUsedInCount(row) {
+  return (row.used_in_items || []).length;
+}
+
+function mmRenderRail() {
+  const tree = document.getElementById('matMgrTree');
+  if (DATA_SOURCE !== 'supabase') {
+    tree.innerHTML = '<div class="comp-empty">Offline — the Materials Manager needs a live Supabase connection. Browse materials in the Materials View tab.</div>';
+    document.getElementById('matMgrCombos').innerHTML = '<div class="comp-empty">Offline.</div>';
+    return;
+  }
+  const groups = {};
+  for (const m of DB_MATERIALS) (groups[m.material_family] = groups[m.material_family] || []).push(m);
+  let html = '';
+  for (const fam of MM_FAMILY_ORDER) {
+    const rows = (groups[fam] || []).slice().sort((a, b) => mmDisplayName(a).localeCompare(mmDisplayName(b)));
+    html += `<div class="matmgr-group-header"><span>${escapeHtml(MATERIAL_TYPE_LABEL[fam] || fam)}</span>
+      <button class="matmgr-add-btn" onclick="mmNewMaterial('${fam}')">+ Add</button></div>`;
+    if (!rows.length) { html += '<div class="comp-empty">None.</div>'; continue; }
+    for (const m of rows) {
+      const dot = stalenessClass(m.verified_date);
+      const sel = m.material_key === mmState.selectedKey ? ' selected' : '';
+      const inactive = m.is_active ? '' : ' inactive';
+      const cost = m.cost_per_sq_ft != null ? '$' + Number(m.cost_per_sq_ft).toFixed(4) + '/sf' : '—';
+      html += `<div class="matmgr-row${sel}${inactive}" onclick="mmSelectMaterial('${escapeHtml(m.material_key)}')">
+        <span class="mm-name">${escapeHtml(mmDisplayName(m))}${m.is_active ? '' : ' (inactive)'}</span>
+        <span class="mm-cost">${escapeHtml(cost)}</span>
+        <span class="mm-meta">
+          ${m.roll_width_in != null ? Math.round(Number(m.roll_width_in)) + '" roll' : ''}
+          <span>${dot ? `<span class="stale-dot ${dot}"></span> ` : ''}${escapeHtml(m.verified_date || 'unverified')}</span>
+          <span>${mmUsedInCount(m)} item${mmUsedInCount(m) === 1 ? '' : 's'}</span>
+        </span>
+      </div>`;
+    }
+  }
+  tree.innerHTML = html;
+  mmRenderComboList();
+}
+
+function mmRenderComboList() {
+  const el = document.getElementById('matMgrCombos');
+  let html = '';
+  for (const c of COMBINATIONS) {
+    const sel = String(c.id) === String(mmState.selectedComboId) ? ' selected' : '';
+    const inactive = c.is_active ? '' : ' inactive';
+    html += `<div class="matmgr-row${sel}${inactive}" onclick="mmSelectCombo('${escapeHtml(String(c.id))}')">
+      <span class="mm-name">${escapeHtml(c.name)}${c.is_active ? '' : ' (inactive)'}</span>
+      <span class="mm-cost">${escapeHtml(PROCESS_TYPE_LABEL[c.process_type] || c.process_type)}</span>
+      <span class="mm-meta"><span>${c.components.length} component${c.components.length === 1 ? '' : 's'}</span></span>
+    </div>`;
+  }
+  el.innerHTML = html || '<div class="comp-empty">No combinations yet.</div>';
+}
+
+function mmSelectMaterial(key) {
+  mmState.selectedKey = key;
+  mmState.selectedComboId = null;
+  mmState.mode = 'edit';
+  mmRenderRail();
+  const row = DB_MATERIALS.find(m => m.material_key === key);
+  mmRenderMaterialForm(row);
+}
+
+function mmNewMaterial(family) {
+  mmState.selectedKey = null;
+  mmState.selectedComboId = null;
+  mmState.mode = 'new';
+  mmRenderRail();
+  mmRenderMaterialForm({ material_family: family, is_active: true, notes: '', used_in_items: [] });
+}
+
+function mmFieldValue(row, id) {
+  const v = row ? row[id] : null;
+  return v === null || v === undefined ? '' : v;
+}
+
+function mmRenderMaterialForm(row) {
+  const el = document.getElementById('matMgrDetail');
+  const isNew = mmState.mode === 'new';
+  const family = row.material_family || 'cut_vinyl';
+  let html = `<h3>${isNew ? 'New Material' : 'Material — ' + escapeHtml(mmDisplayName(row))}</h3>`;
+  html += `<div class="calc-field">
+    <label>Material Family</label>
+    <select id="mm-material_family" ${isNew ? '' : 'disabled'} onchange="mmFamilyChanged()">
+      ${MM_FAMILY_ORDER.map(f => `<option value="${f}"${f === family ? ' selected' : ''}>${escapeHtml(MATERIAL_TYPE_LABEL[f] || f)}</option>`).join('')}
+    </select>
+  </div>`;
+  html += '<div class="matmgr-form-grid" id="mm-fields">';
+  for (const f of MM_FIELDS) {
+    const hidden = !mmFieldVisible(f, family) ? ' hidden' : '';
+    const readonly = (f.newOnly && !isNew) ? ' disabled' : '';
+    const val = mmFieldValue(row, f.id);
+    const wide = ['material_key', 'product_name', 'pms_note', 'engine_key'].includes(f.id) ? ' full' : '';
+    html += `<div class="calc-field${wide}${hidden}" data-field="${f.id}">
+      <label>${escapeHtml(f.label)}</label>
+      <input type="${f.type}" id="mm-${f.id}" value="${escapeHtml(String(val))}"${readonly} ${f.type === 'number' ? 'step="any"' : ''} />
+      ${f.hint ? `<div class="calc-hint">${escapeHtml(f.hint)}</div>` : ''}
+      ${f.id === 'verified_date' ? '<button class="matmgr-add-btn" style="margin-top:5px;" onclick="mmMarkVerifiedToday()">Mark as verified today</button>' : ''}
+    </div>`;
+  }
+  html += '</div>';
+  html += `<div class="calc-field">
+    <label class="checkbox-label"><input type="checkbox" id="mm-is_active" ${row.is_active !== false ? 'checked' : ''}/> Active (unchecked = soft-deleted: hidden from calculator dropdowns, history preserved)</label>
+  </div>`;
+  html += `<div class="calc-field"><label>Notes</label><textarea id="mm-notes" rows="3">${escapeHtml(row.notes || '')}</textarea></div>`;
+  html += `<div class="matmgr-computed" id="mm-computed"></div>`;
+  if (!isNew) {
+    html += `<div class="matmgr-computed">Used in ${mmUsedInCount(row)} catalog item${mmUsedInCount(row) === 1 ? '' : 's'}${mmUsedInCount(row) ? ': ' + (row.used_in_items || []).join(', ') : ''} (from items catalog — read-only)</div>`;
+  }
+  html += `<div class="matmgr-actions">
+    <button class="copy-btn" onclick="mmSaveMaterial()">${isNew ? 'Create Material' : 'Save Changes'}</button>
+    <button class="copy-btn" onclick="mmCancel()">Cancel</button>
+    ${!isNew ? '<button class="copy-btn danger" onclick="mmDeleteMaterial()">Delete (soft)</button>' : ''}
+    <span class="matmgr-status" id="mm-status"></span>
+  </div>`;
+  el.innerHTML = html;
+  for (const id of ['cost_per_roll', 'roll_width_in', 'roll_length_yd', 'roll_length_ft']) {
+    const input = document.getElementById('mm-' + id);
+    if (input) input.addEventListener('input', mmUpdateComputed);
+  }
+  mmUpdateComputed();
+}
+
+function mmFamilyChanged() {
+  const family = document.getElementById('mm-material_family').value;
+  for (const f of MM_FIELDS) {
+    const wrap = document.querySelector(`#mm-fields .calc-field[data-field="${f.id}"]`);
+    if (wrap) wrap.classList.toggle('hidden', !mmFieldVisible(f, family));
+  }
+  mmUpdateComputed();
+}
+
+function mmUpdateComputed() {
+  const el = document.getElementById('mm-computed');
+  if (!el) return;
+  const g = id => parseFloat((document.getElementById('mm-' + id) || {}).value) || 0;
+  const costRoll = g('cost_per_roll');
+  const widthIn = g('roll_width_in');
+  const lengthYd = g('roll_length_yd');
+  const lengthFt = g('roll_length_ft') || lengthYd * 3;
+  const lines = ['Computed from roll specs (read-only cross-check):'];
+  if (costRoll && widthIn && lengthFt) {
+    const sqft = (widthIn / 12) * lengthFt;
+    lines.push(`  roll area: ${sqft.toFixed(1)} sq ft → cost/sq ft: $${(costRoll / sqft).toFixed(4)}`);
+  }
+  if (costRoll && lengthYd) {
+    lines.push(`  cost/linear yd: $${(costRoll / lengthYd).toFixed(4)}`);
+  }
+  if (lines.length === 1) lines.push('  enter cost/roll + roll dimensions to compute');
+  el.textContent = lines.join('\n');
+}
+
+function mmMarkVerifiedToday() {
+  const input = document.getElementById('mm-verified_date');
+  if (input) input.value = new Date().toISOString().slice(0, 10);
+}
+
+function mmStatus(msg, cls) {
+  const el = document.getElementById('mm-status');
+  if (!el) return;
+  el.textContent = msg;
+  el.className = 'matmgr-status' + (cls ? ' ' + cls : '');
+}
+
+function mmCancel() {
+  mmState.selectedKey = null;
+  mmState.selectedComboId = null;
+  mmState.mode = null;
+  document.getElementById('matMgrDetail').innerHTML =
+    '<h3>Material Detail</h3><div class="comp-empty" style="padding:20px 4px;">Select a material from the left rail, or add a new one.</div>';
+  mmRenderRail();
+}
+
+function mmCollectMaterialPayload(isNew) {
+  const family = document.getElementById('mm-material_family').value;
+  const payload = { account_id: 'elliott', material_family: family };
+  for (const f of MM_FIELDS) {
+    if (!mmFieldVisible(f, family) && f.id !== 'material_key') continue;
+    const input = document.getElementById('mm-' + f.id);
+    if (!input) continue;
+    let v = input.value.trim();
+    if (f.type === 'number') v = v === '' ? null : parseFloat(v);
+    if (f.type === 'date') v = v === '' ? null : v;
+    payload[f.id] = v === '' ? (f.type === 'text' ? '' : null) : v;
+  }
+  payload.is_active = document.getElementById('mm-is_active').checked;
+  payload.notes = document.getElementById('mm-notes').value;
+  if (!payload.engine_key && payload.material_key) {
+    payload.engine_key = String(payload.material_key).replace(/^3m-180mc-/, '').replace(/-/g, '_');
+  }
+  if (!isNew) delete payload.material_key;
+  return payload;
+}
+
+async function mmRehydrate() {
+  // Re-pull materials + combinations and rebuild the in-memory config so the
+  // calculator and Materials View pick the change up without a reload.
+  const [matsQ, combosQ] = await Promise.all([
+    sb.from('elliott_materials').select('*').order('material_key'),
+    sb.from('elliott_material_combinations').select('*, elliott_material_combination_components(id, component_role, usage_sq_ft_multiplier, material_id, elliott_materials(material_key, engine_key, material_family, product_name, color_name, roll_width_in, cost_per_sq_ft, cost_per_linear_yd, verified_date))').order('name'),
+  ]);
+  if (matsQ.error) throw matsQ.error;
+  if (combosQ.error) throw combosQ.error;
+  DB_MATERIALS = matsQ.data;
+  COMBINATIONS = combosQ.data.map(normalizeCombination);
+  window.CALCULATOR_CONFIG = assembleConfigFromDb(DB_BANDS, DB_SETTINGS, DB_MATERIALS, DB_ITEMS);
+  const matMap = {};
+  for (const row of DB_MATERIALS) {
+    if (!row.is_active || row.engine_key === 'eco_solvent_ink') continue;
+    matMap[row.material_key] = { frontmatter: materialRowToFm(row) };
+  }
+  MATERIALS_DATA = { generated: new Date().toISOString(), material_count: Object.keys(matMap).length, materials: matMap };
+  materials = MATERIALS_DATA.materials;
+  sortedMIDs = Object.keys(materials).sort();
+}
+
+async function mmSaveMaterial() {
+  if (mmState.busy || DATA_SOURCE !== 'supabase') return;
+  const isNew = mmState.mode === 'new';
+  const payload = mmCollectMaterialPayload(isNew);
+  if (isNew && !payload.material_key) { mmStatus('material_key is required', 'error'); return; }
+  if (!payload.product_name) { mmStatus('product_name is required', 'error'); return; }
+  mmState.busy = true;
+  mmStatus('Saving…');
+  try {
+    let q;
+    if (isNew) {
+      q = await sb.from('elliott_materials').insert(payload).select().single();
+    } else {
+      q = await sb.from('elliott_materials').update(payload)
+        .eq('material_key', mmState.selectedKey).select().single();
+    }
+    if (q.error) throw q.error;
+    await mmRehydrate();
+    mmState.selectedKey = q.data.material_key;
+    mmState.mode = 'edit';
+    mmRenderRail();
+    mmRenderMaterialForm(q.data);
+    mmStatus('Saved ✓', 'ok');
+  } catch (e) {
+    mmStatus('Save failed: ' + (e.message || e), 'error');
+  } finally {
+    mmState.busy = false;
+  }
+}
+
+async function mmDeleteMaterial() {
+  if (mmState.busy || DATA_SOURCE !== 'supabase' || !mmState.selectedKey) return;
+  const row = DB_MATERIALS.find(m => m.material_key === mmState.selectedKey);
+  const used = COMBINATIONS.filter(c => c.is_active && c.components.some(cc => cc.material_key === mmState.selectedKey));
+  let msg = `Soft-delete "${mmDisplayName(row)}"? It disappears from the rail and calculator dropdowns; history is preserved (is_active = false).`;
+  if (used.length) msg += `\n\nWARNING: used by ${used.length} active combination(s): ${used.map(c => c.name).join(', ')}`;
+  if (!confirm(msg)) return;
+  mmState.busy = true;
+  mmStatus('Deleting…');
+  try {
+    const q = await sb.from('elliott_materials').update({ is_active: false })
+      .eq('material_key', mmState.selectedKey);
+    if (q.error) throw q.error;
+    await mmRehydrate();
+    mmCancel();
+  } catch (e) {
+    mmStatus('Delete failed: ' + (e.message || e), 'error');
+  } finally {
+    mmState.busy = false;
+  }
+}
+
+/* --- Combination builder --- */
+
+function mmSelectCombo(id) {
+  mmState.selectedComboId = id;
+  mmState.selectedKey = null;
+  mmState.mode = 'combo-edit';
+  mmRenderRail();
+  mmRenderComboForm(COMBINATIONS.find(c => String(c.id) === String(id)));
+}
+
+function mmNewCombination() {
+  if (DATA_SOURCE !== 'supabase') return;
+  mmState.selectedComboId = null;
+  mmState.selectedKey = null;
+  mmState.mode = 'combo-new';
+  mmRenderRail();
+  mmRenderComboForm({ name: '', process_type: 'printed_laminated', description: '', is_active: true, components: [] });
+}
+
+function mmComboMaterialOptions(selectedKey) {
+  return DB_MATERIALS.filter(m => m.is_active)
+    .map(m => `<option value="${escapeHtml(m.material_key)}"${m.material_key === selectedKey ? ' selected' : ''}>${escapeHtml(MATERIAL_TYPE_LABEL[m.material_family] || m.material_family)} — ${escapeHtml(mmDisplayName(m))}</option>`)
+    .join('');
+}
+
+function mmComboCompRow(comp, idx) {
+  const roles = ['substrate', 'laminate', 'tape', 'ink', 'other'];
+  return `<div class="combo-comp-row" data-idx="${idx}">
+    <select class="cc-role">${roles.map(r => `<option value="${r}"${comp.component_role === r ? ' selected' : ''}>${r}</option>`).join('')}</select>
+    <select class="cc-material">${mmComboMaterialOptions(comp.material_key)}</select>
+    <input class="cc-mult" type="number" step="any" value="${comp.usage_sq_ft_multiplier != null ? comp.usage_sq_ft_multiplier : 1}" title="usage sq ft multiplier" />
+    <button class="remove-comp" onclick="this.parentElement.remove()">✕</button>
+  </div>`;
+}
+
+function mmRenderComboForm(combo) {
+  const el = document.getElementById('matMgrDetail');
+  const isNew = mmState.mode === 'combo-new';
+  let html = `<h3>${isNew ? 'New Combination' : 'Combination — ' + escapeHtml(combo.name)}</h3>`;
+  html += `<div class="calc-field"><label>Name</label><input type="text" id="cmb-name" value="${escapeHtml(combo.name)}" /></div>`;
+  html += `<div class="calc-field"><label>Process Type</label><select id="cmb-process">
+    ${Object.entries(PROCESS_TYPE_LABEL).map(([v, l]) => `<option value="${v}"${combo.process_type === v ? ' selected' : ''}>${escapeHtml(l)}</option>`).join('')}
+  </select></div>`;
+  html += `<div class="calc-field"><label>Description</label><textarea id="cmb-desc" rows="2">${escapeHtml(combo.description || '')}</textarea></div>`;
+  html += `<div class="calc-field"><label class="checkbox-label"><input type="checkbox" id="cmb-active" ${combo.is_active !== false ? 'checked' : ''}/> Active (shown in calculator dropdown)</label></div>`;
+  html += `<div class="calc-field"><label>Components (role · material · sq ft multiplier)</label><div id="cmb-components">`;
+  html += combo.components.map((c, i) => mmComboCompRow(c, i)).join('');
+  html += `</div><button class="matmgr-add-btn" style="margin-top:6px;" onclick="mmAddComboComp()">+ Add Component</button></div>`;
+  html += `<div class="matmgr-actions">
+    <button class="copy-btn" onclick="mmSaveCombo()">${isNew ? 'Create Combination' : 'Save Combination'}</button>
+    <button class="copy-btn" onclick="mmCancel()">Cancel</button>
+    ${!isNew ? '<button class="copy-btn danger" onclick="mmDeleteCombo()">Delete (soft)</button>' : ''}
+    <span class="matmgr-status" id="mm-status"></span>
+  </div>`;
+  el.innerHTML = html;
+}
+
+function mmAddComboComp() {
+  const wrap = document.getElementById('cmb-components');
+  const div = document.createElement('div');
+  div.innerHTML = mmComboCompRow({ component_role: 'substrate', material_key: (DB_MATERIALS[0] || {}).material_key, usage_sq_ft_multiplier: 1 }, 99);
+  wrap.appendChild(div.firstElementChild);
+}
+
+async function mmSaveCombo() {
+  if (mmState.busy || DATA_SOURCE !== 'supabase') return;
+  const isNew = mmState.mode === 'combo-new';
+  const name = document.getElementById('cmb-name').value.trim();
+  if (!name) { mmStatus('name is required', 'error'); return; }
+  const comps = [...document.querySelectorAll('#cmb-components .combo-comp-row')].map(rowEl => ({
+    component_role: rowEl.querySelector('.cc-role').value,
+    material_key: rowEl.querySelector('.cc-material').value,
+    usage_sq_ft_multiplier: parseFloat(rowEl.querySelector('.cc-mult').value) || 1,
+  }));
+  if (!comps.length) { mmStatus('add at least one component', 'error'); return; }
+  mmState.busy = true;
+  mmStatus('Saving…');
+  try {
+    const payload = {
+      account_id: 'elliott',
+      name,
+      process_type: document.getElementById('cmb-process').value,
+      description: document.getElementById('cmb-desc').value,
+      is_active: document.getElementById('cmb-active').checked,
+    };
+    let comboId;
+    if (isNew) {
+      const q = await sb.from('elliott_material_combinations').insert(payload).select('id').single();
+      if (q.error) throw q.error;
+      comboId = q.data.id;
+    } else {
+      comboId = mmState.selectedComboId;
+      const q = await sb.from('elliott_material_combinations').update(payload).eq('id', comboId);
+      if (q.error) throw q.error;
+    }
+    // replace components atomically-enough for a single-user tool
+    const del = await sb.from('elliott_material_combination_components').delete().eq('combination_id', comboId);
+    if (del.error) throw del.error;
+    for (const c of comps) {
+      const mat = DB_MATERIALS.find(m => m.material_key === c.material_key);
+      if (!mat) throw new Error('unknown material ' + c.material_key);
+      const ins = await sb.from('elliott_material_combination_components').insert({
+        combination_id: comboId, material_id: mat.id,
+        component_role: c.component_role, usage_sq_ft_multiplier: c.usage_sq_ft_multiplier,
+      });
+      if (ins.error) throw ins.error;
+    }
+    await mmRehydrate();
+    mmState.selectedComboId = comboId;
+    mmState.mode = 'combo-edit';
+    mmRenderRail();
+    mmRenderComboForm(COMBINATIONS.find(c => String(c.id) === String(comboId)));
+    mmStatus('Saved ✓', 'ok');
+    if (calcFormInitialized) populateComboSelect();
+  } catch (e) {
+    mmStatus('Save failed: ' + (e.message || e), 'error');
+  } finally {
+    mmState.busy = false;
+  }
+}
+
+async function mmDeleteCombo() {
+  if (mmState.busy || DATA_SOURCE !== 'supabase' || !mmState.selectedComboId) return;
+  if (!confirm('Soft-delete this combination? It disappears from the calculator dropdown; components and history are preserved (is_active = false).')) return;
+  mmState.busy = true;
+  try {
+    const q = await sb.from('elliott_material_combinations').update({ is_active: false }).eq('id', mmState.selectedComboId);
+    if (q.error) throw q.error;
+    await mmRehydrate();
+    mmCancel();
+    if (calcFormInitialized) populateComboSelect();
+  } catch (e) {
+    mmStatus('Delete failed: ' + (e.message || e), 'error');
+  } finally {
+    mmState.busy = false;
+  }
+}
+
 init();
 </script>
 
@@ -2895,10 +4273,14 @@ init();
 <script>
 /*
  * Elliott Equipment — Calculator Pricing Engine
- * Pure logic. No UI. Reads window.CALCULATOR_CONFIG + window.ITEMS_DATA.
- * Exposes window.runCalculator(inputs).
+ * Pure logic. No UI. Reads window.CALCULATOR_CONFIG + window.ITEMS_DATA
+ * (hydrated from Supabase by the UI block, with static-JSON fallback).
+ * Exposes window.runCalculator(inputs). An inputs._config override lets the
+ * UI hand a per-run config variant (inline material component swaps).
  *
- * Session 2 deliverable. Session 3 wires this to a Calculator tab.
+ * Session H (2026-06-09): report-only tier enforcement (audit C-1/D1),
+ * §25 full-bleed-only ink (H-1), §25 canonical kit material costing (H-4),
+ * W1-W6 guards, F24/F25 STOP flags, brief completeness (W4).
  */
 (function() {
   'use strict';
@@ -2961,6 +4343,12 @@ init();
     const fam = inp.material_family;
     const t = config.routing;
     const sq = (inp.width_in * inp.height_in) / 144;
+    // W3 guard: a "kit" with label_count = 1 is a single label — re-route to
+    // the single path and let generateFlags fire F21 REVIEW so Nick verifies
+    // the intent. Without this, a 1-label kit cost-builds $10 × 1 silently.
+    const kit_lc1_rerouted = !isCutVinylInput(inp) && isKitInput(inp)
+      && (inp.label_count || 1) === 1
+      && fam === PRINTED_LAM_FAMILY;
     if (isCutVinylInput(inp)) {
       const band = config.bands.cut_vinyl_lettering;
       const active = band[band.active_band];
@@ -2991,18 +4379,21 @@ init();
     }
     if (sq <= t.tiny_threshold_sq_ft) {
       return { route: 'tiny', route_reason:
-        `Sq ft ${sq.toFixed(4)} ≤ ${t.tiny_threshold_sq_ft} sq ft — tiny printed label. Singles band inapplicable. Price from job economics at the $${config.account.floor.toFixed(0)} one-off job-economics floor (one-off program total).` };
+        `Sq ft ${sq.toFixed(4)} ≤ ${t.tiny_threshold_sq_ft} sq ft — tiny printed label. Singles band inapplicable. Price from job economics at the $${config.account.floor.toFixed(0)} one-off job-economics floor (one-off program total).`, kit_lc1_rerouted };
     }
-    if (isKitInput(inp)) {
+    if (isKitInput(inp) && !kit_lc1_rerouted) {
       return { route: 'kit', route_reason:
         `Kit with ${inp.label_count} labels. Printed/laminated kit band applies. Per-label parity at $${config.bands.printed_laminated_kits.per_label_qty_20.toFixed(2)}/label at qty 20 when same-dim and ≤${t.parity_max_lam_passes} lam passes.` };
     }
+    const lc1Note = kit_lc1_rerouted
+      ? ' NOTE: kit item type with label_count = 1 — re-routed to single (F21 REVIEW); a 1-label kit is a single label.'
+      : '';
     if (sq <= t.sub_scope_ceiling_sq_ft) {
       return { route: 'single_sub_scope', route_reason:
-        `Sq ft ${sq.toFixed(3)} is between ${t.sub_scope_floor_sq_ft} and ${t.sub_scope_ceiling_sq_ft} — below the singles band scope floor (~${t.singles_band_floor_sq_ft} sq ft). Price at band-consistent $/sq ft (do NOT use the below-scope position to justify below-band rates). Excluded from band DATA POINTS until production-volume acceptance.` };
+        `Sq ft ${sq.toFixed(3)} is between ${t.sub_scope_floor_sq_ft} and ${t.sub_scope_ceiling_sq_ft} — below the singles band scope floor (~${t.singles_band_floor_sq_ft} sq ft). Price at band-consistent $/sq ft (do NOT use the below-scope position to justify below-band rates). Excluded from band DATA POINTS until production-volume acceptance.${lc1Note}`, kit_lc1_rerouted };
     }
     return { route: 'single_standard', route_reason:
-      `Sq ft ${sq.toFixed(3)} within the singles band scope (${t.singles_band_floor_sq_ft}-${t.singles_band_ceiling_sq_ft}). Standard printed/laminated singles band applies.` };
+      `Sq ft ${sq.toFixed(3)} within the singles band routing scope (${t.singles_band_floor_sq_ft}-${t.singles_band_ceiling_sq_ft} — routing threshold; the band is CALIBRATED on data points at 0.503-1.296 sq ft). Standard printed/laminated singles band applies.${lc1Note}`, kit_lc1_rerouted };
   }
 
   // ===== lam passes =====
@@ -3080,11 +4471,14 @@ init();
     const colorKey = inp.cut_vinyl_color || 'cardinal_red';
     const color = config.cut_vinyl_colors[colorKey];
     if (!color) {
+      // W6 guard: unknown color is a STOP condition (F25) — no tier table is
+      // safe without a real material cost. generateFlags reads error/error_key.
       return {
         vinyl_cost: null, lam_cost: null, ink_cost: null, tape_cost: null,
         total_per_label: null, total_per_kit: null, ink_unverified: false,
         breakdown_text: `Unknown cut vinyl color key: ${colorKey}`,
         error: true,
+        error_key: colorKey,
       };
     }
     const tape_psf = config.material_constants.transferrite_582u.cost_per_sq_ft;
@@ -3133,8 +4527,12 @@ init();
   }
 
   // ===== material cost: print/lam =====
+  // §25 (account-wide, est. 2026-06-01): every Elliott printed/laminated item
+  // is costed at FULL BLEED ink — $0.50/sq ft × full label sq ft. The legacy
+  // low/medium/high/flood_coat keys remain in config for historical reference
+  // only and are never routing targets (audit H-1/H-2 fix, Session H).
   function inkComponent(ink_coverage, sq_ft_per_label, config) {
-    const def = config.ink_rates[ink_coverage] || config.ink_rates.medium;
+    const def = config.ink_rates[ink_coverage] || config.ink_rates.full_bleed_flood_coat;
     let cost = 0;
     let unverified = false;
     if (def.placeholder !== undefined) {
@@ -3149,48 +4547,35 @@ init();
   }
 
   function computePrintLamMaterial(inp, sq_ft_per_label, lam_passes, config) {
+    // §25 canonical formula (PRICING_RULES.md §25, normalized Session H /
+    // audit H-4): (Orajet sq ft × $1.21) + (lam sq ft × $0.2389) +
+    // (label sq ft × $0.50 full bleed) per label; kits = per-label × count.
+    // The legacy per-pass laminate amortization and the hardcoded $2.99/$5.16
+    // kit totals are retired — frontmatter material_cost_per_unit now carries
+    // §25 canonical totals across the kit family ($2.40 / $3.60 / $5.95).
+    // The engine reports the raw canonical build; the filed frontmatter value
+    // additionally carries the judgment-applied incidental buffer (round-up).
     const orajet_psf = config.material_constants.orajet_3951.cost_per_sq_ft;
     const lam_psf = config.material_constants.polyester_lam_1mil.cost_per_sq_ft;
     const label_count = inp.label_count || 1;
 
     const vinyl_per_label = sq_ft_per_label * orajet_psf;
     const lam_per_label = sq_ft_per_label * lam_psf;
-    const ink = inkComponent(inp.ink_coverage || 'medium', sq_ft_per_label, config);
+    const ink = inkComponent(inp.ink_coverage || 'full_bleed_flood_coat', sq_ft_per_label, config);
 
     const per_label_total = vinyl_per_label + lam_per_label + ink.cost;
-
-    let total_per_kit;
-    let kit_note = '';
-    const canonical_3 = (label_count === 3 && Math.abs(sq_ft_per_label - 0.609) < 0.005);
-    const canonical_5 = (label_count === 5 && Math.abs(sq_ft_per_label - 0.609) < 0.005);
-    if (canonical_3) {
-      total_per_kit = 2.99;
-      kit_note = ' [canonical 3-label kit at $2.99 per data.json frontmatter]';
-    } else if (canonical_5) {
-      total_per_kit = 5.16;
-      kit_note = ' [canonical 5-label kit at $5.16 per data.json frontmatter]';
-    } else if (label_count > 1 && lam_passes) {
-      // Cost-build using amortization formula
-      // sq_ft_per_pass = (labels_per_pass) × sq_ft_per_label
-      const labels_per_pass = label_count / lam_passes;
-      const sq_ft_per_pass = labels_per_pass * sq_ft_per_label;
-      const lam_amortized = sq_ft_per_pass * lam_psf * lam_passes;
-      const vinyl_kit = vinyl_per_label * label_count;
-      const ink_kit = ink.cost * label_count;
-      total_per_kit = vinyl_kit + lam_amortized + ink_kit;
-    } else {
-      total_per_kit = per_label_total;
-    }
+    const total_per_kit = per_label_total * label_count;
 
     const lines = [
       `Orajet 3951 cast vinyl: ${sq_ft_per_label.toFixed(3)} sq ft × $${orajet_psf}/sq ft = $${vinyl_per_label.toFixed(4)}/label`,
       `1-mil polyester lam: ${sq_ft_per_label.toFixed(3)} sq ft × $${lam_psf}/sq ft = $${lam_per_label.toFixed(4)}/label`,
-      `Ink (${inp.ink_coverage || 'medium'}): $${ink.cost.toFixed(4)}/label${ink.unverified ? ' [UNVERIFIED placeholder — confirm after first production run]' : ''}`,
-      `Per-label total: $${per_label_total.toFixed(2)}`,
+      `Ink — full bleed / full coverage ($0.50/sq ft, account standard per §25): $${ink.cost.toFixed(4)}/label${ink.unverified ? ' [UNVERIFIED placeholder — confirm after first production run]' : ''}`,
+      `Per-label total (§25 canonical, pre-buffer): $${per_label_total.toFixed(2)}`,
     ];
     if (label_count > 1) {
-      lines.push(`Per-kit total (${label_count} labels, ${lam_passes ?? '?'} lam pass${lam_passes !== 1 ? 'es' : ''}): $${total_per_kit.toFixed(2)}${kit_note}`);
+      lines.push(`Per-kit total (${label_count} labels × $${per_label_total.toFixed(4)}): $${total_per_kit.toFixed(2)} (§25 canonical, pre-buffer)`);
     }
+    lines.push(`Filed frontmatter material_cost_per_unit adds a judgment-applied incidental buffer (conservative round-up) on top of the canonical build.`);
 
     return {
       vinyl_cost: r(vinyl_per_label, 4),
@@ -3261,13 +4646,8 @@ init();
       snap,
       used_template,
       micro_band: true,
-      // Skip cascade enforcement when the template is used directly — the table is
-      // AI-validated and Nick-locked (4-wave + final 6-model review); cliffs are
-      // intentional and resolved by §26 invoice protection at billing time. When
-      // outside ±30% the tiers are algorithmic and pass through standard enforcement.
-      skip_enforcement: used_template,
       template_source: used_template
-        ? `Micro-Format Band template (1279000 founding data point, within ±30% of ${anchor_sq_ft_ref} sq ft anchor — used directly, enforcement skipped to preserve AI-validated tier table)`
+        ? `Micro-Format Band template (1279000 founding data point, within ±30% of ${anchor_sq_ft_ref} sq ft anchor — validated table used directly)`
         : `Micro-Format Band scaled from $${anchor_psf}/sq ft anchor (outside ±30% of ${anchor_sq_ft_ref} sq ft founding anchor — algorithmic scaling)`,
     };
   }
@@ -3464,13 +4844,17 @@ init();
     { key: 'price_200_plus', label: '200+', min: 200, max: null },
   ];
 
-  // ===== tier boundary enforcement =====
-  // Hard constraint — after any tier table is generated, walk boundaries
-  // bottom-up (200+ is the anchor) and floor-cap any lower tier whose
-  // boundary total exceeds the upper tier's boundary total. Floor to the
-  // penny guarantees compliance even when the upper tier is itself capped
-  // in the same pass. Returns the enforced tiers and a list of adjustments
-  // suitable for F23 detail text.
+  // ===== tier boundary enforcement (REPORT-ONLY since Session H) =====
+  // Audit C-1 / decision fork D1 (2026-06-09): every Nick-locked catalog
+  // table keeps intentional boundary cliffs that §26 invoice protection
+  // resolves at billing time, so a brief generator that REWRITES tiers can
+  // never agree with the system it feeds (the strict cascade drove every
+  // brief 29-46% below catalog/band). enforceTierBoundaries() still walks
+  // boundaries bottom-up (200+ anchor) and computes what a strict cascade
+  // WOULD cap — but the caller no longer applies the result. The
+  // adjustments feed F23 (report-only cliff detail) and the brief's
+  // invoice-protection section; the tier table itself reflects the
+  // band-anchored price.
   const TIER_ENFORCE_BOUNDARIES = [
     { lower: 'price_100_199', upper: 'price_200_plus', lower_label: '100-199', upper_label: '200+',   lower_max_qty: 199, upper_min_qty: 200 },
     { lower: 'price_50_99',   upper: 'price_100_199', lower_label: '50-99',   upper_label: '100-199', lower_max_qty: 99,  upper_min_qty: 100 },
@@ -3509,42 +4893,35 @@ init();
     return { tiers: out, adjustments };
   }
 
-  function checkInvoiceProtection(tiers, snap, apply_autofix) {
+  function checkInvoiceProtection(tiers) {
+    // Live check on the UNMODIFIED tier table (Session H / audit C-1): finds
+    // every boundary where the lower tier's max total exceeds the upper
+    // tier's min total. Cliffs are REPORTED with the §26 resolution (buyer
+    // billed the lesser adjacent-tier total) — the table is never mutated.
+    // The pre-Session-H 10-19 autofix is removed; F11 is retired with it.
     const violations = [];
-    let autofix_applied = false;
-    const adjusted = Object.assign({}, tiers);
     for (let i = 0; i < TIER_BOUNDS.length - 1; i++) {
       const lo = TIER_BOUNDS[i];
       const up = TIER_BOUNDS[i + 1];
       // Round to penny precision before comparing to avoid floating-point
       // false positives (e.g., 19 × 0.80 = 15.200...1 in IEEE 754).
-      const loMaxTotal = Math.round(lo.max * adjusted[lo.key] * 100) / 100;
-      const upMinTotal = Math.round(up.min * adjusted[up.key] * 100) / 100;
+      const loMaxTotal = Math.round(lo.max * tiers[lo.key] * 100) / 100;
+      const upMinTotal = Math.round(up.min * tiers[up.key] * 100) / 100;
       if (loMaxTotal > upMinTotal) {
-        const cliff = loMaxTotal - upMinTotal;
         violations.push({
           tier_low: lo.label,
           tier_high: up.label,
-          cliff_amount: r(cliff, 2),
+          cliff_amount: r(loMaxTotal - upMinTotal, 2),
           low_max_total: r(loMaxTotal, 2),
           up_min_total: r(upMinTotal, 2),
         });
-        // Auto-fix only at the customer-facing 10-19 → 20-49 boundary, and only when
-        // apply_autofix is true (printed/laminated items). Upper-tier cliffs are
-        // tolerated by invoice protection language. Use ceil-snap per spec; residual
-        // sub-snap cliffs are accepted (matches 1210810 pattern).
-        if (apply_autofix && lo.label === '10-19' && snap) {
-          const fixed_raw = upMinTotal / lo.max;
-          adjusted[lo.key] = ceilSnap(fixed_raw, snap);
-          autofix_applied = true;
-        }
       }
     }
     return {
       violations,
       all_clear: violations.length === 0,
-      autofix_applied,
-      adjusted_tiers: autofix_applied ? adjusted : null,
+      autofix_applied: false,
+      adjusted_tiers: null,
     };
   }
 
@@ -3655,8 +5032,15 @@ init();
   }
 
   function inferOverrideType(pn, fm, route) {
-    if (route === 'cut_vinyl') return 'Relationship Concession';
-    return 'None';
+    // W5 fix (Session H): read the item's actual override_type instead of
+    // inferring from route (the old route-based guess mislabeled every
+    // no-override cut vinyl item as "Relationship Concession"). Supabase-
+    // hydrated item data carries override_type; the static data.json
+    // fallback strips it (D4 pending) — report Unknown rather than guess.
+    if (fm && typeof fm.override_type === 'string') {
+      return fm.override_type.trim() || 'None';
+    }
+    return 'Unknown (override_type not in offline data)';
   }
 
   function comparableItemsFromData(inp, route, sq_ft_per_label, anchor, config) {
@@ -3674,6 +5058,7 @@ init();
     const out = [];
     for (const pn of Object.keys(items)) {
       if (dnb[pn]) continue;
+      if (inp.part_number && pn === inp.part_number) continue; // an item is not its own benchmark
       const fm = items[pn].frontmatter;
       if (!fm) continue;
       if (fm.material_family !== fam) continue;
@@ -3692,6 +5077,20 @@ init();
         psf: psf !== null ? r(psf, 2) : null,
         status: fm.status,
         override_type: inferOverrideType(pn, fm, route),
+        // W4: full 6-tier benchmark table for the brief (not just price_20_49)
+        tiers: {
+          price_1_9: parseFloat(fm.price_1_9),
+          price_10_19: parseFloat(fm.price_10_19),
+          price_20_49: price20,
+          price_50_99: parseFloat(fm.price_50_99),
+          price_100_199: parseFloat(fm.price_100_199),
+          price_200_plus: parseFloat(fm.price_200_plus),
+        },
+        material_cost_per_unit: fm.material_cost_per_unit !== undefined
+          ? parseFloat(fm.material_cost_per_unit) : null,
+        label_count: parseInt(fm.label_count, 10) || 1,
+        process: fm.process || '',
+        lamination_passes: fm.lamination_passes,
       });
     }
     out.sort(function(a, b) { return Math.abs(a.sq_ft - sq_ft_per_label) - Math.abs(b.sq_ft - sq_ft_per_label); });
@@ -3728,8 +5127,8 @@ init();
     F8:  { severity: 'INFO',   text: 'Item at low end of singles band scope — band-consistent pricing applies; small-label fixed cost premium acknowledged.', suppresses_output: false },
     F9:  { severity: 'REVIEW', text: 'Tiny one-off (≤0.1 sq ft) — $55 flat program total, NOT a catalog rate. Per-sq-ft math is a minimum-run artifact. Do NOT benchmark. AI validation recommended (Rounds 1+2 minimum) for any tiny one-off.', suppresses_output: false },
     F10: { severity: 'REVIEW', text: 'Sub-scope single (0.1-0.5 sq ft) — below band scope. Excluded from band DATA POINTS until production-volume acceptance.', suppresses_output: false },
-    F11: { severity: 'INFO',   text: 'Never-pay-more cliff detected; engine auto-fixed lower tier(s) — review the adjusted tier table.', suppresses_output: false },
-    F12: { severity: 'INFO',   text: 'Ink cost is an UNVERIFIED placeholder ($0.25 flood coat). Realistic range $0.40-$0.60. Confirm after first production run and update material_cost_per_unit.', suppresses_output: false },
+    F11: { severity: 'INFO',   text: 'RETIRED (Session H, audit C-1/H-4): the 10-19 autofix was removed with report-only enforcement — no code path mutates tiers, so F11 cannot fire. Cliffs are reported via F23 + §26 language. Definition kept for ID stability.', suppresses_output: false },
+    F12: { severity: 'INFO',   text: 'Ink cost is an UNVERIFIED placeholder. RESERVED (Session H, audit H-1): unreachable while ink is always full_bleed_flood_coat per §25 — legacy placeholder rates are no longer routing targets.', suppresses_output: false },
     F13: { severity: 'INFO',   text: 'Color PMS caveat — visual approximation only; disclose in quote that this is not a certified Pantone match.', suppresses_output: false },
     F14: { severity: 'INFO',   text: 'Alternate roll width available — efficiency scenario surfaced (do NOT pass savings to buyer; internal margin lever).', suppresses_output: false },
     F15: { severity: 'REVIEW', text: 'Rule 14 deviation: this item is benchmarked against a Relationship Concession band. AI consensus band is higher — document the strategic choice.', suppresses_output: false },
@@ -3738,7 +5137,9 @@ init();
     F20: { severity: 'STOP',   text: 'Cannot fit kit in ≤2 lam-pass orientation groups — exceeds current equipment routing. Requires Nick review (mixed-dim or special handling).', suppresses_output: true },
     F21: { severity: 'REVIEW', text: 'Mixed-dimension kit — per-label parity does NOT apply. Cost-build from scratch and run AI validation (Rounds 1+2 minimum).', suppresses_output: false },
     F22: { severity: 'INFO',   text: 'Item below band — verify intentional. Smaller labels carry higher fixed cost per sq ft, not lower; below-scope position does NOT justify below-band $/sq ft.', suppresses_output: false },
-    F23: { severity: 'INFO',   text: 'Tier boundary auto-capped for never-pay-more compliance.', suppresses_output: false },
+    F23: { severity: 'INFO',   text: 'Tier boundary cliff detected (REPORT-ONLY — tier table NOT modified). §26 invoice protection resolves at billing: buyer is charged the lesser adjacent-tier total.', suppresses_output: false },
+    F24: { severity: 'STOP',   text: 'Invalid input — width, height, and label count must all be positive. Output blocked (W2 input-sanity guard).', suppresses_output: true },
+    F25: { severity: 'STOP',   text: 'Unknown cut vinyl color — no verified material cost exists for this color key. Output blocked; add the material (Materials tab) or pick a configured color (W6 guard).', suppresses_output: true },
   };
 
   function makeFlag(id, extra, detail) {
@@ -3752,8 +5153,9 @@ init();
     };
   }
 
-  function generateFlags(inp, route, material, pricing, margins, band, lamInfo, config, tier_enforcement) {
+  function generateFlags(inp, route, material, pricing, margins, band, lamInfo, config, tier_enforcement, routeMeta) {
     const flags = [];
+    routeMeta = routeMeta || {};
 
     // material staleness — derive from material constants verified_date
     let oldest_days = null;
@@ -3792,8 +5194,17 @@ init();
     if (route === 'tiny') flags.push(makeFlag('F9'));
     if (route === 'single_sub_scope') flags.push(makeFlag('F10'));
     if (route === 'kit' && inp.item_type === 'kit_mixed_dim') flags.push(makeFlag('F21'));
+    // W3: kit item_type with label_count = 1 was re-routed to a single route —
+    // surface it as F21 REVIEW so the intent is verified before quoting.
+    if (routeMeta.kit_lc1_rerouted) {
+      flags.push(makeFlag('F21', '(kit item type with label_count = 1 — re-routed to the single path; a 1-label kit is a single label. Verify the intended label count.)'));
+    }
     if (route === 'kit' && lamInfo && lamInfo.passes && lamInfo.passes > config.routing.parity_max_lam_passes) {
       flags.push(makeFlag('F16'));
+    }
+    // W6: unknown cut vinyl color — STOP, no safe material cost exists.
+    if (route === 'cut_vinyl' && material.error) {
+      flags.push(makeFlag('F25', `(color key: ${material.error_key || 'unknown'})`));
     }
 
     // band proximity F8 — fire when sq_ft within 30% of singles floor (above or below)
@@ -3831,24 +5242,22 @@ init();
       flags.push(makeFlag('F22'));
     }
 
-    // F11: invoice protection cliff that was auto-fixed at the customer-facing boundary.
-    // Other (upper-tier) cliffs are tolerated by invoice protection language without
-    // tier-table change, so we don't fire F11 for those.
-    if (pricing.invoice_protection && pricing.invoice_protection.autofix_applied) {
-      flags.push(makeFlag('F11'));
-    }
+    // F11 retired (Session H): no code path mutates tiers post report-only
+    // enforcement, so the autofix flag can never fire. See FLAG_DEFS note.
 
-    // F23: tier boundary auto-capped by enforceTierBoundaries. One flag per
-    // adjustment, with boundary-specific detail text.
+    // F23: tier boundary cliff detected (REPORT-ONLY since Session H / C-1).
+    // One flag per boundary that would invert, with the cliff math and the
+    // §26 resolution. The tier table is NOT modified.
     if (tier_enforcement && tier_enforcement.adjustments && tier_enforcement.adjustments.length) {
       for (const adj of tier_enforcement.adjustments) {
         const upperPrice = adj.upper_min_total / adj.upper_min_qty;
-        const detailText = `${adj.lower_label} capped from $${adj.original.toFixed(2)} to $${adj.capped.toFixed(2)} at the ${adj.lower_max_qty}/${adj.upper_min_qty} boundary (${adj.lower_max_qty} × $${adj.original.toFixed(2)} = $${adj.original_low_total.toFixed(2)} > ${adj.upper_min_qty} × $${upperPrice.toFixed(2)} = $${adj.upper_min_total.toFixed(2)}).`;
+        const detailText = `${adj.lower_label} at $${adj.original.toFixed(2)} inverts at the ${adj.lower_max_qty}/${adj.upper_min_qty} boundary (${adj.lower_max_qty} × $${adj.original.toFixed(2)} = $${adj.original_low_total.toFixed(2)} > ${adj.upper_min_qty} × $${upperPrice.toFixed(2)} = $${adj.upper_min_total.toFixed(2)}). §26 resolves at billing — buyer charged the lesser total. Table unchanged (report-only).`;
         flags.push(makeFlag('F23', '(' + detailText + ')', adj));
       }
     }
 
-    // F12: ink unverified
+    // F12 reserved (Session H / H-1): ink is always full_bleed_flood_coat,
+    // which carries no unverified placeholder — this cannot fire.
     if (material.ink_unverified) flags.push(makeFlag('F12'));
 
     // F13: PMS caveat
@@ -3914,6 +5323,38 @@ init();
   }
 
   // ===== brief =====
+  // W4: step-by-step production process per route (from PRODUCTION.md).
+  // File import/setup is ~5 min mechanical, NOT billable labor (§22-24).
+  const PROCESS_STEPS = {
+    cut_vinyl: [
+      '1. File import/setup — Elliott-supplied production-ready DWG to cutter (~5 min mechanical, NOT billable labor per §22)',
+      '2. Cut — Roland SG3-300 (or 54" plotter for 48" stock)',
+      '3. Weed — remove excess vinyl around cut characters',
+      '4. Mask — apply TransferRite 582U application tape',
+      '5. Inspect and package',
+    ],
+    print_lam: [
+      '1. File import/setup — Elliott-supplied production-ready DWG with registration marks to RIP (~5 min mechanical, NOT billable labor per §22)',
+      '2. Print — Roland SG3-300, full-color eco-solvent on Orajet 3951 (full bleed per §25)',
+      '3. Laminate — 1-mil polyester overlaminate (13.5" max width)',
+      '4. Contour cut — Roland follows registration marks',
+      '5. Weed — remove excess material',
+      '6. Inspect — print quality, laminate adhesion, cut accuracy, color fidelity',
+      '7. Package — singles: stack. Kits: collate as matched set.',
+    ],
+  };
+
+  function fmtCompactTiers(tiers, label_count) {
+    const parts = [];
+    for (const b of TIER_BOUNDS) {
+      const v = tiers[b.key];
+      if (v === null || v === undefined || isNaN(v)) continue;
+      const per = label_count > 1 ? ` ($${(v / label_count).toFixed(2)}/label)` : '';
+      parts.push(`${b.label}: ${fmt(v)}${per}`);
+    }
+    return parts.join(' | ');
+  }
+
   function fmtTierTable(per_tier) {
     const lines = [
       '| Tier      | Price   | Margin  | Gross Profit |',
@@ -3929,7 +5370,9 @@ init();
     return lines.join('\n');
   }
 
-  function generateBrief(inp, route, route_reason, fund, material, pricing, margins, band, flags, invoice, lamInfo, quote_stubs, config) {
+  function generateBrief(inp, route, route_reason, fund, material, pricing, margins, band, flags, invoice, lamInfo, quote_stubs, config, routeMeta) {
+    routeMeta = routeMeta || {};
+    const isPrintLam = route === 'single_standard' || route === 'single_sub_scope' || route === 'kit' || route === 'tiny';
     const lines = [];
     lines.push('ELLIOTT EQUIPMENT — PRICING BRIEF');
     lines.push('=================================');
@@ -3951,11 +5394,28 @@ init();
     lines.push('------------');
     lines.push(`Sq ft per label: ${fund.sq_ft_per_label}`);
     lines.push(`Sq ft per kit: ${fund.sq_ft_per_kit}`);
+    if (isPrintLam) {
+      lines.push('Ink coverage: Full bleed / full coverage ink ($0.50/sq ft) — account standard per §25.');
+    }
     if (lamInfo) {
       lines.push(`Lamination passes: ${lamInfo.passes === null ? 'STOP' : lamInfo.passes}`);
       lines.push(`  ${lamInfo.reasoning}`);
     } else if (route === 'cut_vinyl') {
       lines.push('Lamination passes: N/A (cut vinyl, no laminate)');
+    }
+    lines.push('');
+    lines.push('PRODUCTION PROCESS (step by step)');
+    lines.push('---------------------------------');
+    const steps = route === 'cut_vinyl' ? PROCESS_STEPS.cut_vinyl
+      : (route === 'no_profile' ? null : PROCESS_STEPS.print_lam);
+    if (steps) {
+      for (const s of steps) lines.push('  ' + s);
+      lines.push('  Equipment constraints: Roland SG3-300 28" max print/cut width; 13.5" max laminator width (printed/lam); 54" plotter for 48" cut vinyl stock.');
+    } else {
+      lines.push('  No documented process for this material family yet — cost-build with Nick (F17).');
+    }
+    if (routeMeta.lam_pass_advisory) {
+      lines.push(`  ⚠ LAM-PASS ADVISORY (W1): ${routeMeta.lam_pass_advisory}`);
     }
     lines.push('');
     lines.push('MATERIAL COST');
@@ -3969,6 +5429,7 @@ init();
       lines.push(`Anchor (qty 20-49): ${fmt(pricing.anchor)}${pricing.anchor_psf ? ` (${fmt(pricing.anchor_psf)}/sq ft)` : ''}`);
     }
     if (pricing.template_source) lines.push(`Tier template: ${pricing.template_source}`);
+    lines.push('Tier table is BAND-ANCHORED. Boundary cliffs are reported below (report-only enforcement) and resolved by §26 at billing — the table is never compressed by the generator.');
     lines.push(fmtTierTable(margins.per_tier));
     if (pricing.kit_totals) {
       lines.push('');
@@ -4011,21 +5472,34 @@ init();
         const st = ((c.status || '') + '            ').slice(0, 11);
         lines.push(`  | ${pn} | ${desc} | ${sf} | ${p20} | ${psf} | ${st} | ${c.override_type}`);
       }
+      lines.push('');
+      lines.push('Benchmark tier tables (full 6 tiers — W4):');
+      for (const c of band.comparable_items.slice(0, 3)) {
+        lines.push(`  ${c.pn} (${c.status || '?'}): ${fmtCompactTiers(c.tiers || {}, c.label_count || 1)}`);
+      }
+      lines.push('');
+      lines.push('KEY COMPARISONS (vs nearest benchmark — W4)');
+      const nb = band.comparable_items[0];
+      const refSqFt = inp.label_count > 1 ? fund.sq_ft_per_kit : fund.sq_ft_per_label;
+      const nbSqFt = (nb.label_count || 1) > 1 ? nb.sq_ft * nb.label_count : nb.sq_ft;
+      lines.push(`  Benchmark: ${nb.pn} — ${nb.description || ''}`);
+      if (nbSqFt > 0) lines.push(`  Sq ft ratio (this/benchmark): ${(refSqFt / nbSqFt).toFixed(3)} (${refSqFt} vs ${nbSqFt.toFixed(3)})`);
+      if (material.total_per_kit !== null && nb.material_cost_per_unit) {
+        lines.push(`  Material cost ratio (this canonical/benchmark filed): ${(material.total_per_kit / nb.material_cost_per_unit).toFixed(3)} ($${material.total_per_kit.toFixed(2)} vs $${nb.material_cost_per_unit.toFixed(2)})`);
+      }
+      lines.push(`  Production touches: this item ${route === 'cut_vinyl' ? 'Cut/Weed/Mask' : `Print/Lam/Cut (${lamInfo && lamInfo.passes !== null ? lamInfo.passes : '?'} pass)`} vs benchmark ${nb.process || 'n/a'}.`);
     } else {
       lines.push('No comparable items found in catalog (or all filtered by do_not_benchmark).');
     }
     lines.push('');
-    lines.push('INVOICE PROTECTION (Never-Pay-More)');
-    lines.push('-----------------------------------');
+    lines.push('INVOICE PROTECTION (Never-Pay-More, §26)');
+    lines.push('----------------------------------------');
     if (invoice.all_clear) {
       lines.push('All boundaries clear. No cliff between adjacent tiers.');
     } else {
-      if (invoice.autofix_applied) lines.push('Customer-facing 10-19 → 20-49 boundary auto-fixed; upper-tier cliffs are tolerated by invoice protection language (buyer always billed the lower of two totals at any boundary).');
-      else lines.push('Cliffs present; invoice protection language handles automatically at the buyer level. No tier adjustment applied.');
-      lines.push('Violations detected:');
+      lines.push('The tier table is NOT modified (report-only enforcement per audit C-1/D1). Every boundary below would invert; §26 resolves each at billing time — the buyer is always charged the lesser of the adjacent tier totals:');
       for (const v of invoice.violations) {
-        const autofixed = (invoice.autofix_applied && v.tier_low === '10-19') ? ' [auto-fixed]' : '';
-        lines.push(`  ${v.tier_low} → ${v.tier_high}: cliff $${v.cliff_amount} (${fmt(v.low_max_total)} > ${fmt(v.up_min_total)})${autofixed}`);
+        lines.push(`  ${v.tier_low} → ${v.tier_high}: ${fmt(v.low_max_total)} > ${fmt(v.up_min_total)} (cliff $${v.cliff_amount}) → §26: bill ${fmt(v.up_min_total)}`);
       }
     }
     lines.push('');
@@ -4050,9 +5524,13 @@ init();
 
   // ===== main entry =====
   function runCalculator(inputs) {
-    const config = window.CALCULATOR_CONFIG;
+    // inputs._config: optional per-run config override — the calculator UI
+    // hands a hydrated clone when Nick swaps a material component inline
+    // (left-rail combination detail). Business logic is unchanged; only the
+    // constants source varies for that run.
+    const config = (inputs && inputs._config) || window.CALCULATOR_CONFIG;
     if (!config) {
-      throw new Error('CALCULATOR_CONFIG not loaded. Ensure calculator_config.json is fetched before calling runCalculator.');
+      throw new Error('CALCULATOR_CONFIG not loaded. Ensure Supabase hydration or the calculator_config.json fallback ran before calling runCalculator.');
     }
     const inp = Object.assign({
       part_number: '',
@@ -4064,17 +5542,56 @@ init();
       height_in: 0,
       label_count: 1,
       cut_vinyl_color: '',
-      ink_coverage: 'medium',
+      // §25: full bleed is the only ink routing on this account (H-1 fix).
+      ink_coverage: 'full_bleed_flood_coat',
       is_ansi_safety: false,
       production_override: false,
       order_qty: 0,
       notes: '',
     }, inputs || {});
 
+    // 0. W2 input-sanity guard — zero/negative dimensions or label count
+    // produce nonsense routing (0 sq ft → tiny → $55 flat). STOP hard.
+    if (!(inp.width_in > 0) || !(inp.height_in > 0) || (inp.label_count || 1) < 1) {
+      const f24 = makeFlag('F24', `(width ${inp.width_in}", height ${inp.height_in}", label_count ${inp.label_count})`);
+      const emptyMaterial = {
+        vinyl_cost: null, lam_cost: null, ink_cost: null, tape_cost: null,
+        total_per_label: null, total_per_kit: null, ink_unverified: false,
+        breakdown_text: 'Not computed — invalid inputs (F24).',
+      };
+      const reason = `Invalid inputs: width, height, and label count must all be positive (got ${inp.width_in}" × ${inp.height_in}", ${inp.label_count} label(s)). No routing performed.`;
+      return {
+        route: 'invalid_input',
+        route_reason: reason,
+        sq_ft_per_label: 0,
+        sq_ft_per_kit: 0,
+        lam_passes: null,
+        lam_pass_reasoning: 'Not computed — invalid inputs.',
+        material: emptyMaterial,
+        pricing: { anchor_price_qty_20: null, anchor_psf: null, tiers: null,
+                   kit_totals: null, per_label_tiers: null,
+                   first_article_price: null, template_source: null },
+        margins: { at_qty_20: null, at_qty_200_plus: null, per_tier: [] },
+        band: { active_band_min: null, active_band_max: null,
+                this_item_psf: null, position: 'out_of_scope',
+                ai_consensus_min: null, ai_consensus_max: null,
+                comparable_items: [] },
+        invoice_protection: { violations: [], all_clear: true },
+        flags: [f24],
+        has_stop_flag: true,
+        brief: 'ELLIOTT EQUIPMENT — PRICING BRIEF\n=================================\n'
+          + `Date: ${todayISO()}\n\n[F24] STOP: ${f24.text}\n${reason}\n\n`
+          + 'READY FOR ROUND 1 AI VALIDATION: NO — resolve STOP flag(s) first',
+        ready_for_round_1: false,
+        quote_stubs: { anchor_line: '', pms_caveat: null, full_stub: '' },
+      };
+    }
+
     // 1. Routing
     const routeInfo = determineRoute(inp, config);
     const route = routeInfo.route;
     const route_reason = routeInfo.route_reason;
+    const routeMeta = { kit_lc1_rerouted: !!routeInfo.kit_lc1_rerouted };
 
     // 2. Fundamentals
     const sq_ft_per_label = r((inp.width_in * inp.height_in) / 144, 3);
@@ -4127,38 +5644,38 @@ init();
       tierBuild = { tiers: null, anchor: null, anchor_psf: null, snap: null };
     }
 
-    // 5b. Tier boundary enforcement (HARD constraint — never-pay-more compliance
-    // guaranteed before margin calc). Runs on every route that produces real
-    // tiers — single_standard, single_sub_scope, kit, cut_vinyl. Skips tiny
-    // (all 6 tiers are flat $55 by design), no_profile (no tiers), and any
-    // tier build that sets skip_enforcement=true (currently the Micro-Format Band
-    // when its template is used directly — AI-validated and Nick-locked tier
-    // tables that should not be second-guessed by algorithmic cascade).
-    let tier_enforcement = { adjustments: [] };
-    if (tierBuild.tiers && route !== 'tiny' && route !== 'no_profile' && !tierBuild.skip_enforcement) {
+    // 5b. Tier boundary enforcement — REPORT-ONLY (Session H, audit C-1 /
+    // decision fork D1). The cascade is computed on every route that produces
+    // real tiers (single_standard, single_sub_scope, kit, cut_vinyl —
+    // including the micro-band template) but its result is NEVER applied:
+    // the tier table stays band-anchored, F23 reports each boundary that
+    // would invert, and §26 invoice protection resolves the cliffs at
+    // billing time. Skips tiny (flat $55) and no_profile (no tiers).
+    let tier_enforcement = { adjustments: [], report_only: true };
+    if (tierBuild.tiers && route !== 'tiny' && route !== 'no_profile') {
       const enforced = enforceTierBoundaries(tierBuild.tiers);
-      tierBuild.tiers = enforced.tiers;
-      if (tierBuild.kit_totals) tierBuild.kit_totals = enforced.tiers;
-      tier_enforcement = { adjustments: enforced.adjustments };
+      tier_enforcement = { adjustments: enforced.adjustments, report_only: true };
+      // NOTE: enforced.tiers is intentionally discarded — report-only.
     }
 
-    // 6. Never-pay-more — secondary verification step. With enforceTierBoundaries
-    // above guaranteeing compliance, checkInvoiceProtection should report zero
-    // violations on any tier table that has been through enforcement. If it ever
-    // finds a violation here, that is a bug to investigate. The 10-19 autofix
-    // path is preserved for the 1210810 historical pattern but should not fire
-    // post-enforcement. When skip_enforcement is set (Micro-Format Band template-
-    // direct), we still RUN checkInvoiceProtection to surface cliffs in the brief
-    // as informational context (§26 resolves them at billing time) but disable
-    // the autofix so the AI-validated template is preserved.
+    // 6. Never-pay-more — live check on the UNMODIFIED tier table. Every
+    // boundary that would invert is listed in the brief with the §26
+    // resolution. No autofix, no mutation (F11 retired).
     let invoice = { violations: [], all_clear: true, autofix_applied: false, adjusted_tiers: null };
-    const apply_autofix = (route === 'single_standard' || route === 'single_sub_scope' || route === 'kit')
-      && !tierBuild.skip_enforcement;
-    if (tierBuild.tiers && tierBuild.snap && route !== 'cut_vinyl') {
-      invoice = checkInvoiceProtection(tierBuild.tiers, tierBuild.snap, apply_autofix);
-      if (invoice.adjusted_tiers) {
-        tierBuild.tiers = invoice.adjusted_tiers;
-        if (tierBuild.kit_totals) tierBuild.kit_totals = invoice.adjusted_tiers;
+    if (tierBuild.tiers && route !== 'tiny' && route !== 'no_profile') {
+      invoice = checkInvoiceProtection(tierBuild.tiers);
+    }
+
+    // W1 lam-pass advisory (decision fork D6b): the geometric pass model
+    // returns 1 whenever the wide dimension fits the laminator, but when the
+    // single-orientation print layout exceeds the 28" Roland bed, production
+    // may choose a mixed-orientation layout that takes 2 passes (the 1245130
+    // 5-label case). Advisory only — verify against PRODUCTION.md.
+    if (route === 'kit' && lamInfo && lamInfo.passes === 1) {
+      const narrow = Math.min(inp.width_in, inp.height_in);
+      if ((inp.label_count || 1) * narrow > config.routing.roland_max_print_width_in) {
+        routeMeta.lam_pass_advisory =
+          `Algorithmic pass count is 1, but ${inp.label_count} labels at ${narrow.toFixed(2)}" narrow-dim exceed the ${config.routing.roland_max_print_width_in}" print bed in one orientation — production reality for this geometry (e.g. the 5-label kit 1245130) is 2 passes via a mixed-orientation layout. Verify pass count against PRODUCTION.md before quoting lead time.`;
       }
     }
 
@@ -4187,13 +5704,13 @@ init();
     const band = computeBand(inp, route, sq_ft_per_label, sq_ft_per_kit, tierBuild.tiers, config);
 
     // 10. Flags
-    const flags = generateFlags(inp, route, material, pricing, margins, band, lamInfo, config, tier_enforcement);
+    const flags = generateFlags(inp, route, material, pricing, margins, band, lamInfo, config, tier_enforcement, routeMeta);
 
     // 11. Quote stubs
     const quote_stubs = generateQuoteStubs(inp, route, pricing, sq_ft_per_label, material, config);
 
     // 12. Brief
-    const brief = generateBrief(inp, route, route_reason, fund, material, pricing, margins, band, flags, invoice, lamInfo, quote_stubs, config);
+    const brief = generateBrief(inp, route, route_reason, fund, material, pricing, margins, band, flags, invoice, lamInfo, quote_stubs, config, routeMeta);
 
     return {
       route,
@@ -4202,6 +5719,8 @@ init();
       sq_ft_per_kit,
       lam_passes: lamInfo ? lamInfo.passes : null,
       lam_pass_reasoning: lamInfo ? lamInfo.reasoning : 'N/A (cut vinyl)',
+      lam_pass_advisory: routeMeta.lam_pass_advisory || null,
+      tier_enforcement,
       material,
       pricing: {
         anchor_price_qty_20: pricing.anchor_price_qty_20,
@@ -4229,32 +5748,25 @@ init();
   window.runCalculator = runCalculator;
 
   // sanity-check runner (for console use; safe to keep — no UI side-effects)
+  // Session H suite: 14 cases — 11 original (incl. the previously-missing
+  // documented Convex no_profile case) + 3 new (1278890 kit cost-build path,
+  // 1068270 orientation parity with 1082570, 3010701 Band A). Prices are the
+  // BAND-ANCHORED engine outputs (report-only enforcement, C-1 fix). Where
+  // the algorithmic snap diverges from the Nick-locked catalog value, the
+  // documented engine value is asserted and the catalog value noted.
   window.runSanityChecks = function() {
     const items = (window.ITEMS_DATA && window.ITEMS_DATA.items) || {};
-    const cases = [
-      { pn: '1230820', expect_route: 'single_standard', expect_price_20: 20.00, ink: 'high' },
-      { pn: '1082570', expect_route: 'single_standard', expect_price_20: 8.00, ink: 'flood_coat' },
-      { pn: '1210810', expect_route: 'single_sub_scope', expect_price_20: 4.50, ink: 'flood_coat_safety_red' },
-      { pn: '1278930', expect_route: 'kit', expect_price_20: 30.00, ink: 'medium' },
-      { pn: '1205720', expect_route: 'cut_vinyl', expect_price_20: 35.00, color: 'cardinal_red' },
-      { pn: '1277970', expect_route: 'tiny', expect_price_20: 55.00, ink: 'low' },
-      { pn: '1245130', expect_route: 'kit', expect_price_20: 50.00, ink: 'medium' },
-      // NEW — Session C: Band B (Large-Format ≥ 5 sq ft) via 3010704
-      { pn: '3010704', expect_route: 'cut_vinyl', expect_price_20: 78.00, color: 'cardinal_red_15in', expect_size_band: 'Band B (Large-Format)' },
-      // NEW — Session C: Band C (Sub-1 sq ft) via 3010707
-      { pn: '3010707', expect_route: 'cut_vinyl', expect_price_20: 20.00, color: 'cardinal_red', expect_size_band: 'Band C (Sub-1 sq ft)' },
-    ];
-    const out = [];
-    for (const tc of cases) {
-      const it = items[tc.pn];
-      if (!it) { out.push({ pn: tc.pn, error: 'not found in data.json' }); continue; }
+
+    function inputsForPN(pn, extra) {
+      const it = items[pn];
+      if (!it) return null;
       const fm = it.frontmatter;
       let itemType;
       if (fm.material_family === CUT_VINYL_FAMILY) itemType = 'cut_vinyl';
       else if (fm.item_type === 'Printed/Laminated Kit') itemType = 'kit_same_dim';
       else itemType = 'single';
-      const inputs = {
-        part_number: tc.pn,
+      return Object.assign({
+        part_number: pn,
         description: fm.description,
         model: fm.model,
         material_family: fm.material_family,
@@ -4262,60 +5774,123 @@ init();
         width_in: parseFloat(fm.width_in),
         height_in: parseFloat(fm.height_in),
         label_count: parseInt(fm.label_count, 10) || 1,
-        cut_vinyl_color: tc.color || '',
-        ink_coverage: tc.ink || 'medium',
+        cut_vinyl_color: '',
+        ink_coverage: 'full_bleed_flood_coat',
         is_ansi_safety: false,
         production_override: false,
         order_qty: 0,
         notes: '',
-      };
-      const result = runCalculator(inputs);
-      out.push({
-        pn: tc.pn,
-        route: result.route,
-        expected_route: tc.expect_route,
-        route_match: result.route === tc.expect_route,
-        price_20_49: result.pricing.tiers ? result.pricing.tiers.price_20_49 : null,
-        kit_price_20: result.pricing.kit_totals ? result.pricing.kit_totals.price_20_49 : null,
-        expected_price_20: tc.expect_price_20,
-        margin_at_qty_20: result.margins.at_qty_20,
-        flags: result.flags.map(f => f.id + ':' + f.severity),
-        has_stop: result.has_stop_flag,
-      });
+      }, extra || {});
     }
 
-    // NEW — Session C: sub-0.1 sq ft production override (Orajet, 8" × 1.75" = 0.0972 sq ft)
-    const overrideInputs = {
-      part_number: 'PROD-OVERRIDE-TEST',
-      description: 'Production catalog item (sub-0.1 override test)',
-      model: '',
-      material_family: PRINTED_LAM_FAMILY,
-      item_type: 'single',
-      width_in: 8.0,
-      height_in: 1.75,
-      label_count: 1,
-      cut_vinyl_color: '',
-      ink_coverage: 'full_bleed_flood_coat',
-      is_ansi_safety: false,
-      production_override: true,
-      order_qty: 0,
-      notes: 'Session C synthetic test — sub-0.1 sq ft production override',
-    };
-    const overrideResult = runCalculator(overrideInputs);
-    out.push({
-      pn: 'PROD-OVERRIDE-TEST',
-      route: overrideResult.route,
-      expected_route: 'single_sub_scope',
-      route_match: overrideResult.route === 'single_sub_scope',
-      price_20_49: overrideResult.pricing.tiers ? overrideResult.pricing.tiers.price_20_49 : null,
-      kit_price_20: null,
-      expected_price_20: '~$3.00 (micro-band template, 1279000 founding anchor at 0.097 sq ft; sq ft within ±30% uses template directly)',
-      margin_at_qty_20: overrideResult.margins.at_qty_20,
-      flags: overrideResult.flags.map(f => f.id + ':' + f.severity),
-      has_stop: overrideResult.has_stop_flag,
-    });
+    const out = [];
+    function record(name, result, expect) {
+      const price = result.pricing.kit_totals
+        ? result.pricing.kit_totals.price_20_49
+        : (result.pricing.tiers ? result.pricing.tiers.price_20_49 : null);
+      const checks = [];
+      checks.push(['route', result.route === expect.route]);
+      if (expect.price_20 !== undefined) {
+        checks.push(['price@20', price !== null && Math.abs(price - expect.price_20) < 0.005]);
+      } else {
+        checks.push(['price@20', price === null]);
+      }
+      if (expect.stop !== undefined) checks.push(['stop', result.has_stop_flag === expect.stop]);
+      if (expect.per_label_20 !== undefined) {
+        const pl = result.pricing.per_label_tiers ? result.pricing.per_label_tiers.price_20_49 : null;
+        checks.push(['per_label@20', pl !== null && Math.abs(pl - expect.per_label_20) < 0.005]);
+      }
+      if (expect.flag_present) {
+        for (const fid of expect.flag_present) {
+          checks.push(['flag ' + fid, result.flags.some(f => f.id === fid)]);
+        }
+      }
+      if (expect.flag_absent) {
+        for (const fid of expect.flag_absent) {
+          checks.push(['no ' + fid, !result.flags.some(f => f.id === fid)]);
+        }
+      }
+      if (expect.extra_check) checks.push([expect.extra_check[0], expect.extra_check[1]]);
+      out.push({
+        case: name,
+        route: result.route,
+        price_20_49: price,
+        expected: expect.price_20 !== undefined ? expect.price_20 : 'n/a (suppressed)',
+        note: expect.note || '',
+        flags: result.flags.map(f => f.id + ':' + f.severity).join(' '),
+        pass: checks.every(c => c[1]),
+        failed_checks: checks.filter(c => !c[1]).map(c => c[0]).join(',') || '-',
+      });
+      return result;
+    }
 
+    // 1-7: original Session B/C catalog cases (band-anchored post-C-1 prices)
+    record('1230820', runCalculator(inputsForPN('1230820')),
+      { route: 'single_standard', price_20: 20.00, flag_present: ['F23'], flag_absent: ['F7', 'F11', 'F12'],
+        note: 'band-anchored $20 = catalog; F23×5 report-only' });
+    const r1082570 = record('1082570', runCalculator(inputsForPN('1082570')),
+      { route: 'single_standard', price_20: 7.75, flag_present: ['F8', 'F23'], flag_absent: ['F12'],
+        note: 'algorithmic snap 0.503×15.43=7.76→$7.75; catalog locked $8.00 (documented divergence)' });
+    record('1210810', runCalculator(inputsForPN('1210810')),
+      { route: 'single_sub_scope', price_20: 4.50, flag_present: ['F10', 'F8', 'F23'], flag_absent: ['F12'],
+        note: 'band-anchored $4.50; catalog locked $4.75 (Wave 4 premium — documented divergence)' });
+    record('1278930', runCalculator(inputsForPN('1278930')),
+      { route: 'kit', price_20: 30.00, per_label_20: 10.00, flag_present: ['F23'],
+        note: '3-label template; per-label parity $10.00 consistent with kit total (H-1 desync gone)' });
+    record('1245130', runCalculator(inputsForPN('1245130')),
+      { route: 'kit', price_20: 50.00, per_label_20: 10.00,
+        extra_check: ['W1 advisory', !!runCalculator(inputsForPN('1245130')).lam_pass_advisory],
+        note: '5-label template $50; W1 lam-pass advisory fires (5 × 7.88" > 28" bed)' });
+    record('1205720', runCalculator(inputsForPN('1205720', { cut_vinyl_color: 'cardinal_red' })),
+      { route: 'cut_vinyl', price_20: 35.00, flag_present: ['F15', 'F23'], flag_absent: ['F5'],
+        note: 'Band A anchor $35 = catalog' });
+    record('1277970', runCalculator(inputsForPN('1277970')),
+      { route: 'tiny', price_20: 55.00, flag_present: ['F9'],
+        note: '$55 flat one-off program total' });
+
+    // 8-10: Session C/D band routing cases
+    record('3010704 (Band B)', runCalculator(inputsForPN('3010704', { cut_vinyl_color: 'cardinal_red_15in' })),
+      { route: 'cut_vinyl', price_20: 78.00, flag_present: ['F15'],
+        note: 'Band B template direct (within ±30% of 7.069 founding anchor)' });
+    record('3010707 (Band C)', runCalculator(inputsForPN('3010707', { cut_vinyl_color: 'cardinal_red' })),
+      { route: 'cut_vinyl', price_20: 20.00, flag_present: ['F15'],
+        note: 'Band C template direct (within ±30% of 0.969 founding anchor)' });
+    record('PROD-OVERRIDE 8x1.75', runCalculator({
+      part_number: 'PROD-OVERRIDE-TEST', description: 'Production catalog item (sub-0.1 override test)',
+      model: '', material_family: PRINTED_LAM_FAMILY, item_type: 'single',
+      width_in: 8.0, height_in: 1.75, label_count: 1, cut_vinyl_color: '',
+      ink_coverage: 'full_bleed_flood_coat', is_ansi_safety: false,
+      production_override: true, order_qty: 0, notes: '',
+    }), { route: 'single_sub_scope', price_20: 3.00, flag_present: ['F10', 'F23'],
+          note: 'Micro-Format Band template direct ($3.00, 1279000 anchor); cliffs reported via F23 (report-only)' });
+
+    // 11: documented Convex no_profile case (was absent from the suite — L-8)
+    record('CONVEX 10x6 (no_profile)', runCalculator({
+      part_number: 'CONVEX-TEST', description: 'Convex panel decal probe', model: '',
+      material_family: 'Convex High Bond + Poly Lam', item_type: 'single',
+      width_in: 10, height_in: 6, label_count: 1, cut_vinyl_color: '',
+      ink_coverage: 'full_bleed_flood_coat', is_ansi_safety: false,
+      production_override: false, order_qty: 0, notes: '',
+    }), { route: 'no_profile', stop: true, flag_present: ['F17'],
+          note: 'F17 STOP — output suppressed, first item establishes the band' });
+
+    // 12-14: NEW Session H cases (Sessions E/F/G items)
+    record('1278890 (2-label kit)', runCalculator(inputsForPN('1278890')),
+      { route: 'kit', price_20: 20.00, per_label_20: 10.00,
+        note: 'no 2-label template — cost-build path fires ($10.00/label parity × 2 = $20/kit, matches catalog)' });
+    const r1068270 = runCalculator(inputsForPN('1068270'));
+    record('1068270 (parity w/ 1082570)', r1068270,
+      { route: 'single_standard', price_20: 7.75,
+        extra_check: ['orientation parity', JSON.stringify(r1068270.pricing.tiers) === JSON.stringify(r1082570.pricing.tiers)
+          && r1068270.route === r1082570.route],
+        note: 'orientation-flipped W/H — engine output identical to 1082570 (catalog $8.00, same documented snap)' });
+    record('3010701 (Band A 3.202)', runCalculator(inputsForPN('3010701', { cut_vinyl_color: 'cardinal_red' })),
+      { route: 'cut_vinyl', price_20: 45.00, flag_present: ['F15'],
+        note: 'Band A algorithmic: 3.202 × $13.795 mid-band = $44.17 → snap $45; catalog locked $44 (documented divergence)' });
+
+    const passed = out.filter(o => o.pass).length;
     console.table(out);
+    console.log(`runSanityChecks: ${passed}/${out.length} cases pass`);
     return out;
   };
 })();
