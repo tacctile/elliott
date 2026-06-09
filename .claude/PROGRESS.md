@@ -2,7 +2,39 @@
 
 > **Newest entries at the top. Updated every session.**
 >
-> Last Updated: 2026-06-09 (Session I — cleanup + hardening: §25 costing normalization on 1230820/1082570/1068270 (D2-full + D7 resolved), tape cost method corrected to length-based on the 4-item small-format cut vinyl cluster (D3), data.json strips pricing_logic + notes and Supabase internal fields moved to a service-role-only table (D4), §27 $50 rush/favor floor codified (D5). Documentation/security-only — no sell prices, tiers, band anchors, or statuses changed. validate.py 0/0; harness 14/14.)
+> Last Updated: 2026-06-09 (Session J — global spec sheet drop zone + Supabase Storage: private `spec-sheets` bucket, `elliott_items.spec_sheet_paths text[]`, drag/drop + paste + click-to-browse upload on every tab, in-app lightbox viewer with pdf.js pagination, Calculator attach button + reference thumbnail strip, sync_from_supabase.py signed-URL support. UI + storage only — zero pricing/governance changes.)
+
+---
+
+### 2026-06-09 — Session J (feature): Global Spec Sheet Drop Zone + Supabase Storage
+
+**What:** Focused UI + storage session. A global drag-and-drop spec sheet upload zone works on all tabs, files land in the private Supabase Storage bucket `spec-sheets` (folder layout `elliott/{part_number}/{filename}`; fallback `elliott/unlinked/{filename}`), and storage paths link to item records via the new `elliott_items.spec_sheet_paths text[]` column. **No pricing logic, tier math, routing, flag system, brief generator, governance files, band anchors, or item prices changed** — the calculator engine script block has zero diff hunks.
+
+**Phase 1 — Supabase (migrations `spec_sheets_storage_session_j` + `spec_sheets_column_scoped_update_fix`):**
+- Bucket `spec-sheets`: public = **false** (all reads via signed URLs — 1h in-app, 24h in the sync script), 50MB file limit, no MIME restriction (PDF/PNG/JPG/WEBP/SVG/DXF/DWG all accepted).
+- Storage RLS on `storage.objects` scoped to this bucket only: anon SELECT / INSERT / DELETE.
+- `elliott_items.spec_sheet_paths text[] DEFAULT '{}'` + RLS UPDATE policy for anon scoped to `account_id = 'elliott'`.
+- **Security catch fixed during the session:** `elliott_items` carried a pre-existing table-level UPDATE grant to anon that was inert (no UPDATE policy existed) — the new policy would have made every column anon-writable, prices included. Fixed live: `REVOKE UPDATE` from anon, re-granted column-scoped `UPDATE (spec_sheet_paths)` only. Role-tested via `SET ROLE anon`: price update → insufficient_privilege; spec_sheet_paths update → succeeds (both rolled back).
+
+**Phase 2 — global drop zone (frontend/index.html, UI script block only):**
+- Fixed bottom strip (~80px, all tabs): dashed `--border-medium` / `--surface-2` at 0.4 opacity → drag-over solid `--brand-red` / `--surface-3` at 1.0 ("Release to upload") → busy spinner ("Uploading {file} — attaching to P/N {pn}…") → green ✓ 3s / red error 5s. Paste (Ctrl/Cmd+V file/screenshot) and click-to-browse (`accept="*"`, multiple) behave identically. Reuses existing CSS tokens exclusively — no new color tokens.
+- Association priority: (1) Items tab + selected item → auto-attach; (2) Calculator tab + P/N field → attach (file stores under `elliott/{pn}/` even for not-yet-created items — links when the item row exists); (3) no context → modal with typeahead over existing P/Ns + "Skip — just store it" → `elliott/unlinked/`. Duplicate filenames get a timestamp suffix (revision history, never overwrite). Offline/fallback mode → clear error, no upload attempt.
+- Post-upload: path appended to `spec_sheet_paths` via column-scoped anon UPDATE; in-memory `DB_ITEMS`/`items` refreshed; the Items-tab sticky thumbnail re-renders immediately (no reload). Storage spec sheets take priority over repo `frontend/images/` files; items without uploads keep the existing repo render path untouched. Multi-file badge ("N files") on the thumbnail.
+- New spec viewer lightbox (replaces open-in-new-tab/pdf-embed on thumbnail click): file selector tabs when multiple files, pdf.js page render with Prev/Next, full-res images, "Download original" via signed URL (`download` disposition), × / Escape to close. Works for both Storage files (signed URLs) and legacy repo files.
+
+**Phase 3 — Calculator integration:** "📎 Attach spec sheet" button under the P/N field (green dot when the entered P/N has spec sheets — Storage or repo — grey otherwise; opens the file picker; resolution follows the same priority chain). When attached, a "Spec Sheet Reference" thumbnail strip appears below the dimensions fields (first page via pdf.js / direct img) — click opens the lightbox.
+
+**Phase 4 — sync:** `sync_from_supabase.py` now batch-signs all `spec_sheet_paths` (24h expiry) via the Storage sign API and populates the regenerated data.json `image` arrays where uploads exist, falling back to repo images on empty paths, partial signing failure, or `--from-file` mode (no creds). `validate.py` unchanged (spec sheets are not a validation requirement). Existing `frontend/images/` files NOT migrated — they keep working as-is.
+
+**Verification:** Both index.html script blocks parse (Node `new Function`); engine block diff = 0 hunks. `validate.py` → **PASS 0 errors / 0 warnings**. `sync_from_supabase.py --from-file` (sandbox has no Supabase egress; dump pulled via MCP) → clean, and the regenerated JSONs verified value-identical to committed state (timestamp/jsonb-key-order aside) then reverted — verification run only. Supabase live: bucket + 4 policies confirmed by catalog query; anon role-tested as above.
+
+**Drift flagged for Nick (pre-existing, NOT fixed here):** the Supabase `elliott_materials.transferrite-582u` row has empty `notes`, so any sync run overwrites the repo's Session-I D3 usage-method note in materials.json with ''. Backfill the DB notes column (service_role) or guard the overlay in a future session.
+
+**Files Modified:** `frontend/index.html` (UI script block + CSS + markup; engine block untouched), `scripts/sync_from_supabase.py`, `.claude/PROGRESS.md`, `.claude/STATE.yml`. Plus Supabase migrations `spec_sheets_storage_session_j`, `spec_sheets_column_scoped_update_fix`.
+
+**Files NOT Modified:** all `items/*.md`, `materials/*.md`, `categories/*`, `governance/*`, `.claude/MASTER_CONTEXT.md`, `scripts/validate.py`, `scripts/build_frontend.py`, `scripts/build_materials.py`, `scripts/build_calculator_config.py`, `scripts/profile.py`, `scripts/migrate_to_supabase.py`, `frontend/data.json` / `materials.json` / `calculator_config.json` / `combinations.json` (regenerated for verification, then reverted), `frontend/images/*`. No band data, tier values, prices, or calculator engine logic.
+
+**Status:** Session J complete. validate.py 0/0; sync clean; storage + RLS live and role-tested. Next: Nick drops a real spec sheet in the browser and verifies thumbnail + persistence.
 
 ---
 

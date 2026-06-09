@@ -154,6 +154,9 @@ def load_dump(args):
               "(env, .env, or --url/--key).")
         sys.exit(1)
     return {
+        # creds kept for Storage signed-URL generation (Session J); absent in
+        # --from-file mode, where signing is skipped and repo images are used.
+        "_creds": {"url": url, "key": key},
         "materials": fetch_rest(url, key, "elliott_materials"),
         "items": fetch_rest(url, key, "elliott_items"),
         "bands": fetch_rest(url, key, "elliott_pricing_bands"),
@@ -221,7 +224,50 @@ def sync_materials(db_materials):
 # data.json
 # ---------------------------------------------------------------------------
 
-def sync_items(db_items):
+SPEC_BUCKET = "spec-sheets"
+
+IMAGE_EXT_TYPES = {"png", "jpg", "jpeg", "webp", "gif", "svg", "bmp"}
+
+
+def sign_spec_sheet_urls(creds, paths):
+    """Batch-sign Storage paths (24h expiry — offline-fallback freshness
+    window; the live app signs its own 1h URLs). Returns {path: url} for
+    every path that signed cleanly. Empty dict on any failure or in
+    --from-file mode (no creds) — callers fall back to repo images."""
+    if not creds or not paths:
+        return {}
+    try:
+        req = urllib.request.Request(
+            f"{creds['url']}/storage/v1/object/sign/{SPEC_BUCKET}",
+            data=json.dumps({"expiresIn": 86400, "paths": paths}).encode(),
+            headers={"apikey": creds["key"],
+                     "Authorization": f"Bearer {creds['key']}",
+                     "Content-Type": "application/json"})
+        with urllib.request.urlopen(req, timeout=30) as r:
+            rows = json.loads(r.read())
+        return {row["path"]: f"{creds['url']}/storage/v1{row['signedURL']}"
+                for row in rows
+                if not row.get("error") and row.get("signedURL")}
+    except Exception as e:  # noqa: BLE001 — network/storage issues are non-fatal
+        print(f"  WARN: spec sheet URL signing failed ({e}) — "
+              "keeping repo image fallbacks")
+        return {}
+
+
+def spec_sheet_image_field(paths, signed):
+    files = []
+    for p in paths:
+        url = signed.get(p)
+        if not url:
+            return None  # partial signing — keep the repo fallback intact
+        ext = p.rsplit(".", 1)[-1].lower() if "." in p else ""
+        ftype = "pdf" if ext == "pdf" else (
+            "image" if ext in IMAGE_EXT_TYPES else "file")
+        files.append({"type": ftype, "path": url})
+    return files or None
+
+
+def sync_items(db_items, creds=None):
     item_files = sorted((REPO_ROOT / "items").glob("*.md"))
     items = {}
     for fp in item_files:
@@ -230,6 +276,15 @@ def sync_items(db_items):
             items[item["frontmatter"]["part_number"]] = item
 
     db_by_pn = {r["part_number"]: r for r in db_items if r.get("is_active", True)}
+
+    # Session J: items with uploaded spec sheets get their `image` field
+    # populated from Supabase Storage signed URLs (24h expiry) — Storage takes
+    # priority over frontend/images/ repo files. Items without uploads keep
+    # the repo render path untouched.
+    all_spec_paths = sorted({p for row in db_by_pn.values()
+                             for p in (row.get("spec_sheet_paths") or [])})
+    signed = sign_spec_sheet_urls(creds, all_spec_paths)
+
     for pn, row in db_by_pn.items():
         if pn in items:
             fm = items[pn]["frontmatter"]
@@ -248,6 +303,11 @@ def sync_items(db_items):
                 k: "" for k in ("item_overview", "material_spec", "nesting",
                                 "production", "pricing_derivation",
                                 "margin_analysis", "notes", "production_debrief")}}
+        spec_paths = row.get("spec_sheet_paths") or []
+        if spec_paths:
+            image = spec_sheet_image_field(spec_paths, signed)
+            if image:
+                items[pn]["image"] = image
 
     inactive = {r["part_number"] for r in db_items if not r.get("is_active", True)}
     for pn in inactive:
@@ -493,7 +553,7 @@ def sync_combinations(combos):
 def main():
     dump = load_dump(sys.argv[1:])
     n_mat = sync_materials(dump["materials"])
-    n_items = sync_items(dump["items"])
+    n_items = sync_items(dump["items"], dump.get("_creds"))
     n_bands = sync_config(dump["bands"], dump["settings"], dump["materials"],
                           dump["items"])
     n_combos = sync_combinations(dump["combinations"])

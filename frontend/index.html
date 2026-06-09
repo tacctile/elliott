@@ -1624,6 +1624,189 @@
     border: none;
   }
 
+  /* === SPEC SHEET DROP ZONE (Session J) === */
+  .dropzone {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    height: 80px;
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-top: 2px dashed var(--border-medium);
+    background: var(--surface-2);
+    opacity: 0.4;
+    cursor: pointer;
+    transition: opacity 0.2s, background 0.2s, border-color 0.2s, color 0.2s;
+    font-size: 13px;
+    color: var(--text-secondary);
+    user-select: none;
+  }
+  .dropzone:hover { opacity: 0.7; }
+  .dropzone.drag-over {
+    border-top: 2px solid var(--brand-red);
+    opacity: 1;
+    background: var(--surface-3);
+    color: var(--text-primary);
+  }
+  .dropzone.busy, .dropzone.done, .dropzone.error { opacity: 1; cursor: default; }
+  .dropzone.done { color: var(--flag-ready); border-top-color: var(--flag-ready); }
+  .dropzone.error { color: var(--flag-stop); border-top-color: var(--flag-stop); }
+  .dz-spinner {
+    width: 16px; height: 16px;
+    border: 2px solid var(--surface-4);
+    border-top-color: var(--brand-red);
+    border-radius: 50%;
+    display: inline-block;
+    animation: spin 0.8s linear infinite;
+    vertical-align: middle;
+  }
+
+  /* Multi-file badge on the sticky thumbnail */
+  .sticky-image .thumb-link { position: relative; }
+  .spec-badge {
+    position: absolute;
+    top: 4px; right: 4px;
+    z-index: 2;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: var(--brand-red);
+    color: var(--text-inverse);
+    pointer-events: none;
+  }
+
+  /* Priority-3 fallback modal: which P/N is this for? */
+  .pn-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    background: rgba(0,0,0,0.7);
+    align-items: center;
+    justify-content: center;
+  }
+  .pn-modal.open { display: flex; }
+  .pn-modal-box {
+    background: var(--surface-2);
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    padding: 20px;
+    width: 380px;
+    max-width: 92vw;
+  }
+  .pn-modal-box h3 {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    color: var(--text-primary);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .pn-typeahead-list {
+    display: none;
+    max-height: 180px;
+    overflow-y: auto;
+    margin: -8px 0 12px;
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    background: var(--surface-1);
+  }
+  .pn-typeahead-list.show { display: block; }
+  .pn-ta-row {
+    padding: 8px 10px;
+    cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .pn-ta-row:last-child { border-bottom: none; }
+  .pn-ta-row:hover { background: var(--surface-3); }
+  .pn-ta-row .pn-ta-desc {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-left: 8px;
+  }
+
+  /* Spec sheet lightbox viewer */
+  .spec-viewer {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1050;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(8px);
+    flex-direction: column;
+    align-items: center;
+  }
+  .spec-viewer.open { display: flex; }
+  .spec-viewer-bar {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 14px 56px;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+  .spec-viewer-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+    width: 100%;
+    text-align: center;
+    padding: 0 20px 20px;
+  }
+  .spec-viewer-body img, .spec-viewer-body canvas {
+    max-width: calc(100vw - 80px);
+    border-radius: 4px;
+  }
+  .spec-pager {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  /* Calculator attach button dot + spec reference strip */
+  .attach-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--text-tertiary);
+    vertical-align: middle;
+    margin-right: 4px;
+  }
+  .attach-dot.attached { background: var(--flag-ready); }
+  .calc-spec-thumb {
+    display: inline-block;
+    border: 1px solid var(--border-medium);
+    border-radius: 6px;
+    background: var(--surface-0);
+    padding: 6px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    max-width: 100%;
+  }
+  .calc-spec-thumb:hover { border-color: var(--border-strong); }
+  .calc-spec-thumb canvas, .calc-spec-thumb img {
+    display: block;
+    max-width: 100%;
+    max-height: 140px;
+    object-fit: contain;
+    margin: 0 auto;
+  }
+
   /* === SCROLLBAR === */
   ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-track { background: transparent; }
@@ -1712,6 +1895,7 @@
               <div>
                 <label>Part Number</label>
                 <input type="text" id="calc-pn" placeholder="optional" autocomplete="off" spellcheck="false" />
+                <button class="matmgr-add-btn" id="calcAttachBtn" style="margin-top:5px;" onclick="calcAttachClick()"><span class="attach-dot" id="calcAttachDot"></span>📎 Attach spec sheet</button>
               </div>
               <div>
                 <label>Model</label>
@@ -1758,6 +1942,12 @@
                 <label>Height (in)</label>
                 <input type="number" id="calc-height" step="0.001" min="0" placeholder="e.g. 12.44" />
               </div>
+            </div>
+
+            <div class="calc-field hidden" id="calc-spec-strip-wrap">
+              <label>Spec Sheet Reference</label>
+              <div id="calcSpecStrip"></div>
+              <div class="calc-hint">Visual reference while entering dimensions — click to open full size.</div>
             </div>
 
             <div class="calc-field hidden" id="calc-labelcount-wrap">
@@ -1858,6 +2048,40 @@
 <div class="lightbox" id="lightbox">
   <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
   <div class="lightbox-content" id="lightboxContent"></div>
+</div>
+
+<!-- SPEC SHEET DROP ZONE (Session J) — global, works on every tab -->
+<div class="dropzone" id="specDropZone">
+  <span id="dzIcon">⤓</span><span id="dzText">Drop spec sheet here — or click to browse</span>
+</div>
+<input type="file" id="specFileInput" accept="*" multiple style="display:none" />
+
+<!-- Priority-3 fallback: no item context — ask which P/N -->
+<div class="pn-modal" id="pnModal">
+  <div class="pn-modal-box">
+    <h3>Which P/N is this spec sheet for?</h3>
+    <div class="calc-field">
+      <input type="text" id="pnModalInput" placeholder="P/N — existing or new" autocomplete="off" spellcheck="false" />
+      <div class="calc-hint">Type to search existing items. A new P/N stores the file unlinked until that item is created.</div>
+    </div>
+    <div class="pn-typeahead-list" id="pnModalList"></div>
+    <div class="matmgr-actions" style="border-top:none;padding-top:0;margin-top:4px;">
+      <button class="copy-btn" onclick="pnModalAttach()">Attach</button>
+      <button class="copy-btn" onclick="pnModalSkip()">Skip — just store it</button>
+      <button class="copy-btn" onclick="pnModalCancel()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- SPEC SHEET VIEWER — lightbox with file selector + pdf.js pagination -->
+<div class="spec-viewer" id="specViewer">
+  <button class="lightbox-close" onclick="closeSpecViewer()">&times;</button>
+  <div class="spec-viewer-bar" id="specViewerTabs"></div>
+  <div class="spec-viewer-bar" style="padding-top:0;">
+    <div class="spec-pager" id="specPager"></div>
+    <button class="copy-btn" id="specDownloadBtn" onclick="specDownloadOriginal()">Download original</button>
+  </div>
+  <div class="spec-viewer-body" id="specViewerBody"></div>
 </div>
 
 <script>
@@ -2466,27 +2690,60 @@ function renderItemHeader(fm) {
 
 function renderItemImage(item) {
   const el = document.getElementById('itemStickyImage');
+  const pn = item.frontmatter.part_number;
+
+  // Session J: Supabase Storage spec sheets take priority over repo files.
+  const specPaths = specPathsFor(pn);
+  if (specPaths.length && sb) {
+    renderSpecThumb(el, pn, specPaths);
+    return;
+  }
+
+  // Repo fallback path (frontend/images/) — unchanged render, but the click
+  // now opens the in-app spec viewer instead of a new tab / pdf embed.
   const files = item.image;
   if (!files || files.length === 0) { el.innerHTML = ''; return; }
 
-  // Use the first file
   const file = files[0];
+  el.innerHTML = `<a class="thumb-link" href="#" id="stickyImgLink">${files.length > 1 ? `<span class="spec-badge">${files.length} files</span>` : ''}</a>`;
+  const link = document.getElementById('stickyImgLink');
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    openSpecViewer(pn);
+  });
   if (file.type === 'pdf') {
-    el.innerHTML = `<a class="thumb-link" href="#" id="stickyImgLink"></a>`;
-    const link = document.getElementById('stickyImgLink');
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      openPdfModal(file.path);
-    });
     renderPdfFirstPage(file.path, link);
   } else {
-    el.innerHTML = `<a class="thumb-link" href="${file.path}" target="_blank" rel="noopener">
-      <img src="${file.path}" alt="${escapeHtml(file.path)}" />
-    </a>`;
+    link.innerHTML += `<img src="${file.path}" alt="${escapeHtml(file.path)}" />`;
   }
 }
 
-async function renderPdfFirstPage(src, container) {
+async function renderSpecThumb(el, pn, paths) {
+  const count = paths.length;
+  el.innerHTML = `<a class="thumb-link" href="#" id="stickyImgLink">${count > 1 ? `<span class="spec-badge">${count} files</span>` : ''}</a>`;
+  const link = document.getElementById('stickyImgLink');
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    openSpecViewer(pn);
+  });
+  const name = paths[0].split('/').pop();
+  const url = await specSignedUrl(paths[0]);
+  if (selectedPN !== pn) return; // user moved on while the URL was signing
+  if (!url) {
+    link.innerHTML += `<div class="pdf-stack"><div class="pdf-label">${escapeHtml(name)}</div></div>`;
+    return;
+  }
+  const type = specFileType(paths[0]);
+  if (type === 'pdf') {
+    renderPdfFirstPage(url, link, name);
+  } else if (type === 'image') {
+    link.innerHTML += `<img src="${url}" alt="${escapeHtml(name)}" />`;
+  } else {
+    link.innerHTML += `<div class="pdf-stack"><div class="pdf-label">${escapeHtml(name)}</div></div>`;
+  }
+}
+
+async function renderPdfFirstPage(src, container, label) {
   try {
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     const pdf = pdfCache[src] || await pdfjsLib.getDocument(src).promise;
@@ -2500,10 +2757,10 @@ async function renderPdfFirstPage(src, container) {
     container.appendChild(canvas);
     const lbl = document.createElement('div');
     lbl.className = 'pdf-label';
-    lbl.textContent = src.split('/').pop();
+    lbl.textContent = label || src.split('/').pop();
     container.appendChild(lbl);
   } catch(e) {
-    container.innerHTML = `<div class="pdf-stack"><div class="pdf-label">${src.split('/').pop()}</div></div>`;
+    container.innerHTML = `<div class="pdf-stack"><div class="pdf-label">${escapeHtml(label || src.split('/').pop())}</div></div>`;
   }
 }
 
@@ -3237,9 +3494,11 @@ function initCalculatorForm() {
     document.getElementById('calc-itemtype').addEventListener('change', updateCalcFormVisibility);
     document.getElementById('calc-width').addEventListener('input', updateCalcFormVisibility);
     document.getElementById('calc-height').addEventListener('input', updateCalcFormVisibility);
+    document.getElementById('calc-pn').addEventListener('input', refreshCalcSpecUI);
   }
   populateComboSelect();
   updateCalcFormVisibility();
+  refreshCalcSpecUI();
 }
 
 function populateComboSelect() {
@@ -4271,6 +4530,411 @@ async function mmDeleteCombo() {
   }
 }
 
+/* ===== SPEC SHEET DROP ZONE + STORAGE (Session J) =====
+ * Global drag/drop + paste + click-to-browse upload of spec sheets into the
+ * private `spec-sheets` Supabase Storage bucket (folder layout:
+ * elliott/{part_number}/{filename}; fallback elliott/unlinked/{filename}).
+ * Storage paths are appended to elliott_items.spec_sheet_paths (text[]) via
+ * an anon-key column-scoped UPDATE. All reads use signed URLs (1h expiry) —
+ * the bucket is NOT public. Items with no uploaded files keep the existing
+ * frontend/images/ repo render path untouched. */
+
+const SPEC_BUCKET = 'spec-sheets';
+const specUrlCache = {};   // path(|dl) -> { url, expires }
+const dzState = { busy: false, timer: null };
+let pendingSpecFiles = null;
+
+function specPathsFor(pn) {
+  const it = items[pn];
+  const arr = it && it.frontmatter && it.frontmatter.spec_sheet_paths;
+  return Array.isArray(arr) ? arr.filter(Boolean) : [];
+}
+
+function specFileType(path) {
+  const ext = path.split('/').pop().split('?')[0].split('.').pop().toLowerCase();
+  if (ext === 'pdf') return 'pdf';
+  if (['png', 'jpg', 'jpeg', 'webp', 'gif', 'svg', 'bmp'].includes(ext)) return 'image';
+  return 'file'; // DXF/DWG etc — stored + downloadable, no inline preview
+}
+
+async function specSignedUrl(path, forDownload) {
+  if (!sb) return null;
+  const cacheKey = path + (forDownload ? '|dl' : '');
+  const hit = specUrlCache[cacheKey];
+  if (hit && hit.expires > Date.now()) return hit.url;
+  const { data, error } = await sb.storage.from(SPEC_BUCKET)
+    .createSignedUrl(path, 3600, forDownload ? { download: true } : undefined);
+  if (error || !data || !data.signedUrl) {
+    console.warn('spec sheet signed URL failed:', path, error);
+    return null;
+  }
+  // cache slightly short of the 1h expiry
+  specUrlCache[cacheKey] = { url: data.signedUrl, expires: Date.now() + 55 * 60 * 1000 };
+  return data.signedUrl;
+}
+
+/* --- drop zone state machine --- */
+
+function dzSet(state, text) {
+  const dz = document.getElementById('specDropZone');
+  const icon = document.getElementById('dzIcon');
+  const txt = document.getElementById('dzText');
+  clearTimeout(dzState.timer);
+  dz.classList.remove('busy', 'done', 'error', 'drag-over');
+  dzState.busy = state === 'busy';
+  if (state) dz.classList.add(state);
+  icon.innerHTML = state === 'busy' ? '<span class="dz-spinner"></span>'
+    : state === 'done' ? '✓'
+    : state === 'error' ? '✕'
+    : '⤓';
+  txt.textContent = text || 'Drop spec sheet here — or click to browse';
+  if (state === 'done') dzState.timer = setTimeout(() => dzSet(null), 3000);
+  if (state === 'error') dzState.timer = setTimeout(() => dzSet(null), 5000);
+}
+
+/* --- file association: priority 1 Items tab selection, priority 2
+ * Calculator P/N field, priority 3 the fallback modal --- */
+
+function specUploadTarget() {
+  if (activeTab === 'items' && selectedPN) return { pn: selectedPN };
+  if (activeTab === 'calculator') {
+    const pn = document.getElementById('calc-pn').value.trim();
+    if (pn) return { pn };
+  }
+  return null;
+}
+
+async function handleSpecFiles(fileList) {
+  const files = Array.from(fileList || []).filter(f => f && f.size > 0);
+  if (!files.length) return;
+  if (!sb || DATA_SOURCE !== 'supabase') {
+    dzSet('error', 'Offline — spec sheet uploads need a live Supabase connection');
+    return;
+  }
+  const target = specUploadTarget();
+  if (!target) { pendingSpecFiles = files; openPnModal(); return; }
+  await uploadSpecFiles(files, target.pn);
+}
+
+function specSafeName(name) {
+  return String(name || 'file').replace(/[^A-Za-z0-9._ -]+/g, '_').replace(/\s+/g, ' ').trim() || 'file';
+}
+
+async function uploadSpecFiles(files, pn) {
+  // pn === null → "Skip — just store it" → elliott/unlinked/
+  const folder = pn ? `elliott/${pn}` : 'elliott/unlinked';
+  for (const file of files) {
+    const safe = specSafeName(file.name);
+    dzSet('busy', pn ? `Uploading ${safe} — attaching to P/N ${pn}…` : `Uploading ${safe}…`);
+    let path = `${folder}/${safe}`;
+    let up = await sb.storage.from(SPEC_BUCKET)
+      .upload(path, file, { upsert: false, contentType: file.type || undefined });
+    if (up.error && /exist|duplicate|409/i.test(String(up.error.message || up.error.statusCode || ''))) {
+      // same filename already stored — keep both (revision history)
+      const stamp = new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14);
+      const dot = safe.lastIndexOf('.');
+      const stamped = dot > 0 ? safe.slice(0, dot) + '_' + stamp + safe.slice(dot) : safe + '_' + stamp;
+      path = `${folder}/${stamped}`;
+      up = await sb.storage.from(SPEC_BUCKET)
+        .upload(path, file, { upsert: false, contentType: file.type || undefined });
+    }
+    if (up.error) {
+      dzSet('error', `Upload failed: ${up.error.message || up.error}`);
+      return;
+    }
+    if (pn) {
+      const linked = await specLinkPath(pn, path);
+      dzSet('done', linked
+        ? `✓ Attached to P/N ${pn}`
+        : `✓ Stored for new item ${pn} — links when the item is created`);
+    } else {
+      dzSet('done', `✓ Stored unlinked — ${path.split('/').pop()}`);
+    }
+  }
+}
+
+async function specLinkPath(pn, path) {
+  const row = DB_ITEMS.find(r => r.part_number === pn);
+  if (!row) return false; // P/N not in elliott_items yet — file stored anyway
+  const arr = (row.spec_sheet_paths || []).slice();
+  if (!arr.includes(path)) arr.push(path);
+  const q = await sb.from('elliott_items')
+    .update({ spec_sheet_paths: arr })
+    .eq('part_number', pn)
+    .select('spec_sheet_paths')
+    .single();
+  if (q.error) {
+    console.warn('spec_sheet_paths update failed:', q.error);
+    return false;
+  }
+  row.spec_sheet_paths = q.data.spec_sheet_paths;
+  if (items[pn]) items[pn].frontmatter.spec_sheet_paths = q.data.spec_sheet_paths;
+  // live UI refresh — no reload
+  if (activeTab === 'items' && selectedPN === pn) renderItemImage(items[pn]);
+  if (activeTab === 'calculator') refreshCalcSpecUI();
+  return true;
+}
+
+/* --- priority-3 fallback modal --- */
+
+function openPnModal() {
+  document.getElementById('pnModalInput').value = '';
+  document.getElementById('pnModalList').classList.remove('show');
+  document.getElementById('pnModal').classList.add('open');
+  document.getElementById('pnModalInput').focus();
+}
+
+function pnModalTypeahead() {
+  const q = document.getElementById('pnModalInput').value.trim().toLowerCase();
+  const list = document.getElementById('pnModalList');
+  if (!q) { list.classList.remove('show'); return; }
+  const matches = sortedPNs.filter(pn =>
+    pn.toLowerCase().includes(q)
+    || (items[pn].frontmatter.description || '').toLowerCase().includes(q)
+  ).slice(0, 8);
+  if (!matches.length) { list.classList.remove('show'); return; }
+  list.innerHTML = matches.map(pn =>
+    `<div class="pn-ta-row" onclick="pnModalPick('${escapeHtml(pn)}')">${escapeHtml(pn)}<span class="pn-ta-desc">${escapeHtml(items[pn].frontmatter.description || '')}</span></div>`
+  ).join('');
+  list.classList.add('show');
+}
+
+function pnModalPick(pn) {
+  document.getElementById('pnModalInput').value = pn;
+  document.getElementById('pnModalList').classList.remove('show');
+}
+
+function pnModalClose() {
+  document.getElementById('pnModal').classList.remove('open');
+}
+
+async function pnModalAttach() {
+  const pn = document.getElementById('pnModalInput').value.trim();
+  if (!pn) { document.getElementById('pnModalInput').focus(); return; }
+  const files = pendingSpecFiles; pendingSpecFiles = null;
+  pnModalClose();
+  if (files) await uploadSpecFiles(files, pn);
+}
+
+async function pnModalSkip() {
+  const files = pendingSpecFiles; pendingSpecFiles = null;
+  pnModalClose();
+  if (files) await uploadSpecFiles(files, null);
+}
+
+function pnModalCancel() {
+  pendingSpecFiles = null;
+  pnModalClose();
+  dzSet(null);
+}
+
+/* --- spec sheet viewer (lightbox) --- */
+
+const specViewerState = { pn: null, files: [], idx: 0, page: 1, pdf: null, url: null };
+
+function specViewerFiles(pn) {
+  const paths = specPathsFor(pn);
+  if (paths.length && sb) {
+    return paths.map(p => ({ kind: 'storage', path: p, name: p.split('/').pop(), type: specFileType(p) }));
+  }
+  const repo = (items[pn] && items[pn].image) || [];
+  return repo.map(f => ({ kind: 'repo', path: f.path, name: f.path.split('/').pop().split('?')[0], type: f.type }));
+}
+
+async function openSpecViewer(pn) {
+  const files = specViewerFiles(pn);
+  if (!files.length) return;
+  specViewerState.pn = pn;
+  specViewerState.files = files;
+  document.getElementById('specViewer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  await specViewerShow(0);
+}
+
+function closeSpecViewer() {
+  document.getElementById('specViewer').classList.remove('open');
+  document.getElementById('specViewerBody').innerHTML = '';
+  document.body.style.overflow = '';
+  specViewerState.pdf = null;
+}
+
+function renderSpecViewerTabs() {
+  const el = document.getElementById('specViewerTabs');
+  const s = specViewerState;
+  el.innerHTML = s.files.map((f, i) =>
+    `<button class="filter-pill${i === s.idx ? ' active' : ''}" onclick="specViewerShow(${i})">${escapeHtml(f.name)}</button>`
+  ).join('');
+}
+
+function renderSpecPager() {
+  const el = document.getElementById('specPager');
+  const s = specViewerState;
+  if (!s.pdf || s.pdf.numPages < 2) { el.innerHTML = ''; return; }
+  el.innerHTML = `
+    <button class="filter-pill" ${s.page <= 1 ? 'disabled' : ''} onclick="specViewerPage(-1)">‹ Prev</button>
+    <span>Page ${s.page} / ${s.pdf.numPages}</span>
+    <button class="filter-pill" ${s.page >= s.pdf.numPages ? 'disabled' : ''} onclick="specViewerPage(1)">Next ›</button>`;
+}
+
+async function specViewerShow(i) {
+  const s = specViewerState;
+  s.idx = i; s.page = 1; s.pdf = null;
+  renderSpecViewerTabs();
+  const body = document.getElementById('specViewerBody');
+  const f = s.files[i];
+  body.innerHTML = '<div class="pdf-stack"><div class="pdf-label">Loading…</div></div>';
+  const url = f.kind === 'storage' ? await specSignedUrl(f.path) : f.path;
+  if (s.files[s.idx] !== f) return; // user switched files mid-load
+  if (!url) {
+    body.innerHTML = `<div class="pdf-stack"><div class="pdf-label">Could not load ${escapeHtml(f.name)}</div></div>`;
+    renderSpecPager();
+    return;
+  }
+  s.url = url;
+  if (f.type === 'pdf') {
+    try {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      s.pdf = pdfCache[url] || await pdfjsLib.getDocument(url).promise;
+      pdfCache[url] = s.pdf;
+      await specViewerRenderPage();
+    } catch (e) {
+      body.innerHTML = `<div class="pdf-stack"><div class="pdf-label">PDF render failed: ${escapeHtml(e && e.message ? e.message : String(e))}</div></div>`;
+    }
+  } else if (f.type === 'image') {
+    body.innerHTML = `<img src="${url}" alt="${escapeHtml(f.name)}" />`;
+  } else {
+    body.innerHTML = `<div class="pdf-stack"><div class="pdf-label">${escapeHtml(f.name)} — no inline preview for this file type. Use Download original.</div></div>`;
+  }
+  renderSpecPager();
+}
+
+async function specViewerRenderPage() {
+  const s = specViewerState;
+  const page = await s.pdf.getPage(s.page);
+  const viewport = page.getViewport({ scale: 1.5 });
+  const canvas = document.createElement('canvas');
+  canvas.width = viewport.width;
+  canvas.height = viewport.height;
+  await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+  const body = document.getElementById('specViewerBody');
+  body.innerHTML = '';
+  body.appendChild(canvas);
+  renderSpecPager();
+}
+
+async function specViewerPage(delta) {
+  const s = specViewerState;
+  if (!s.pdf) return;
+  const next = s.page + delta;
+  if (next < 1 || next > s.pdf.numPages) return;
+  s.page = next;
+  await specViewerRenderPage();
+}
+
+async function specDownloadOriginal() {
+  const s = specViewerState;
+  const f = s.files[s.idx];
+  if (!f) return;
+  const url = f.kind === 'storage' ? await specSignedUrl(f.path, true) : f.path;
+  if (!url) return;
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = f.name;
+  a.target = '_blank';
+  a.rel = 'noopener';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  if (document.getElementById('specViewer').classList.contains('open')) closeSpecViewer();
+  else if (document.getElementById('pnModal').classList.contains('open')) pnModalCancel();
+});
+
+/* --- calculator tab integration --- */
+
+function calcAttachClick() {
+  // target resolution happens in handleSpecFiles (priority 2: the P/N field;
+  // empty field → the priority-3 modal)
+  document.getElementById('specFileInput').click();
+}
+
+async function refreshCalcSpecUI() {
+  const dot = document.getElementById('calcAttachDot');
+  const wrap = document.getElementById('calc-spec-strip-wrap');
+  const strip = document.getElementById('calcSpecStrip');
+  if (!dot || !wrap) return;
+  const pn = document.getElementById('calc-pn').value.trim();
+  const paths = pn ? specPathsFor(pn) : [];
+  const hasRepo = pn && items[pn] && (items[pn].image || []).length > 0;
+  dot.classList.toggle('attached', paths.length > 0 || hasRepo);
+  if (!pn || (!paths.length && !hasRepo)) {
+    wrap.classList.add('hidden');
+    strip.innerHTML = '';
+    strip.dataset.pn = '';
+    return;
+  }
+  if (strip.dataset.pn === pn && strip.innerHTML) { wrap.classList.remove('hidden'); return; }
+  strip.dataset.pn = pn;
+  wrap.classList.remove('hidden');
+  strip.innerHTML = '<div class="calc-spec-thumb" id="calcSpecThumb"></div>';
+  const thumb = document.getElementById('calcSpecThumb');
+  thumb.onclick = () => openSpecViewer(pn);
+  const files = specViewerFiles(pn);
+  const f = files[0];
+  const url = f.kind === 'storage' ? await specSignedUrl(f.path) : f.path;
+  if (strip.dataset.pn !== pn) return; // P/N changed while signing
+  if (!url) { thumb.innerHTML = `<div class="pdf-label">${escapeHtml(f.name)}</div>`; return; }
+  if (f.type === 'pdf') renderPdfFirstPage(url, thumb, f.name);
+  else if (f.type === 'image') thumb.innerHTML = `<img src="${url}" alt="${escapeHtml(f.name)}" />`;
+  else thumb.innerHTML = `<div class="pdf-label">${escapeHtml(f.name)}</div>`;
+}
+
+/* --- global event wiring --- */
+
+function initSpecDropZone() {
+  const dz = document.getElementById('specDropZone');
+  const fi = document.getElementById('specFileInput');
+
+  window.addEventListener('dragover', e => {
+    e.preventDefault();
+    if (dzState.busy) return;
+    dz.classList.add('drag-over');
+    document.getElementById('dzText').textContent = 'Release to upload';
+  });
+  window.addEventListener('dragleave', e => {
+    if (e.relatedTarget) return; // still inside the window
+    if (dzState.busy) return;
+    dzSet(null);
+  });
+  window.addEventListener('drop', e => {
+    e.preventDefault();
+    if (dzState.busy) return;
+    dzSet(null);
+    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) {
+      handleSpecFiles(e.dataTransfer.files);
+    }
+  });
+  dz.addEventListener('click', () => { if (!dzState.busy) fi.click(); });
+  fi.addEventListener('change', () => {
+    if (fi.files && fi.files.length) handleSpecFiles(fi.files);
+    fi.value = '';
+  });
+  // Ctrl+V / Cmd+V — e.g. a screenshot of a spec sheet from email
+  document.addEventListener('paste', e => {
+    if (dzState.busy) return;
+    // text pastes into inputs are untouched — only clipboard FILES upload
+    const files = Array.from((e.clipboardData && e.clipboardData.files) || []);
+    if (!files.length) return;
+    e.preventDefault();
+    handleSpecFiles(files);
+  });
+  document.getElementById('pnModalInput').addEventListener('input', pnModalTypeahead);
+}
+
+initSpecDropZone();
 init();
 </script>
 
