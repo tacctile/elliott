@@ -2,7 +2,75 @@
 
 > **Newest entries at the top. Updated every session.**
 >
-> Last Updated: 2026-06-05 (Session D: P/N 1279000 added as the founding data point for the sub-0.1 sq ft printed/laminated Micro-Format Band; calculator routing updated so production-override path uses the new micro band ($30.86/sq ft anchor) instead of the singles band ($15.43/sq ft).)
+> Last Updated: 2026-06-09 (Session E: P/N 3010701 added as the first Band A data point outside the 2.51–2.56 sq ft cluster. MED member of the confirmed ELLIOTT S/M/L wordmark family. 3.202 sq ft, $44/qty 20, $13.74/sq ft — inside Band A range. 4-wave AI validated + revised Wave 2; Wave 4 unanimous YES.)
+
+---
+
+### 2026-06-09 — Session E: P/N 3010701 Founding Data Point for 3–5 sq ft Band A Range + ELLIOTT S/M/L Wordmark Family Middle Member
+
+**What:** **New item P/N 3010701** — LBL-ELLIOTT MED RD, a Cardinal Red cut vinyl "ELLIOTT" wordmark at 49.16" × 9.38" = 3.202 sq ft. Drawing dated 02/26/07, Rev B, Engineer AEB / DTR DFL. **First Band A data point outside the 2.51–2.56 sq ft small-format cluster** — founds the 3–5 sq ft Band A range; establishes the pricing curve between the cluster and Band B (LRG at $11.03/sq ft). Middle member of the confirmed ELLIOTT S/M/L brand wordmark family (SML undefined; MED = this item at 3.202 sq ft; LRG = P/N 3010704 at 7.069 sq ft). Locked tier table: **$57 / $50 / $44 / $42 / $40 / $39**. Anchor $44 at qty 20 = $13.74/sq ft — lands inside the Band A range ($13.65–$13.94/sq ft). Material cost $12.78/label ($11.87 vinyl + $0.91 tape — same 24" Cardinal Red roll + 24" TransferRite 582U as the small-format cluster; 2-across nesting at 9.38" rotated height across 24" roll with 5.24" clearance; 55.16" feed per row of 2 = 1.532 yd). Margin at qty 20: ~71% material-only. Margin floor at 200+: ~67.2% material-only. Tier compression 31.6% (intentionally tighter than Band A cluster's 51% to preserve the LRG inversion floor at $35.32 and reflect fully-burdened margin at high volume per revised Wave 2). 4-wave atomic AI validation complete (24 independent responses, 6 models × 4 waves) plus a revised Wave 2 with corrected geometry context after the first run partially contaminated by nesting misreads. Wave 4 was UNANIMOUS YES (6/6) on the tier table; 200+ tier raised from $38 to $39 after revised Wave 2 fully-burdened margin analysis at high volume. No override — engine consensus accepted. No first article — not requested or offered. No MOQ. §26 invoice protection covers all five tier boundaries (9/10, 19/20, 49/50, 99/100, 199/200).
+
+**Key validation summary:**
+- **Wave 1 (Build, no anchor):** Cluster $42.50–$44.00 (4 models, central $43.25). Outliers rejected: M1 $33.50 (inverts family curve below LRG); M5 $46.00 (exceeds small-format band ceiling). Key finding — price-to-area ratio ($44/$35 = 1.257) nearly exactly matches area ratio (3.202/2.56 = 1.251); proportional pricing with 0.5% fractional width-handling premium for the 49.16" weed/mask span.
+- **Wave 2 (Destruction, second run after geometry clarification):** $44.00 inside small-format band is structurally superior to $43.25 below it (THE single most important finding). 200+ needs visible step-down. Fully-burdened margin at $44 is ~44–53% (below 57% warn floor) — accepted as strategic concession. January 2027 normalization requires ~9% uplift ($44 → ~$48) — manageable.
+- **Wave 3 (Buyer Sim as Sean Finn):** All 6 approved $44.00 with immediate PO same day. Zero pushback. Sean's normalization $44 ÷ 3.202 = $13.74/sq ft passes pattern-match in <30 seconds. Pushback threshold $47–$49; logs $13.74/sq ft as permanent Band A anchor; expects future ~4.0 sq ft items at ~$54–$56.
+- **Wave 4 (Final Synthesis):** 6/6 UNANIMOUS YES on $57/$50/$44/$42/$40/$38; 200+ raised to $39 after revised Wave 2.
+
+**Files Modified:**
+- `items/3010701.md` — NEW. Full structure per `governance/STRUCTURE_RULES.md`: all required frontmatter fields, all 10 required sections (Spec Extraction, Item Overview, Material Specification, Nesting and Material Cost with explicit 90-degree rotation geometry documentation, Production Process, Pricing with §26 cliff table, Pricing Derivation with full 4-wave validation record + proportional-price math + family position + LRG inversion floor check, Margin Analysis, Notes and Warnings, Production Debrief).
+- `categories/cut-vinyl-3m-180mc.md` — (a) 3010701 row added to Items table; (b) Band A renamed from "Small-Format Cut Vinyl (2.51–2.56 sq ft)" to "Small-Format Cut Vinyl (1.0–5.0 sq ft)" to reflect the expanded calibrated range; (c) Band A metrics table rewritten to show cluster + MED ranges side-by-side (material cost / label, material cost / sq ft, selling price / sq ft, margin, tier compression, margin floor); (d) new "3010701 — first Band A data point outside the 2.51–2.56 sq ft cluster" paragraph added documenting founding-data-point status, family position, proportional-pricing math, validation record; (e) Band width paragraph rewritten to reflect 5-item band spanning 0.5 sq ft of confirmed data (2.512 → 3.202); (f) Override note extended to clarify that 3010701 is consistent with the concession-phase band and moves with it at January 2027 normalization.
+- `materials/3m-180mc-cardinal-red.md` — `used_in_items` list updated to include "3010701".
+- `materials/transferrite-582u.md` — `used_in_items` list updated to include "3010701".
+- `.claude/ARCHITECTURE.md` — (a) Last Updated stamp; (b) 3010701 row added to Item Catalog table; (c) Cut Vinyl Lettering Category Registry row updated: item count 8 → 9, Band A description expanded to reflect 5 data points + new MED anchor + concession-phase inheritance + January 2027 normalization context for 3010701; (d) new Precedent Chain branch added for 3010701 under the Band A chain — full structural explanation, material build, family position $/sq ft curve, proportional pricing math, LRG inversion floor check, complete 4-wave validation record summary, Wave 3 Sean-Finn buyer-sim findings, Nick's decision, tier table, §26 invoice protection note, internal-only January 2027 normalization note, family open item (SML undefined).
+- `.claude/PROGRESS.md` — this entry.
+- `.claude/STATE.yml` — last_session + next_action + blockers + item_count (20 → 21) + pending_quotes updated to reflect Session E completion.
+
+**Files NOT Modified:**
+- No existing item prices changed on any item.
+- No existing band anchor values changed (Band A small-format cluster anchor $13.67/sq ft unchanged; Band B $11.03/sq ft unchanged; Band C $20.64/sq ft unchanged).
+- No existing item files touched except via material `used_in_items` cascade (metadata-only).
+- No `governance/PRICING_RULES.md` changes (§25 full bleed and §26 invoice protection both apply unchanged to 3010701).
+- No `governance/PRODUCTION.md` changes (material costs unchanged; standard 24" Cardinal Red + 24" TransferRite already documented for the small-format cluster).
+- No `governance/STRUCTURE_RULES.md` changes (3010701 follows the existing schema).
+- No `governance/PRICING_VALIDATION.md`, `governance/VALIDATION_PROMPTS.md`, or `governance/CALCULATOR.md` changes — 3010701 is a within-band data point validated through the standard 4-wave process; no engine routing changes required (Band A routing at 1.0 ≤ sq ft < 5.0 already covers 3.202 sq ft).
+- No `.claude/MASTER_CONTEXT.md` changes (Core Rules unchanged; material families table unchanged).
+- No Band B (3010704) or Band C (3010707/08/09) definitions touched.
+- No calculator engine, build script, or `calculator_config.json` band-data changes — the Band A routing path already handles 3010701; this item is a data-point addition, not a band extension or new band.
+
+**Acceptance Criteria Met:**
+- `items/3010701.md` exists with all required frontmatter fields and all 10 required sections per `governance/STRUCTURE_RULES.md` ✓
+- Frontmatter: `width_in: 49.16`, `height_in: 9.38`, `sq_ft_per_label: 3.202`, `sq_ft_per_kit: 3.202`, `label_count: 1` ✓
+- Frontmatter: `price_1_9: 57.00`, `price_10_19: 50.00`, `price_20_49: 44.00`, `price_50_99: 42.00`, `price_100_199: 40.00`, `price_200_plus: 39.00` ✓
+- Frontmatter: `material_cost_per_unit: 12.78`, `per_label_at_qty_20: 44.00`, `margin_at_qty_20: "~71%"` ✓
+- Frontmatter: `first_article_price: ""`, `status: "Quoted"`, `override_type: ""` ✓
+- Frontmatter: `material_family: "3M 180mC Cut Vinyl"`, `item_type: "Vinyl Cut Lettering"` ✓
+- Nesting section documents the 90-degree rotation geometry explicitly (9.38" height feeds across the 24" roll, 49.16" width feeds along the roll length, 2-across nesting confirmed with 5.24" clearance) ✓
+- Pricing Derivation section contains the complete 4-wave validation record ✓
+- `categories/cut-vinyl-3m-180mc.md` contains 3010701 in the items table and the updated Band A definition with 5 data points and the new-data-point note ✓
+- `.claude/ARCHITECTURE.md` contains 3010701 in catalog, updated Category Registry, and the new Precedent Chain branch ✓
+- Material files updated with `used_in_items` reference ✓
+- `python scripts/validate.py` — 0 errors, 0 warnings (21 items) ✓
+- All 3 build scripts run clean ✓
+- `frontend/data.json` regenerated (21 items) ✓
+
+**Key Decisions Carried Forward:**
+- Band A is now CALIBRATED across the 2.51–3.202 sq ft range with 5 data points. Future Band A items at 1.0 ≤ sq ft < 5.0 validate against the expanded band. Items near the Band B boundary (~4.5–5.5 sq ft) and items near the Band C boundary (~0.8–1.2 sq ft) still require 4-wave AI validation before pricing — the band cannot safely extrapolate to its edges from current data points.
+- The ELLIOTT S/M/L wordmark family has TWO of three members confirmed (MED = 3010701, LRG = 3010704). SML is not yet defined. When the SML drawing arrives, validate against Band A (if 1.0 ≤ sq ft < 5.0) or Band C (if < 1.0 sq ft); do NOT parity-quote from MED or LRG without the full validation process.
+- 3010701's $44 anchor was validated AT the concession-phase Band A $/sq ft rate ($13.74). When the January 2027 normalization moves Band A to the AI-consensus range ($14.84–$16.41/sq ft), 3010701 moves with the band (estimated ~9% uplift, $44 → ~$48). This was deliberately considered in Wave 2 fully-burdened margin analysis and is internal-only context — never surfaced to Sean.
+- 3010701's 200+ tier ($39) was held above the LRG inversion floor ($35.32 = 3.202 × $11.03) by $3.68/label (10.4% above). The intentionally-tighter 31.6% tier compression (vs Band A cluster's 51%) preserves the band hierarchy at high quantities; deeper compression would have inverted against Band B.
+- Wave 3 confirmed that Sean will log $13.74/sq ft as the operative Band A anchor and expect future ~4.0 sq ft items at ~$54–$56. This is the new buyer-mental-model anchor for Band A — quote future Band A items accordingly until the January 2027 normalization.
+- §26 invoice protection covers all five tier boundaries on 3010701. Same pattern as 1205720, 1210810, 3010707, 3010704. Buyer is always charged the lesser of adjacent tier totals at billing time.
+
+**Pending Quotes:**
+- **3010701** ($44/qty 20, Band A 3–5 sq ft founding data point — Session E — quote pending)
+- 1279000 ($3.00/qty 20, Micro-Format Band founding data point — Session D)
+- 3010707 / 3010708 / 3010709 ($20/qty 20, Band C founding cluster)
+- 3010704 ($78/qty 20, Band B founding)
+- 1210810 ($57.50 for qty 10; recurring $4.75 at 20-49; 1-9 tier $7.25 added Session A)
+- 1082570 ($42 flat for qty 2 once PO arrives; production $8 at qty 20)
+- 1245130, 3017435, 3018378, 1186310, 1277970, 1277980, 1277990, 1278000, 3017583, 3017584 — quoted May–Jun 2026, awaiting Sean response/PO
+
+**Status:** Session E complete. validate.py 0/0; all 3 build scripts clean; new item 3010701 created and integrated into Band A. Three INDEPENDENT cut vinyl size-class bands preserved; the new data point expands Band A's calibrated range without contaminating Band B or Band C. ELLIOTT S/M/L wordmark family has two of three members confirmed. Ready to send Sean the quote.
 
 ---
 
