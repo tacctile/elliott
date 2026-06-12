@@ -2,7 +2,37 @@
 
 > **Newest entries at the top. Updated every session.**
 >
-> Last Updated: 2026-06-12 (Session L — P/N 1267140 added: printed/laminated single at 0.560 sq ft, third singles-band data point and first interior point at $15.63/sq ft, 4-wave validated, $8.75 at qty 20. Description/model blank on drawing — documented as blank, never invented. Item count 23 → 24.)
+> Last Updated: 2026-06-12 (Session M — P/N 1278220 added: LBL-MAX JIB CAP 1500 TIP HZRD, direct parity clone of 1279000 (Micro-Format Band founding data point). Identical dimensions / material / process / tier table ($4.50/$3.50/$3.00/$2.60/$2.30/$2.10); only P/N and description/artwork differ. Direct parity exemption per PRICING_VALIDATION.md — 1279000's 4-wave validation inherited, no new AI validation run. Rule 15 satisfied at $30.86/sq ft = band anchor. NOT a band founding data point. Permanent lockstep link to 1279000. Merged with the parallel Session L (P/N 1267140, PR #42): both sessions had double-claimed Session L / category footnote ⁶ / item #24 — 1267140 keeps all three (first to main); this session relabeled to Session M, footnote renumbered to ⁷, item count corrected to 25. Item count 24 → 25.)
+
+---
+
+### 2026-06-12 — Session M (new item): P/N 1278220 — Direct Parity Clone of P/N 1279000 (Micro-Format Band, $3.00 at qty 20)
+
+**What:** Created `items/1278220.md` (LBL-MAX JIB CAP 1500 TIP HZRD) as a **direct parity clone of P/N 1279000** (LBL-MAX PLTF CAP 1200 TIP HZRD — the Micro-Format Band founding data point). The only differences are the part number and the description/artwork content (max jib capacity 1500 lbs vs max platform capacity 1200 lbs). All dimensions (8.00" × 1.75" = 0.097 sq ft), material (Orajet 3951 + 1-mil polyester lam), process (Print/Lam/Cut, 1 pass), material cost ($0.20, §25 canonical), tier table ($4.50 / $3.50 / $3.00 / $2.60 / $2.30 / $2.10), and margin profile (~93% at qty 20) are cloned exactly. No PDF artifact attached this session — parity clone declared by Nick off the 1279000 spec; the item file's Spec Extraction documents the sourcing. All dependent files updated per the Self-Healing Rule. **No existing item's pricing, status, or data changed anywhere; no governance or calculator-engine changes.**
+
+**Pricing basis — direct parity exemption:**
+- **Exemption applied per `governance/PRICING_VALIDATION.md`:** "Items dimensionally and materially identical to something already quoted. Match the existing structure and move on." No multi-round AI validation was run; 1279000's 4-wave atomic validation (24 independent responses) + final 6-model comprehensive review (6/6 send as shown) are **inherited**. Same exemption pattern as 1068270 (clone of 1082570, Session F).
+- **Rule 15 (band check) still applies and is satisfied:** $3.00 at qty 20 / 0.0972 sq ft = **$30.86/sq ft = the Micro-Format Band anchor exactly** (the 3-decimal frontmatter rounding shows $30.93 — documented presentation artifact, same as on 1279000; within validate.py's ±1.5% band tolerance).
+- **NOT a band founding data point:** that status belongs to 1279000 only. 1278220 does not anchor, tighten, or extend the band; the band's data point count is unchanged. The band's boundary caution (4-wave validation required at ~0.08–0.12 sq ft) governs dimensionally NEW items, not exact-dimension parity clones — reconciliation documented in the item file's Pricing Derivation Step 4.
+- **Permanent lockstep link:** if any dimension, material cost, process, or band parameter changes on 1279000 in a future session, 1278220 must be updated in lockstep (same convention as the 1068270 ↔ 1082570 link). Declared in the item file (Pricing Derivation + Notes and Warnings), the category footnote, and the ARCHITECTURE precedent chain.
+- No first article requested or offered. No MOQ. No override. §26 invoice protection inherited (identical tier table → identical cliffs, all resolved at billing time).
+
+**Items Affected:**
+- 1278220 — NEW. Quoted 2026-06-12. Status: Quoted.
+- 1279000 — no file changes; now carries a downstream parity clone (lockstep obligation documented on the clone, the category footnote ⁷, and the precedent chain).
+
+**Key Decisions:**
+- **Item count — parallel-session collision resolved at 25:** the session brief said "item count 24 → 25," but at session time the repo had 23 item files, so 23 → 24 was filed initially. The brief's numbers turned out to assume the parallel Session L (P/N 1267140, PR #42) had already landed — it merged to main while this PR (#43) was open, and both sessions had independently double-claimed "Session L," category footnote ⁶, and item #24. Merge resolution: 1267140 keeps Session L / footnote ⁶ / #24 (first to main); this session is relabeled **Session M**, its category footnote renumbered **⁶ → ⁷**, and the final count corrected to **25** (= 25 item files; STATE.yml in sync). Both sessions' content verified intact post-merge — no pricing, status, governance, or engine data changed on either side; the only collisions were namespace (session letter, footnote marker, item count).
+- `cost_version_date` filed as 2026-06-05 — the cost data vintage of the benchmark's §25 build (Orajet 2026-04-22 / lam 2026-05-28 / ink standard 2026-06-01, unchanged since).
+- Category footnote marker ⁷ used (⁵ was already taken by 1278890 in the Multi-Label Kits table; ⁶ is claimed by the parallel Session L's 1267140 footnote — this entry's marker was renumbered ⁶ → ⁷ in the merge resolution).
+
+**Verification:** `validate.py` → **PASS 0 errors / 0 warnings** on the merged tree (1278220 passes §25 compliance — filed $0.20 vs canonical $0.189, buffer +$0.011 in window; Micro band membership within tolerance; material cross-refs bidirectional; STATE.yml item_count matches 25 files post-merge). All three build scripts ran clean — `frontend/data.json` (25 items post-merge), `frontend/materials.json` (1278220 and 1267140 both in the §25 materials' used_in_items), `frontend/calculator_config.json` regenerated.
+
+**Files Modified:** `items/1278220.md` (NEW — full 10-section file per STRUCTURE_RULES), `categories/printed-laminated-orajet.md` (Single Labels table row after 1279000 + footnote ⁷, renumbered from ⁶ in the merge resolution; Micro-Format Band Data points line intentionally unchanged), `materials/orajet-3951-white.md` + `materials/1mil-polyester-overlaminate.md` (used_in_items += 1278220), `.claude/ARCHITECTURE.md` (stamp; catalog row after 1267140/1279000; Printed + Laminated category count → 16 post-merge (14 + 1267140 + 1278220) + Micro-Format Band clone note; precedent chain branch under 1279000), `.claude/PROGRESS.md`, `.claude/STATE.yml` (item_count → 25 post-merge, last_session, next_action, pending_quotes), `frontend/data.json` / `materials.json` (regenerated on the merged tree).
+
+**Files NOT Modified:** all other `items/*.md` (including 1279000 — clone inherits, source untouched), all `governance/*`, `.claude/MASTER_CONTEXT.md`, all `scripts/*`, `frontend/index.html` (calculator engine untouched), `frontend/combinations.json`. No tier values, band anchors, statuses, or prices changed on any existing item. Supabase NOT written this session (not in scope): the `elliott_items` row for 1278220 is pending — run `scripts/migrate_to_supabase.py` (service role) to seed it; until then the deployed UI shows 1278220 only in offline-fallback mode.
+
+**Status:** Session M complete, including the merge resolution against Session L (1267140, PR #42). validate.py 0/0 on the merged tree; all 3 build scripts clean; quote ready to send ($3.00 at qty 20, tiers $4.50/$3.50/$3.00/$2.60/$2.30/$2.10). Next: Nick sends Sean the 1278220 quote (and the 1267140 quote from Session L); seed the Supabase `elliott_items` rows for both via migrate_to_supabase.py.
 
 ---
 
