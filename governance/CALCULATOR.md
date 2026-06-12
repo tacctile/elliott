@@ -444,7 +444,7 @@ Nick composes the quote email by hand, using the calculator's quote-language stu
 | `scripts/build_calculator_config.py` | Build script + **seed constants** | Generates `calculator_config.json` from repo state; its named constants are what `migrate_to_supabase.py` seeds into Supabase |
 | `scripts/build_frontend.py` | Build script | Generates `data.json` |
 | `scripts/build_materials.py` | Build script | Generates `materials.json` |
-| `scripts/migrate_to_supabase.py` | Migration (service_role) | Repo → Supabase: materials, items, bands, settings, default combinations. Idempotent. RLS/auth approach documented in its header |
+| `scripts/migrate_to_supabase.py` | Migration (service_role) | Repo → Supabase: materials, items, bands, settings, default combinations. Idempotent. RLS/auth approach documented in its header. **MANDATORY at end of every new-item Claude Code session.** Run after `validate.py` passes. Confirm row count before committing. Never defer. |
 | `scripts/sync_from_supabase.py` | Sync (anon key suffices) | Supabase → repo: regenerates all four fallback JSONs from live DB state |
 | `governance/CALCULATOR.md` | This file | The contract — what the calculator is, is not, and how to extend it |
 | `governance/PRICING_VALIDATION.md` | Companion governance | The 4-round AI validation process the calculator feeds into |

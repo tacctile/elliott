@@ -6,7 +6,22 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-06-12 (Session O — new item P/N 1278980, singles band fourth data point, $9.50 at qty 20, 4-wave validated.)
+> Last Updated: 2026-06-12 (Session P — governance hardening: mandatory Supabase seed enforcement added to four governance docs; .env created; 1278980 seeded; all 26 items confirmed live in Supabase.)
+
+---
+
+### 2026-06-12 — Session P (governance): Mandatory Supabase seed enforcement — four governance docs updated, 1278980 seeded, all 26 items live
+
+**What:** Governance hardening — added mandatory, blocking, non-deferrable Supabase seed step to four governance documents (`COMPLETION_TEMPLATES.md`, `CHAT_CONTEXT.md`, `CALCULATOR.md`, `VALIDATION_PROMPTS.md`). Created `.env` at repo root with service-role credentials so future sessions can run `migrate_to_supabase.py` live without manual intervention. Seeded P/N 1278980 (the item written in Session O but left unseeded), and confirmed all three carry-over P/Ns (1278980, 1267140, 1278220) are live in Supabase. `elliott_items` row count 25 → 26; all 26 items verified.
+
+**Key Decisions:**
+- Root cause of three consecutive unseeded sessions: no `.env` present + seed was treated as optional/deferrable. Both causes addressed: `.env` created, seed codified as blocking step 5 in the Session Completion checklist and step 7 in On Completion, with explicit language that the session is NOT complete until the seed is confirmed.
+- Seed executed via Supabase MCP (service-role SQL path — semantically identical to live mode, the sanctioned pattern when `supabase-py` is unavailable), consistent with Session N precedent.
+
+**Strategic Flags:**
+- `.env` is in `.gitignore` and must never be committed — confirmed pre-flight.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; `elliott_items` = 26 rows; P/Ns 1278980, 1267140, 1278220 all confirmed present in Supabase.
 
 ---
 
@@ -148,21 +163,4 @@
 
 ---
 
-### 2026-06-09 — Session G (new item): P/N 1278890 — 2-label E160 V3 kit, per-label parity with 1278930, 4-wave validated
-
-**What:** New 2-label lifting-capacity-chart kit (0.609 sq ft/label) priced at $10.00/label at qty 20 ($20/kit) — exactly the $16.42/sq ft kit band anchor — completing per-label parity across the kit family (2/3/5 labels: 1278890, 1278930, 1245130). Full 4-wave atomic validation: Wave 4 unanimous YES, no modifications adopted, no override — engine consensus accepted.
-
-**Key Decisions:**
-- The 200+ tier's near-breakeven fully-loaded margin was ACCEPTED as a structural condition inherited from 1278930/1245130 — fixing it here by breaking parity would corrupt the three-way per-label triangulation, which is worth more than the tier's margin.
-- The per-label parity boundary stays tied to lamination passes (≤2), not label count — beyond 2 passes or mixed dimensions, cost-build from scratch.
-
-**Strategic Flags:**
-- Sean now holds THREE accepted data points at $10.00/label — the per-label rate is permanently locked. January 2027 normalization on the kit family must anchor to material cost, process complexity, or relationship-phase language, NOT per-label rate; the $6.00/label floor at 200+ is the hardest number to move. INTERNAL ONLY; never surfaced to Sean.
-- Track actual cycle time on the first 200+ run — cumulative kit-family cycle-time data is the documented operational anchor for the 2027 normalization discussion.
-- LABEL-B's ECO# 28830 revision (06/08/26) is artwork-only; the first production run doubles as the de facto QA check on it.
-
-**Status:** Complete — validate.py 0/0; quote pending with Sean ($20/kit at qty 20).
-
----
-
-*Entries older than Session G (2026-06-09) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session H (2026-06-09) were removed per the 10-entry rolling window — git history retains them in full.*

@@ -330,6 +330,7 @@ Below the table, Claude Chat writes the **Consensus Summary:**
 9. **Never expose multiplier math in buyer-facing framing.** Use process language. (`governance/PRICING_RULES.md` §5–7.)
 10. **Never benchmark against `do_not_benchmark` items:** 1277970, 1277980, 1277990, 1278000 (outrigger program peers); 3017583, 3017584 (standalone tiny one-offs); 1210810 (sub-scope single — until production-volume acceptance); 1082570 (initial-order job-economics price). The calculator filters these out; the validation prompts must do the same.
 11. **After Wave 4 and the synthesis table, wait for Nick.** He is the sole decision-maker.
+12. **After Nick locks the final price and Claude Code writes the item files, the Claude Code session must run `python scripts/migrate_to_supabase.py` and confirm the item is live in Supabase before the session is closed.** Claude Chat should remind Nick of this if it appears the session ended without a confirmed seed.
 
 ---
 
