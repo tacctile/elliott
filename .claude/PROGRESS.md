@@ -2,7 +2,37 @@
 
 > **Newest entries at the top. Updated every session.**
 >
-> Last Updated: 2026-06-09 (Session K — drop zone scoped to main panel: overlay invisible until a file drag is in progress, never overlaps the left rail; 📎 attach button replaces the persistent strip. Supabase transferrite-582u notes backfilled (closes the Session J drift). Session I's D2/D3/D4/D5 work verified already complete — no pricing changes anywhere.)
+> Last Updated: 2026-06-12 (Session L — P/N 1278220 added: LBL-MAX JIB CAP 1500 TIP HZRD, direct parity clone of 1279000 (Micro-Format Band founding data point). Identical dimensions / material / process / tier table ($4.50/$3.50/$3.00/$2.60/$2.30/$2.10); only P/N and description/artwork differ. Direct parity exemption per PRICING_VALIDATION.md — 1279000's 4-wave validation inherited, no new AI validation run. Rule 15 satisfied at $30.86/sq ft = band anchor. NOT a band founding data point. Permanent lockstep link to 1279000. Item count 23 → 24.)
+
+---
+
+### 2026-06-12 — Session L (new item): P/N 1278220 — Direct Parity Clone of P/N 1279000 (Micro-Format Band, $3.00 at qty 20)
+
+**What:** Created `items/1278220.md` (LBL-MAX JIB CAP 1500 TIP HZRD) as a **direct parity clone of P/N 1279000** (LBL-MAX PLTF CAP 1200 TIP HZRD — the Micro-Format Band founding data point). The only differences are the part number and the description/artwork content (max jib capacity 1500 lbs vs max platform capacity 1200 lbs). All dimensions (8.00" × 1.75" = 0.097 sq ft), material (Orajet 3951 + 1-mil polyester lam), process (Print/Lam/Cut, 1 pass), material cost ($0.20, §25 canonical), tier table ($4.50 / $3.50 / $3.00 / $2.60 / $2.30 / $2.10), and margin profile (~93% at qty 20) are cloned exactly. No PDF artifact attached this session — parity clone declared by Nick off the 1279000 spec; the item file's Spec Extraction documents the sourcing. All dependent files updated per the Self-Healing Rule. **No existing item's pricing, status, or data changed anywhere; no governance or calculator-engine changes.**
+
+**Pricing basis — direct parity exemption:**
+- **Exemption applied per `governance/PRICING_VALIDATION.md`:** "Items dimensionally and materially identical to something already quoted. Match the existing structure and move on." No multi-round AI validation was run; 1279000's 4-wave atomic validation (24 independent responses) + final 6-model comprehensive review (6/6 send as shown) are **inherited**. Same exemption pattern as 1068270 (clone of 1082570, Session F).
+- **Rule 15 (band check) still applies and is satisfied:** $3.00 at qty 20 / 0.0972 sq ft = **$30.86/sq ft = the Micro-Format Band anchor exactly** (the 3-decimal frontmatter rounding shows $30.93 — documented presentation artifact, same as on 1279000; within validate.py's ±1.5% band tolerance).
+- **NOT a band founding data point:** that status belongs to 1279000 only. 1278220 does not anchor, tighten, or extend the band; the band's data point count is unchanged. The band's boundary caution (4-wave validation required at ~0.08–0.12 sq ft) governs dimensionally NEW items, not exact-dimension parity clones — reconciliation documented in the item file's Pricing Derivation Step 4.
+- **Permanent lockstep link:** if any dimension, material cost, process, or band parameter changes on 1279000 in a future session, 1278220 must be updated in lockstep (same convention as the 1068270 ↔ 1082570 link). Declared in the item file (Pricing Derivation + Notes and Warnings), the category footnote, and the ARCHITECTURE precedent chain.
+- No first article requested or offered. No MOQ. No override. §26 invoice protection inherited (identical tier table → identical cliffs, all resolved at billing time).
+
+**Items Affected:**
+- 1278220 — NEW. Quoted 2026-06-12. Status: Quoted.
+- 1279000 — no file changes; now carries a downstream parity clone (lockstep obligation documented on the clone, the category footnote ⁶, and the precedent chain).
+
+**Key Decisions:**
+- **Item count corrected to ground truth:** the session brief said "item count 24 → 25," but the repo had 23 item files (STATE.yml `item_count: 23`, 23 ARCHITECTURE catalog rows) before this session. Adding 1278220 makes **24**. Filed 23 → 24 everywhere — writing 25 would have desynced STATE.yml from the actual file count and tripped validate.py's item-count check.
+- `cost_version_date` filed as 2026-06-05 — the cost data vintage of the benchmark's §25 build (Orajet 2026-04-22 / lam 2026-05-28 / ink standard 2026-06-01, unchanged since).
+- Category footnote marker ⁶ used (⁵ was already taken by 1278890 in the Multi-Label Kits table).
+
+**Verification:** `validate.py` → **PASS 0 errors / 0 warnings** (1278220 passes §25 compliance — filed $0.20 vs canonical $0.189, buffer +$0.011 in window; Micro band membership within tolerance; material cross-refs bidirectional; STATE.yml item_count matches 24 files). All three build scripts ran clean — `frontend/data.json` (24 items), `frontend/materials.json` (1278220 in both §25 materials' used_in_items), `frontend/calculator_config.json` regenerated.
+
+**Files Modified:** `items/1278220.md` (NEW — full 10-section file per STRUCTURE_RULES), `categories/printed-laminated-orajet.md` (Single Labels table row after 1279000 + footnote ⁶; band Data points line intentionally unchanged), `materials/orajet-3951-white.md` + `materials/1mil-polyester-overlaminate.md` (used_in_items += 1278220), `.claude/ARCHITECTURE.md` (stamp; catalog row after 1279000; Printed + Laminated category count 14 → 15 + Micro-Format Band clone note; precedent chain branch under 1279000), `.claude/PROGRESS.md`, `.claude/STATE.yml` (item_count 23 → 24, last_session, next_action, pending_quotes), `frontend/data.json` / `materials.json` / `calculator_config.json` (regenerated).
+
+**Files NOT Modified:** all other `items/*.md` (including 1279000 — clone inherits, source untouched), all `governance/*`, `.claude/MASTER_CONTEXT.md`, all `scripts/*`, `frontend/index.html` (calculator engine untouched), `frontend/combinations.json`. No tier values, band anchors, statuses, or prices changed on any existing item. Supabase NOT written this session (not in scope): the `elliott_items` row for 1278220 is pending — run `scripts/migrate_to_supabase.py` (service role) to seed it; until then the deployed UI shows 1278220 only in offline-fallback mode.
+
+**Status:** Session L complete. validate.py 0/0; all 3 build scripts clean; quote ready to send ($3.00 at qty 20, tiers $4.50/$3.50/$3.00/$2.60/$2.30/$2.10). Next: Nick sends the 1278220 quote to Sean; seed the Supabase `elliott_items` row via migrate_to_supabase.py.
 
 ---
 
