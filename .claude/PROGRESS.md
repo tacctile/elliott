@@ -6,7 +6,23 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-06-12 (Session P — governance hardening: mandatory Supabase seed enforcement added to four governance docs; .env created; 1278980 seeded; all 26 items confirmed live in Supabase.)
+> Last Updated: 2026-06-12 (Session Q — prompt template hardening: On Completion block standardized with explicit build + seed + commit sequence; Prompt Writing Rule 9 now resolves seed count to a real number from STATE.yml; Acceptance Criteria Rules section added to CHAT_CONTEXT.md.)
+
+---
+
+### 2026-06-12 — Session Q (governance): Prompt template hardening — On Completion block, Prompt Writing Rule 9, Acceptance Criteria Rules section
+
+**What:** Hardened the new-item prompt template in `CHAT_CONTEXT.md` so every Claude Chat–generated prompt is self-contained and self-enforcing, with no human judgment required to remember build, seed, or count steps. Three targeted edits: On Completion block now has an explicit 9-step sequence (build scripts at step 6, validate at step 7, blocking seed with confirmed count at step 8, commit at step 9); Prompt Writing Rule 9 now requires Claude Chat to read `STATE.yml` and resolve seed count to a real number before generating any prompt; Acceptance Criteria Rules section added with 10 binary checks that every generated prompt must include.
+
+**Key Decisions:**
+- On Completion step 5 now explicitly requires updating `item_count` to N+1 in STATE.yml — previously implied but not stated.
+- The three build scripts are now a numbered step (step 6), not buried in session-completion boilerplate — this ensures they appear in every generated prompt's completion checklist.
+- Acceptance Criteria Rules formalized as a standalone section (not a subset of Prompt Writing Rules) so the 10 checks are always visible as a discrete reference.
+
+**Strategic Flags:**
+- Next session is a new item. Claude Chat must read STATE.yml, see item_count = 26, and resolve seed count to 27 in the Acceptance Criteria before generating the prompt.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 26 rows confirmed, no drift.
 
 ---
 
@@ -145,21 +161,6 @@
 - Materials added via the Manager exist in the DB first — a follow-up session must backfill `materials/*.md` before any CI rebuild overwrites the fallback JSONs.
 
 **Status:** Complete — validate.py 0/0 with 4 new structural checks active; Supabase seeded and RLS role-tested; next was Nick's browser review of v2.
-
----
-
-### 2026-06-09 — Full System Audit: 1 CRITICAL, 5 HIGH, 15 MEDIUM, 11 LOW, 7 INFO
-
-**What:** Hostile read-and-report audit of the entire system with maximum depth on the calculator; every number independently recomputed. Verdict: SAFE TO QUOTE FROM — WITH CAVEATS. The catalog (item tier tables — what Sean is invoiced against) is arithmetically immaculate and band-coherent, but calculator briefs landed 29–46% below locked catalog/band on every standard route (C-1), VALIDATION_PROMPTS.md §3's embedded band table was missing 3 bands and 5 anchors, and three §25 costing eras coexisted, making margin strings non-comparable. Full report: `audits/2026-06-09-full-system-audit.md`.
-
-**Key Decisions:**
-- Read-and-report only — zero fixes applied, not even typos; all remediation deferred to follow-up sessions gated on Nick resolving seven decision forks (D1 cascade design, D2 legacy §25 recost, D3 tape method, D4 data.json internal exposure, D5 rush-floor codification, D6 lam-pass model, D7 ink-lineage lockstep).
-- Calculator tier tables, margins, and quote stubs were declared unfit as Wave-1 inputs, and 4-wave sessions off §3's band table suspended, until the forks resolved (done in Sessions H and I).
-
-**Strategic Flags:**
-- Deployed data.json shipped INTERNAL ONLY Jan-2027 normalization notes behind a single Vercel password (M-15) — became fork D4.
-
-**Status:** Complete — findings handed to Session H (C-1, H-1–H-5, W1–W6) and Session I (D2-full, D3, D4, D5, D7), which resolved them.
 
 ---
 

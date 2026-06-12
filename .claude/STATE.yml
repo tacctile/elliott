@@ -4,9 +4,9 @@
 last_session:
   date: "2026-06-12"
   type: "governance"
-  summary: "Session P — governance hardening: mandatory Supabase seed enforcement added to four governance docs (COMPLETION_TEMPLATES.md, CHAT_CONTEXT.md, CALCULATOR.md, VALIDATION_PROMPTS.md); .env created at repo root with service-role credentials; P/N 1278980 seeded; all 26 items confirmed live in Supabase (elliott_items 25 → 26 rows); validate.py 0/0; all three build scripts clean."
+  summary: "Session Q — prompt template hardened: On Completion block standardized with explicit build + seed + commit sequence; Prompt Writing Rule 9 now resolves seed count to a real number from STATE.yml; Acceptance Criteria Rules section added to CHAT_CONTEXT.md; validate.py 0/0; all three build scripts clean; elliott_items = 26 rows confirmed, no drift."
 
-next_action: "All 26 items live in Supabase. Next new-item session will auto-seed as part of the mandatory completion checklist. Nick sends Sean the still-pending quotes: 1278980 ($9.50 at qty 20; anchor: 'Pricing is based on the same cast vinyl/polyester overlaminate construction as your prior Pro Label orders.'), 1267140 ($8.75 at qty 20), 1278220 ($3.00 at qty 20). Carry-overs: Nick tests the Session K drop-zone fix in the browser; verify first live calculator quote run; enter first new material via Materials Manager; decide D4-residual (sections.notes INTERNAL ONLY subsections in data.json)."
+next_action: "System fully hardened. Next session is a new item. Claude Chat reads STATE.yml item_count before generating prompt, resolves seed count to 27, embeds in Acceptance Criteria."
 
 blockers: "none"
 

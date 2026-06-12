@@ -88,10 +88,14 @@ Every prompt pasted into Claude Code follows this structure:
 2. Update `categories/[relevant].md` — add item to catalog table + update Pricing Profile
 3. Update `.claude/ARCHITECTURE.md` — add item to catalog registry
 4. Update `.claude/PROGRESS.md` — add session entry
-5. Update `.claude/STATE.yml` — record what was done
-6. Run `python scripts/validate.py` — all checks must pass
-7. Run `python scripts/migrate_to_supabase.py` (live). Confirm `elliott_items` row count incremented. This is blocking — do not commit until seed is confirmed.
-8. Commit with message: `item([PN]): [short description]`
+5. Update `.claude/STATE.yml` — record what was done, update `item_count` to [N+1]
+6. Run all three build scripts:
+   * `python scripts/build_frontend.py`
+   * `python scripts/build_materials.py`
+   * `python scripts/build_calculator_config.py`
+7. Run `python scripts/validate.py` — must pass 0 errors, 0 warnings before proceeding
+8. Run `python scripts/migrate_to_supabase.py` (live mode using `.env` credentials). Confirm `elliott_items` row count = [N+1]. This step is BLOCKING. Do not proceed to step 9 until row count is confirmed.
+9. Commit with message: `item([PN]): [short description]`
 ```
 
 ### Prompt Writing Rules
@@ -104,7 +108,26 @@ Every prompt pasted into Claude Code follows this structure:
 6. **Include the "Do NOT" section.** Prevents scope creep.
 7. **Acceptance criteria are testable.** Not "it should be correct" — specific checks.
 8. **Spec data is pre-verified.** Nick confirmed the extraction before it goes into the prompt.
-9. **Every new-item prompt must include in its Acceptance Criteria:** "`python scripts/migrate_to_supabase.py` completed successfully — `elliott_items` row count = [expected count]." The session is not complete until this check passes. Never mark this step as deferred, optional, or a follow-up.
+9. **Supabase seed count is always explicit.** Every new-item prompt must state the current `item_count` from `STATE.yml` and use it to generate a specific, testable Acceptance Criteria line: '`python scripts/migrate_to_supabase.py` completed in live mode — `elliott_items` row count confirmed = [current item_count + 1].' Claude Chat must read `STATE.yml` before generating the prompt to get the correct current count. Never use a placeholder like [expected count] — always resolve it to a real number.
+
+---
+
+### Acceptance Criteria Rules
+
+Every generated prompt must include an Acceptance Criteria section. That section must contain ALL of the following as testable, binary checks:
+
+1. Item file `items/[PN].md` created with all 10 required sections
+2. `categories/[relevant].md` items table updated — P/N appears in the table
+3. `categories/[relevant].md` Pricing Profile updated — new data point reflected
+4. `.claude/ARCHITECTURE.md` catalog row added — item count correct
+5. Both material `used_in_items` lists updated (Orajet + lam for printed/lam; vinyl + tape for cut vinyl)
+6. `python scripts/validate.py` — 0 errors, 0 warnings
+7. `python scripts/migrate_to_supabase.py` completed in live mode — `elliott_items` row count = [resolved number, never a placeholder]
+8. PROGRESS.md entry added at top; rolling window enforced (10 entries max)
+9. STATE.yml `item_count` = [resolved number]
+10. Committed
+
+Claude Chat must resolve all bracketed placeholders to real values before generating the prompt. A prompt with unresolved placeholders like [expected count] or [N+1] is not acceptable — read STATE.yml first.
 
 ---
 
