@@ -6,7 +6,23 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-06-12 (Session N — Supabase seed of P/N 1267140 + 1278220. Same day: file rewritten to the compact 10-entry rolling-window format; entries older than Session F dropped — git retains them.)
+> Last Updated: 2026-06-12 (Session O — new item P/N 1278980, singles band fourth data point, $9.50 at qty 20, 4-wave validated.)
+
+---
+
+### 2026-06-12 — Session O (new item): P/N 1278980 — singles band fourth data point, $9.50 at qty 20, 4-wave validated
+
+**What:** New printed/laminated single label (LABEL-PLTFM RANGE CAPACITY CHART MODEL E160 V3) at 7.88" × 11.13" = 0.609 sq ft, priced $9.50 at qty 20 = $15.60/sq ft — the singles band's fourth confirmed data point and the first item at exactly 0.609 sq ft. Band $/sq ft is now monotonic across four positions (0.503 / 0.560 / 0.609 / 1.296 → $15.91 / $15.63 / $15.60 / $15.43). Full 4-wave atomic validation (24 responses): Wave 1 landed 5/6 at exactly $9.50, all anchored to 1267140; Wave 3 sent the PO as-is 6/6 with zero questions.
+
+**Key Decisions:**
+- Wave 2's single structural finding adopted: a 200+ floor below $6.50 inverts against 1267140's validated floor on a $/sq ft basis — floor set at $6.75 (strongest Wave 2 clustering), 100-199 held at $7.50 for tier separation. Wave 4 split 4 YES / 2 NO (the 2 NO argued $7.07–$7.25 on $/sq ft parity); Nick accepted $6.75 — the residual $/sq ft step vs 1267140's floor ($11.08 vs $11.61) is theoretical given Sean's 20–50 batch pattern, and $6.75 stays above the $6.50 dollar threshold he'd notice on an invoice. No override — engine consensus accepted.
+- Routed as a SINGLE to the singles band despite exact kit-family label geometry: kit per-label parity does not apply to singles; $9.50 vs the $10.00/label kit rate is the documented intentional kit premium, not an inconsistency.
+
+**Strategic Flags:**
+- INTERNAL ONLY: likely the first of several singles at exactly 0.609 sq ft — every tier in this table becomes the permanent reference for future items at this size. January 2027 normalization from $9.50 requires ~$1.46–$3.90/label uplift to $18–$22/sq ft; anchor to relationship-phase transition, NOT per-label rate arguments — Sean now has four accepted/quoted data points at $15.43–$15.91/sq ft.
+- Wave 3 quote email anchor line locked: "Pricing is based on the same cast vinyl/polyester overlaminate construction as your prior Pro Label orders." (Reference 1267140/1230820 if helpful.)
+
+**Status:** Complete — validate.py 0/0; quote pending ($9.50 at qty 20); Supabase seed for 1278980 deferred to a follow-up run (scripts/migrate_to_supabase.py).
 
 ---
 
@@ -149,19 +165,4 @@
 
 ---
 
-### 2026-06-09 — Session F (new item): P/N 1068270 — direct parity clone of 1082570
-
-**What:** New printed/laminated load chart label (CHART-EZR BASKET JIB 500# / G85 BASKET 500#) created as a direct parity clone of 1082570 — an orientation-flipped W/H pair (7.25" × 10.00" vs 10.00" × 7.25") with identical sq ft (0.503), material, process, tier table ($8.00 at qty 20), and margins; only artwork content differs. The direct parity exemption per `governance/PRICING_VALIDATION.md` applies: 1082570's 4-round validation is inherited, no new AI validation run. Rule 15 band check satisfied: $15.91/sq ft at qty 20, inside the singles band.
-
-**Key Decisions:**
-- Orientation-flipped W/H pairs qualify as "dimensionally identical" for the parity exemption — sq ft, material cost, nesting, and per-label labor are all unchanged. This is the clean, repeatable clone pattern (later reused by 1278220 in Session M).
-
-**Strategic Flags:**
-- Permanent lockstep link: any future change to 1082570's material cost, process, or band parameters must update 1068270 in lockstep.
-- 1068270 inherits 1082570's data-point status rather than adding a new structural one — but the singles band's 0.503 sq ft end is now reinforced by a second item at that exact size.
-
-**Status:** Complete — validate.py 0/0; quote pending with Sean ($8.00 at qty 20).
-
----
-
-*Entries older than Session F (2026-06-09) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session G (2026-06-09) were removed per the 10-entry rolling window — git history retains them in full.*
