@@ -2,7 +2,26 @@
 
 > **Newest entries at the top. Updated every session.**
 >
-> Last Updated: 2026-06-12 (Session M — P/N 1278220 added: LBL-MAX JIB CAP 1500 TIP HZRD, direct parity clone of 1279000 (Micro-Format Band founding data point). Identical dimensions / material / process / tier table ($4.50/$3.50/$3.00/$2.60/$2.30/$2.10); only P/N and description/artwork differ. Direct parity exemption per PRICING_VALIDATION.md — 1279000's 4-wave validation inherited, no new AI validation run. Rule 15 satisfied at $30.86/sq ft = band anchor. NOT a band founding data point. Permanent lockstep link to 1279000. Merged with the parallel Session L (P/N 1267140, PR #42): both sessions had double-claimed Session L / category footnote ⁶ / item #24 — 1267140 keeps all three (first to main); this session relabeled to Session M, footnote renumbered to ⁷, item count corrected to 25. Item count 24 → 25.)
+> Last Updated: 2026-06-12 (Session N — Supabase seed: P/N 1267140 and P/N 1278220 upserted into `elliott_items` + `elliott_items_internal` via migrate_to_supabase.py `--emit-sql` executed through the Supabase MCP (service-role path; no SUPABASE_SERVICE_ROLE_KEY in the remote session env). Both tables 23 → 25 rows; migration report 25 items / 0 skipped; both P/Ns verified row-level in the live DB (1267140 → singles_standard, 1278220 → singles_micro). Deployed Supabase-first UI now carries both. No repo item, governance, or pricing changes.)
+
+---
+
+### 2026-06-12 — Session N (ops): Supabase Seed — P/N 1267140 + P/N 1278220 → `elliott_items` / `elliott_items_internal`
+
+**What:** Seeded the two items added earlier today (Session L: 1267140; Session M: 1278220) into the shared `prolabel` Supabase project, completing the carry-over flagged in both sessions' Status lines and in STATE.yml. The deployed frontend reads Supabase first — until this run it could only show both items in offline-fallback (static JSON) mode. **No repo item files, governance files, pricing, tiers, or statuses were touched** — this was a pure seed run of the existing source-of-truth files.
+
+**Execution path:** The remote session environment has no `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` (and no `.env`), so the script's live mode exited as designed. Used the documented alternate path (script docstring: `--emit-sql` is "for psql / MCP runs"; STATE.yml next_action: "migrate_to_supabase.py with service-role creds, **or MCP**"): generated the full idempotent SQL (88 statements, ~79 KB; report: 12 materials, 25 items, 6 bands, 1 settings row, 8 combinations, 25/25 item→combination links, **0 skipped**) and executed it against project `prolabel` (`tszssadgsxjoymcttlwd`) through the service-role-backed Supabase MCP in 5 sequential statement batches. Batching detail: the three largest multirow upserts were split at row boundaries to fit MCP payload limits — semantically identical upserts (same columns, same `on conflict ... do update`), same statement order as `--emit-sql`, and each combination's insert + component delete/re-insert kept atomic within one batch. All 5 batches executed without error.
+
+**Live-DB verification (post-seed):**
+- `elliott_items` **23 → 25 rows**; `elliott_items_internal` **23 → 25 rows**; all 25 items have `material_combination_id` linked.
+- **1267140** — band_class `singles_standard` (now 4 items: 1068270, 1082570, 1230820, 1267140); 0.56 sq ft; $1.09 material; tiers $13.00/$10.50/$8.75/$7.50/$7.25/$6.50; $8.75 at qty 20; ~87.5%; Quoted 2026-06-12; benchmark 1068270; linked to the Orajet 3951 + 1-mil Poly Lam combination.
+- **1278220** — band_class `singles_micro` (now 2 items: 1278220, 1279000); 0.097 sq ft; $0.20 material; tiers $4.50/$3.50/$3.00/$2.60/$2.30/$2.10; $3.00 at qty 20; ~93%; Quoted 2026-06-12; benchmark 1279000; linked to the Orajet 3951 + 1-mil Poly Lam combination.
+- **D4 routing intact:** `pricing_logic`/`notes` are blank (`''`) on both anon-readable `elliott_items` rows; full strategy text (including the 1267140 INTERNAL ONLY normalization note) lives only in `elliott_items_internal` (1267140: 629 + 736 chars; 1278220: 474 + 468 chars). RLS re-verified: `elliott_items` has public SELECT (deployed UI sees both rows); `elliott_items_internal` has **no** anon policies (service-role only).
+- Materials refresh included both new P/Ns in `used_in_items` on orajet-3951-white and 1mil-polyester-overlaminate; bands/settings/combinations re-upserted to current repo values (idempotent — no value drift, the repo is the source of truth).
+
+**Files Modified:** `.claude/PROGRESS.md`, `.claude/STATE.yml` (seed carry-over cleared). Nothing else — no `items/*`, no `governance/*`, no `categories/*`, no `materials/*`, no `scripts/*`, no `frontend/*`.
+
+**Status:** Session N complete. Both P/Ns live in Supabase; acceptance criteria met (0 skipped, both P/Ns in the report's band rows, deployed Supabase-first UI now serves both). Remaining next actions are unchanged from Session L/M: Nick sends Sean both quotes (1267140 $8.75 at qty 20; 1278220 $3.00 at qty 20).
 
 ---
 
