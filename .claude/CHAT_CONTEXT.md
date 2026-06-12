@@ -28,20 +28,21 @@ This file defines how both paths work.
 5. Claude Chat generates the self-contained prompt.
 6. Nick pastes the prompt into Claude Code (Opus 4.7, max effort) with the repo mounted.
 7. Claude Code outputs: spec extraction, pricing recommendation, complete item `.md` file, updated category profile, updated ARCHITECTURE.md.
-8. Nick reviews the output.
-9. Nick opens a fresh Claude Chat session with the full repo loaded (minus item files and frontend).
-10. Nick pastes the validation brief from the calculator.
-11. Claude Chat generates Wave 1 prompt (per `governance/VALIDATION_PROMPTS.md`).
-12. Nick runs Wave 1 across 6 models in ChatHub, pastes all 6 responses back into Claude Chat.
-13. Claude Chat generates Wave 2 prompt incorporating Wave 1 findings.
-14. Nick runs Wave 2, pastes all 6 responses.
-15. Claude Chat generates Wave 3 prompt.
-16. Nick runs Wave 3, pastes all 6 responses.
-17. Claude Chat generates Wave 4 prompt.
-18. Nick runs Wave 4, pastes all 6 responses.
-19. Claude Chat produces the Final Synthesis Table.
-20. Nick and Claude Chat discuss and lock the final price.
-21. Nick commits and sends the quote.
+8. Claude Code runs `python scripts/migrate_to_supabase.py` in live mode. Confirms `elliott_items` row count = N+1. This is a required completion step, not a follow-up task. Session is not done until this passes.
+9. Nick reviews the output.
+10. Nick opens a fresh Claude Chat session with the full repo loaded (minus item files and frontend).
+11. Nick pastes the validation brief from the calculator.
+12. Claude Chat generates Wave 1 prompt (per `governance/VALIDATION_PROMPTS.md`).
+13. Nick runs Wave 1 across 6 models in ChatHub, pastes all 6 responses back into Claude Chat.
+14. Claude Chat generates Wave 2 prompt incorporating Wave 1 findings.
+15. Nick runs Wave 2, pastes all 6 responses.
+16. Claude Chat generates Wave 3 prompt.
+17. Nick runs Wave 3, pastes all 6 responses.
+18. Claude Chat generates Wave 4 prompt.
+19. Nick runs Wave 4, pastes all 6 responses.
+20. Claude Chat produces the Final Synthesis Table.
+21. Nick and Claude Chat discuss and lock the final price.
+22. Nick commits and sends the quote.
 
 ### Critical Rule
 
@@ -89,7 +90,8 @@ Every prompt pasted into Claude Code follows this structure:
 4. Update `.claude/PROGRESS.md` — add session entry
 5. Update `.claude/STATE.yml` — record what was done
 6. Run `python scripts/validate.py` — all checks must pass
-7. Commit with message: `item([PN]): [short description]`
+7. Run `python scripts/migrate_to_supabase.py` (live). Confirm `elliott_items` row count incremented. This is blocking — do not commit until seed is confirmed.
+8. Commit with message: `item([PN]): [short description]`
 ```
 
 ### Prompt Writing Rules
@@ -102,6 +104,7 @@ Every prompt pasted into Claude Code follows this structure:
 6. **Include the "Do NOT" section.** Prevents scope creep.
 7. **Acceptance criteria are testable.** Not "it should be correct" — specific checks.
 8. **Spec data is pre-verified.** Nick confirmed the extraction before it goes into the prompt.
+9. **Every new-item prompt must include in its Acceptance Criteria:** "`python scripts/migrate_to_supabase.py` completed successfully — `elliott_items` row count = [expected count]." The session is not complete until this check passes. Never mark this step as deferred, optional, or a follow-up.
 
 ---
 

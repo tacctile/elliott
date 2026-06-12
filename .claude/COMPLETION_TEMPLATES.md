@@ -16,7 +16,7 @@ This repo is a living, interconnected set of documents. When anything changes, *
 
 | Change Type | Files That Must Be Updated |
 |-------------|---------------------------|
-| New item quoted | `items/[PN].md` (all sections), `.claude/ARCHITECTURE.md` (item catalog row), `categories/[relevant].md` (items table + Pricing Profile), `.claude/PROGRESS.md` (session entry), `.claude/STATE.yml`, `frontend/data.json` (run `python scripts/build_frontend.py` — rebuild `frontend/data.json`) |
+| New item quoted | `items/[PN].md` (all sections), `.claude/ARCHITECTURE.md` (item catalog row), `categories/[relevant].md` (items table + Pricing Profile), `.claude/PROGRESS.md` (session entry), `.claude/STATE.yml`, `frontend/data.json` (run `python scripts/build_frontend.py` — rebuild `frontend/data.json`) — then run `python scripts/migrate_to_supabase.py` (live, blocking). Confirm `elliott_items` row count = previous count + 1 before closing the session. NOT deferrable. |
 | Price change on existing item | `items/[PN].md` (pricing + margin sections), `.claude/ARCHITECTURE.md` (price/margin columns), `categories/[relevant].md` (items table + Pricing Profile if band shifts), `.claude/PROGRESS.md`, check all downstream items in the precedent chain, `frontend/data.json` (run `python scripts/build_frontend.py` — rebuild `frontend/data.json`) |
 | Material cost change | `governance/PRODUCTION.md` (material costs), `categories/[relevant].md` (Pricing Profile material cost band), every `items/*.md` in the affected material family (recalculate margins), `.claude/ARCHITECTURE.md` (margin columns), `.claude/PROGRESS.md`, `.claude/STATE.yml`, `frontend/data.json` (run `python scripts/build_frontend.py` — rebuild `frontend/data.json`) |
 | Status change | `items/[PN].md` (frontmatter status + Item Overview), `.claude/ARCHITECTURE.md` (status column), `.claude/PROGRESS.md`, `frontend/data.json` (run `python scripts/build_frontend.py` — rebuild `frontend/data.json`) |
@@ -32,6 +32,7 @@ This repo is a living, interconnected set of documents. When anything changes, *
 | Pricing band shifts (new FA-Accepted item, band normalization) | Update `categories/*.md` first (source of truth), then re-run `build_calculator_config.py` to propagate to calculator |
 | New item pricing validation complete (4 waves done, price locked by Nick) | Claude Code writes item file per `governance/STRUCTURE_RULES.md`; updates `categories/*.md`, `.claude/ARCHITECTURE.md`, `.claude/PROGRESS.md`, `.claude/STATE.yml`, runs all build scripts |
 | Validation wave prompts need updating (band shift, relationship phase change, new benchmark item) | Update `governance/VALIDATION_PROMPTS.md` — specifically Section 3 benchmark anchors, Section 3 band values, and Section 5 Sean profile if relationship status changes |
+| Supabase seed required | Every session that adds, modifies, or discontinues an item | Run `python scripts/migrate_to_supabase.py` after `validate.py` passes. Confirm row count. If credentials missing, create `.env` first. |
 
 ---
 
@@ -42,8 +43,13 @@ Every session that modifies the repo ends with:
 1. All affected files updated per the table above.
 2. `.claude/PROGRESS.md` entry added (newest first).
 3. `.claude/STATE.yml` updated with session outcome and next action.
-4. `python scripts/validate.py` passes (when applicable).
-5. Commit with the appropriate message format (see `CHAT_CONTEXT.md`).
+4. `python scripts/validate.py` passes (0 errors, 0 warnings).
+5. **`python scripts/migrate_to_supabase.py` runs successfully (live mode).
+   Confirm `elliott_items` row count incremented by the number of new items
+   this session. This step is BLOCKING — the session is not complete until
+   the seed is confirmed. If service-role credentials are missing, the .env
+   file at repo root must be created before proceeding. Never defer this step.**
+6. Commit with the appropriate message format (see `CHAT_CONTEXT.md`).
 
 > PROGRESS.md enforces a 10-entry rolling window. When adding a new entry, remove the oldest if the count exceeds 10.
 
