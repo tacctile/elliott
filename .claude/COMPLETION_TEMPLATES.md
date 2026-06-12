@@ -2,7 +2,7 @@
 
 > **What gets updated when. No exceptions. No "I'll update that next time."**
 >
-> Last Updated: 2026-06-01 (VALIDATION_PROMPTS triggers added)
+> Last Updated: 2026-06-12 (PROGRESS.md 10-entry rolling window codified + compact entry format adopted)
 
 ---
 
@@ -45,27 +45,26 @@ Every session that modifies the repo ends with:
 4. `python scripts/validate.py` passes (when applicable).
 5. Commit with the appropriate message format (see `CHAT_CONTEXT.md`).
 
+> PROGRESS.md enforces a 10-entry rolling window. When adding a new entry, remove the oldest if the count exceeds 10.
+
 ---
 
 ## PROGRESS.md Entry Format
 
-Newest entries at the top.
+Newest entries at the top. **Rolling window: 10 entries max — when adding an 11th, remove the oldest. Git retains all history.** Target length per entry: 10–25 lines. No sections beyond these five. PROGRESS.md is the session memory layer only — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and acceptance criteria are enforced by `scripts/validate.py`. Do not log file-modified lists, acceptance checklists, wave transcripts, margin tables, or §26 cliff math here.
 
 ```markdown
-### YYYY-MM-DD — [Session Type]: [Summary]
+### YYYY-MM-DD — [Session Label]: [One-line summary]
 
-**What:** [1-2 sentence summary]
+**What:** 2–4 sentences max. What was done and why. Strategic framing only — not a file list.
 
-**Items Affected:**
-- [P/N] — [what changed]
+**Key Decisions:** Only decisions that are non-obvious, override something, or affect future sessions. Engine consensus with no override = omit. If nothing notable: omit this section entirely.
+- Decision + one-sentence rationale
 
-**Files Modified:**
-- [file path] — [what changed]
+**Strategic Flags:** Internal-only context, band implications, January 2027 normalization anchors, precedent risks, parity links, do-not-benchmark designations. If nothing: omit this section.
+- Flag + implication
 
-**Key Decisions:**
-- [any decisions that affect future sessions]
-
-**Status:** [complete / partial — what's left]
+**Status:** One sentence. Complete / partial + what remains.
 ```
 
 ---
