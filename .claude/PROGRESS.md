@@ -6,7 +6,27 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-06-16 (Session S — new item 1247120: LBL-DNGR TIP-OVER HAZARD — sub-scope single (0.122 sq ft), $2.75 at qty 20 ($22.54/sq ft), 4-wave validated.)
+> Last Updated: 2026-06-16 (Session T — new item 3024140: LBL-WRK LGHTS — smallest item on account (0.019 sq ft), $2.50 at qty 20, 4-wave validated, complexity-dependent non-ANSI floor below 3024592.)
+
+---
+
+### 2026-06-16 — Session T (new item): P/N 3024140 — LBL-WRK LGHTS, smallest item on account (0.019 sq ft), $2.50 at qty 20, 4-wave validated, complexity-dependent floor
+
+**What:** New printed/laminated single label (LBL-WRK LGHTS) at 2.000" × 1.375" = 0.019 sq ft — the smallest production catalog item on the Elliott account. Drawing dated 10/23/24, engineer LKM, model blank. Non-ANSI equipment control label (+ WORK LIGHTS / ON / OFF, black on white, interior Ø1/2" circle cutout). Sub-0.06 sq ft: per-label floor governs AND is complexity-dependent. 4-wave atomic AI validated (24 independent responses, 6 models × 4 waves). $2.50 at qty 20 — intentionally below 3024592 ($2.75, ANSI Z535.6 DANGER) per complexity differentiation. Tier table: $4.00/$3.00/$2.50/$2.25/$2.00/$1.75. Material cost $0.10 (§25 canonical: $0.038 calculated + incidental buffer). Margin ~96.0% at qty 20.
+
+**Key Decisions:**
+- Wave 1 (6/6) initially proposed $2.75 mirroring 3024592, citing complexity offset (interior Ø1/2" cutout vs simpler color scheme). Wave 2 (6/6 H on all four attack vectors) rejected: cutout adds ~5–10 sec weeding; eliminated ANSI compliance labor (multi-color registration, compliance inspection) exceeds cutout labor. True non-ANSI floor is below 3024592.
+- Wave 3: 3/6 approved at $2.75; 3/6 pushed back (threshold $2.25–$2.50, instant approval $1.50–$2.25).
+- Wave 4: 6/6 unanimous NO on $2.75; 6/6 unanimous YES on $2.50. Engine consensus accepted, no override.
+- Complexity-dependent per-label floor now confirmed with two live data points: ANSI regulated → $2.75 (3024592); simple non-ANSI → $2.50 (3024140). Documented in categories/printed-laminated-orajet.md.
+- do_not_benchmark = false. Added to BAND_EXCEPTIONS in validate.py ($/sq ft artifact, $131.58, is inapplicable).
+
+**Strategic Flags:**
+- Per-label floor is now formally complexity-dependent — this is a doctrinal addition. Future sub-0.06 sq ft items must classify complexity (ANSI vs non-ANSI) before applying the floor.
+- Item count: 28 → 29. Printed/Laminated category: 19 → 20 items.
+- The $/sq ft implied rate ($131.58 at qty 20) is a mathematical artifact. Never benchmark against it.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 29 rows confirmed in Supabase.
 
 ---
 
@@ -152,19 +172,4 @@
 
 ---
 
-### 2026-06-09 — Session J (feature): Global spec sheet drop zone + Supabase Storage
-
-**What:** Added global drag-and-drop / paste / click-to-browse spec sheet upload across all tabs. Files land in the private Supabase Storage bucket `spec-sheets` (reads via signed URLs only), link to items through the new `elliott_items.spec_sheet_paths` column, and render in a new in-app viewer; `sync_from_supabase.py` signs stored paths into regenerated data.json. No pricing logic, routing, governance, band, or price changes — engine block zero diff hunks.
-
-**Key Decisions:**
-- Upload association priority: selected Items-tab item → Calculator P/N field → typeahead modal with an "unlinked" fallback folder. Duplicate filenames get timestamp suffixes — revision history, never overwrite.
-- Security catch fixed live: `elliott_items` carried a dormant table-level anon UPDATE grant that the new RLS policy would have activated for every column, prices included — revoked and re-granted column-scoped to `spec_sheet_paths` only, role-tested both ways.
-
-**Strategic Flags:**
-- Drift flagged for Nick: the Supabase `elliott_materials.transferrite-582u` row had empty notes, so any sync run would overwrite the repo's Session-I D3 usage-method note (closed in Session K).
-
-**Status:** Complete — validate.py 0/0; storage + RLS live and role-tested; next: Nick drops a real spec sheet in the browser.
-
----
-
-*Entries older than Session J (2026-06-09) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session K (2026-06-09) were removed per the 10-entry rolling window — git history retains them in full.*
