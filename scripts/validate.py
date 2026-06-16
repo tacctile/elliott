@@ -95,6 +95,7 @@ BAND_EXCEPTIONS = {
     "1278000": "one-off job-economics floor — excluded from all bands",
     "3017583": "one-off job-economics floor — excluded from all bands",
     "3017584": "one-off job-economics floor — excluded from all bands",
+    "3024592": "per-label floor governs — first sub-0.06 sq ft production item; linear Micro band formula ($30.86/sq ft × 0.054 = $1.67) overridden by per-label floor at $2.75/qty 20; $/sq ft ($50.93) is an arithmetic artifact, not the pricing basis; 4-wave validated 2026-06-16",
 }
 
 

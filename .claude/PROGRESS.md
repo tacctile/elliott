@@ -6,7 +6,26 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-06-12 (Session Q — prompt template hardening: On Completion block standardized with explicit build + seed + commit sequence; Prompt Writing Rule 9 now resolves seed count to a real number from STATE.yml; Acceptance Criteria Rules section added to CHAT_CONTEXT.md.)
+> Last Updated: 2026-06-16 (Session R — new item 3024592: LBL-FALL PRTCT ANCHRG 1 PERSON — first sub-0.06 sq ft production catalog item on the account; per-label floor $2.75 at qty 20; 4-wave validated.)
+
+---
+
+### 2026-06-16 — Session R (new item): P/N 3024592 — first sub-0.06 sq ft production item, per-label floor $2.75 at qty 20, 4-wave validated
+
+**What:** New printed/laminated single label (LBL-FALL PRTCT ANCHRG 1 PERSON) at 4.750" × 1.625" = 0.054 sq ft, ANSI Z535.6 DANGER class. First production catalog item below 0.06 sq ft on the Elliott account. The Micro-Format Band linear formula ($30.86/sq ft × 0.054 = $1.67) is overridden by the per-label floor documented in 1279000. Floor anchor confirmed at $2.75 at qty 20 by 4-wave atomic AI validation (24 responses, 6 models × 4 waves). Tier table: $4.25/$3.25/$2.75/$2.50/$2.25/$2.00. Material cost $0.20 (§25 canonical, same as 1279000 despite smaller area). Margin at qty 20: ~92.7%. This item IS a band data point for the sub-0.06 sq ft floor.
+
+**Key Decisions:**
+- Per-label floor ($2.75 at qty 20) governs over the linear $/sq ft formula ($1.67) — documented with full derivation in items/3024592.md Pricing Derivation section.
+- 200+ tier at $2.00 is below the ~$2.50–$3.00 per-label floor band minimum — accepted as structural completeness; Sean orders 20–50 batches; same pattern as 1279000's 200+ at $2.10.
+- This item IS a band data point (do_not_benchmark = false) — the floor of $2.75 at qty 20 anchors future sub-0.06 sq ft items. Future items must validate fresh against job economics; do NOT clone $2.75 mechanically.
+- Quote email anchor (Wave 4 validated): "Same material and process as P/N 1279000/1278220 — no file prep charge, no first article."
+- Sub-0.06 sq ft floor caution in categories/printed-laminated-orajet.md updated from anticipated to confirmed.
+
+**Strategic Flags:**
+- First time the per-label floor has been invoked on a live production item at this account. The $2.75 anchor is now visible to Sean — he will log it alongside 1279000's $3.00 and compare when future sub-0.1 sq ft items arrive.
+- Item count: 26 → 27. Printed/Laminated category: 17 → 18 items.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 27 rows confirmed in Supabase.
 
 ---
 
@@ -147,21 +166,4 @@
 
 ---
 
-### 2026-06-09 — Session H (system v2): Supabase data layer + Materials Manager + calculator overhaul
-
-**What:** Built system v2 off the same-day audit: a Supabase data layer (7 `elliott_`-prefixed tables in the shared `prolabel` project, seeded idempotently by the new `migrate_to_supabase.py`, mirrored back by the new `sync_from_supabase.py`), a Materials Manager tab with full CRUD, and a calculator overhaul that hydrates from Supabase first with static-JSON fallback. Resolved audit findings C-1, H-1–H-5, and W1–W6. No sell price changed anywhere.
-
-**Key Decisions:**
-- Supabase is primary; the four JSONs are fallback (visible banner). Category files remain the governance source of truth for band definitions; `build_calculator_config.py` constants remain the seed source.
-- Tables are `elliott_`-prefixed because `prolabel` hosts unrelated apps — never touch co-tenant tables.
-- RLS write split: the Materials Manager (anon key) may write materials/combinations/components only; items, bands, and settings change only through governed Claude Code sessions via the migration script. Soft deletes everywhere.
-- D1 resolved as report-only enforcement: `enforceTierBoundaries()` computes but never mutates tiers — catalog tables keep their intentional cliffs, §26 resolves them at billing, and briefs are band-anchored again (eliminating C-1's 29–46%-low briefs).
-- H-4: kit material costs normalized to §25 canonical (1278930 $2.99 → $3.60; 1245130 $5.16 → $5.95) — documentation-only recost; kit-family margins now cross-comparable (~88% at qty 20, ~80% floor).
-- §25 full bleed is the only reachable ink mode from the calculator (H-1); the engine's `inputs._config` hook is the ONLY supported way to vary constants per run.
-- Materials added via the Manager exist in the DB first — a follow-up session must backfill `materials/*.md` before any CI rebuild overwrites the fallback JSONs.
-
-**Status:** Complete — validate.py 0/0 with 4 new structural checks active; Supabase seeded and RLS role-tested; next was Nick's browser review of v2.
-
----
-
-*Entries older than Session H (2026-06-09) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session I (2026-06-09) were removed per the 10-entry rolling window — git history retains them in full.*

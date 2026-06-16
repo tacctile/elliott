@@ -2,14 +2,14 @@
 # Updated at the end of every session
 
 last_session:
-  date: "2026-06-12"
-  type: "governance"
-  summary: "Session Q — prompt template hardened: On Completion block standardized with explicit build + seed + commit sequence; Prompt Writing Rule 9 now resolves seed count to a real number from STATE.yml; Acceptance Criteria Rules section added to CHAT_CONTEXT.md; validate.py 0/0; all three build scripts clean; elliott_items = 26 rows confirmed, no drift."
+  date: "2026-06-16"
+  type: "new item"
+  summary: "Session R — P/N 3024592 (LBL-FALL PRTCT ANCHRG 1 PERSON) added. First sub-0.06 sq ft production catalog item on the account. Per-label floor $2.75 at qty 20 governs (linear Micro-Format Band formula overridden). 4-wave atomic AI validated. Tier table $4.25/$3.25/$2.75/$2.50/$2.25/$2.00. Material cost $0.20. Margin ~92.7% at qty 20. validate.py 0/0; all three build scripts clean; elliott_items = 27 rows confirmed in Supabase."
 
-next_action: "System fully hardened. Next session is a new item. Claude Chat reads STATE.yml item_count before generating prompt, resolves seed count to 27, embeds in Acceptance Criteria."
+next_action: "Send 3024592 quote to Sean. Future sub-0.06 sq ft items invoke the per-label floor — do NOT linearly extrapolate downward. Claude Chat reads STATE.yml item_count before generating any prompt, resolves seed count to 28 for next new item."
 
 blockers: "none"
 
-item_count: 26
+item_count: 27
 
 pending_quotes: "1278980 ($9.50/qty 20, singles band fourth data point — Session O — quote pending; Supabase seed pending), 1278220 ($3.00/qty 20, direct parity clone of 1279000 — Session M — quote pending), 1267140 ($8.75/qty 20, singles band third data point — Session L — quote pending), 1278890 ($20/qty 20, 2-label E160 V3 kit — Session G — quote pending), 1068270 ($8.00/qty 20, direct parity clone of 1082570 — Session F), 3010701 ($44/qty 20, Band A 3–5 sq ft founding data point — Session E), 1279000 ($3.00/qty 20, Micro-Format Band founding data point — Session D), 3010707 ($20/qty 20 Cardinal Red, Band C founding anchor), 3010708 ($20/qty 20 Black, Band C color parity), 3010709 ($20/qty 20 White, Band C color parity), 3010704 ($78/qty 20 Band B founding), 1210810 (revalidated 2026-06-01; 1-9 tier $7.25 added 2026-06-05 Session A — $57.50 for qty 10 at 10-19 tier of $5.75, recurring $4.75 at 20-49), 1082570 ($42 flat for qty 2 once PO arrives; color selection pending — production setup only, no pricing impact per §25; production rate $8 at qty 20 also valid), 1245130, 3017435, 3018378, 1186310, 1277970, 1277980, 1277990, 1278000, 3017583, 3017584 — quoted May–Jun 2026, awaiting Sean response/PO"
