@@ -6,7 +6,26 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-06-16 (Session R — new item 3024592: LBL-FALL PRTCT ANCHRG 1 PERSON — first sub-0.06 sq ft production catalog item on the account; per-label floor $2.75 at qty 20; 4-wave validated.)
+> Last Updated: 2026-06-16 (Session S — new item 1247120: LBL-DNGR TIP-OVER HAZARD — sub-scope single (0.122 sq ft), $2.75 at qty 20 ($22.54/sq ft), 4-wave validated.)
+
+---
+
+### 2026-06-16 — Session S (new item): P/N 1247120 — LBL-DNGR TIP-OVER HAZARD, sub-scope single, $2.75 at qty 20, 4-wave validated
+
+**What:** New printed/laminated single label (LBL-DNGR TIP-OVER HAZARD) at 4.0000" × 4.3750" = 0.122 sq ft, ANSI Z535.6 DANGER class. Sub-scope routing (0.1–0.5 sq ft range). Governing comparable: 1210810 ($16.27/sq ft at qty 20). $2.75 at qty 20 = $22.54/sq ft — intentionally above 1210810 per sub-scope premium doctrine (smaller label carries higher $/sq ft). Closes absolute-price inversion against 3024592 ($2.75 for 0.054 sq ft) — both at $2.75 per unit; larger label not cheaper. 4-wave atomic AI validated (24 responses, 6 models × 4 waves). Tier table: $4.25/$3.25/$2.75/$2.25/$2.00/$1.75. Material cost $0.25 (§25 canonical, $0.2377 calculated + incidental buffer). Margin at qty 20: ~90.9%.
+
+**Key Decisions:**
+- Sub-scope routing confirmed (0.122 sq ft, 0.1–0.5 sq ft range) — not singles band, not Micro-Format Band.
+- Wave 4 consensus: 4 NO (all recommending $2.75 at qty 20) / 2 YES on as-shown table; Nick accepted the $2.75 correction.
+- do_not_benchmark = false (unlike 1210810 which is in DO_NOT_BENCHMARK) — 1247120 is a valid sub-scope data point; future sub-scope items in the 0.1–0.5 sq ft range may reference it.
+- Excluded from singles band DATA POINTS until production-volume acceptance confirmed by Nick.
+- 1247120 added to BAND_EXCEPTIONS in validate.py (sub-scope singles require documented exception per band-membership check logic).
+
+**Strategic Flags:**
+- Second confirmed sub-scope data point (0.1–0.5 sq ft range) on the account. Sub-scope $/sq ft gradient now confirmed monotonic: $22.54 (0.122 sq ft) > $16.27 (0.292 sq ft) > $15.43–$15.91 (singles band).
+- Item count: 27 → 28. Printed/Laminated category: 18 → 19 items.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 28 rows confirmed in Supabase.
 
 ---
 
@@ -148,22 +167,4 @@
 
 ---
 
-### 2026-06-09 — Session I (cleanup): §25 costing normalization + tape method fix + security hardening + §27 rush floor
-
-**What:** Resolved the remaining decision forks from the 2026-06-09 full-system audit (D2-full, D3, D4, D5, D7) — documentation and security only; zero sell prices, tiers, band anchors, or statuses changed. The legacy-overstated costing era is fully retired: the whole printed/laminated catalog (minus the documented job-based one-offs) now sits on the single §25 canonical basis, margin strings are cross-comparable, and one length-based tape convention governs all cut vinyl.
-
-**Key Decisions:**
-- Root benchmark 1230820 recosted to §25 canonical ($2.60 material, ~87% at qty 20) — ~87% is now the canonical reference margin for every wave session embedding this benchmark.
-- D7 resolved: ink is always the §25 $0.50/sq ft full-bleed rate regardless of color — Sean's pending color selection on 1082570 affects production setup only, no recosting on selection; 1068270 recosted in lockstep per the parity link.
-- Tape costing uses the length-based method everywhere; the 582U $0.5911/sq ft figure is a derived convenience value never to be used in per-label builds. The calculator engine still consumes it as an area rate (audit M-2) — engine harmonization deliberately deferred.
-- §27 codified: $50 rush/favor floor per job, separate from and non-stacking with the $55 one-off job-economics floor ($55 governs when both apply); replaces the previously undocumented $100 figure.
-- D4 security: `pricing_logic` and frontmatter `notes` stripped from data.json; all internal text moved to the new service-role-only `elliott_items_internal` table, with `migrate_to_supabase.py` routing there on every future seed so re-running can never re-expose.
-
-**Strategic Flags:**
-- D4-residual open fork for Nick: `sections.notes` prose — including 3 items' INTERNAL ONLY Jan-2027 subsections — still ships in deployed data.json behind the Vercel password; stripping it would blank the UI's Notes panel, so deliberately left undone pending a decision.
-
-**Status:** Complete — validate.py 0/0; D2-full, D3, D4 (with documented residual), D5, D7 all resolved.
-
----
-
-*Entries older than Session I (2026-06-09) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session J (2026-06-09) were removed per the 10-entry rolling window — git history retains them in full.*
