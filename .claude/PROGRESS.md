@@ -6,7 +6,26 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-06-16 (Session T — new item 3024140: LBL-WRK LGHTS — smallest item on account (0.019 sq ft), $2.50 at qty 20, 4-wave validated, complexity-dependent non-ANSI floor below 3024592.)
+> Last Updated: 2026-06-17 (Session U — P/Ns 1277300 and 1279020: direct parity clones of 1278980 at 7.88" × 11.13" = 0.609 sq ft. $9.50 at qty 20, ~87.5% margin. Validation inherited via direct parity exemption. Item count 29 → 31.)
+
+---
+
+### 2026-06-17 — Session U (new items): P/Ns 1277300 and 1279020 — direct parity clones of 1278980, $9.50 at qty 20, singles band
+
+**What:** Created P/N 1277300 (LABEL-LIFTING CAPACITY CHART MODEL E160 V3 NO WINCH) and P/N 1279020 (LABEL-RANGE CAPACITY CHART MODEL E190 V3) as direct parity clones of 1278980 (LABEL-PLTFM RANGE CAPACITY CHART MODEL E160 V3). All three items share identical dimensions (7.88" × 11.13" = 0.609 sq ft), material family (Orajet 3951 Cast + Polyester Lam), process (Print/Lam/Cut, 1 pass), material cost ($1.19/label, §25 canonical), and tier table ($14.50/$11.50/$9.50/$8.25/$7.50/$6.75). Only part numbers, descriptions, and artwork content differ.
+
+**Key Decisions:**
+- Direct parity exemption applied per `governance/PRICING_VALIDATION.md` — no multi-round AI validation run for either clone; 1278980's 4-wave atomic validation (24 independent responses, 6 models × 4 waves) is inherited by both.
+- Rule 15 (Pricing Profile band check) satisfied for both: $9.50 at qty 20 = $15.60/sq ft lands within the singles band ($15.43–$15.91/sq ft).
+- Neither clone is a new independent band data point — the 0.609 sq ft position is anchored by 1278980 exclusively. Band data point count remains 4.
+- Permanent three-way lockstep established: any future change to 1278980's dimensions, material cost, process, or tier table must be applied to both 1277300 and 1279020 in the same session.
+- Lockstep note added to 1278980.md Notes and Warnings section per governance requirement.
+
+**Strategic Flags:**
+- Three items now share the 0.609 sq ft / $9.50 tier table. Sean has multiple singles at this exact size — the table is the permanent reference for all E160 V3/E190 V3 capacity chart singles at this geometry.
+- Item count: 29 → 31. Printed/Laminated category: 20 → 22 items.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 31 rows confirmed in Supabase.
 
 ---
 
@@ -161,15 +180,4 @@
 
 ---
 
-### 2026-06-09 — Session K (fix+cleanup): Drop zone scoped to main panel + Session-I deferred-work verification + Supabase drift closure
-
-**What:** Replaced Session J's always-visible fixed bottom drop strip — which overlapped the left rail and blocked clicks — with a drag-activated overlay scoped to the main content panel plus an always-visible 📎 attach button; all upload, association-priority, and paste logic unchanged, calculator engine block zero diff hunks. Separately verified that Session I's deferred work (D2-full, D3, D4, D5) was already complete in commit 4435eff — no re-edits needed — and closed the one real remnant: the empty Supabase `transferrite-582u` notes field flagged by Session J was backfilled and round-trip verified, so sync runs no longer blank the repo's D3 usage note.
-
-**Key Decisions:**
-- The overlay's translucency uses `color-mix()` over existing tokens rather than the spec's rgba approach, which would have required a new color token — prohibited by the frontend's token discipline.
-
-**Status:** Complete — validate.py 0/0; Session J drift closed; carry-over: Nick tests the drop-zone fix in the browser.
-
----
-
-*Entries older than Session K (2026-06-09) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session L (2026-06-12) were removed per the 10-entry rolling window — git history retains them in full.*

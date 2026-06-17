@@ -2,14 +2,14 @@
 # Updated at the end of every session
 
 last_session:
-  date: "2026-06-16"
-  type: "new item"
-  summary: "Session T — P/N 3024140 (LBL-WRK LGHTS) added. Smallest item on the account at 0.019 sq ft. Sub-0.06 sq ft, per-label floor governs AND is complexity-dependent. Non-ANSI simple control label floors at $2.50 at qty 20 — intentionally below 3024592 ($2.75, ANSI Z535.6 DANGER) per 4-wave atomic AI validation (24 independent responses, 6 models × 4 waves). Wave 4: 6/6 unanimous NO on $2.75; 6/6 unanimous YES on $2.50. Tier table $4.00/$3.00/$2.50/$2.25/$2.00/$1.75. Material cost $0.10. Margin ~96.0% at qty 20. do_not_benchmark = false. Interior Ø1/2\" circle = standard Roland contour cut, no punch/die. Split liner = standard, no process impact."
+  date: "2026-06-17"
+  type: "new items"
+  summary: "Session U — P/Ns 1277300 (LABEL-LIFTING CAPACITY CHART MODEL E160 V3 NO WINCH) and 1279020 (LABEL-RANGE CAPACITY CHART MODEL E190 V3) added as direct parity clones of 1278980. Both share identical dimensions (7.88\" × 11.13\" = 0.609 sq ft), material family (Orajet 3951 Cast + Polyester Lam), process (Print/Lam/Cut, 1 pass), material cost ($1.19/label, §25 canonical), and tier table ($14.50/$11.50/$9.50/$8.25/$7.50/$6.75). Direct parity exemption applied — 1278980's 4-wave validation (24 passes) inherited. Rule 15 satisfied: $15.60/sq ft within singles band. NOT new independent band data points. Permanent three-way lockstep: 1278980 ↔ 1277300 ↔ 1279020. Margin ~87.5% at qty 20."
 
-next_action: "Send 3024140 quote to Sean. Run python scripts/migrate_to_supabase.py live to confirm elliott_items = 29 rows. Complexity-dependent per-label floor ($2.75 ANSI vs $2.50 non-ANSI) now documented in categories/printed-laminated-orajet.md."
+next_action: "Send 1277300 and 1279020 quotes to Sean. Also send pending quotes: 1278980 ($9.50/qty 20), 1278220 ($3.00/qty 20), 1267140 ($8.75/qty 20), 1278890 ($20/qty 20)."
 
 blockers: "none"
 
-item_count: 29
+item_count: 31
 
 pending_quotes: "1278980 ($9.50/qty 20, singles band fourth data point — Session O — quote pending; Supabase seed pending), 1278220 ($3.00/qty 20, direct parity clone of 1279000 — Session M — quote pending), 1267140 ($8.75/qty 20, singles band third data point — Session L — quote pending), 1278890 ($20/qty 20, 2-label E160 V3 kit — Session G — quote pending), 1068270 ($8.00/qty 20, direct parity clone of 1082570 — Session F), 3010701 ($44/qty 20, Band A 3–5 sq ft founding data point — Session E), 1279000 ($3.00/qty 20, Micro-Format Band founding data point — Session D), 3010707 ($20/qty 20 Cardinal Red, Band C founding anchor), 3010708 ($20/qty 20 Black, Band C color parity), 3010709 ($20/qty 20 White, Band C color parity), 3010704 ($78/qty 20 Band B founding), 1210810 (revalidated 2026-06-01; 1-9 tier $7.25 added 2026-06-05 Session A — $57.50 for qty 10 at 10-19 tier of $5.75, recurring $4.75 at 20-49), 1082570 ($42 flat for qty 2 once PO arrives; color selection pending — production setup only, no pricing impact per §25; production rate $8 at qty 20 also valid), 1245130, 3017435, 3018378, 1186310, 1277970, 1277980, 1277990, 1278000, 3017583, 3017584 — quoted May–Jun 2026, awaiting Sean response/PO"
