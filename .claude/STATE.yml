@@ -3,10 +3,10 @@
 
 last_session:
   date: "2026-06-17"
-  type: "new items"
-  summary: "Session U — P/Ns 1277300 (LABEL-LIFTING CAPACITY CHART MODEL E160 V3 NO WINCH) and 1279020 (LABEL-RANGE CAPACITY CHART MODEL E190 V3) added as direct parity clones of 1278980. Both share identical dimensions (7.88\" × 11.13\" = 0.609 sq ft), material family (Orajet 3951 Cast + Polyester Lam), process (Print/Lam/Cut, 1 pass), material cost ($1.19/label, §25 canonical), and tier table ($14.50/$11.50/$9.50/$8.25/$7.50/$6.75). Direct parity exemption applied — 1278980's 4-wave validation (24 passes) inherited. Rule 15 satisfied: $15.60/sq ft within singles band. NOT new independent band data points. Permanent three-way lockstep: 1278980 ↔ 1277300 ↔ 1279020. Margin ~87.5% at qty 20."
+  type: "item update"
+  summary: "Session V — P/N 1278930 updated from 3-label kit → 2-label kit. label_count 3 → 2, sq_ft_per_kit 1.827 → 1.218, material_cost_per_unit $3.60 → $2.40 (§25 canonical for 1.218 sq ft), all 6 tiers updated to match 1278890 exactly ($30/$24/$20/$17/$14/$12 vs prior $45/$36/$30/$26/$21/$18). per_label_at_qty_20 = $10.00 and margin_at_qty_20 = ~88% both unchanged. ARCHITECTURE.md, categories/printed-laminated-orajet.md, and PROGRESS.md updated. Supabase elliott_items row updated in live mode — row count confirmed = 31 (unchanged). Documentation and pricing update only — no items added or removed."
 
-next_action: "Send 1277300 and 1279020 quotes to Sean. Also send pending quotes: 1278980 ($9.50/qty 20), 1278220 ($3.00/qty 20), 1267140 ($8.75/qty 20), 1278890 ($20/qty 20)."
+next_action: "Send 1278930 updated pricing to Sean (now $20/kit at qty 20, matching 1278890). Also send pending quotes: 1277300 and 1279020 ($9.50/qty 20), 1278980 ($9.50/qty 20), 1278220 ($3.00/qty 20), 1267140 ($8.75/qty 20), 1278890 ($20/qty 20)."
 
 blockers: "none"
 

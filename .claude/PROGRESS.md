@@ -6,7 +6,25 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-06-17 (Session U — P/Ns 1277300 and 1279020: direct parity clones of 1278980 at 7.88" × 11.13" = 0.609 sq ft. $9.50 at qty 20, ~87.5% margin. Validation inherited via direct parity exemption. Item count 29 → 31.)
+> Last Updated: 2026-06-17 (Session V — P/N 1278930: updated from 3-label kit → 2-label kit. label_count 3 → 2, sq_ft_per_kit 1.827 → 1.218, material_cost_per_unit $3.60 → $2.40, tiers now match 1278890 exactly ($30/$24/$20/$17/$14/$12). ~88% margin at qty 20 unchanged. Item count unchanged at 31.)
+
+---
+
+### 2026-06-17 — Session V (item update): P/N 1278930 — 3-label kit → 2-label kit, tiers now match 1278890
+
+**What:** Updated P/N 1278930 (CHRT-E190 V3, Lifting Capacity Chart Kit) from a 3-label kit to a 2-label kit. Label dimensions unchanged (11.13" × 7.88" = 0.609 sq ft/label). sq_ft_per_kit updated 1.827 → 1.218. material_cost_per_unit updated $3.60 → $2.40 (§25 canonical: 1.218 × $1.9489 = $2.374 + incidental buffer = $2.40, identical to 1278890). All 6 tier prices updated to match 1278890 exactly ($30/$24/$20/$17/$14/$12 vs prior $45/$36/$30/$26/$21/$18). per_label_at_qty_20 unchanged at $10.00; margin_at_qty_20 unchanged at ~88%. Documentation and pricing update only — no items added or removed.
+
+**Key Decisions:**
+- Per-label parity governs: same label dimensions (11.13" × 7.88"), same material (Orajet 3951 + 1-mil polyester lam), ≤2 lam passes — per-label parity applies per PRICING_RULES.md §1–§2. Tier table identical to 1278890, validated by 1278890's 4-wave atomic AI process (24 runs, 6 models × 4 waves, Wave 4 unanimous YES at $10.00/label).
+- Material cost per §25 canonical formula for 1.218 sq ft: Orajet 1.218 × $1.21 = $1.474 + lam 1.218 × $0.2389 = $0.291 + ink 1.218 × $0.50 = $0.609 = $2.374 + incidental buffer = $2.40 (matching 1278890 exactly).
+- Historical 3-label derivation (25 model runs / 6 rounds, 1.5x off 1230820) preserved in Pricing Derivation section as superseded reference.
+- First article price ($65) and status (FA Accepted) unchanged — FA was for the original structure and is historical.
+
+**Strategic Flags:**
+- All three kit-family members (1278890, 1278930, 1245130) now explicitly maintain three-way per-label parity at $10.00/label at qty 20. 1278930 now matches 1278890's tier table exactly. January 2027 normalization strategy unchanged.
+- Item count unchanged at 31. No new Supabase rows required — updating existing row for 1278930.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 31 rows confirmed in Supabase.
 
 ---
 
@@ -164,20 +182,4 @@
 
 ---
 
-### 2026-06-12 — Session L (new item): P/N 1267140 — third singles-band data point, $8.75 at qty 20, 4-wave validated
-
-**What:** New printed/laminated single label at 15.00" × 5.38" = 0.560 sq ft, priced $8.75 at qty 20 = $15.63/sq ft — the singles band's third confirmed data point and first interior point, between 1082570/1068270 ($15.91 at 0.503 sq ft) and root benchmark 1230820 ($15.43 at 1.296 sq ft), making the band's $/sq ft monotonic by size. Full 4-wave atomic validation (24 responses): Wave 1 built to $8.75 independently (6/6); Wave 4 unanimously rejected the draft 200+ tier while keeping $8.75.
-
-**Key Decisions:**
-- Validation's primary structural finding adopted: the draft 200+ tier ($4.75 = $8.48/sq ft) sat 45% below the band floor and would have handed Sean an indefensible procurement anchor. Nick raised 200+ to $6.50 and 100-199 to $7.25 (avoiding a §26 cascade inversion), deliberately setting the 200+ margin floor above the legacy volume-reward floor as band protection. $8.75 at qty 20 unchanged; engine consensus accepted, no override.
-- The drawing's description/model title-block fields are blank and were filed as blank per Nick's instruction — never invented; the P/N is the identifier.
-
-**Strategic Flags:**
-- The third data point cements the singles band ($15.43–$15.91/sq ft at qty 20) — Wave 2/3 consensus: Sean logs it as his permanent procurement baseline, complicating January 2027 normalization. INTERNAL ONLY normalization note carried in the item file.
-- 1267140 is a full band data point — NOT on any do_not_benchmark list.
-
-**Status:** Complete — validate.py 0/0; quote pending (Wave 3 anchor line locked in the item file); the deferred Supabase seed was completed in Session N.
-
----
-
-*Entries older than Session L (2026-06-12) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session M (2026-06-12) were removed per the 10-entry rolling window — git history retains them in full.*
