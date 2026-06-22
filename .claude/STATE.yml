@@ -3,8 +3,8 @@
 
 last_session:
   date: "2026-06-22"
-  type: "new item"
-  summary: "Session X — P/N 1012080 added (LABEL, PTE SINGLE STICK CONTROLLER). Micro-Format Band, parity-governed at 2.8125\" × 3.9375\" = 0.077 sq ft, $2.50 at qty 20 ($32.47/sq ft — parity with 3024140, intentionally above band anchor $30.86/sq ft; BAND_EXCEPTIONS listed). First controller/panel label on the Elliott account. 4-wave atomic AI validated (24 independent responses, 6 models × 4 waves), Wave 4 6/6 unanimous YES. 200+ raised $1.75→$1.90 per Wave 2. Material cost $0.16 (§25 canonical). Item count 32 → 33."
+  type: "governance"
+  summary: "Session Y — governance: removed $55 one-off floor as forward-looking rule; added no-floor job-economics doctrine as §28 in PRICING_RULES.md; added deep-tier standing instruction to VALIDATION_PROMPTS.md §3 Wave 1 prompt template. Files updated: PRICING_RULES.md, CALCULATOR.md, VALIDATION_PROMPTS.md, categories/printed-laminated-orajet.md, MASTER_CONTEXT.md, PROGRESS.md, STATE.yml. No items added. Item count unchanged at 33. validate.py 0/0; all three build scripts clean; elliott_items = 33 confirmed."
 
 next_action: "Send 1012080 quote to Sean ($2.50 at qty 20). Also send pending: 1279130 ($3.10/qty 20), 1277300 and 1279020 ($9.50/qty 20), 1278980 ($9.50/qty 20), 1278930 ($20/kit at qty 20), 1278220 ($3.00/qty 20), 1267140 ($8.75/qty 20), 1278890 ($20/qty 20)."
 

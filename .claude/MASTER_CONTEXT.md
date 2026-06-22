@@ -2,7 +2,7 @@
 
 > **Single source of truth. Read first, every session. No exceptions.**
 >
-> Last Updated: 2026-06-09 (Session I — $50 rush/favor floor reference added to Internal Pricing Notes, see `governance/PRICING_RULES.md` §27. Previously 2026-06-05: MOQ 10 / $55 minimum order charge purged from this account — Core Rule 8 removed, Core Rule 9 renumbered to 8; Account-Level Order Rules section removed; internal pricing-normalization note relocated to its own section)
+> Last Updated: 2026-06-22 (governance — $55 one-off floor removed from Internal Pricing Notes; no-floor job-economics doctrine added at `governance/PRICING_RULES.md` §28. Previously 2026-06-09 Session I: $50 rush/favor floor reference added. Previously 2026-06-05: MOQ 10 / $55 minimum order charge purged — Core Rule 8 removed, Core Rule 9 renumbered to 8; Account-Level Order Rules section removed; internal pricing-normalization note relocated to its own section)
 
 ---
 
@@ -97,7 +97,7 @@ Only after reading all eight does pricing begin.
 
 ## Internal Pricing Notes
 
-Rush/favor floor: $50 per job — see `governance/PRICING_RULES.md` §27. (Separate from and does not stack with the $55 one-off job-economics floor.)
+Rush/favor floor: $50 per job — see `governance/PRICING_RULES.md` §27. No job floor on this account — see `governance/PRICING_RULES.md` §28 (no-floor job-economics doctrine).
 
 > **INTERNAL NOTE (DO NOT SURFACE TO BUYER):** The current account band ($15.43–$15.91/sq ft at qty 20) is a relationship concession below industry standard (~$18–$22/sq ft for premium cast vinyl + polyester lam ANSI safety labels at qty 20). Nick's plan is to normalize pricing toward industry standard by January 1, 2027 as Pro Label has established technical partnership status. This is strategic context for future pricing sessions only.
 
