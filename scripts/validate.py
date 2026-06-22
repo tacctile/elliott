@@ -98,6 +98,7 @@ BAND_EXCEPTIONS = {
     "3024592": "per-label floor governs — first sub-0.06 sq ft production item; linear Micro band formula ($30.86/sq ft × 0.054 = $1.67) overridden by per-label floor at $2.75/qty 20; $/sq ft ($50.93) is an arithmetic artifact, not the pricing basis; 4-wave validated 2026-06-16",
     "1247120": "sub-scope single (0.122 sq ft) — intentionally ABOVE singles band per sub-scope premium doctrine; $22.54/sq ft at qty 20 is above governing comparable 1210810 ($16.27/sq ft); 4-wave validated 2026-06-16; excluded from singles band data points until production-volume acceptance",
     "3024140": "per-label floor governs AND is complexity-dependent — at 0.019 sq ft the linear Micro band formula ($30.86/sq ft × 0.019 = $0.59) is inapplicable; non-ANSI simple control label floors at $2.50/qty 20 (below 3024592 ANSI DANGER floor of $2.75); $/sq ft ($131.58) is a mathematical artifact, not the pricing basis; 4-wave validated 2026-06-16; smallest item on account",
+    "1279130": "sub-scope single (0.148 sq ft) — $20.95/sq ft at qty 20 intentionally above singles band ($15.43–$15.91/sq ft) per sub-scope premium doctrine; 4-wave validated 2026-06-22; excluded from singles band data points until production-volume acceptance. NOTE: 100–199 tier at $2.30 ($15.54/sq ft) clears singles band floor by $0.11/sq ft — intentional, tight but clean per Wave 2/4 validation.",
 }
 
 

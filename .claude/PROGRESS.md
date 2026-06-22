@@ -6,7 +6,26 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-06-17 (Session V — P/N 1278930: updated from 3-label kit → 2-label kit. label_count 3 → 2, sq_ft_per_kit 1.827 → 1.218, material_cost_per_unit $3.60 → $2.40, tiers now match 1278890 exactly ($30/$24/$20/$17/$14/$12). ~88% margin at qty 20 unchanged. Item count unchanged at 31.)
+> Last Updated: 2026-06-22 (Session W — P/N 1279130: LBL-MOVING OR WARNING E-SERIES, sub-scope single at 0.148 sq ft, $3.10 at qty 20, 4-wave validated (Wave 4 unanimous YES 6/6). Third sub-scope data point. Item count 31 → 32.)
+
+---
+
+### 2026-06-22 — Session W (new item): P/N 1279130 — LBL-MOVING OR WARNING E-SERIES, sub-scope single, $3.10 at qty 20, 4-wave validated
+
+**What:** New printed/laminated single label (LBL-MOVING OR WARNING E-SERIES) at 10.00" × 2.13" = 0.148 sq ft. Sub-scope routing (0.1–0.5 sq ft range). Third confirmed sub-scope data point, joining 1247120 (0.122 sq ft, $22.54/sq ft) and 1210810 (0.292 sq ft, $16.27/sq ft). $3.10 at qty 20 = $20.95/sq ft — sits correctly between the two brackets. Sub-scope $/sq ft gradient now monotonic across three points: $22.54 → $20.95 → $16.27. 4-wave atomic AI validated (24 independent responses, 6 models × 4 waves). Wave 4 unanimous YES 6/6. Tier table: $4.75/$3.50/$3.10/$2.55/$2.30/$2.00. Material cost $0.29 (§25 canonical: $0.2885 calculated + incidental buffer). Margin ~90.6% at qty 20. Model blank on drawing — P/N is the identifier.
+
+**Key Decisions:**
+- Wave 2 structural finding adopted: 100–199 raised $2.25→$2.30 to clear singles band floor ($15.43/sq ft); at $2.30 the implied $/sq ft is $15.54 — clears by $0.11/sq ft. Internal tripwire documented. 200+ raised $1.85→$2.00 to eliminate anchor risk.
+- do_not_benchmark = false (valid sub-scope data point); excluded from singles band DATA POINTS until production-volume acceptance.
+- Added to BAND_EXCEPTIONS in validate.py with rationale documenting the sub-scope premium and the 100-199 tripwire.
+- Quote email anchor line: "Pricing is consistent with the 1247120 and 1210810 brackets you've already approved."
+
+**Strategic Flags:**
+- Three-point sub-scope gradient now established — sufficient for interpolation on future items between 0.1–0.5 sq ft. The curve is calibrated at 0.122, 0.148, and 0.292 sq ft.
+- The 100-199 tier at $2.30 ($15.54/sq ft) operates with minimal headroom above the singles band floor ($15.43/sq ft). Any material cost increase on this account requires checking this tier first.
+- Item count: 31 → 32. Printed/Laminated category: 20 → 21 items.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 32 rows confirmed in Supabase.
 
 ---
 
@@ -167,19 +186,4 @@
 
 ---
 
-### 2026-06-12 — Session M (new item): P/N 1278220 — direct parity clone of 1279000 (Micro-Format Band, $3.00 at qty 20)
-
-**What:** Created P/N 1278220 (LBL-MAX JIB CAP 1500 TIP HZRD) as a direct parity clone of 1279000, the Micro-Format Band founding data point — identical dimensions (0.097 sq ft), material, process, tier table, and margins; only the P/N and artwork content differ. The direct parity exemption per `governance/PRICING_VALIDATION.md` applies: 1279000's full 4-wave validation is inherited, no new AI validation run (same pattern as 1068270 ← 1082570, Session F). Rule 15 band check satisfied: $3.00 at qty 20 = $30.86/sq ft, exactly the Micro-Format Band anchor.
-
-**Key Decisions:**
-- Parallel-session collision with Session L (1267140) resolved at merge: both sessions had independently claimed "Session L," category footnote ⁶, and item #24. Resolution — 1267140 keeps Session L / ⁶ / #24 (first to main); this session relabeled Session M with footnote ⁷; final item count 25. Both sessions' content verified intact; the collisions were namespace-only.
-- 1278220 is NOT a band data point — founding status stays with 1279000 alone, and the band's data-point count is unchanged. The band's ~0.08–0.12 sq ft boundary caution governs dimensionally NEW items, not exact-dimension parity clones.
-
-**Strategic Flags:**
-- Permanent lockstep link: any future change to 1279000's dimensions, material cost, process, or band parameters must update 1278220 in lockstep (same convention as 1068270 ↔ 1082570).
-
-**Status:** Complete — validate.py 0/0 on the merged tree; quote pending ($3.00 at qty 20); the deferred Supabase seed was completed in Session N.
-
----
-
-*Entries older than Session M (2026-06-12) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session N (2026-06-12) were removed per the 10-entry rolling window — git history retains them in full.*
