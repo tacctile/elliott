@@ -6,7 +6,26 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-06-22 (Session W — P/N 1279130: LBL-MOVING OR WARNING E-SERIES, sub-scope single at 0.148 sq ft, $3.10 at qty 20, 4-wave validated (Wave 4 unanimous YES 6/6). Third sub-scope data point. Item count 31 → 32.)
+> Last Updated: 2026-06-22 (Session X — P/N 1012080: LABEL, PTE SINGLE STICK CONTROLLER, Micro-Format Band parity-governed at 0.077 sq ft, $2.50 at qty 20, 4-wave validated (Wave 4 6/6 unanimous YES). First controller/panel label on account. Item count 32 → 33.)
+
+---
+
+### 2026-06-22 — Session X (new item): P/N 1012080 — LABEL, PTE SINGLE STICK CONTROLLER, Micro-Format Band parity-governed, $2.50 at qty 20, 4-wave validated
+
+**What:** New printed/laminated single label (LABEL, PTE SINGLE STICK CONTROLLER) at 2.8125" × 3.9375" = 0.077 sq ft. Micro-Format Band, parity-governed at qty 20. At 0.077 sq ft, above the ~0.06 sq ft per-label floor threshold — floor does NOT govern. Linear Micro-Format Band formula ($30.86/sq ft × 0.077 = $2.38); qty-20 price set to $2.50 by parity with P/N 3024140 (non-ANSI control label family, $2.50 at qty 20). First controller/panel label on the Elliott account. Model blank on drawing — P/N is the identifier. 4-wave atomic AI validated (24 independent responses, 6 models × 4 waves). Wave 4: 6/6 unanimous YES. Tier table: $3.75/$2.90/$2.50/$2.20/$1.95/$1.90. Material cost $0.16 (§25 canonical: $0.1501 calculated + $0.0099 buffer). Margin ~93.6% at qty 20.
+
+**Key Decisions:**
+- Parity governs over the linear formula at 0.077 sq ft: $2.50 (parity with 3024140) over $2.38 (linear formula output). The per-label floor (sub-0.06 sq ft) does NOT apply at 0.077 sq ft — above the threshold.
+- 200+ raised from initial $1.75 to $1.90 per Wave 2 structural finding: $1.75 sat 30% below the $2.50 anchor and would have anchored the controller/panel label catalog family below floor. Wave 4 unanimous YES on the corrected table.
+- Added to BAND_EXCEPTIONS in validate.py: $32.47/sq ft (= $2.50 ÷ 0.077) exceeds band anchor upper bound ($30.86 × 1.015 = $31.32). Exception documented with parity rationale and 4-wave validation date.
+- NOT a new independent Micro-Format Band data point — band anchor stays at 1279000 at $30.86/sq ft. Parity governed from 3024140.
+
+**Strategic Flags:**
+- First controller/panel label on the Elliott account. Future controller/panel labels should reference both 3024140 ($2.50, non-ANSI floor anchor) and 1012080 ($2.50 at 0.077 sq ft, parity-governed above the floor threshold) as the two data points for this family.
+- The $2.50 price point is inherited from the non-ANSI control label floor — if 3024140 ever changes, 1012080's parity basis changes with it.
+- Item count: 32 → 33. Printed/Laminated category: 21 → 22 items.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 33 rows confirmed in Supabase.
 
 ---
 
@@ -171,19 +190,4 @@
 
 ---
 
-### 2026-06-12 — Session N (ops): Supabase seed — P/N 1267140 + 1278220 into `elliott_items` / `elliott_items_internal`
-
-**What:** Seeded the two items added earlier today (Session L: 1267140; Session M: 1278220) into the shared `prolabel` Supabase project, clearing the carry-over flagged by both sessions. Pure seed run of the existing source-of-truth files — no repo item, governance, or pricing changes. Both tables went 23 → 25 rows; the deployed Supabase-first UI now serves both items (1267140 in singles_standard, 1278220 in singles_micro, verified row-level in the live DB).
-
-**Key Decisions:**
-- The remote session env had no Supabase service-role credentials, so the documented alternate path was used: `migrate_to_supabase.py --emit-sql` executed through the service-role-backed Supabase MCP in batches — semantically identical to live mode, and the sanctioned pattern for credential-less environments.
-
-**Strategic Flags:**
-- D4 security routing re-verified live: `pricing_logic`/`notes` blank on the anon-readable `elliott_items` rows; full strategy text (including the 1267140 INTERNAL ONLY normalization note) lives only in `elliott_items_internal`, which has no anon policies.
-- The seed is idempotent — materials/bands/settings/combinations re-upserted with zero value drift; the repo remains the source of truth.
-
-**Status:** Complete — next action is Nick sending Sean both quotes (1267140 $8.75 at qty 20, 1278220 $3.00 at qty 20).
-
----
-
-*Entries older than Session N (2026-06-12) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session O (2026-06-12) were removed per the 10-entry rolling window — git history retains them in full.*
