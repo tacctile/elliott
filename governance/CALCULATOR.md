@@ -3,7 +3,7 @@
 > **Authoritative reference for the Elliott calculator system.**
 > The HTML calculator at `frontend/index.html` is the implementation; this document is the contract.
 >
-> Last Updated: 2026-06-09 (Session I — §7 Step 9: §27 $50 rush/favor floor reference added. Previously Session H — audit C-1/H-1/H-2/H-4/H-5 + W1–W6 remediation: tier-boundary enforcement is now REPORT-ONLY (briefs are band-anchored; F23 reports cliffs, §26 resolves at billing, tables are never mutated); ink coverage is full-bleed-only per §25 (dropdown removed); kit material costing uses the §25 canonical formula (legacy $2.99/$5.16 hardcodes removed); F18/F19 ghost rows deleted and the flag table corrected (23 definitions, F24/F25 added, F11/F12/F16 documented unreachable); §6.3 regression checklist rewritten to current truth; singles routing ceiling corrected to 1.5 sq ft; data source is Supabase-first with static-JSON fallback; the material-family/color dropdowns are replaced by the material-combination selector)
+> Last Updated: 2026-06-22 (governance — $55 floor removed from routing framing and account rule description; no-floor job-economics doctrine applied throughout; deep-tier standing instruction added to VALIDATION_PROMPTS.md §3. Previously 2026-06-09 Session I — §7 Step 9: §27 $50 rush/favor floor reference added. Previously Session H — audit C-1/H-1/H-2/H-4/H-5 + W1–W6 remediation: tier-boundary enforcement is now REPORT-ONLY (briefs are band-anchored; F23 reports cliffs, §26 resolves at billing, tables are never mutated); ink coverage is full-bleed-only per §25 (dropdown removed); kit material costing uses the §25 canonical formula (legacy $2.99/$5.16 hardcodes removed); F18/F19 ghost rows deleted and the flag table corrected (23 definitions, F24/F25 added, F11/F12/F16 documented unreachable); §6.3 regression checklist rewritten to current truth; singles routing ceiling corrected to 1.5 sq ft; data source is Supabase-first with static-JSON fallback; the material-family/color dropdowns are replaced by the material-combination selector)
 
 ---
 
@@ -80,7 +80,7 @@ Every input is dispatched to exactly one route. The route determines which band,
       ┌──────────────┐          │
       │ route =      │          │
       │   tiny       │          │
-      │ ($55 floor)  │          │
+      │ (no floor)   │          │
       └──────────────┘          │
                                 │
                        label_count > 1
@@ -116,7 +116,7 @@ Every input is dispatched to exactly one route. The route determines which band,
 | Route | Material Family | Sq Ft | Item Type | Band Applied | Floor Logic |
 |-------|-----------------|-------|-----------|--------------|-------------|
 | `cut_vinyl` | 3M 180mC Cut Vinyl | any | any | Cut Vinyl Lettering — size-class routed: sq ft ≥ 5.0 → Band B (Large-Format, $11.03/sq ft anchor, 3010704 founding); 1.0 ≤ sq ft < 5.0 → Band A (Small-Format, concession_phase, $13.65–$13.94/sq ft); sq ft < 1.0 → Band C (Sub-1 sq ft, $20.64/sq ft anchor, 3010707 founding cluster) | No MOQ. Invoice protection (§26) applies at all tier boundaries. |
-| `tiny` | Orajet 3951 | ≤ 0.1 sq ft | any | None | All 6 tiers flatten to $55 one-off job-economics floor (1230820 FA-anchored) |
+| `tiny` | Orajet 3951 | ≤ 0.1 sq ft | any | None | Elliott sub-0.1 sq ft: production catalog items route to the Micro-Format Band (set `production_override: true` → `single_sub_scope`); one-off field service requests price from material footprint and production time with no floor. |
 | `kit` | Orajet 3951 | > 0.1 sq ft | label_count > 1 OR `Printed/Laminated Kit` | Printed/Laminated Kits | No MOQ. Invoice protection (§26) applies at all tier boundaries. |
 | `single_sub_scope` | Orajet 3951 | 0.1–0.5 sq ft *(standard route)* OR ≤ 0.1 sq ft *(via production-override path)* | single | Printed/Laminated Singles (band-consistent, item excluded from band DATA POINTS) for 0.1–0.5 sq ft. **Sub-0.1 sq ft Micro-Format Band ($30.86/sq ft anchor, 1279000 founding data point)** when `production_override: true` is set on a sub-0.1 sq ft Orajet 3951 single — uses the validated tier template directly when the item's sq ft is within ±30% of the founding anchor sq ft (0.097). | No MOQ. Invoice protection (§26) applies at all tier boundaries. |
 | `single_standard` | Orajet 3951 | > 0.5 sq ft | single | Printed/Laminated Singles | No MOQ. Invoice protection (§26) applies at all tier boundaries. |
@@ -164,7 +164,7 @@ All **23** flag definitions live in `frontend/index.html` (calculator engine `FL
 | F6 | REVIEW | no | Margin at 200+ approaching floor — verify intentional volume reward, not error. |
 | F7 | REVIEW | no | Per-sq-ft rate outside band tolerance (±15%). Either complexity, new material, or repricing needed. (With band-anchored briefs this fires only on genuine deviations — the pre-Session-H 100% alarm saturation is gone.) |
 | F8 | INFO | no | Item at low end of singles band scope — band-consistent pricing applies; small-label fixed cost premium acknowledged. |
-| F9 | REVIEW | no | Tiny one-off (≤0.1 sq ft) — $55 flat program total, NOT a catalog rate. Per-sq-ft math is a minimum-run artifact. Do NOT benchmark. AI validation recommended (Rounds 1+2 minimum) for any tiny one-off. |
+| F9 | REVIEW | no | Tiny item (≤0.1 sq ft) — Elliott doctrine: production catalog items route to the Micro-Format Band (set `production_override: true`); one-off field service requests price from job economics with no floor. Per-sq-ft math at this size is a minimum-run artifact. Do NOT benchmark. AI validation recommended (Rounds 1+2 minimum). |
 | F10 | REVIEW | no | Sub-scope single (0.1–0.5 sq ft) — below band scope. Excluded from band DATA POINTS until production-volume acceptance. |
 | F11 | INFO | no | **RETIRED (Session H).** Was: "cliff auto-fixed at the 10-19 boundary." Post-Session-C it could fire only when `checkInvoiceProtection()`'s 10-19 autofix mutated a tier — which never happened after `enforceTierBoundaries()` ran (0 residual violations), making it dead code (audit H-4). With report-only enforcement no code path mutates tiers at all, so F11 can never fire. Definition kept for ID stability. |
 | F12 | INFO | no | **RESERVED (Session H).** Was: "ink cost is an unverified placeholder." Unreachable while ink is always `full_bleed_flood_coat` per §25 (H-1 fix) — the legacy placeholder rates are no longer routing targets. |
@@ -200,7 +200,7 @@ When any STOP flag fires:
 
 4. **It must NOT bypass `do_not_benchmark` filtering.** The comparable-items lookup must exclude every P/N in `CALCULATOR_CONFIG.do_not_benchmark`. Benchmarking against an outrigger-program peer (1277970–1278000), a standalone tiny one-off (3017583, 3017584), a sub-scope single before production-volume acceptance (1210810), or an initial-order job-economics price (1082570) is a structural error the calculator must prevent.
 
-5. **It must NOT hardcode pricing constants.** All bands, tier ratios, snap granularity, ink rates, the $55 floor, the 13.5" laminator constraint, the 0.1/0.5/1.5 sq ft scope thresholds, the do-not-benchmark list, and the verified material costs come from the data layer (Supabase `elliott_pricing_bands` / `elliott_account_settings` / `elliott_materials`, mirrored in `calculator_config.json` as the offline fallback). The HTML carries the engine only. When a constant changes: update `scripts/build_calculator_config.py` constants, re-run it, and re-run `scripts/migrate_to_supabase.py` to push the change to Supabase — do not edit the HTML. (Session H removed the last hardcodes: the legacy $2.99/$5.16 kit material totals.)
+5. **It must NOT hardcode pricing constants.** All bands, tier ratios, snap granularity, ink rates, the 13.5" laminator constraint, the 0.1/0.5/1.5 sq ft scope thresholds, the do-not-benchmark list, and the verified material costs come from the data layer (Supabase `elliott_pricing_bands` / `elliott_account_settings` / `elliott_materials`, mirrored in `calculator_config.json` as the offline fallback). The HTML carries the engine only. When a constant changes: update `scripts/build_calculator_config.py` constants, re-run it, and re-run `scripts/migrate_to_supabase.py` to push the change to Supabase — do not edit the HTML. (Session H removed the last hardcodes: the legacy $2.99/$5.16 kit material totals.)
 
 6. **It must NOT propagate stale material cost without flagging.** Every material in `material_constants` and `cut_vinyl_colors` carries a `verified_date`. The calculator computes `days_since(verified_date)` for each material consumed by the active route and fires F2 (>180 days) or F1 (>365 days). A stale cost without a flag is a Self-Healing Rule violation.
 
@@ -288,7 +288,6 @@ For changes to:
 - Cut vinyl size-class thresholds (`cut_vinyl_band_thresholds.band_b_floor_sq_ft`, `band_c_ceiling_sq_ft`)
 - Band B / Band C anchor PSF and tier templates
 - Equipment limits (laminator, Roland print bed)
-- The $55 floor source PN
 - Quote language templates
 - `do_not_benchmark` list
 - Override type precedent
@@ -427,7 +426,7 @@ Claude Code then:
 
 ### Step 9 — Quote to Sean
 
-Nick composes the quote email by hand, using the calculator's quote-language stubs (anchor line + PMS caveat where applicable — MOQ language no longer exists on this account, purged 2026-06-05) as a starting point but applying judgment for account context, recent conversations, and the strategic framing this item needs. For rush or favor jobs, apply the §27 $50 rush/favor floor if applicable (`governance/PRICING_RULES.md` §27 — separate from and non-stacking with the $55 one-off floor). Document as One-Time Exception. The calculator output is internal scratch — Sean never sees a route name, a flag ID, or a "validation brief" reference.
+Nick composes the quote email by hand, using the calculator's quote-language stubs (anchor line + PMS caveat where applicable — MOQ language no longer exists on this account, purged 2026-06-05) as a starting point but applying judgment for account context, recent conversations, and the strategic framing this item needs. For rush or favor jobs, apply the §27 $50 rush/favor floor if applicable (`governance/PRICING_RULES.md` §27). Document as One-Time Exception. The calculator output is internal scratch — Sean never sees a route name, a flag ID, or a "validation brief" reference.
 
 ---
 
@@ -437,7 +436,7 @@ Nick composes the quote email by hand, using the calculator's quote-language stu
 |------|------|---------------------|
 | Supabase `elliott_pricing_bands` / `elliott_account_settings` / `elliott_materials` / `elliott_material_combinations` / `elliott_items` | **PRIMARY data layer** (Session H) | Live band constants, account settings, material costs, combinations, item catalog the deployed app reads first |
 | `frontend/index.html` | Calculator engine + UI + Materials Manager | Routing logic, flag firing logic, brief format, render output, Supabase hydration (anon key constants at top of the UI script block) |
-| `frontend/calculator_config.json` | Constants config (generated — OFFLINE FALLBACK) | Band thresholds, tier ratios, ink rates, $55 floor, do_not_benchmark, quote language when Supabase is unreachable |
+| `frontend/calculator_config.json` | Constants config (generated — OFFLINE FALLBACK) | Band thresholds, tier ratios, ink rates, do_not_benchmark, quote language when Supabase is unreachable |
 | `frontend/data.json` | Items database (generated — fallback + prose) | Items tab sections/images; comparable items lookup offline |
 | `frontend/materials.json` | Materials database (generated — fallback) | Materials View offline |
 | `frontend/combinations.json` | Combinations snapshot (generated by sync — fallback) | Calculator combination selector offline |

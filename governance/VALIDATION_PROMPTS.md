@@ -4,7 +4,7 @@
 >
 > Companion to `governance/PRICING_VALIDATION.md` (methodology) and `governance/CALCULATOR.md` (Round 0 brief generation). This document governs Waves 1–4 — the prompt structure, attack angles, output schemas, and behavioral rules for Claude Chat during a validation session.
 >
-> Last Updated: 2026-06-09 (Session I — §3: $50 rush/favor floor note added under the $55 account floor (PRICING_RULES.md §27); 1230820 root-benchmark anchor verified — its embedded tier table is correct and §3 cites no margin figure for it; the canonical margin reference is now ~87% per the §25 cost normalization should any future edit embed one. Previously Session H / audit H-3 — Section 3 band fence rebuilt to embed ALL SIX bands (added Micro-Format Band, cut vinyl Band B and Band C, expanded Band A 1.0–5.0 sq ft with the 3010701 data point) and all current benchmark anchors (added 3010701, 3010704, 3010707 cluster, 1279000, kit member 1278890); Section 5 stale "MOQ language" stub reference replaced — MOQ language no longer exists post-purge)
+> Last Updated: 2026-06-22 (governance — §3: $55 account floor replaced with no-floor job-economics doctrine; deep-tier standing instruction added to Wave 1 prompt template. Previously 2026-06-09 Session I: $50 rush/favor floor note added; 1230820 root-benchmark anchor verified. Previously Session H / audit H-3 — Section 3 band fence rebuilt to embed ALL SIX bands; all current benchmark anchors added; Section 5 MOQ stub replaced)
 
 ---
 
@@ -152,7 +152,7 @@ For kits, also include (three-way per-label parity at $10.00/label at qty 20):
 | Band | Scope | Range at qty 20 | Anchor(s) | Notes |
 |------|-------|------------------|-----------|-------|
 | Printed/laminated singles | ≥ 0.5 sq ft (calibrated 0.503–1.296) | $15.43–$15.91/sq ft | 1230820; 1082570/1068270 at $15.91 | Concession phase. Band narrowing. Sub-scope 0.1–0.5 sq ft items price band-consistent WITH small-format premium (1210810 at $16.27/sq ft — intentionally above band, do NOT benchmark until production-volume acceptance). |
-| Printed/laminated Micro-Format | < 0.1 sq ft, production volume | $30.86/sq ft (2.0× benchmark) | 1279000 | INDEPENDENT band (est. 2026-06-05). One-off/field-service ≤0.1 sq ft requests route to the $55 one-off floor instead. |
+| Printed/laminated Micro-Format | < 0.1 sq ft, production volume | $30.86/sq ft (2.0× benchmark) | 1279000 | INDEPENDENT band (est. 2026-06-05). One-off/field-service ≤0.1 sq ft requests price from job economics with no floor. |
 | Printed/laminated kits | same-dim, ≤2 lam passes | $10.00/label, ~$16.42/sq ft | 1278890 / 1278930 / 1245130 | Three-way per-label parity. Kit premium ~6% over singles — intentional. |
 | Cut vinyl Band A (Small-Format, concession phase) | 1.0–5.0 sq ft (calibrated 2.512–3.202) | $13.65–$13.94/sq ft | 1205720 cluster + 3010701 | Active band — all 5 Band A items inside. January 2027 normalization applies to Band A only. |
 | Cut vinyl Band A (AI consensus, normalized) | 1.0–5.0 sq ft | $14.84–$16.41/sq ft | — | Would-be normalized band. Normalization planned January 2027. |
@@ -161,9 +161,12 @@ For kits, also include (three-way per-label parity at $10.00/label at qty 20):
 
 All bands are INDEPENDENT — they do not contaminate or interact. Route the item to its band by family and size class FIRST, then embed that band (plus the adjacent bands as context for step-up/step-down sanity).
 
-**$55 account floor:** one-off job-economics floor for field-service rush/one-off requests only. Anchored to 1230820 FA price. Does NOT apply to catalog tier tables — catalog items start at a real 1-9 per-unit price. Invoice protection (§26): buyer never invoiced more for a smaller quantity than a larger quantity at the next tier.
+**Elliott Account — No Job Floor.** Every job is priced from actual job economics: material cost (§25 canonical for printed/laminated; length-based for cut vinyl) plus realistic production time. There is no minimum order charge and no job floor on this account. For sub-0.1 sq ft production catalog items, the Micro-Format Band governs. For one-off field service requests at any size, price from material footprint and production time; Nick makes the final call on whether the job is worth doing. Invoice protection (§26): buyer never invoiced more for a smaller quantity than a larger quantity at the next tier.
 
-**Rush/favor floor: $50 per job (§27).** Separate from and does not stack with the $55 one-off floor. Applies to jobs with a real catalog rate that are expedited or handled as a favor outside the normal order cycle.
+**Rush/favor floor: $50 per job (§27).** Applies to jobs with a real catalog rate that are expedited or handled as a favor outside the normal order cycle.
+
+**Deep Volume Tier Instruction (applies to every Wave 1 prompt):**
+The 100-199 and 200+ tiers are structural scaffolding. They exist to preempt future volume questions from the buyer — not to optimize margin or anchor a high-volume rate. Sean Finn's order pattern is batches of 20-50 units. These tiers will rarely if ever transact. Price them as clean round numbers that step down monotonically from the 50-99 tier. Do not split hairs over cents at these tiers. A $0.05-$0.10 step-down from 100-199 to 200+ is sufficient. The only hard requirement is that the ladder never inverts — each tier must be less than or equal to the tier above it.
 
 ### Required Output Schema (Enforce This Exactly)
 

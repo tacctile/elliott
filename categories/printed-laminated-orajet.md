@@ -69,7 +69,7 @@
 > - The per-sq-ft rate implied by this pricing (**~$343/sq ft**) is an arithmetic artifact of minimum-run economics on tiny labels. It is meaningless as a per-sq-ft reference.
 > - The flat $2.75/label tier table on these items is structural padding for frontmatter compliance. There is no volume tier — Sean ordered qty 5 once, will not reorder.
 > - **Do NOT feed these prices into the Pricing Profile band** (singles, kit, or any other). They are explicitly excluded.
-> - **Do NOT use these items to anchor a future tiny-label quote.** Rebuild the job economics from scratch every time: material footprint + production time on the actual job, then anchor to whichever account floor is appropriate at the time.
+> - **Do NOT use these items to anchor a future tiny-label quote.** Rebuild the job economics from scratch every time: material footprint + production time on the actual job. There is no account floor — price from actual job economics; Nick makes the final call on whether the job is worth doing.
 >
 > If a future session reaches for these items as a benchmark, **STOP and re-read this callout.**
 
@@ -103,7 +103,7 @@
 
 ### Standalone Tiny One-Offs
 
-> Single-P/N one-off orders in the tiny-label size class. Each is priced from job economics anchored to the $55 one-off job-economics floor (1230820 FA-anchored). **Each item below is a one-off — do NOT use any of them as a benchmark for any future Elliott item, including future tiny-label or one-off requests.** Per-label rates are arithmetic byproducts of the $55 floor divided by order quantity and scale inversely with quantity — they are not properties of the labels themselves.
+> Single-P/N one-off orders in the tiny-label size class. Each was priced from job economics at the time of quoting. **Each item below is a one-off — do NOT use any of them as a benchmark for any future Elliott item, including future tiny-label or one-off requests.** Per-label rates are arithmetic byproducts of the order quantity and scale inversely with quantity — they are not properties of the labels themselves. For future one-off field service requests, price from material footprint and production time; there is no account floor.
 
 | P/N | Description | Dimensions | Sq Ft | Qty | Per Label | Program Total | Status |
 |-----|-------------|------------|-------|-----|-----------|---------------|--------|
@@ -167,11 +167,11 @@ Derived from accepted pricing on real items. Tightens with every new item.
 
 **Band width:** Confirmed — 4 band data points across the singles scope (0.503, 0.560, 0.609, 1.296 sq ft; 1082570 + 1068270 share the 0.503 position), all within $15.43–$15.91/sq ft at qty 20 and monotonic by size ($15.91 → $15.63 → $15.60 → $15.43 as area increases). The 1267140 and 1278980 interior points (both added 2026-06-12) confirm the band gradient between the two original endpoints — the interior of the band is now calibrated at two positions and the slope toward the 1230820 root is established.
 
-**Band scope:** Applies to printed/laminated singles in the ~0.5–1.3 sq ft range (calibrated at the 0.503–1.296 sq ft data points). Items below 0.1 sq ft with **production volume** use the sub-0.1 sq ft **Micro-Format Band** ($30.86/sq ft anchor, 1279000 founding data point — see section below). Items in the 0.1–0.5 sq ft range use **sub-scope handling** (band-consistent $/sq ft with small-format premium per 1210810 and 1247120; excluded from band DATA POINTS until production-volume acceptance). One-off / field-service requests at ≤ 0.1 sq ft continue to route to the tiny one-off floor (see Tiny Printed Labels table above) — the Micro-Format Band applies only to production catalog items.
+**Band scope:** Applies to printed/laminated singles in the ~0.5–1.3 sq ft range (calibrated at the 0.503–1.296 sq ft data points). Items below 0.1 sq ft with **production volume** use the sub-0.1 sq ft **Micro-Format Band** ($30.86/sq ft anchor, 1279000 founding data point — see section below). Items in the 0.1–0.5 sq ft range use **sub-scope handling** (band-consistent $/sq ft with small-format premium per 1210810 and 1247120; excluded from band DATA POINTS until production-volume acceptance). One-off / field-service requests at ≤ 0.1 sq ft price from job economics with no floor — the Micro-Format Band applies only to production catalog items.
 
 Items in the 0.1–0.5 sq ft range (such as P/N 1210810 at 0.292 sq ft, P/N 1279130 at 0.148 sq ft, and P/N 1247120 at 0.122 sq ft) are below the band scope floor but above the tiny-label threshold. Correct approach: price at band-consistent $/sq ft with a small-format premium (do NOT use the sub-scope position to justify a below-band rate — smaller labels carry higher fixed cost per sq ft, not lower). Sub-scope $/sq ft must be above the singles band ($15.43–$15.91/sq ft) at the qty-20 tier. Exclude from band DATA POINTS until production-volume acceptance confirmed by Nick.
 
-**Floor-anchored orders do NOT feed the band.** One-off small-run orders priced at the $55 account floor (e.g., 1082570 initial qty 2 order at $27.50/label) are explicitly excluded from band calculations. Only production-volume accepted prices enter the band.
+**Job-economics orders do NOT feed the band.** One-off small-run orders priced from job economics (e.g., 1082570 initial qty 2 order at $27.50/label) are explicitly excluded from band calculations. Only production-volume accepted prices enter the band.
 
 ### Sub-0.1 sq ft Printed/Laminated (Micro-Format Band)
 
@@ -205,7 +205,7 @@ Items in the 0.1–0.5 sq ft range (such as P/N 1210810 at 0.292 sq ft, P/N 1279
 - **Sub-scope (0.1–0.5 sq ft):** band-consistent $/sq ft with small-format premium. Three confirmed sub-scope data points: 1210810 at 0.292 sq ft, $4.75 at qty 20 = $16.27/sq ft (+5.4% above band, 4-wave validated 2026-06-01); 1279130 at 0.148 sq ft, $3.10 at qty 20 = $20.95/sq ft (+35.8% above band root, 4-wave validated 2026-06-22); 1247120 at 0.122 sq ft, $2.75 at qty 20 = $22.54/sq ft (+46.1% above band root, 4-wave validated 2026-06-16). Sub-scope premium doctrine: smaller sub-scope labels carry higher $/sq ft — $22.54 > $20.95 > $16.27 > $15.43–$15.91 is the correct gradient. All three excluded from band DATA POINTS until production-volume acceptance confirmed by Nick.
 - **Micro-Format Band (< 0.1 sq ft):** $30.86/sq ft at qty 20. Founded by 1279000. 100% $/sq ft step-up from the singles band.
 
-Future sub-0.1 sq ft **production-volume** items validate against THIS band ($30.86/sq ft anchor), NOT the singles band. **The tiny route ($55 flat) remains the default for one-off / field-service requests at ≤ 0.1 sq ft** — the Micro-Format Band applies only to production catalog items.
+Future sub-0.1 sq ft **production-volume** items validate against THIS band ($30.86/sq ft anchor), NOT the singles band. **One-off / field-service requests at ≤ 0.1 sq ft price from job economics with no floor** — the Micro-Format Band applies only to production catalog items.
 
 **Per-label floor caution — CONFIRMED AND COMPLEXITY-DEPENDENT (3024592 at 0.054 sq ft and 3024140 at 0.019 sq ft, both 4-wave validated 2026-06-16):** The $/sq ft anchor ($30.86) must NOT be linearly extrapolated below ~0.06 sq ft. At extreme smallness, a per-label floor overrides $/sq ft scaling because fixed labor per label has a minimum regardless of how small the label gets. **The floor is further confirmed to be COMPLEXITY-DEPENDENT — not a single fixed number:**
 
@@ -247,7 +247,7 @@ Beyond 2 lam passes or mixed dimensions → cost-build from scratch. Boundary is
 ## Pricing Rules for This Category
 
 1. **Single labels (≥0.5 sq ft)** — validate against the singles per-sq-ft band.
-2. **Tiny printed labels (≤0.1 sq ft)** — price from job economics (material footprint + production time), anchored to the lowest account-level worthwhile-charge floor. Sq ft band is inapplicable. **Do NOT use P/N 1277970/1277980/1277990/1278000 as a benchmark** — they are a one-off priced at the account FA floor ($55 program total). Rebuild from scratch every time. NOTE: file prep is NEVER a cost driver on this account (see Pricing Rules §22).
+2. **Tiny one-off printed labels (≤0.1 sq ft)** — price from job economics (material footprint + production time). There is no account floor. Sq ft band is inapplicable. **Do NOT use P/N 1277970/1277980/1277990/1278000 as a benchmark** — they are a one-off priced from job economics (historical program total $55). Rebuild from scratch every time. NOTE: file prep is NEVER a cost driver on this account (see Pricing Rules §22).
 3. **Same-dimension kits (≤2 lam passes)** — validate against the kit per-label band.
 4. **Kits exceeding 2 lam passes** — cost-build from scratch. Run AI validation.
 5. **Mixed-dimension kits** — see methodology below. Cost-build from scratch.
@@ -261,7 +261,7 @@ Beyond 2 lam passes or mixed dimensions → cost-build from scratch. Boundary is
 1. Extract dimensions, calculate sq ft.
 1a. **Size-class routing (FIRST CHECK):**
     - **If sq ft < 0.1 AND this is a production catalog item (not a one-off):** use the **Sub-0.1 sq ft Micro-Format Band** ($30.86/sq ft anchor, 1279000 founding data point). Run 4-wave AI validation if outside ±30% of the founding anchor sq ft (0.097).
-    - **If sq ft < 0.1 AND this is a one-off / field-service request:** price from job economics at the $55 one-off job-economics floor (1230820 FA-anchored). Do NOT use the Micro-Format Band for one-offs.
+    - **If sq ft < 0.1 AND this is a one-off / field-service request:** price from job economics (material footprint + production time); there is no floor. Nick makes the final call on whether the job is worth doing. Do NOT use the Micro-Format Band for one-offs.
     - **If 0.1 ≤ sq ft < 0.5:** use sub-scope handling — price at band-consistent $/sq ft with the small-format premium per 1210810. Exclude from band data points until production-volume acceptance.
     - **If sq ft ≥ 0.5:** continue to Step 2 (standard singles band).
 2. Pull this Pricing Profile (singles section).
