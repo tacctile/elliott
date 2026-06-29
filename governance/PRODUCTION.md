@@ -13,6 +13,7 @@
 | Roland SG3-300 | 30" printer/cutter, 28" max cut width | Print + contour cut (printed items), cut only (vinyl lettering) |
 | 54" plotter | 54" cut width | Cut vinyl on 48" roll stock |
 | Polyester laminator | **13.5" max width** | Overlaminating printed items with 1-mil polyester |
+| Rollsroller flat laminating table | Sheet lamination, up to 4' × 8' | Convex High Bond + polycarbonate laminate family. Documentation only — no pass count or width calculations apply. |
 
 ### The 13.5" Laminator Constraint
 

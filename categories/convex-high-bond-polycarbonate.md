@@ -19,6 +19,8 @@ Two approved combinations for Elliott panel decals:
 | Ink (§25 full bleed) | Eco-solvent, full coverage | $0.50 | Account standard |
 | **Combined rate (before buffer)** | | **$3.0576/sq ft** | |
 
+> **Base + laminate only — excludes ink.** Per §25 pattern, ink cost ($0.50/sq ft × full label sq ft) is added separately when calculating `material_cost_per_unit` for any item in this family.
+>
 > Supplier status: provisional — Convex (base) and TBD (5-mil lam). Both may be replaced.
 
 ### Combination B — 10-mil Polycarbonate Overlaminate (Kapco)
@@ -30,11 +32,13 @@ Two approved combinations for Elliott panel decals:
 | Ink (§25 full bleed) | Eco-solvent, full coverage | $0.50 | Account standard |
 | **Combined rate (before buffer)** | | **$3.5081/sq ft** | |
 
+> **Base + laminate only — excludes ink.** Per §25 pattern, ink cost ($0.50/sq ft × full label sq ft) is added separately when calculating `material_cost_per_unit` for any item in this family.
+>
 > Supplier: Kapco — in stock; single-roll buying only at this time.
 
 ### Comparison to Orajet/Polyester Lam
 
-The Orajet/polyester lam combined rate is ~$1.9489/sq ft (§25 canonical). Convex Combination A is ~$3.0576/sq ft (+57% vs Orajet/lam). Combination B is ~$3.5081/sq ft (+80% vs Orajet/lam). Elliott panel decals will price significantly above the Orajet/lam singles band ($15.43–$15.91/sq ft at qty 20). Band anchors will be established when the first item is priced.
+The Orajet/polyester lam combined rate is ~$1.9489/sq ft (§25 canonical). Convex Combination A is ~$3.0576/sq ft (+57% vs Orajet/lam; base + lam only, excludes ink — ink added separately per §25). Combination B is ~$3.5081/sq ft (+80% vs Orajet/lam; base + lam only, excludes ink — ink added separately per §25). Elliott panel decals will price significantly above the Orajet/lam singles band ($15.43–$15.91/sq ft at qty 20). Band anchors will be established when the first item is priced.
 
 ### Governing Rules
 
@@ -50,13 +54,12 @@ The Orajet/polyester lam combined rate is ~$1.9489/sq ft (§25 canonical). Conve
 
 ## Process Notes
 
-### Lamination — Critical Constraint
+### Lamination Equipment
 
-The current 13.5" polyester laminator handles the Orajet/lam family only. It **cannot** accommodate Convex panel decals (base material: 30" wide). Polycarbonate overlaminate application requires a wide-format lamination process — exact method (cold press, wide-format roller laminator, or third-party service) must be confirmed when the first item is quoted.
+Lamination equipment: Rollsroller flat laminating table (accommodates up to 4' × 8' sheets — no width or orientation constraint on any Elliott panel decal). The 13.5" narrow-web polyester laminator is NOT used for this material family. Lamination pass count: always 1, regardless of label dimensions.
 
-- 5-mil polycarbonate lam roll is 51" wide — 21" clearance over the 30" base; no trimming required.
-- 10-mil Kapco polycarbonate lam roll is 38" wide — 8" clearance over the 30" base.
-- Pass count and production geometry to be determined at first item spec. Do not apply the 13.5" laminator pass-count logic from the Orajet/lam family to this category.
+- 5-mil polycarbonate lam roll is 51" wide — more than sufficient for 30" base material.
+- 10-mil Kapco polycarbonate lam roll is 38" wide — 8" clearance over 30" base.
 
 ### Print
 
