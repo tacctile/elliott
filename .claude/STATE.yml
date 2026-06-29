@@ -3,10 +3,10 @@
 
 last_session:
   date: "2026-06-29"
-  type: "new items + governance"
-  summary: "Session AB — P/Ns 1279260 (FRONT TIRE PRESSURE 120 PSI, UNIT 8835) and 1279270 (REAR TIRE PRESSURE 90 PSI, UNIT 8825) added. Both 4.750\" × 1.000\" = 0.033 sq ft, Orajet 3951 Cast + Polyester Lam, sub-0.06 sq ft per-label floor governs at $2.75/qty 20 per §29 ANSI account rule, tier table parity with 3024592. Material cost $0.10. §30 ($0.25 increment rule) added to governance/PRICING_RULES.md. Item count 33 → 35. validate.py 0/0; all three build scripts clean."
+  type: "audit + new material family"
+  summary: "Session AC — Full repo audit (9-section structured report). New material family shell: 3 new material files (convex-6mil-high-bond at $1.5976/sq ft, 5mil-polycarbonate-overlaminate at $0.9600/sq ft, 10mil-polycarbonate-overlaminate at $1.4105/sq ft) + categories/convex-high-bond-polycarbonate.md (SHELL). MASTER_CONTEXT.md Convex row updated. ARCHITECTURE.md Panel Decals row updated. PRODUCTION.md Convex material costs added. Item count unchanged at 35. validate.py 0/0; build_materials.py 3 new materials; no Supabase migration."
 
-next_action: "Send 1279260 and 1279270 quotes to Sean ($2.75 at qty 20). Also send pending: 1012080 ($2.50/qty 20), 1279130 ($3.10/qty 20), 1277300 and 1279020 ($9.50/qty 20), 1278980 ($9.50/qty 20), 1278930 ($20/kit at qty 20), 1278220 ($3.00/qty 20), 1267140 ($8.75/qty 20), 1278890 ($20/qty 20)."
+next_action: "Await Sean's spec sheet for first Convex/polycarbonate item — quote both 5-mil and 10-mil lam variants. Also send pending quotes: 1279260 and 1279270 ($2.75 at qty 20), 1012080 ($2.50/qty 20), 1279130 ($3.10/qty 20), 1277300 and 1279020 ($9.50/qty 20), 1278980 ($9.50/qty 20), 1278930 ($20/kit at qty 20), 1278220 ($3.00/qty 20), 1267140 ($8.75/qty 20), 1278890 ($20/qty 20)."
 
 blockers: "none"
 

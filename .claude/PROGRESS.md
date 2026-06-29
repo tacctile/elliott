@@ -6,7 +6,27 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-06-29 (Session AB — P/Ns 1279260 + 1279270 FRONT/REAR TIRE PRESSURE labels added; §30 $0.25 increment rule. Item count 33 → 35.)
+> Last Updated: 2026-06-29 (Session AC — Convex/polycarbonate material family shell added: 3 new material files + category shell. Previously Session AB — P/Ns 1279260 + 1279270 FRONT/REAR TIRE PRESSURE labels added; §30 $0.25 increment rule. Item count 33 → 35.)
+
+---
+
+### 2026-06-29 — Session AC (audit + new material family): Convex/polycarbonate material family shell — 3 new material files + category shell
+
+**What:** Read-only audit of full repo (9-section structured report: §25 formula, band routing, per-label floor, tier table construction, ANSI rule, validation tiers, calculator role, Supabase sync, gaps/inconsistencies). New material family shell: (1) `materials/convex-6mil-high-bond.md` — 30" × 150 ft = 375 sq ft, $599.13/roll, $1.5976/sq ft, supplier Convex (provisional); (2) `materials/5mil-polycarbonate-overlaminate.md` — 51" × 150 ft = 637.5 sq ft, $612.00/roll, $0.9600/sq ft, supplier provisional; (3) `materials/10mil-polycarbonate-overlaminate.md` — Kapco KJ10VPC/38/150, 38" × 150 ft = 475 sq ft, $670.00/roll, $1.4105/sq ft, in stock at Kapco, single-roll buying. Category shell: `categories/convex-high-bond-polycarbonate.md` (SHELL — no items, no pricing profile). MASTER_CONTEXT.md Convex row updated. ARCHITECTURE.md Panel Decals row updated. PRODUCTION.md Convex/polycarbonate material costs added. Item count unchanged at 35.
+
+**Key Decisions:**
+- Two laminate combinations documented: Combination A (5-mil) = $3.0576/sq ft combined; Combination B (10-mil Kapco) = $3.5081/sq ft combined. Both vs Orajet/lam at $1.9489/sq ft — panel decals price significantly higher.
+- §25 ink ($0.50/sq ft) applies to Convex items. §29 (ANSI by account rule) does not extend to Convex family — ANSI status evaluated per item. §30 ($0.25 increment rule) applies.
+- No pricing this session. Band anchors, decision tree, pricing profile = PLACEHOLDER until first item spec received from Sean.
+- The 13.5" polyester laminator cannot handle 30" Convex base material. Polycarbonate lamination method (wide-format process) TBD at first item quote.
+
+**Strategic Flags:**
+- Supplier status provisional on Convex base and 5-mil lam — replacement suppliers may be evaluated before first production run.
+- Combination B (10-mil Kapco) is in stock and ready to source. Combination A (5-mil) supplier unconfirmed.
+- Audit finding: CALCULATOR.md still references `production_override: true` path removed in Session Z — documentation artifact, low priority.
+- Item count: unchanged at 35.
+
+**Status:** Complete — validate.py 0/0; build_materials.py 3 new materials; no Supabase migration (no new items).
 
 ---
 
@@ -181,23 +201,4 @@
 
 ---
 
-### 2026-06-16 — Session S (new item): P/N 1247120 — LBL-DNGR TIP-OVER HAZARD, sub-scope single, $2.75 at qty 20, 4-wave validated
-
-**What:** New printed/laminated single label (LBL-DNGR TIP-OVER HAZARD) at 4.0000" × 4.3750" = 0.122 sq ft, ANSI Z535.6 DANGER class. Sub-scope routing (0.1–0.5 sq ft range). Governing comparable: 1210810 ($16.27/sq ft at qty 20). $2.75 at qty 20 = $22.54/sq ft — intentionally above 1210810 per sub-scope premium doctrine (smaller label carries higher $/sq ft). Closes absolute-price inversion against 3024592 ($2.75 for 0.054 sq ft) — both at $2.75 per unit; larger label not cheaper. 4-wave atomic AI validated (24 responses, 6 models × 4 waves). Tier table: $4.25/$3.25/$2.75/$2.25/$2.00/$1.75. Material cost $0.25 (§25 canonical, $0.2377 calculated + incidental buffer). Margin at qty 20: ~90.9%.
-
-**Key Decisions:**
-- Sub-scope routing confirmed (0.122 sq ft, 0.1–0.5 sq ft range) — not singles band, not Micro-Format Band.
-- Wave 4 consensus: 4 NO (all recommending $2.75 at qty 20) / 2 YES on as-shown table; Nick accepted the $2.75 correction.
-- do_not_benchmark = false (unlike 1210810 which is in DO_NOT_BENCHMARK) — 1247120 is a valid sub-scope data point; future sub-scope items in the 0.1–0.5 sq ft range may reference it.
-- Excluded from singles band DATA POINTS until production-volume acceptance confirmed by Nick.
-- 1247120 added to BAND_EXCEPTIONS in validate.py (sub-scope singles require documented exception per band-membership check logic).
-
-**Strategic Flags:**
-- Second confirmed sub-scope data point (0.1–0.5 sq ft range) on the account. Sub-scope $/sq ft gradient now confirmed monotonic: $22.54 (0.122 sq ft) > $16.27 (0.292 sq ft) > $15.43–$15.91 (singles band).
-- Item count: 27 → 28. Printed/Laminated category: 18 → 19 items.
-
-**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 28 rows confirmed in Supabase.
-
----
-
-*Entries older than Session S (2026-06-16) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session T (2026-06-16) were removed per the 10-entry rolling window — git history retains them in full.*

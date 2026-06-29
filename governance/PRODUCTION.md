@@ -2,7 +2,7 @@
 
 > **Equipment specs, material costs, nesting rules, and process details.**
 >
-> Last Updated: 2026-06-09 (Session I — singles costing normalized to §25 canonical: 1230820 quick-reference entry now $2.60; small-format cut vinyl quick reference tape figures corrected from the area pseudo-rate to the length-based method (audit D3) — documentation-only, no sell prices changed. Previously Session H: kit-family §25 normalization — 1278930 $2.99 → $3.60, 1245130 $5.16 → $5.95)
+> Last Updated: 2026-06-29 (Session AC — Convex High Bond + Polycarbonate Overlaminate material costs added: 3 new materials with roll specs and $/sq ft. Previously 2026-06-09 Session I — singles costing normalized to §25 canonical: 1230820 quick-reference entry now $2.60; small-format cut vinyl quick reference tape figures corrected from the area pseudo-rate to the length-based method (audit D3) — documentation-only, no sell prices changed. Previously Session H: kit-family §25 normalization — 1278930 $2.99 → $3.60, 1245130 $5.16 → $5.95)
 
 ---
 
@@ -104,6 +104,22 @@ All printed/laminated items on this account are priced assuming **full bleed / f
 | **Canonical `material_cost_per_unit`** | | **$0.60** |
 
 This is the canonical method on this account. See `PRICING_RULES.md` §25 and `MASTER_CONTEXT.md` Core Rules.
+
+---
+
+### Printed Decals — Convex High Bond + Polycarbonate Overlaminate
+
+| Component | Product | Roll Size | Cost/Roll | Cost/Sq Ft | Notes | Verified |
+|-----------|---------|-----------|-----------|------------|-------|----------|
+| Base (print media) | Convex 6-mil High Bond | 30" × 150 ft = 375 sq ft | $599.13 | $1.5976 | Supplier provisional — Convex, Elliott account only | 2026-06-29 |
+| Overlaminate (Combination A) | 5-mil Polycarbonate Overlaminate | 51" × 150 ft = 637.5 sq ft | $612.00 | $0.9600 | Usable width 30" (governed by base); supplier provisional | 2026-06-29 |
+| Overlaminate (Combination B) | Kapco 10-mil PSA Velvet Polycarbonate (KJ10VPC/38/150) | 38" × 150 ft = 475 sq ft | $670.00 | $1.4105 | In stock at Kapco; single-roll buying only | 2026-06-29 |
+
+**Combined rates (base + lam + §25 ink $0.50/sq ft, before incidental buffer):**
+- Combination A (5-mil): $1.5976 + $0.9600 + $0.50 = **$3.0576/sq ft**
+- Combination B (10-mil Kapco): $1.5976 + $1.4105 + $0.50 = **$3.5081/sq ft**
+
+> Supplier status provisional on Convex base and 5-mil lam — replacement suppliers may be evaluated before first production run. The 13.5" polyester laminator cannot accommodate 30" Convex base material; polycarbonate lamination method (wide-format process) to be confirmed at first item quote. See `categories/convex-high-bond-polycarbonate.md` (SHELL) for lamination notes and pricing profile placeholder.
 
 ---
 

@@ -1,7 +1,31 @@
 {
-  "generated": "2026-06-29T16:57:50Z",
-  "material_count": 11,
+  "generated": "2026-06-29T18:09:03Z",
+  "material_count": 14,
   "materials": {
+    "10mil-polycarbonate-overlaminate": {
+      "frontmatter": {
+        "material_id": "10mil-polycarbonate-overlaminate",
+        "material_type": "laminate",
+        "manufacturer": "Kapco",
+        "product_name": "Kapco 10-mil PSA Velvet Polycarbonate Overlaminate",
+        "product_code": "KJ10VPC/38/150",
+        "film_type": "Polycarbonate",
+        "thickness_mil": 10,
+        "finish": "Velvet",
+        "roll_width_in": 38,
+        "roll_length_ft": 150,
+        "cost_per_roll": 670.0,
+        "cost_per_sq_ft": 1.4105,
+        "verified_date": "2026-06-29",
+        "supplier": "Kapco",
+        "sku": "KJ10VPC/38/150",
+        "compatible_substrates": [
+          "convex-6mil-high-bond"
+        ],
+        "used_in_items": [],
+        "notes": "Overlaminate for Elliott panel decal program (Combination B). Roll: 38\" \u00d7 150 ft = 475 sq ft. Cost: $670.00 / 475 = $1.4105/sq ft. Usable width is 30\" (governed by Convex 6-mil High Bond base material); 38\" roll provides 8\" clearance. Cost per sq ft calculated on full roll area \u2014 no waste adjustment applied at this time. Supplier: Kapco \u2014 in-stock; single-roll buying only at this time. Paired with convex-6mil-high-bond. Product code / SKU: KJ10VPC/38/150."
+      }
+    },
     "1mil-polyester-overlaminate": {
       "frontmatter": {
         "material_id": "1mil-polyester-overlaminate",
@@ -256,6 +280,55 @@
           "3017435"
         ],
         "notes": "48\" roll stock runs on 54\" plotter, not the Roland SG3-300. Better nesting for wide items \u2014 5 labels across vs 2 on 24\" roll. Length-based material cost method used for nesting calculations."
+      }
+    },
+    "5mil-polycarbonate-overlaminate": {
+      "frontmatter": {
+        "material_id": "5mil-polycarbonate-overlaminate",
+        "material_type": "laminate",
+        "manufacturer": "",
+        "product_name": "5-mil Polycarbonate Overlaminate",
+        "product_code": "",
+        "film_type": "Polycarbonate",
+        "thickness_mil": 5,
+        "finish": "Gloss clear",
+        "roll_width_in": 51,
+        "roll_length_ft": 150,
+        "cost_per_roll": 612.0,
+        "cost_per_sq_ft": 0.96,
+        "verified_date": "2026-06-29",
+        "supplier": "",
+        "sku": "",
+        "compatible_substrates": [
+          "convex-6mil-high-bond"
+        ],
+        "used_in_items": [],
+        "notes": "Overlaminate for Elliott panel decal program (Combination A). Roll: 51\" \u00d7 150 ft = 637.5 sq ft. Cost: $612.00 / 637.5 = $0.9600/sq ft. Usable width is 30\" (governed by Convex 6-mil High Bond base material); 51\" roll provides 21\" clearance with no trimming required for 30\" base. Cost per sq ft calculated on full roll area \u2014 no waste adjustment applied at this time. Supplier provisional \u2014 under review, may be replaced. SKU unknown \u2014 leave blank until confirmed. Manufacturer unknown \u2014 leave blank until confirmed. Paired with convex-6mil-high-bond."
+      }
+    },
+    "convex-6mil-high-bond": {
+      "frontmatter": {
+        "material_id": "convex-6mil-high-bond",
+        "material_type": "print_media",
+        "manufacturer": "Convex",
+        "product_name": "Convex 6-mil High Bond",
+        "product_code": "",
+        "film_type": "High bond vinyl",
+        "film_thickness_mil": 6,
+        "adhesive_type": "Pressure-sensitive high bond",
+        "roll_width_in": 30,
+        "roll_length_ft": 150,
+        "cost_per_roll": 599.13,
+        "cost_per_sq_ft": 1.5976,
+        "verified_date": "2026-06-29",
+        "supplier": "Convex",
+        "sku": "",
+        "compatible_laminates": [
+          "5mil-polycarbonate-overlaminate",
+          "10mil-polycarbonate-overlaminate"
+        ],
+        "used_in_items": [],
+        "notes": "Base substrate for Elliott panel decal program. Roll: 30\" \u00d7 150 ft = 375 sq ft. Cost: $599.13 / 375 = $1.5976/sq ft. Supplier status provisional \u2014 Convex, Elliott account only at this time; may be replaced. No ink coverage surcharge applies to base cost (ink cost calculated separately per \u00a725 pattern: $0.50/sq ft \u00d7 full label sq ft). Paired with 5-mil or 10-mil polycarbonate overlaminate. SKU unknown \u2014 leave blank until confirmed."
       }
     },
     "orajet-3951-white": {
