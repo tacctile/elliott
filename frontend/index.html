@@ -2463,6 +2463,13 @@ function hydrateFromDb(mats, dbItems, bands, settings, combos, staticData) {
   COMBINATIONS = combos.map(normalizeCombination);
 
   window.CALCULATOR_CONFIG = assembleConfigFromDb(bands, settings, mats, dbItems);
+  // DB settings.extra may not carry ink_rates if the row was seeded before §25
+  // was codified (2026-06-01). Fall back to the static calculator_config.json
+  // ink_rates so the engine always has full_bleed_flood_coat available.
+  if (!window.CALCULATOR_CONFIG.ink_rates || !window.CALCULATOR_CONFIG.ink_rates.full_bleed_flood_coat) {
+    const si = staticData && staticData.config && staticData.config.ink_rates;
+    if (si && si.full_bleed_flood_coat) window.CALCULATOR_CONFIG.ink_rates = si;
+  }
 
   // ITEMS_DATA: DB frontmatter (authoritative, incl. override_type +
   // band_class) merged with static data.json prose sections + images.
@@ -5267,6 +5274,7 @@ init();
   // only and are never routing targets (audit H-1/H-2 fix, Session H).
   function inkComponent(ink_coverage, sq_ft_per_label, config) {
     const def = config.ink_rates[ink_coverage] || config.ink_rates.full_bleed_flood_coat;
+    if (!def) return { cost: config.material_constants && config.material_constants.orajet_3951 ? sq_ft_per_label * 0.50 : 0, unverified: false };
     let cost = 0;
     let unverified = false;
     if (def.placeholder !== undefined) {
