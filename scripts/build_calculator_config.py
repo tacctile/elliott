@@ -399,12 +399,12 @@ INK_RATES = {
 # ---------------------------------------------------------------------------
 
 DO_NOT_BENCHMARK = {
-    "1277970": "One-off program peer — $55 floor pricing, not a catalog rate",
-    "1277980": "One-off program peer — $55 floor pricing, not a catalog rate",
-    "1277990": "One-off program peer — $55 floor pricing, not a catalog rate",
-    "1278000": "One-off program peer — $55 floor pricing, not a catalog rate",
-    "3017583": "Standalone one-off — $55 floor pricing, not a catalog rate",
-    "3017584": "Standalone one-off — $55 floor pricing, not a catalog rate",
+    "1277970": "One-off program peer — historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
+    "1277980": "One-off program peer — historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
+    "1277990": "One-off program peer — historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
+    "1278000": "One-off program peer — historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
+    "3017583": "Standalone one-off — historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
+    "3017584": "Standalone one-off — historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
     "1210810": "Sub-scope single — excluded from band data points until production-volume acceptance",
     "1082570": "Initial order was $42 flat job-economics (not a catalog rate). Production tier table is valid for reorder volumes.",
 }
@@ -429,7 +429,7 @@ OVERRIDE_TYPE_PRECEDENT = {
 # ---------------------------------------------------------------------------
 
 QUOTE_LANGUAGE = {
-    "tiny_one_off_program": "One-time minimum program charge: $55.00 total",
+    "tiny_one_off_program": "RETIRED (§28 no-floor doctrine) — tiny one-off route removed. All items price from Micro-Format Band.",
     "anchor_line_template": "Label measures {width}\" × {height}\" ({sq_ft} sq ft) in {material} — priced at ${price} at your projected monthly volume.",
     "pms_caveat_template": "{color} is a visual approximation of {pms_code} — not a certified Pantone match.",
     "ink_unverified_note": "Ink cost is a placeholder pending first production run. Update material_cost_per_unit after run.",
@@ -497,14 +497,11 @@ def to_float(val):
 # ---------------------------------------------------------------------------
 
 def build_account_section():
-    item_1230820 = parse_frontmatter(ITEMS_DIR / f"{FLOOR_SOURCE_PN}.md")
-    if item_1230820 is None:
-        raise FileNotFoundError(f"items/{FLOOR_SOURCE_PN}.md not found or has no frontmatter")
-    floor = to_float(item_1230820["first_article_price"])
+    # §28 no-floor doctrine: account.floor is retired. Set to null.
     return {
-        "floor": floor,
-        "floor_source_pn": FLOOR_SOURCE_PN,
-        "floor_label": FLOOR_LABEL,
+        "floor": None,
+        "floor_source_pn": None,
+        "floor_label": "No job floor — §28 no-floor job-economics doctrine. All items price from Micro-Format Band or job economics.",
         "moq": {
             "printed_laminated": MOQ_PRINTED_LAMINATED,
         },

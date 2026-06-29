@@ -2,9 +2,9 @@
 # Updated at the end of every session
 
 last_session:
-  date: "2026-06-22"
-  type: "governance"
-  summary: "Session Y — governance: removed $55 one-off floor as forward-looking rule; added no-floor job-economics doctrine as §28 in PRICING_RULES.md; added deep-tier standing instruction to VALIDATION_PROMPTS.md §3 Wave 1 prompt template. Files updated: PRICING_RULES.md, CALCULATOR.md, VALIDATION_PROMPTS.md, categories/printed-laminated-orajet.md, MASTER_CONTEXT.md, PROGRESS.md, STATE.yml. No items added. Item count unchanged at 33. validate.py 0/0; all three build scripts clean; elliott_items = 33 confirmed."
+  date: "2026-06-29"
+  type: "bug-fix + governance"
+  summary: "Session Z — removed tiny route and $55 floor from calculator engine; fixed inkComponent crash on production_override inputs (Fix 1A: ink_rates fallback in assembleConfigFromDb; Fix 1B: null guard in inkComponent); §28 no-floor doctrine fully implemented in calculator (FIX 2). Removed: buildTinyTiers(), production_override checkbox UI, all route==='tiny' guards, F9 flag emission. F9 definition updated to RETIRED/INFO. Sanity test 1277970 removed; PROD-OVERRIDE renamed MICRO-BAND. build_calculator_config.py updated: account.floor→null, DO_NOT_BENCHMARK updated, tiny_one_off_program retired. Supabase floor_value seeded to 0. Files updated: frontend/index.html, scripts/build_calculator_config.py, frontend/calculator_config.json, frontend/data.json, frontend/materials.json, .claude/STATE.yml, .claude/PROGRESS.md. Item count unchanged at 33. validate.py 0/0; all three build scripts clean."
 
 next_action: "Send 1012080 quote to Sean ($2.50 at qty 20). Also send pending: 1279130 ($3.10/qty 20), 1277300 and 1279020 ($9.50/qty 20), 1278980 ($9.50/qty 20), 1278930 ($20/kit at qty 20), 1278220 ($3.00/qty 20), 1267140 ($8.75/qty 20), 1278890 ($20/qty 20)."
 
