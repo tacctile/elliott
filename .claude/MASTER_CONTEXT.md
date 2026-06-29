@@ -2,7 +2,7 @@
 
 > **Single source of truth. Read first, every session. No exceptions.**
 >
-> Last Updated: 2026-06-22 (governance — $55 one-off floor removed from Internal Pricing Notes; no-floor job-economics doctrine added at `governance/PRICING_RULES.md` §28. Previously 2026-06-09 Session I: $50 rush/favor floor reference added. Previously 2026-06-05: MOQ 10 / $55 minimum order charge purged — Core Rule 8 removed, Core Rule 9 renumbered to 8; Account-Level Order Rules section removed; internal pricing-normalization note relocated to its own section)
+> Last Updated: 2026-06-29 (Session AC — Convex/polycarbonate material family added: 3 new material files + `categories/convex-high-bond-polycarbonate.md` (SHELL), Convex row updated to link category file. Previously 2026-06-22: governance — $55 one-off floor removed from Internal Pricing Notes; no-floor job-economics doctrine added at `governance/PRICING_RULES.md` §28. Previously 2026-06-09 Session I: $50 rush/favor floor reference added. Previously 2026-06-05: MOQ 10 / $55 minimum order charge purged — Core Rule 8 removed, Core Rule 9 renumbered to 8; Account-Level Order Rules section removed; internal pricing-normalization note relocated to its own section)
 
 ---
 
@@ -34,7 +34,7 @@ This is not a codebase. It is a knowledge system with the same architectural dis
 |--------|-------------|---------------|
 | 3M 180mC Cut Vinyl | All 3M Controltac 180mC colors. Cut/weed/mask. No printing. | `categories/cut-vinyl-3m-180mc.md` |
 | Orajet 3951 Cast + Polyester Lam | Orajet 3951 base + 1-mil polyester overlaminate. Printed full-color. | `categories/printed-laminated-orajet.md` |
-| Convex High Bond + Poly Lam | Convex 6-mil high bond + polycarbonate overlaminate. Panel decals. | No category file yet — first item establishes it. |
+| Convex High Bond + Poly Lam | Convex 6-mil high bond + polycarbonate overlaminate. Panel decals. Two lam variants: 5-mil and 10-mil (Kapco). | `categories/convex-high-bond-polycarbonate.md` (SHELL — no items yet) |
 | Lexan/Polycarbonate | Direct print on polycarbonate substrate. Legacy Elliott spec. | No category file yet — first item establishes it. |
 
 ---
