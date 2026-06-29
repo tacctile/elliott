@@ -59,6 +59,8 @@
 
 §28 — **Elliott Account — No Job Floor.** Every job is priced from actual job economics: material cost (§25 canonical for printed/laminated; length-based for cut vinyl) plus realistic production time. There is no minimum order charge and no job floor on this account. For sub-0.1 sq ft production catalog items, the Micro-Format Band governs. For one-off field service requests at any size, price from material footprint and production time; Nick makes the final call on whether the job is worth doing.
 
+§29 — **All items printed on Orajet 3951 with polyester laminate on this account are ANSI by default.** The per-label floor for new production items is $2.75 at qty 20 (ANSI). The $2.50 non-ANSI floor is a historical data point only — applicable solely to 3024140 and 1012080, which were priced under the prior framework. The ANSI checkbox has been removed from the calculator; ANSI = true is hardcoded for all Orajet/lam items. Established 2026-06-29.
+
 ---
 
 ## Per-Sq-Ft Kit Premium

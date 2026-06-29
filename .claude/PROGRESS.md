@@ -6,7 +6,26 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-06-29 (Session Z — tiny route + $55 floor removed from calculator engine; inkComponent crash fixed; §28 fully implemented in calculator. Item count unchanged at 33.)
+> Last Updated: 2026-06-29 (Session AA — hardcode ANSI for all Orajet/lam items; remove calc-ansi checkbox. Item count unchanged at 33.)
+
+---
+
+### 2026-06-29 — Session AA (governance): Hardcode ANSI for all Orajet/lam items; remove calc-ansi checkbox; §29 added
+
+**What:** Account-level rule change — all items printed on Orajet 3951 with polyester laminate are ANSI by definition going forward. Removed the `calc-ansi` checkbox and its `calc-ansi-wrap` wrapper from the calculator UI entirely. Removed `is_ansi_safety` from `gatherCalcInputs()`, `runCalculator()` defaults, `inputsForPN()` sanity-check helper, and two inline sanity test objects. Added fixed line "ANSI: Yes — account rule (all Orajet/lam items)" to `generateBrief()` for all printed/lam routes. Added §29 to `governance/PRICING_RULES.md` documenting the account-level ANSI rule. Updated `governance/CALCULATOR.md` Step 2 and Last Updated header. Updated `categories/printed-laminated-orajet.md` per-label floor section: $2.75 is the governing floor for all future sub-0.06 sq ft items; $2.50 floor is historical (3024140 / 1012080 only). No items added or repriced. No Supabase seed required (no item data changed).
+
+**Key Decisions:**
+- `is_ansi_safety` was collected from the checkbox but never used in any ANSI/non-ANSI branching in the per-label floor logic — removal is purely UI/brief cleanup, no engine routing changes.
+- The `calc-ansi-wrap` div and all references to `calc-ansi` / `is_ansi_safety` removed exhaustively: HTML, `gatherCalcInputs()`, `runCalculator()` defaults, `inputsForPN()` helper, and two inline test objects.
+- Brief now shows fixed "ANSI: Yes — account rule (all Orajet/lam items)" in the FUNDAMENTALS section for all printed/lam routes.
+- §29 codifies: all Orajet/lam items are ANSI by default; $2.75 floor governs new items; $2.50 non-ANSI floor is historical data only (3024140 and 1012080 only).
+
+**Strategic Flags:**
+- The $2.50 per-label floor (3024140, 1012080) remains unchanged — those two items were priced under the prior framework and are grandfathered. Do NOT apply $2.50 to any future item.
+- The governing floor for all new sub-0.06 sq ft production items is $2.75 (ANSI), per §29.
+- Item count unchanged at 33. No Supabase changes needed.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; item_count = 33.
 
 ---
 
@@ -181,35 +200,4 @@
 
 ---
 
-### 2026-06-12 — Session Q (governance): Prompt template hardening — On Completion block, Prompt Writing Rule 9, Acceptance Criteria Rules section
-
-**What:** Hardened the new-item prompt template in `CHAT_CONTEXT.md` so every Claude Chat–generated prompt is self-contained and self-enforcing, with no human judgment required to remember build, seed, or count steps. Three targeted edits: On Completion block now has an explicit 9-step sequence (build scripts at step 6, validate at step 7, blocking seed with confirmed count at step 8, commit at step 9); Prompt Writing Rule 9 now requires Claude Chat to read `STATE.yml` and resolve seed count to a real number before generating any prompt; Acceptance Criteria Rules section added with 10 binary checks that every generated prompt must include.
-
-**Key Decisions:**
-- On Completion step 5 now explicitly requires updating `item_count` to N+1 in STATE.yml — previously implied but not stated.
-- The three build scripts are now a numbered step (step 6), not buried in session-completion boilerplate — this ensures they appear in every generated prompt's completion checklist.
-- Acceptance Criteria Rules formalized as a standalone section (not a subset of Prompt Writing Rules) so the 10 checks are always visible as a discrete reference.
-
-**Strategic Flags:**
-- Next session is a new item. Claude Chat must read STATE.yml, see item_count = 26, and resolve seed count to 27 in the Acceptance Criteria before generating the prompt.
-
-**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 26 rows confirmed, no drift.
-
----
-
-### 2026-06-12 — Session P (governance): Mandatory Supabase seed enforcement — four governance docs updated, 1278980 seeded, all 26 items live
-
-**What:** Governance hardening — added mandatory, blocking, non-deferrable Supabase seed step to four governance documents (`COMPLETION_TEMPLATES.md`, `CHAT_CONTEXT.md`, `CALCULATOR.md`, `VALIDATION_PROMPTS.md`). Created `.env` at repo root with service-role credentials so future sessions can run `migrate_to_supabase.py` live without manual intervention. Seeded P/N 1278980 (the item written in Session O but left unseeded), and confirmed all three carry-over P/Ns (1278980, 1267140, 1278220) are live in Supabase. `elliott_items` row count 25 → 26; all 26 items verified.
-
-**Key Decisions:**
-- Root cause of three consecutive unseeded sessions: no `.env` present + seed was treated as optional/deferrable. Both causes addressed: `.env` created, seed codified as blocking step 5 in the Session Completion checklist and step 7 in On Completion, with explicit language that the session is NOT complete until the seed is confirmed.
-- Seed executed via Supabase MCP (service-role SQL path — semantically identical to live mode, the sanctioned pattern when `supabase-py` is unavailable), consistent with Session N precedent.
-
-**Strategic Flags:**
-- `.env` is in `.gitignore` and must never be committed — confirmed pre-flight.
-
-**Status:** Complete — validate.py 0/0; all three build scripts clean; `elliott_items` = 26 rows; P/Ns 1278980, 1267140, 1278220 all confirmed present in Supabase.
-
----
-
-*Entries older than Session P (2026-06-12) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session R (2026-06-16) were removed per the 10-entry rolling window — git history retains them in full.*
