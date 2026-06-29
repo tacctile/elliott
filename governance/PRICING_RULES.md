@@ -2,7 +2,7 @@
 
 > **Non-negotiable constraints. Apply to every pricing decision on this account.**
 >
-> Last Updated: 2026-06-22 (§27 $55 one-off floor cross-reference removed; §28 no-floor job-economics doctrine added. Previously 2026-06-09: §27 rush/favor job floor added — $50 per job; audit decision fork D5)
+> Last Updated: 2026-06-29 (§30 $0.25 increment rule added. Previously §29 ANSI account rule added. Previously 2026-06-22: §28 no-floor job-economics doctrine added)
 
 ---
 
@@ -60,6 +60,8 @@
 §28 — **Elliott Account — No Job Floor.** Every job is priced from actual job economics: material cost (§25 canonical for printed/laminated; length-based for cut vinyl) plus realistic production time. There is no minimum order charge and no job floor on this account. For sub-0.1 sq ft production catalog items, the Micro-Format Band governs. For one-off field service requests at any size, price from material footprint and production time; Nick makes the final call on whether the job is worth doing.
 
 §29 — **All items printed on Orajet 3951 with polyester laminate on this account are ANSI by default.** The per-label floor for new production items is $2.75 at qty 20 (ANSI). The $2.50 non-ANSI floor is a historical data point only — applicable solely to 3024140 and 1012080, which were priced under the prior framework. The ANSI checkbox has been removed from the calculator; ANSI = true is hardcoded for all Orajet/lam items. Established 2026-06-29.
+
+§30 — **All tier prices must be in $0.25 increments.** All tier table prices across all items, all material families, and all band classes must be expressed in $0.25 increments (e.g. $2.75, $3.00, $4.25). This rule is forward-looking only — items priced prior to this session are grandfathered and not subject to retroactive correction. Applies to every new item from this session forward, without exception. Established 2026-06-29.
 
 ---
 

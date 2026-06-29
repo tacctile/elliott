@@ -175,7 +175,7 @@ Each Wave 1 prompt instructs each model to produce, in order:
 1. **Interpreted Specs** — restate what you understood. Flag any ambiguity.
 2. **Benchmark Match** — which existing item you are anchoring to and why.
 3. **Cost Drivers** — what is driving the price on this specific item.
-4. **Proposed Tier Table** — all 6 quantity breaks with prices AND $/sq ft AND margin % at each tier.
+4. **Proposed Tier Table** — all 6 quantity breaks with prices AND $/sq ft AND margin % at each tier. All tier prices must be in $0.25 increments — no exceptions.
 5. **Per-Label Math** — if kit, show per-label cost and per-label price at qty 20.
 6. **Margin Estimate** — at qty 20 and 200+. Show the math.
 7. **Risk Flags** — anything that makes you uncomfortable about this price.

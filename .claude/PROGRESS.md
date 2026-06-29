@@ -6,7 +6,26 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-06-29 (Session AA — hardcode ANSI for all Orajet/lam items; remove calc-ansi checkbox. Item count unchanged at 33.)
+> Last Updated: 2026-06-29 (Session AB — P/Ns 1279260 + 1279270 FRONT/REAR TIRE PRESSURE labels added; §30 $0.25 increment rule. Item count 33 → 35.)
+
+---
+
+### 2026-06-29 — Session AB (new items + governance): P/Ns 1279260 and 1279270 — FRONT/REAR TIRE PRESSURE labels; §30 $0.25 increment rule
+
+**What:** Two new printed/laminated single labels: 1279260 (FRONT TIRE PRESSURE 120 PSI, UNIT 8835) and 1279270 (REAR TIRE PRESSURE 90 PSI, UNIT 8825). Both 4.750" × 1.000" = 0.033 sq ft, Orajet 3951 Cast + Polyester Lam, Print/Lam/Cut 1 pass. Sub-0.06 sq ft — per-label floor governs at $2.75/qty 20 per §29 (ANSI account rule). Tier table locked: $4.25/$3.25/$2.75/$2.50/$2.25/$2.00 — parity with 3024592. Material cost $0.10 (§25 canonical: $0.0643 calculated + incidental buffer). Margin ~96.4% at qty 20. Primary comparable: 3024592 (identical tier table, same per-label floor governance). Pricing locked per session prompt — no 4-wave AI validation run. §30 added to governance/PRICING_RULES.md: all tier prices must be in $0.25 increments (forward-looking only, existing items grandfathered). §30 requirement also added to governance/VALIDATION_PROMPTS.md Wave 1 Required Output Schema.
+
+**Key Decisions:**
+- Per-label floor governs at $2.75/qty 20 per §29 ANSI account rule. Linear Micro-Format Band formula ($30.86/sq ft × 0.033 = $1.02) is inapplicable — overridden by floor.
+- Tier table matches 3024592 exactly. All tiers in $0.25 increments per new §30 rule.
+- Material cost $0.10 — same as 3024140 despite different dimensions; material negligible at this size class.
+- No first article price on either item. No 4-wave AI validation — pricing locked per session prompt.
+
+**Strategic Flags:**
+- Both items are band data points for the sub-0.06 sq ft per-label floor (ANSI). The $2.75 floor at qty 20 is now confirmed across three independent items (3024592, 1279260, 1279270).
+- §30 ($0.25 increment rule) applies to all new items from this session forward. Existing items are grandfathered.
+- Item count: 33 → 35. Printed/Laminated category: 22 → 24 items.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 35 rows confirmed in Supabase.
 
 ---
 
@@ -181,23 +200,4 @@
 
 ---
 
-### 2026-06-16 — Session R (new item): P/N 3024592 — first sub-0.06 sq ft production item, per-label floor $2.75 at qty 20, 4-wave validated
-
-**What:** New printed/laminated single label (LBL-FALL PRTCT ANCHRG 1 PERSON) at 4.750" × 1.625" = 0.054 sq ft, ANSI Z535.6 DANGER class. First production catalog item below 0.06 sq ft on the Elliott account. The Micro-Format Band linear formula ($30.86/sq ft × 0.054 = $1.67) is overridden by the per-label floor documented in 1279000. Floor anchor confirmed at $2.75 at qty 20 by 4-wave atomic AI validation (24 responses, 6 models × 4 waves). Tier table: $4.25/$3.25/$2.75/$2.50/$2.25/$2.00. Material cost $0.20 (§25 canonical, same as 1279000 despite smaller area). Margin at qty 20: ~92.7%. This item IS a band data point for the sub-0.06 sq ft floor.
-
-**Key Decisions:**
-- Per-label floor ($2.75 at qty 20) governs over the linear $/sq ft formula ($1.67) — documented with full derivation in items/3024592.md Pricing Derivation section.
-- 200+ tier at $2.00 is below the ~$2.50–$3.00 per-label floor band minimum — accepted as structural completeness; Sean orders 20–50 batches; same pattern as 1279000's 200+ at $2.10.
-- This item IS a band data point (do_not_benchmark = false) — the floor of $2.75 at qty 20 anchors future sub-0.06 sq ft items. Future items must validate fresh against job economics; do NOT clone $2.75 mechanically.
-- Quote email anchor (Wave 4 validated): "Same material and process as P/N 1279000/1278220 — no file prep charge, no first article."
-- Sub-0.06 sq ft floor caution in categories/printed-laminated-orajet.md updated from anticipated to confirmed.
-
-**Strategic Flags:**
-- First time the per-label floor has been invoked on a live production item at this account. The $2.75 anchor is now visible to Sean — he will log it alongside 1279000's $3.00 and compare when future sub-0.1 sq ft items arrive.
-- Item count: 26 → 27. Printed/Laminated category: 17 → 18 items.
-
-**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 27 rows confirmed in Supabase.
-
----
-
-*Entries older than Session R (2026-06-16) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session S (2026-06-16) were removed per the 10-entry rolling window — git history retains them in full.*
