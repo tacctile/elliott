@@ -207,14 +207,16 @@ Items in the 0.1–0.5 sq ft range (such as P/N 1210810 at 0.292 sq ft, P/N 1279
 
 Future sub-0.1 sq ft **production-volume** items validate against THIS band ($30.86/sq ft anchor), NOT the singles band. **One-off / field-service requests at ≤ 0.1 sq ft price from job economics with no floor** — the Micro-Format Band applies only to production catalog items.
 
-**Per-label floor caution — CONFIRMED AND COMPLEXITY-DEPENDENT (3024592 at 0.054 sq ft and 3024140 at 0.019 sq ft, both 4-wave validated 2026-06-16):** The $/sq ft anchor ($30.86) must NOT be linearly extrapolated below ~0.06 sq ft. At extreme smallness, a per-label floor overrides $/sq ft scaling because fixed labor per label has a minimum regardless of how small the label gets. **The floor is further confirmed to be COMPLEXITY-DEPENDENT — not a single fixed number:**
+**Account-level ANSI rule (established 2026-06-29, §29):** All new items on this account printed on Orajet 3951 with polyester laminate are ANSI by default. The $2.75 per-label floor (at qty 20) is the governing floor for all future sub-0.06 sq ft items. The $2.50 non-ANSI floor is historical only — it applies solely to 3024140 and 1012080, which were priced under the prior framework before this rule was established. Do not apply the $2.50 floor to any new item.
 
-| Label Complexity Class | Per-Label Floor (qty 20) | Reference Item |
-|------------------------|--------------------------|----------------|
-| ANSI regulated (multi-color, compliance inspection) | **$2.75** | 3024592 (ANSI Z535.6 DANGER, 0.054 sq ft) |
-| Simple non-ANSI control label (single/dual color, no compliance inspection) | **$2.50** | 3024140 (non-ANSI, 0.019 sq ft) |
+**Per-label floor caution — CONFIRMED (3024592 at 0.054 sq ft and 3024140 at 0.019 sq ft, both 4-wave validated 2026-06-16):** The $/sq ft anchor ($30.86) must NOT be linearly extrapolated below ~0.06 sq ft. At extreme smallness, a per-label floor overrides $/sq ft scaling because fixed labor per label has a minimum regardless of how small the label gets. **The governing floor for all future sub-0.06 sq ft new items is $2.75 (ANSI) per §29:**
 
-Items below ~0.06 sq ft require fresh job-economics validation, not a linear $/sq ft formula. The complexity class of the new item must be assessed before applying the floor. Do NOT use 3024592's $2.75 or 3024140's $2.50 as mechanical parity clones — future sub-0.06 sq ft items must validate fresh against job economics, compare to the appropriate complexity-class floor, and run 4-wave AI validation.
+| Label Complexity Class | Per-Label Floor (qty 20) | Reference Item | Status |
+|------------------------|--------------------------|----------------|--------|
+| ANSI regulated (all new items — account rule §29) | **$2.75** | 3024592 (ANSI Z535.6 DANGER, 0.054 sq ft) | Governing floor |
+| Simple non-ANSI control label | **$2.50** | 3024140 (non-ANSI, 0.019 sq ft) | Historical only — 3024140 and 1012080 only |
+
+Items below ~0.06 sq ft require fresh job-economics validation, not a linear $/sq ft formula. Per §29, all new items are ANSI — use the $2.75 floor as the reference. Do NOT use 3024592's $2.75 as a mechanical parity clone — future sub-0.06 sq ft items must validate fresh against job economics and run 4-wave AI validation. The $2.50 non-ANSI floor (3024140) is historical — do not apply to any new item.
 
 **Band width:** Single founding data point at 0.097 sq ft. Band will tighten as additional sub-0.1 sq ft production items are quoted. Items at the boundary (~0.08–0.12 sq ft) still require **4-wave AI validation** — do not parity-quote from 1279000 without running the validation process.
 

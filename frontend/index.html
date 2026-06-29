@@ -1996,11 +1996,6 @@
               <input type="text" id="calc-ink-display" value="Full bleed — $0.50/sq ft (account standard per §25)" disabled />
             </div>
 
-            <div class="calc-field" id="calc-ansi-wrap">
-              <label class="checkbox-label"><input type="checkbox" id="calc-ansi" /> ANSI/Safety Label</label>
-            </div>
-
-
             <div class="calc-field">
               <label>Order Quantity</label>
               <input type="number" id="calc-qty" min="0" step="1" placeholder="optional" />
@@ -3660,7 +3655,6 @@ function updateCalcFormVisibility() {
   document.getElementById('calc-itemtype-wrap').classList.toggle('hidden', isCV);
   document.getElementById('calc-labelcount-wrap').classList.toggle('hidden', !isKit);
   document.getElementById('calc-ink-wrap').classList.toggle('hidden', !isPL);
-  document.getElementById('calc-ansi-wrap').classList.toggle('hidden', !isPL);
 
 }
 
@@ -3692,7 +3686,6 @@ function gatherCalcInputs() {
     cut_vinyl_color: cutVinylColor,
     // H-1: full bleed is the only ink routing on this account (§25)
     ink_coverage: 'full_bleed_flood_coat',
-    is_ansi_safety: document.getElementById('calc-ansi').checked,
     order_qty: parseInt(document.getElementById('calc-qty').value, 10) || 0,
     notes: document.getElementById('calc-notes').value.trim(),
     _config: cfgOverride || undefined,
@@ -6094,6 +6087,7 @@ init();
     lines.push(`Sq ft per kit: ${fund.sq_ft_per_kit}`);
     if (isPrintLam) {
       lines.push('Ink coverage: Full bleed / full coverage ink ($0.50/sq ft) — account standard per §25.');
+      lines.push('ANSI: Yes — account rule (all Orajet/lam items)');
     }
     if (lamInfo) {
       lines.push(`Lamination passes: ${lamInfo.passes === null ? 'STOP' : lamInfo.passes}`);
@@ -6242,7 +6236,6 @@ init();
       cut_vinyl_color: '',
       // §25: full bleed is the only ink routing on this account (H-1 fix).
       ink_coverage: 'full_bleed_flood_coat',
-      is_ansi_safety: false,
       order_qty: 0,
       notes: '',
     }, inputs || {});
@@ -6469,7 +6462,6 @@ init();
         label_count: parseInt(fm.label_count, 10) || 1,
         cut_vinyl_color: '',
         ink_coverage: 'full_bleed_flood_coat',
-        is_ansi_safety: false,
         order_qty: 0,
         notes: '',
       }, extra || {});
@@ -6547,7 +6539,7 @@ init();
       part_number: 'MICRO-BAND-TEST', description: 'Sub-0.1 sq ft — Micro-Format Band routing test (§28)',
       model: '', material_family: PRINTED_LAM_FAMILY, item_type: 'single',
       width_in: 8.0, height_in: 1.75, label_count: 1, cut_vinyl_color: '',
-      ink_coverage: 'full_bleed_flood_coat', is_ansi_safety: false,
+      ink_coverage: 'full_bleed_flood_coat',
       order_qty: 0, notes: '',
     }), { route: 'single_sub_scope', price_20: 3.00, flag_present: ['F10', 'F23'],
           note: 'Micro-Format Band template direct ($3.00, 1279000 anchor); §28 unconditional routing; cliffs reported via F23 (report-only)' });
@@ -6557,7 +6549,7 @@ init();
       part_number: 'CONVEX-TEST', description: 'Convex panel decal probe', model: '',
       material_family: 'Convex High Bond + Poly Lam', item_type: 'single',
       width_in: 10, height_in: 6, label_count: 1, cut_vinyl_color: '',
-      ink_coverage: 'full_bleed_flood_coat', is_ansi_safety: false,
+      ink_coverage: 'full_bleed_flood_coat',
       order_qty: 0, notes: '',
     }), { route: 'no_profile', stop: true, flag_present: ['F17'],
           note: 'F17 STOP — output suppressed, first item establishes the band' });
