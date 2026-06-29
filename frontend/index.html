@@ -2000,10 +2000,6 @@
               <label class="checkbox-label"><input type="checkbox" id="calc-ansi" /> ANSI/Safety Label</label>
             </div>
 
-            <div class="calc-field hidden" id="calc-prodoverride-wrap">
-              <label class="checkbox-label"><input type="checkbox" id="calc-prodoverride" /> Production catalog item (override tiny route)</label>
-              <div class="calc-hint">Default off — sub-0.1 sq ft Orajet items route to tiny ($55 flat). Check this for production catalog items at ≤0.1 sq ft to route to single_sub_scope and get real tiered pricing.</div>
-            </div>
 
             <div class="calc-field">
               <label>Order Quantity</label>
@@ -2386,7 +2382,24 @@ function assembleConfigFromDb(bands, settings, mats, dbItems) {
       },
     },
     material_constants,
-    ink_rates: extra.ink_rates || {},
+    ink_rates: (extra.ink_rates && extra.ink_rates.full_bleed_flood_coat)
+      ? extra.ink_rates
+      : {
+          default_coverage: 'full_bleed_flood_coat',
+          default_note: 'Account-wide standard for ALL Elliott printed/laminated items. §25.',
+          full_bleed_flood_coat: {
+            account_default: true,
+            cost_per_sq_ft: 0.5,
+            applies_to: 'All Elliott printed/laminated items — past, present, and future.',
+            canonical_formula: '(Orajet 3951 sq ft × $1.21) + (laminate sq ft × $0.2389) + (label sq ft × $0.50) + incidental buffer',
+            note: 'Full bleed / full coverage at $0.50/sq ft. This is the only ink routing on this account.',
+          },
+          low: { cost_per_label_typical: 0.1, note: 'DEPRECATED for routing — historical reference only.' },
+          medium: { cost_per_sq_ft: 0.44, note: 'DEPRECATED for routing — historical reference only.' },
+          high: { cost_per_label_typical: 0.4, note: 'DEPRECATED for routing — historical reference only.' },
+          flood_coat: { cost_per_label_min: 0.4, cost_per_label_max: 0.6, placeholder: 0.25, unverified: true },
+          flood_coat_safety_red: { cost_per_label_min: 0.4, cost_per_label_max: 0.5, placeholder: 0.25, unverified: true },
+        },
     cut_vinyl_colors,
     do_not_benchmark,
     override_type_precedent: extra.override_type_precedent || {},
@@ -3649,17 +3662,6 @@ function updateCalcFormVisibility() {
   document.getElementById('calc-ink-wrap').classList.toggle('hidden', !isPL);
   document.getElementById('calc-ansi-wrap').classList.toggle('hidden', !isPL);
 
-  // Production override checkbox — Orajet 3951 single items at sq ft ≤ 0.1 only.
-  const w = parseFloat(document.getElementById('calc-width').value) || 0;
-  const h = parseFloat(document.getElementById('calc-height').value) || 0;
-  const sq_ft = (w * h) / 144;
-  const tiny_threshold = (window.CALCULATOR_CONFIG && window.CALCULATOR_CONFIG.routing
-    && window.CALCULATOR_CONFIG.routing.tiny_threshold_sq_ft) || 0.1;
-  const showOverride = isPL && isSingle && sq_ft > 0 && sq_ft <= tiny_threshold;
-  const overrideWrap = document.getElementById('calc-prodoverride-wrap');
-  const overrideEl = document.getElementById('calc-prodoverride');
-  overrideWrap.classList.toggle('hidden', !showOverride);
-  if (!showOverride) overrideEl.checked = false;
 }
 
 function gatherCalcInputs() {
@@ -3668,10 +3670,6 @@ function gatherCalcInputs() {
   const isCV = family === '3M 180mC Cut Vinyl';
   const itemType = isCV ? 'cut_vinyl' : document.getElementById('calc-itemtype').value;
   const isKit = !isCV && itemType.startsWith('kit_');
-  const overrideWrap = document.getElementById('calc-prodoverride-wrap');
-  const overrideEl = document.getElementById('calc-prodoverride');
-  const overrideVisible = overrideWrap && !overrideWrap.classList.contains('hidden');
-
   // cut vinyl color = the combination's substrate component (or its override)
   let cutVinylColor = '';
   if (isCV && combo) {
@@ -3695,7 +3693,6 @@ function gatherCalcInputs() {
     // H-1: full bleed is the only ink routing on this account (§25)
     ink_coverage: 'full_bleed_flood_coat',
     is_ansi_safety: document.getElementById('calc-ansi').checked,
-    production_override: overrideVisible && overrideEl ? overrideEl.checked : false,
     order_qty: parseInt(document.getElementById('calc-qty').value, 10) || 0,
     notes: document.getElementById('calc-notes').value.trim(),
     _config: cfgOverride || undefined,
@@ -3734,7 +3731,7 @@ function renderCalcOutput(result, inputs) {
   const sections = [];
   sections.push(renderCalcSummary(result, inputs));
   sections.push(renderCalcFlags(result));
-  if (!hasStop && route !== 'tiny' && route !== 'no_profile' && route !== 'invalid_input') {
+  if (!hasStop && route !== 'no_profile' && route !== 'invalid_input') {
     sections.push(renderCalcPricingTable(result, inputs));
   }
   if (route !== 'no_profile' && route !== 'invalid_input') {
@@ -3797,33 +3794,6 @@ function renderCalcSummary(result, inputs) {
     `;
   }
 
-  if (route === 'tiny') {
-    const tinyTiers = effectivePriceTiers(result);
-    const tot = tinyTiers ? tinyTiers.price_20_49 : 55;
-    return `
-      <div class="calc-section">
-        <div class="calc-section-header">
-          <h3 class="calc-section-title">Routing</h3>
-          <span class="calc-routing-badge">${escapeHtml(badge)}</span>
-        </div>
-        <div class="oneoff-block" style="border-left-color: var(--flag-review);">
-          <div class="oneoff-tag">One-Time Program Only</div>
-          <div class="oneoff-line">
-            <span class="oneoff-k">Program Total</span>
-            <span class="oneoff-v">$${Number(tot).toFixed(2)}</span>
-          </div>
-          <div class="oneoff-line">
-            <span class="oneoff-k">Per-Label Rate</span>
-            <span class="oneoff-v" style="color: var(--text-tertiary); font-size: 13px;">suppressed (arithmetic artifact)</span>
-          </div>
-          <div class="oneoff-note">
-            Tiny one-off (≤0.1 sq ft) — $${Number(tot).toFixed(0)} program total. NOT a per-unit rate. Per-label math is suppressed in customer-facing output. Per-sq-ft math is a minimum-run artifact. Do NOT benchmark this item against future quotes.
-          </div>
-        </div>
-        <p class="calc-route-reason">${reason}</p>
-      </div>
-    `;
-  }
 
   const tiers = effectivePriceTiers(result);
   const isKit = (inputs.label_count || 1) > 1;
@@ -5109,18 +5079,15 @@ init();
       return { route: 'no_profile', route_reason:
         `Material family "${fam}" has no Pricing Profile band yet. First item establishes the band. Cost-build from scratch and run AI validation (Rounds 1+2 minimum).` };
     }
-    if (sq <= t.tiny_threshold_sq_ft && inp.production_override) {
+    if (sq <= t.tiny_threshold_sq_ft) {
+      // All items route to Micro-Format Band — no job floor on this account (§28)
       let microNote = '';
       if (config.bands && config.bands.printed_laminated_micro) {
         const m = config.bands.printed_laminated_micro;
         microNote = ` Using sub-0.1 sq ft micro-format band ($${m.anchor_psf_qty_20}/sq ft anchor, ${m.anchor_pn} founding data point).`;
       }
       return { route: 'single_sub_scope', route_reason:
-        `Sq ft ${sq.toFixed(4)} ≤ ${t.tiny_threshold_sq_ft} — would normally route to tiny, but production catalog override is set. Routing to single_sub_scope for real tier pricing.${microNote}` };
-    }
-    if (sq <= t.tiny_threshold_sq_ft) {
-      return { route: 'tiny', route_reason:
-        `Sq ft ${sq.toFixed(4)} ≤ ${t.tiny_threshold_sq_ft} sq ft — tiny printed label. Singles band inapplicable. Price from job economics at the $${config.account.floor.toFixed(0)} one-off job-economics floor (one-off program total).`, kit_lc1_rerouted };
+        `Sq ft ${sq.toFixed(4)} ≤ ${t.tiny_threshold_sq_ft} sq ft — Micro-Format Band pricing applies (§28: no job floor on this account).${microNote}` };
     }
     if (isKitInput(inp) && !kit_lc1_rerouted) {
       return { route: 'kit', route_reason:
@@ -5273,8 +5240,12 @@ init();
   // low/medium/high/flood_coat keys remain in config for historical reference
   // only and are never routing targets (audit H-1/H-2 fix, Session H).
   function inkComponent(ink_coverage, sq_ft_per_label, config) {
-    const def = config.ink_rates[ink_coverage] || config.ink_rates.full_bleed_flood_coat;
-    if (!def) return { cost: config.material_constants && config.material_constants.orajet_3951 ? sq_ft_per_label * 0.50 : 0, unverified: false };
+    const rates = config.ink_rates || {};
+    const def = rates[ink_coverage] || rates.full_bleed_flood_coat;
+    if (!def) {
+      // §25 account standard — full bleed at $0.50/sq ft, always
+      return { cost: r(sq_ft_per_label * 0.50, 4), unverified: false };
+    }
     let cost = 0;
     let unverified = false;
     if (def.placeholder !== undefined) {
@@ -5563,18 +5534,6 @@ init();
     };
   }
 
-  function buildTinyTiers(config) {
-    const floor = config.account.floor;
-    const tiers = {
-      price_1_9: floor,
-      price_10_19: floor,
-      price_20_49: floor,
-      price_50_99: floor,
-      price_100_199: floor,
-      price_200_plus: floor,
-    };
-    return { tiers, anchor: floor, anchor_psf: null, snap: null, note: 'Tiny one-off: flat $' + floor.toFixed(0) + ' program total (NOT per-unit). Tier table is structural padding; the operative price is the program total.' };
-  }
 
   // ===== never-pay-more =====
   const TIER_BOUNDS = [
@@ -5724,9 +5683,9 @@ init();
       };
     }
     if (route === 'single_standard' || route === 'single_sub_scope') {
-      // Sub-0.1 sq ft micro-format band — applies when single_sub_scope is reached
-      // via production override (sq ft ≤ tiny_threshold). Compares against the
-      // micro band anchor ($30.86/sq ft, 1279000 founding), not the singles band.
+      // Sub-0.1 sq ft micro-format band — applies when sq ft ≤ tiny_threshold
+      // (§28: all items route to Micro-Format Band, no job floor). Compares against
+      // the micro band anchor ($30.86/sq ft, 1279000 founding), not the singles band.
       const tinyT = (config.routing && config.routing.tiny_threshold_sq_ft) || 0.1;
       if (route === 'single_sub_scope' && sq_ft_ref != null && sq_ft_ref <= tinyT
           && config.bands && config.bands.printed_laminated_micro) {
@@ -5759,7 +5718,7 @@ init();
   }
 
   function classifyBandPosition(this_psf, band_range, route) {
-    if (route === 'tiny' || route === 'no_profile') return 'out_of_scope';
+    if (route === 'no_profile') return 'out_of_scope';
     const min = band_range.active_band_min;
     const max = band_range.active_band_max;
     if (min === null || max === null) return 'out_of_scope';
@@ -5867,7 +5826,7 @@ init();
     F6:  { severity: 'REVIEW', text: 'Margin at 200+ approaching floor — verify intentional volume reward, not error.', suppresses_output: false },
     F7:  { severity: 'REVIEW', text: 'Per-sq-ft rate outside band tolerance (±15%). Either complexity, new material, or repricing needed.', suppresses_output: false },
     F8:  { severity: 'INFO',   text: 'Item at low end of singles band scope — band-consistent pricing applies; small-label fixed cost premium acknowledged.', suppresses_output: false },
-    F9:  { severity: 'REVIEW', text: 'Tiny one-off (≤0.1 sq ft) — $55 flat program total, NOT a catalog rate. Per-sq-ft math is a minimum-run artifact. Do NOT benchmark. AI validation recommended (Rounds 1+2 minimum) for any tiny one-off.', suppresses_output: false },
+    F9:  { severity: 'INFO',   text: 'RETIRED (§28 no-floor doctrine): Tiny one-off route removed. All items price from Micro-Format Band regardless of sq ft.', suppresses_output: false },
     F10: { severity: 'REVIEW', text: 'Sub-scope single (0.1-0.5 sq ft) — below band scope. Excluded from band DATA POINTS until production-volume acceptance.', suppresses_output: false },
     F11: { severity: 'INFO',   text: 'RETIRED (Session H, audit C-1/H-4): the 10-19 autofix was removed with report-only enforcement — no code path mutates tiers, so F11 cannot fire. Cliffs are reported via F23 + §26 language. Definition kept for ID stability.', suppresses_output: false },
     F12: { severity: 'INFO',   text: 'Ink cost is an UNVERIFIED placeholder. RESERVED (Session H, audit H-1): unreachable while ink is always full_bleed_flood_coat per §25 — legacy placeholder rates are no longer routing targets.', suppresses_output: false },
@@ -5933,7 +5892,6 @@ init();
 
     // route-based flags
     if (route === 'no_profile') flags.push(makeFlag('F17'));
-    if (route === 'tiny') flags.push(makeFlag('F9'));
     if (route === 'single_sub_scope') flags.push(makeFlag('F10'));
     if (route === 'kit' && inp.item_type === 'kit_mixed_dim') flags.push(makeFlag('F21'));
     // W3: kit item_type with label_count = 1 was re-routed to a single route —
@@ -5964,10 +5922,10 @@ init();
       if (t.margin_pct !== null && t.margin_pct < config.flag_thresholds.margin_stop_any_tier_pct) anyTierBelowStop = true;
     }
     if (anyTierBelowStop) flags.push(makeFlag('F4'));
-    if (route !== 'tiny' && m20 !== null && m20 < config.flag_thresholds.margin_warn_qty20_pct) {
+    if (m20 !== null && m20 < config.flag_thresholds.margin_warn_qty20_pct) {
       flags.push(makeFlag('F5', `(${pctFmt(m20)} at qty 20)`));
     }
-    if (route !== 'tiny' && m200 !== null && m200 < config.flag_thresholds.margin_warn_200plus_pct) {
+    if (m200 !== null && m200 < config.flag_thresholds.margin_warn_200plus_pct) {
       flags.push(makeFlag('F6', `(${pctFmt(m200)} at 200+)`));
     }
 
@@ -6032,9 +5990,7 @@ init();
     const price20 = pricing.tiers ? pricing.tiers.price_20_49 : null;
     const ref_sq_ft = route === 'kit' ? (sq_ft_per_label * (inp.label_count || 1)) : sq_ft_per_label;
     let anchor_line;
-    if (route === 'tiny') {
-      anchor_line = lang.tiny_one_off_program;
-    } else if (price20) {
+    if (price20) {
       anchor_line = lang.anchor_line_template
         .replace('{width}', String(inp.width_in))
         .replace('{height}', String(inp.height_in))
@@ -6114,7 +6070,7 @@ init();
 
   function generateBrief(inp, route, route_reason, fund, material, pricing, margins, band, flags, invoice, lamInfo, quote_stubs, config, routeMeta) {
     routeMeta = routeMeta || {};
-    const isPrintLam = route === 'single_standard' || route === 'single_sub_scope' || route === 'kit' || route === 'tiny';
+    const isPrintLam = route === 'single_standard' || route === 'single_sub_scope' || route === 'kit';
     const lines = [];
     lines.push('ELLIOTT EQUIPMENT — PRICING BRIEF');
     lines.push('=================================');
@@ -6287,13 +6243,12 @@ init();
       // §25: full bleed is the only ink routing on this account (H-1 fix).
       ink_coverage: 'full_bleed_flood_coat',
       is_ansi_safety: false,
-      production_override: false,
       order_qty: 0,
       notes: '',
     }, inputs || {});
 
     // 0. W2 input-sanity guard — zero/negative dimensions or label count
-    // produce nonsense routing (0 sq ft → tiny → $55 flat). STOP hard.
+    // produce nonsense routing. STOP hard.
     if (!(inp.width_in > 0) || !(inp.height_in > 0) || (inp.label_count || 1) < 1) {
       const f24 = makeFlag('F24', `(width ${inp.width_in}", height ${inp.height_in}", label_count ${inp.label_count})`);
       const emptyMaterial = {
@@ -6342,7 +6297,7 @@ init();
 
     // 3. Lam passes (printed/lam only)
     let lamInfo = null;
-    if (route === 'single_standard' || route === 'single_sub_scope' || route === 'kit' || route === 'tiny') {
+    if (route === 'single_standard' || route === 'single_sub_scope' || route === 'kit') {
       lamInfo = computeLamPasses(inp.width_in, inp.height_in, inp.label_count || 1, config);
     }
 
@@ -6365,15 +6320,12 @@ init();
     let tierBuild;
     if (route === 'cut_vinyl') {
       tierBuild = buildCutVinylTiers(sq_ft_per_label, config);
-    } else if (route === 'tiny') {
-      tierBuild = buildTinyTiers(config);
     } else if (route === 'kit') {
       tierBuild = buildPrintLamKitTiers(inp.label_count || 1, sq_ft_per_label, lamInfo ? lamInfo.passes : 1, config);
     } else if (route === 'single_standard' || route === 'single_sub_scope') {
-      // Sub-0.1 sq ft production override routes here AND uses the micro band
-      // ($30.86/sq ft anchor, 1279000 founding data point) instead of the singles
-      // band. Detected by sq_ft ≤ tiny_threshold (which only reaches single_sub_scope
-      // when production_override is true) AND the micro band being configured.
+      // Sub-0.1 sq ft items route here and use the micro band ($30.86/sq ft anchor,
+      // 1279000 founding data point) instead of the singles band.
+      // §28: no job floor — all items ≤ tiny_threshold route to single_sub_scope.
       const tinyT = (config.routing && config.routing.tiny_threshold_sq_ft) || 0.1;
       if (route === 'single_sub_scope' && sq_ft_per_label <= tinyT
           && config.bands && config.bands.printed_laminated_micro) {
@@ -6392,9 +6344,9 @@ init();
     // including the micro-band template) but its result is NEVER applied:
     // the tier table stays band-anchored, F23 reports each boundary that
     // would invert, and §26 invoice protection resolves the cliffs at
-    // billing time. Skips tiny (flat $55) and no_profile (no tiers).
+    // billing time.
     let tier_enforcement = { adjustments: [], report_only: true };
-    if (tierBuild.tiers && route !== 'tiny' && route !== 'no_profile') {
+    if (tierBuild.tiers && route !== 'no_profile') {
       const enforced = enforceTierBoundaries(tierBuild.tiers);
       tier_enforcement = { adjustments: enforced.adjustments, report_only: true };
       // NOTE: enforced.tiers is intentionally discarded — report-only.
@@ -6404,7 +6356,7 @@ init();
     // boundary that would invert is listed in the brief with the §26
     // resolution. No autofix, no mutation (F11 retired).
     let invoice = { violations: [], all_clear: true, autofix_applied: false, adjusted_tiers: null };
-    if (tierBuild.tiers && route !== 'tiny' && route !== 'no_profile') {
+    if (tierBuild.tiers && route !== 'no_profile') {
       invoice = checkInvoiceProtection(tierBuild.tiers);
     }
 
@@ -6490,12 +6442,11 @@ init();
   window.runCalculator = runCalculator;
 
   // sanity-check runner (for console use; safe to keep — no UI side-effects)
-  // Session H suite: 14 cases — 11 original (incl. the previously-missing
-  // documented Convex no_profile case) + 3 new (1278890 kit cost-build path,
-  // 1068270 orientation parity with 1082570, 3010701 Band A). Prices are the
-  // BAND-ANCHORED engine outputs (report-only enforcement, C-1 fix). Where
-  // the algorithmic snap diverges from the Nick-locked catalog value, the
-  // documented engine value is asserted and the catalog value noted.
+  // Session Z suite: 13 cases — removed 1277970 tiny route case (§28 no-floor:
+  // tiny route retired); updated PROD-OVERRIDE test to MICRO-BAND (§28
+  // unconditional routing). Prices are the BAND-ANCHORED engine outputs
+  // (report-only enforcement, C-1 fix). Where the algorithmic snap diverges from
+  // the Nick-locked catalog value, the documented engine value is asserted.
   window.runSanityChecks = function() {
     const items = (window.ITEMS_DATA && window.ITEMS_DATA.items) || {};
 
@@ -6519,7 +6470,6 @@ init();
         cut_vinyl_color: '',
         ink_coverage: 'full_bleed_flood_coat',
         is_ansi_safety: false,
-        production_override: false,
         order_qty: 0,
         notes: '',
       }, extra || {});
@@ -6586,10 +6536,6 @@ init();
     record('1205720', runCalculator(inputsForPN('1205720', { cut_vinyl_color: 'cardinal_red' })),
       { route: 'cut_vinyl', price_20: 35.00, flag_present: ['F15', 'F23'], flag_absent: ['F5'],
         note: 'Band A anchor $35 = catalog' });
-    record('1277970', runCalculator(inputsForPN('1277970')),
-      { route: 'tiny', price_20: 55.00, flag_present: ['F9'],
-        note: '$55 flat one-off program total' });
-
     // 8-10: Session C/D band routing cases
     record('3010704 (Band B)', runCalculator(inputsForPN('3010704', { cut_vinyl_color: 'cardinal_red_15in' })),
       { route: 'cut_vinyl', price_20: 78.00, flag_present: ['F15'],
@@ -6597,14 +6543,14 @@ init();
     record('3010707 (Band C)', runCalculator(inputsForPN('3010707', { cut_vinyl_color: 'cardinal_red' })),
       { route: 'cut_vinyl', price_20: 20.00, flag_present: ['F15'],
         note: 'Band C template direct (within ±30% of 0.969 founding anchor)' });
-    record('PROD-OVERRIDE 8x1.75', runCalculator({
-      part_number: 'PROD-OVERRIDE-TEST', description: 'Production catalog item (sub-0.1 override test)',
+    record('MICRO-BAND 8x1.75', runCalculator({
+      part_number: 'MICRO-BAND-TEST', description: 'Sub-0.1 sq ft — Micro-Format Band routing test (§28)',
       model: '', material_family: PRINTED_LAM_FAMILY, item_type: 'single',
       width_in: 8.0, height_in: 1.75, label_count: 1, cut_vinyl_color: '',
       ink_coverage: 'full_bleed_flood_coat', is_ansi_safety: false,
-      production_override: true, order_qty: 0, notes: '',
+      order_qty: 0, notes: '',
     }), { route: 'single_sub_scope', price_20: 3.00, flag_present: ['F10', 'F23'],
-          note: 'Micro-Format Band template direct ($3.00, 1279000 anchor); cliffs reported via F23 (report-only)' });
+          note: 'Micro-Format Band template direct ($3.00, 1279000 anchor); §28 unconditional routing; cliffs reported via F23 (report-only)' });
 
     // 11: documented Convex no_profile case (was absent from the suite — L-8)
     record('CONVEX 10x6 (no_profile)', runCalculator({
@@ -6612,7 +6558,7 @@ init();
       material_family: 'Convex High Bond + Poly Lam', item_type: 'single',
       width_in: 10, height_in: 6, label_count: 1, cut_vinyl_color: '',
       ink_coverage: 'full_bleed_flood_coat', is_ansi_safety: false,
-      production_override: false, order_qty: 0, notes: '',
+      order_qty: 0, notes: '',
     }), { route: 'no_profile', stop: true, flag_present: ['F17'],
           note: 'F17 STOP — output suppressed, first item establishes the band' });
 

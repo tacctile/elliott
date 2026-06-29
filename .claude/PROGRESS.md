@@ -6,7 +6,26 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-06-22 (Session Y — governance: $55 one-off floor removed; no-floor job-economics doctrine (§28) added to PRICING_RULES.md; deep-tier standing instruction added to VALIDATION_PROMPTS.md §3. Item count unchanged at 33.)
+> Last Updated: 2026-06-29 (Session Z — tiny route + $55 floor removed from calculator engine; inkComponent crash fixed; §28 fully implemented in calculator. Item count unchanged at 33.)
+
+---
+
+### 2026-06-29 — Session Z (bug-fix + governance): Remove tiny route + $55 floor from engine; fix inkComponent crash; §28 fully implemented in calculator
+
+**What:** Two-part calculator fix. FIX 1: inkComponent() crash on production_override inputs — two-part fix: (1A) added canonical ink_rates fallback in assembleConfigFromDb() so the full_bleed_flood_coat entry is always present even when Supabase settings.extra doesn't include it; (1B) added null guard in inkComponent() with `config.ink_rates || {}` and improved !def fallback to `r(sq_ft_per_label * 0.50, 4)`. FIX 2: §28 no-floor doctrine fully implemented in calculator — removed the tiny route and $55 floor entirely. Removed buildTinyTiers() function, production_override checkbox UI, all `route === 'tiny'` guards throughout engine (renderCalcOutput, renderCalcSummary, lam passes, tier build, tier enforcement, never-pay-more check, generateBrief). F9 flag definition changed to RETIRED/INFO (suppresses_output: false). All sub-0.1 sq ft items now unconditionally route to single_sub_scope (Micro-Format Band). Sanity test 1277970 (tiny route) removed; PROD-OVERRIDE test renamed MICRO-BAND. build_calculator_config.py: account.floor→null, DO_NOT_BENCHMARK updated to remove "$55 floor pricing" language, tiny_one_off_program marked RETIRED. Supabase elliott_account_settings: floor_value seeded to 0 (column NOT NULL), floor_label updated to §28 text. validate.py 0/0; all three build scripts clean; elliott_items = 33 confirmed.
+
+**Key Decisions:**
+- FIX 1 root cause: previous hydrateFromDb() patch (21937f6) was a post-assembly workaround; FIX 1A fixes assembleConfigFromDb() directly; FIX 1B adds defensive guard in inkComponent() as belt-and-suspenders.
+- FIX 2 approach: single unconditional branch for sub-0.1 sq ft items — no production_override escape hatch. §28 doctrine means ALL items price from job economics or Micro-Format Band, never from a flat floor.
+- F9 flag kept in flag registry (as RETIRED/INFO) for historical audit trail; suppresses_output: false so it can be surfaced for diagnostic purposes but no longer emitted on any live route.
+- Supabase floor_value set to 0 (not NULL) due to NOT NULL column constraint; floor_label updated to §28 text. The 0 value is semantically correct — "no floor."
+
+**Strategic Flags:**
+- Calculator engine is now §28-compliant. Any sub-0.1 sq ft item is priced from Micro-Format Band, not from a flat floor.
+- DO_NOT_BENCHMARK entries for 1277970/1277980/1277990/1278000/3017583/3017584 now reference "historical job-economics pricing" rather than "$55 floor pricing" — accurate framing post-§28.
+- Item count unchanged at 33. No new items added this session.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 33 confirmed.
 
 ---
 

@@ -1,10 +1,10 @@
 {
-  "generated": "2026-06-29T15:25:43Z",
+  "generated": "2026-06-29T15:48:12Z",
   "version": "1.0",
   "account": {
-    "floor": 55.0,
-    "floor_source_pn": "1230820",
-    "floor_label": "One-off job-economics floor (1230820 FA price)",
+    "floor": null,
+    "floor_source_pn": null,
+    "floor_label": "No job floor \u2014 \u00a728 no-floor job-economics doctrine. All items price from Micro-Format Band or job economics.",
     "moq": {
       "printed_laminated": {
         "applies": false,
@@ -326,12 +326,12 @@
     }
   },
   "do_not_benchmark": {
-    "1277970": "One-off program peer \u2014 $55 floor pricing, not a catalog rate",
-    "1277980": "One-off program peer \u2014 $55 floor pricing, not a catalog rate",
-    "1277990": "One-off program peer \u2014 $55 floor pricing, not a catalog rate",
-    "1278000": "One-off program peer \u2014 $55 floor pricing, not a catalog rate",
-    "3017583": "Standalone one-off \u2014 $55 floor pricing, not a catalog rate",
-    "3017584": "Standalone one-off \u2014 $55 floor pricing, not a catalog rate",
+    "1277970": "One-off program peer \u2014 historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
+    "1277980": "One-off program peer \u2014 historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
+    "1277990": "One-off program peer \u2014 historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
+    "1278000": "One-off program peer \u2014 historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
+    "3017583": "Standalone one-off \u2014 historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
+    "3017584": "Standalone one-off \u2014 historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
     "1210810": "Sub-scope single \u2014 excluded from band data points until production-volume acceptance",
     "1082570": "Initial order was $42 flat job-economics (not a catalog rate). Production tier table is valid for reorder volumes."
   },
@@ -344,7 +344,7 @@
     "Strategic Anchor": true
   },
   "quote_language": {
-    "tiny_one_off_program": "One-time minimum program charge: $55.00 total",
+    "tiny_one_off_program": "RETIRED (\u00a728 no-floor doctrine) \u2014 tiny one-off route removed. All items price from Micro-Format Band.",
     "anchor_line_template": "Label measures {width}\" \u00d7 {height}\" ({sq_ft} sq ft) in {material} \u2014 priced at ${price} at your projected monthly volume.",
     "pms_caveat_template": "{color} is a visual approximation of {pms_code} \u2014 not a certified Pantone match.",
     "ink_unverified_note": "Ink cost is a placeholder pending first production run. Update material_cost_per_unit after run.",
