@@ -15,6 +15,6 @@ verified_date: "2026-06-29"
 supplier: "Kapco"
 sku: "KJ10VPC/38/150"
 compatible_substrates: ["convex-6mil-high-bond"]
-used_in_items: []
+used_in_items: ["3017557"]
 notes: "Overlaminate for Elliott panel decal program (Combination B). Roll: 38\" × 150 ft = 475 sq ft. Cost: $670.00 / 475 = $1.4105/sq ft. Usable width is 30\" (governed by Convex 6-mil High Bond base material); 38\" roll provides 8\" clearance. Cost per sq ft calculated on full roll area — no waste adjustment applied at this time. Supplier: Kapco — in-stock; single-roll buying only at this time. Paired with convex-6mil-high-bond. Product code / SKU: KJ10VPC/38/150."
 ---
