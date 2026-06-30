@@ -730,6 +730,57 @@
   }
   .copy-hint.show { opacity: 1; }
 
+  /* === MULTI-VARIANT === */
+  .variant-stat-section {
+    margin-bottom: 16px;
+  }
+  .variant-stat-section:last-child {
+    margin-bottom: 0;
+  }
+  .variant-stat-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .stat-row-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .variant-pricing-section {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .variant-pricing-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  .variant-pricing-label {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    padding: 6px 10px;
+    background: var(--surface-3);
+    border-radius: 4px;
+    border-left: 3px solid var(--text-tertiary);
+  }
+  .variant-fa-note {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+
   /* === CALCULATOR === */
   :root {
     --flag-stop: #ff6b6b;
@@ -2816,14 +2867,7 @@ async function renderPdfFirstPage(src, container, label) {
   }
 }
 
-function renderItemStats(fm) {
-  const el = document.getElementById('itemStatRow');
-  const oneOff = isOneOff(fm);
-
-  const p20 = toNum(fm.price_20_49);
-  const mc = toNum(fm.material_cost_per_unit);
-  const sqft = toNum(fm.sq_ft_per_kit);
-
+function buildStatCards(p20, mc, sqft, marginStr, oneOff, fm) {
   const priceCard = `
     <div class="stat-block">
       <div class="stat-label">Price @ Qty 20</div>
@@ -2836,7 +2880,6 @@ function renderItemStats(fm) {
     <div class="stat-block">
       <div class="stat-label">Material Cost</div>
       <div class="stat-value">${mc != null ? '$' + mc.toFixed(2) : '—'}</div>
-      ${fm.cost_version_date ? `<div class="stat-sub">as of ${fm.cost_version_date}</div>` : ''}
     </div>`;
 
   let marginCard;
@@ -2847,7 +2890,6 @@ function renderItemStats(fm) {
         <div class="stat-value muted">N/A — One-Off</div>
       </div>`;
   } else {
-    const marginStr = fm.margin_at_qty_20 ? String(fm.margin_at_qty_20).trim() : '';
     let display;
     if (marginStr) display = marginStr;
     else if (p20 != null && mc != null) display = ((p20 - mc) / p20 * 100).toFixed(0) + '%';
@@ -2877,14 +2919,92 @@ function renderItemStats(fm) {
         </div>`;
     }
   }
+  return priceCard + mcCard + marginCard + ppsfCard;
+}
+
+function renderItemStats(fm) {
+  const el = document.getElementById('itemStatRow');
+  const oneOff = isOneOff(fm);
+  const item = items[fm.part_number];
+  const variants = item && item.variants;
+
+  if (variants && variants.length >= 2) {
+    let html = '';
+    variants.forEach(v => {
+      const vp20 = toNum(v.price_20_49);
+      const vmc = toNum(v.material_cost);
+      const sqft = toNum(fm.sq_ft_per_kit);
+      const vmargin = v.margin_at_qty_20 ? String(v.margin_at_qty_20).trim() : '';
+      html += `<div class="variant-stat-section">
+        <div class="variant-stat-label">Variant ${v.label} — ${escapeHtml(v.name)}</div>
+        <div class="stat-row-inner">${buildStatCards(vp20, vmc, sqft, vmargin, false, fm)}</div>
+      </div>`;
+    });
+    el.style.gridTemplateColumns = '1fr';
+    el.innerHTML = html;
+    return;
+  }
+
+  const p20 = toNum(fm.price_20_49);
+  const mc = toNum(fm.material_cost_per_unit);
+  const sqft = toNum(fm.sq_ft_per_kit);
+  const marginStr = fm.margin_at_qty_20 ? String(fm.margin_at_qty_20).trim() : '';
 
   el.style.gridTemplateColumns = oneOff ? 'repeat(3, 1fr)' : 'repeat(4, 1fr)';
-  el.innerHTML = priceCard + mcCard + marginCard + ppsfCard;
+  el.innerHTML = buildStatCards(p20, mc, sqft, marginStr, oneOff, fm);
+}
+
+function buildPricingTable(tierData, mc, fa, isKit, labelCount) {
+  const tiers = [
+    { label: '1–9',     price: toNum(tierData.price_1_9) },
+    { label: '10–19',   price: toNum(tierData.price_10_19) },
+    { label: '20–49',   price: toNum(tierData.price_20_49), highlight: true },
+    { label: '50–99',   price: toNum(tierData.price_50_99) },
+    { label: '100–199', price: toNum(tierData.price_100_199) },
+    { label: '200+',    price: toNum(tierData.price_200_plus) },
+  ].filter(t => t.price != null);
+
+  let html = `<table class="ptable"><thead><tr>
+    <th>Quantity</th><th>Unit Price</th>
+    ${isKit ? '<th>Per Label</th>' : ''}
+    <th>Gross Profit</th><th>Margin</th>
+  </tr></thead><tbody>`;
+
+  if (fa != null) {
+    const profit = mc != null ? (fa - mc) : null;
+    const margin = (mc != null && fa > 0) ? ((fa - mc) / fa * 100).toFixed(0) + '%' : '—';
+    html += `<tr>
+      <td>First Article</td>
+      <td>$${fa.toFixed(2)}</td>
+      ${isKit ? `<td>$${(fa / labelCount).toFixed(2)}</td>` : ''}
+      <td class="${profit != null ? 'col-profit' : 'cell-missing'}">${profit != null ? '$' + profit.toFixed(2) : '—'}</td>
+      <td class="col-margin">${margin}</td>
+    </tr>`;
+  }
+
+  tiers.forEach(t => {
+    const p = t.price;
+    const perLabel = isKit ? p / labelCount : null;
+    const profit = mc != null ? (p - mc) : null;
+    const margin = (mc != null && p > 0) ? ((p - mc) / p * 100).toFixed(0) + '%' : '—';
+    const cls = t.highlight ? 'row-highlight' : '';
+    html += `<tr class="${cls}">
+      <td>${t.label}</td>
+      <td>$${p.toFixed(2)}</td>
+      ${isKit ? `<td>$${perLabel.toFixed(2)}</td>` : ''}
+      <td class="${profit != null ? 'col-profit' : 'cell-missing'}">${profit != null ? '$' + profit.toFixed(2) : '—'}</td>
+      <td class="col-margin">${margin}</td>
+    </tr>`;
+  });
+
+  html += '</tbody></table>';
+  return html;
 }
 
 function renderPricing(fm) {
   const title = document.getElementById('pricingTitle');
   const body = document.getElementById('pricingBody');
+  const copyWrap = document.querySelector('.copy-wrap');
   const oneOff = isOneOff(fm);
 
   if (oneOff) {
@@ -2903,59 +3023,42 @@ function renderPricing(fm) {
         </div>
       </div>
     `;
+    if (copyWrap) copyWrap.style.display = '';
+    return;
+  }
+
+  const item = items[fm.part_number];
+  const variants = item && item.variants;
+  const isKit = fm.label_count > 1;
+  const fa = toNum(fm.first_article_price);
+
+  if (variants && variants.length >= 2) {
+    title.textContent = 'Volume Pricing — Two Variants';
+    if (copyWrap) copyWrap.style.display = 'none';
+
+    let html = '';
+    if (fa != null) {
+      html += `<div class="variant-fa-note">First Article: $${fa.toFixed(2)} — shared across both variants, charged once.</div>`;
+    }
+    variants.forEach((v, idx) => {
+      const vmc = toNum(v.material_cost);
+      html += `<div class="variant-pricing-section">
+        <div class="variant-pricing-label">Variant ${v.label} — ${escapeHtml(v.name)}</div>
+        ${buildPricingTable(v, vmc, fa, isKit, fm.label_count)}
+        <div class="copy-wrap">
+          <button class="copy-btn" onclick="copyVariantForEmail('${v.label}')">Copy for Email</button>
+          <span class="copy-hint" id="copyHint_${v.label}">Copied to clipboard</span>
+        </div>
+      </div>`;
+    });
+    body.innerHTML = html;
     return;
   }
 
   title.textContent = 'Volume Pricing';
+  if (copyWrap) copyWrap.style.display = '';
   const mc = toNum(fm.material_cost_per_unit);
-  const isKit = fm.label_count > 1;
-
-  const tiers = [
-    { label: '1–9',     price: toNum(fm.price_1_9) },
-    { label: '10–19',   price: toNum(fm.price_10_19) },
-    { label: '20–49',   price: toNum(fm.price_20_49), highlight: true },
-    { label: '50–99',   price: toNum(fm.price_50_99) },
-    { label: '100–199', price: toNum(fm.price_100_199) },
-    { label: '200+',    price: toNum(fm.price_200_plus) },
-  ].filter(t => t.price != null);
-
-  const fa = toNum(fm.first_article_price);
-
-  let html = `<table class="ptable"><thead><tr>
-    <th>Quantity</th><th>Unit Price</th>
-    ${isKit ? '<th>Per Label</th>' : ''}
-    <th>Gross Profit</th><th>Margin</th>
-  </tr></thead><tbody>`;
-
-  if (fa != null) {
-    const profit = mc != null ? (fa - mc) : null;
-    const margin = (mc != null && fa > 0) ? ((fa - mc) / fa * 100).toFixed(0) + '%' : '—';
-    html += `<tr>
-      <td>First Article</td>
-      <td>$${fa.toFixed(2)}</td>
-      ${isKit ? `<td>$${(fa / fm.label_count).toFixed(2)}</td>` : ''}
-      <td class="${profit != null ? 'col-profit' : 'cell-missing'}">${profit != null ? '$' + profit.toFixed(2) : '—'}</td>
-      <td class="col-margin">${margin}</td>
-    </tr>`;
-  }
-
-  tiers.forEach(t => {
-    const p = t.price;
-    const perLabel = isKit ? p / fm.label_count : null;
-    const profit = mc != null ? (p - mc) : null;
-    const margin = (mc != null && p > 0) ? ((p - mc) / p * 100).toFixed(0) + '%' : '—';
-    const cls = t.highlight ? 'row-highlight' : '';
-    html += `<tr class="${cls}">
-      <td>${t.label}</td>
-      <td>$${p.toFixed(2)}</td>
-      ${isKit ? `<td>$${perLabel.toFixed(2)}</td>` : ''}
-      <td class="${profit != null ? 'col-profit' : 'cell-missing'}">${profit != null ? '$' + profit.toFixed(2) : '—'}</td>
-      <td class="col-margin">${margin}</td>
-    </tr>`;
-  });
-
-  html += '</tbody></table>';
-  body.innerHTML = html;
+  body.innerHTML = buildPricingTable(fm, mc, fa, isKit, fm.label_count);
 }
 
 function renderSpecs(fm) {
@@ -3305,6 +3408,54 @@ function toNum(n) {
 function num(n) {
   const v = toNum(n);
   return v == null ? '—' : v.toFixed(2);
+}
+
+function copyVariantForEmail(variantLabel) {
+  if (!selectedPN) return;
+  const item = items[selectedPN];
+  const fm = item.frontmatter;
+  const variants = item.variants;
+  if (!variants) return;
+  const v = variants.find(vt => vt.label === variantLabel);
+  if (!v) return;
+
+  const isKit = fm.label_count > 1;
+  const unit = isKit ? 'per kit' : 'ea';
+
+  let lines = [`P/N ${fm.part_number} — ${fm.description}`];
+  lines.push(`Variant ${v.label} — ${v.name}`);
+  lines.push(fm.material_family);
+  lines.push('');
+
+  const fa = toNum(fm.first_article_price);
+  const tiers = [
+    { label: 'First Article', price: fa },
+    { label: '1-9',     price: toNum(v.price_1_9) },
+    { label: '10-19',   price: toNum(v.price_10_19) },
+    { label: '20-49',   price: toNum(v.price_20_49) },
+    { label: '50-99',   price: toNum(v.price_50_99) },
+    { label: '100-199', price: toNum(v.price_100_199) },
+    { label: '200+',    price: toNum(v.price_200_plus) },
+  ].filter(t => t.price != null);
+
+  tiers.forEach(t => {
+    const padLabel = t.label.padEnd(14);
+    lines.push(`${padLabel}$${t.price.toFixed(2)} ${unit}`);
+  });
+
+  navigator.clipboard.writeText(lines.join('\n')).then(() => {
+    const hint = document.getElementById('copyHint_' + variantLabel);
+    const btn = hint && hint.previousElementSibling;
+    if (btn) {
+      btn.classList.add('copied');
+      btn.textContent = 'Copied';
+    }
+    if (hint) hint.classList.add('show');
+    setTimeout(() => {
+      if (btn) { btn.classList.remove('copied'); btn.textContent = 'Copy for Email'; }
+      if (hint) hint.classList.remove('show');
+    }, 2000);
+  });
 }
 
 function copyForEmail() {

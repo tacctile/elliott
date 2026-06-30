@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-30T01:58:41Z",
+  "generated": "2026-06-30T02:17:46Z",
   "item_count": 36,
   "items": {
     "1012080": {
@@ -1270,6 +1270,7 @@
         "first_article_price": 75,
         "per_label_at_qty_20": 30.75,
         "margin_at_qty_20": "~87%",
+        "variant_count": 2,
         "process": "Print/Lam/Cut (1 pass)",
         "lamination_passes": 1,
         "cut_runs": 1,
@@ -1286,7 +1287,35 @@
         "margin_analysis": "### Variant B \u2014 10-mil Polycarbonate (Primary, material cost $4.00)\n\n| Qty Tier | Price | Material Cost | Gross Profit | Margin |\n|----------|-------|---------------|-------------|--------|\n| 1\u20139 | $46.25 | $4.00 | $42.25 | 91.4% |\n| 10\u201319 | $37.00 | $4.00 | $33.00 | 89.2% |\n| 20\u201349 | $30.75 | $4.00 | $26.75 | 87.0% |\n| 50\u201399 | $26.25 | $4.00 | $22.25 | 84.8% |\n| 100\u2013199 | $23.00 | $4.00 | $19.00 | 82.6% |\n| 200+ | $20.00 | $4.00 | $16.00 | 80.0% |\n\nCompression: 56.8% ($46.25 \u2192 $20.00). \u00a726 clean at all tier boundaries.\n\n### Variant A \u2014 5-mil Polycarbonate (material cost $3.50)\n\n| Qty Tier | Price | Material Cost | Gross Profit | Margin |\n|----------|-------|---------------|-------------|--------|\n| 1\u20139 | $40.25 | $3.50 | $36.75 | 91.3% |\n| 10\u201319 | $32.00 | $3.50 | $28.50 | 89.1% |\n| 20\u201349 | $26.75 | $3.50 | $23.25 | 86.9% |\n| 50\u201399 | $22.75 | $3.50 | $19.25 | 84.6% |\n| 100\u2013199 | $20.00 | $3.50 | $16.50 | 82.5% |\n| 200+ | $17.50 | $3.50 | $14.00 | 80.0% |\n\nCompression: 56.5% ($40.25 \u2192 $17.50). \u00a726 clean at all tier boundaries.\n\n---",
         "notes": "- **FOUNDING DATA POINT.** First item in the Convex High Bond + Polycarbonate material family. Establishes the $/sq ft band for the entire family. Every future Convex/PC item scales from this data point.\n- **Strategic Anchor override.** The pricing was derived from the internal material-proportional scaling methodology, not from external market data. External market data ($40\u2013$70/sq ft) confirms the price is ~30% below market \u2014 a relationship concession, consistent with the Orajet band.\n- **Two variants on one P/N.** Both 5-mil and 10-mil polycarbonate variants are quoted. Variant B (10-mil Kapco) is the primary \u2014 in-stock material, higher spec. Frontmatter reflects Variant B pricing. Variant A pricing documented in the Pricing and Margin sections.\n- **Not ANSI.** This is a control panel overlay, not an ANSI safety label. \u00a729 (ANSI account rule for Orajet/lam items) does NOT extend to the Convex/PC family.\n- **Lifetime warranty.** Nick's commitment \u2014 embedded in the 87% margin, not a separate line item.\n- **First article:** $75.00, consistent with 1205720 FA price from April.\n- **File prep:** $0 per account rule \u00a722 \u2014 Elliott provides production-ready DWG files.\n- **Application:** Safety-critical. Primary operator control interface on basket control box of an industrial aerial work platform. Equipment value $100,000+.\n\n---",
         "production_debrief": "*No production debrief yet. Update after first production run. Capture: actual material vs estimated, polycarbonate lamination quality on the Rollsroller, contour cut registration on interior cutouts, whether the Kapco 10-mil velvet texture meets Sean's expectations, time, scrap, production issues, whether pricing assumptions held.*"
-      }
+      },
+      "variants": [
+        {
+          "label": "A",
+          "name": "5-mil Polycarbonate Overlaminate",
+          "material_cost": 3.5,
+          "price_1_9": 40.25,
+          "price_10_19": 32.0,
+          "price_20_49": 26.75,
+          "price_50_99": 22.75,
+          "price_100_199": 20.0,
+          "price_200_plus": 17.5,
+          "margin_at_qty_20": "~86.9%",
+          "sq_ft_rate_at_qty_20": 24.27
+        },
+        {
+          "label": "B",
+          "name": "10-mil Polycarbonate Overlaminate (Kapco KJ10VPC, in stock)",
+          "material_cost": 4.0,
+          "price_1_9": 46.25,
+          "price_10_19": 37.0,
+          "price_20_49": 30.75,
+          "price_50_99": 26.25,
+          "price_100_199": 23.0,
+          "price_200_plus": 20.0,
+          "margin_at_qty_20": "~87%",
+          "sq_ft_rate_at_qty_20": 27.9
+        }
+      ]
     },
     "3017583": {
       "frontmatter": {

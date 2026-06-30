@@ -102,7 +102,7 @@ This methodology maintains the same margin profile (~87% at qty 20) as the Oraje
 | Margin floor (200+) | 80.0% | 80.0% |
 | Tier compression (1-9 → 200+) | 56.8% | 56.5% |
 
-**Band scope:** Applies to all Convex High Bond + Polycarbonate panel decals. Single founding data point at 1.102 sq ft. Band will tighten as additional items are quoted. Future items at significantly different areas should validate the proportional scaling against the founding data point.
+**Band scope:** Applies to all Convex High Bond + Polycarbonate panel decals. Single founding data point at 1.102 sq ft with two independently-priced laminate variants on one P/N ($24.27/sq ft for 5-mil, $27.90/sq ft for 10-mil), both anchored to the same material-proportional scaling methodology. Band will tighten as additional items are quoted. Future items at significantly different areas should validate the proportional scaling against the founding data point.
 
 **Tier ratios (template, derived from the 3017557 Variant B table):**
 - 1-9: 1.504× anchor

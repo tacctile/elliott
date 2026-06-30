@@ -34,7 +34,7 @@ This is not a codebase. It is a knowledge system with the same architectural dis
 |--------|-------------|---------------|
 | 3M 180mC Cut Vinyl | All 3M Controltac 180mC colors. Cut/weed/mask. No printing. | `categories/cut-vinyl-3m-180mc.md` |
 | Orajet 3951 Cast + Polyester Lam | Orajet 3951 base + 1-mil polyester overlaminate. Printed full-color. | `categories/printed-laminated-orajet.md` |
-| Convex High Bond + Poly Lam | Convex 6-mil high bond + polycarbonate overlaminate. Panel decals. Two lam variants: 5-mil and 10-mil (Kapco). | `categories/convex-high-bond-polycarbonate.md` (SHELL — no items yet) |
+| Convex High Bond + Poly Lam | Convex 6-mil high bond + polycarbonate overlaminate. Panel decals. Two lam variants: 5-mil and 10-mil (Kapco). | `categories/convex-high-bond-polycarbonate.md` |
 | Lexan/Polycarbonate | Direct print on polycarbonate substrate. Legacy Elliott spec. | No category file yet — first item establishes it. |
 
 ---

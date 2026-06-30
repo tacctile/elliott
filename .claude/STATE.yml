@@ -3,10 +3,10 @@
 
 last_session:
   date: "2026-06-30"
-  type: "new item"
-  summary: "Session AD — P/N 3017557 (LBL-BASKET CONTROL BOX SINGLE AXIS) — FOUNDING item for Convex High Bond + Polycarbonate material family. Material-proportional scaling from Orajet singles band. Var B (10-mil Kapco): $30.75 at qty 20 = $27.90/sq ft, material $4.00, margin ~87%. Var A (5-mil PC): $26.75 at qty 20 = $24.27/sq ft, material $3.50, margin ~87%. Strategic Anchor — establishes $/sq ft band for entire Convex/PC family. Category shell → active with Pricing Profile. Item count 35 → 36. validate.py 0/0; all three build scripts clean; elliott_items = 36 rows confirmed in Supabase."
+  type: "item update"
+  summary: "Session AE — P/N 3017557 dual-variant display update. Added variant frontmatter (variant_count: 2, variant_a_*, variant_b_*). Frontend now renders two independent pricing sections (5-mil and 10-mil) with per-variant Copy for Email buttons. Multi-variant schema documented in STRUCTURE_RULES.md. Item count unchanged at 36. validate.py 0/0; all three build scripts clean; elliott_items = 36 rows confirmed in Supabase."
 
-next_action: "Send pending quotes: 3017557 ($30.75 Var B / $26.75 Var A at qty 20 — founding Convex/PC item), 1279260 and 1279270 ($2.75 at qty 20), 1012080 ($2.50/qty 20), 1279130 ($3.10/qty 20), 1277300 and 1279020 ($9.50/qty 20), 1278980 ($9.50/qty 20), 1278930 ($20/kit at qty 20), 1278220 ($3.00/qty 20), 1267140 ($8.75/qty 20), 1278890 ($20/qty 20). Await Sean's feedback on laminate preference (5-mil vs 10-mil) for 3017557."
+next_action: "Send pending quotes: 3017557 ($30.75 Var B / $26.75 Var A at qty 20 — both variants now displayed on dashboard with independent Copy for Email), 1279260 and 1279270 ($2.75 at qty 20), 1012080 ($2.50/qty 20), 1279130 ($3.10/qty 20), 1277300 and 1279020 ($9.50/qty 20), 1278980 ($9.50/qty 20), 1278930 ($20/kit at qty 20), 1278220 ($3.00/qty 20), 1267140 ($8.75/qty 20), 1278890 ($20/qty 20). Await Sean's feedback on laminate preference (5-mil vs 10-mil) for 3017557."
 
 blockers: "none"
 
