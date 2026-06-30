@@ -6,7 +6,28 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-06-29 (Session AC — Convex/polycarbonate material family shell added: 3 new material files + category shell. Previously Session AB — P/Ns 1279260 + 1279270 FRONT/REAR TIRE PRESSURE labels added; §30 $0.25 increment rule. Item count 33 → 35.)
+> Last Updated: 2026-06-30 (Session AD — P/N 3017557 founding Convex/polycarbonate item, material-proportional scaling, $30.75/$26.75 at qty 20. Previously Session AC — Convex/polycarbonate material family shell added. Item count 35 → 36.)
+
+---
+
+### 2026-06-30 — Session AD (new item): P/N 3017557 — founding Convex/polycarbonate item, material-proportional scaling, $30.75/$26.75 at qty 20
+
+**What:** New panel decal — LBL-BASKET CONTROL BOX SINGLE AXIS at 17.75" × 8.9375" = 1.102 sq ft. FOUNDING item for the Convex High Bond + Polycarbonate material family. Two laminate variants quoted on one P/N: Variant B (10-mil Kapco, primary, in stock) at $30.75/qty 20 = $27.90/sq ft, material cost $4.00; Variant A (5-mil PC, supplier provisional) at $26.75/qty 20 = $24.27/sq ft, material cost $3.50. Pricing derived by material-proportional scaling from the Orajet singles band: interpolated Orajet $/sq ft at 1.102 sq ft (~$15.48) × material cost ratio (1.800× Var B, 1.569× Var A) = Convex/PC $/sq ft. Category file `categories/convex-high-bond-polycarbonate.md` transformed from SHELL to active with full Pricing Profile, band data, tier ratios, decision tree. Three material files updated (`used_in_items` → ["3017557"]). First article $75.00. Lifetime warranty embedded in margin.
+
+**Key Decisions:**
+- Pricing LOCKED by Nick — no multi-round AI validation run. Override type: Strategic Anchor.
+- Material-proportional scaling is the governing methodology. The Orajet band ($15.43–$15.91/sq ft) does NOT apply directly — the Convex/PC band is a scaled derivative.
+- §29 (ANSI account rule for Orajet/lam) does NOT extend to the Convex/PC family. This item is not ANSI — it is a control panel overlay.
+- Rollsroller flat laminating table handles all Convex/PC lamination (NOT the 13.5" polyester laminator). Lamination passes: 1.
+- Frontmatter uses Variant B (primary) pricing. Both variants documented in Pricing, Material Cost, and Margin sections.
+
+**Strategic Flags:**
+- Strategic Anchor — this price establishes the founding $/sq ft band for the entire Convex/polycarbonate material family. Every future Convex/PC item scales from this data point.
+- External market research ($40–$70/sq ft) confirmed price sits ~30% below market floor — consistent with the ~25–30% relationship concession on the Orajet band.
+- Combination B (10-mil Kapco) is in stock. Combination A (5-mil) supplier is provisional.
+- Item count: 35 → 36. Panel Decals category: 0 → 1 items.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 36 rows confirmed in Supabase.
 
 ---
 
@@ -181,24 +202,4 @@
 
 ---
 
-### 2026-06-16 — Session T (new item): P/N 3024140 — LBL-WRK LGHTS, smallest item on account (0.019 sq ft), $2.50 at qty 20, 4-wave validated, complexity-dependent floor
-
-**What:** New printed/laminated single label (LBL-WRK LGHTS) at 2.000" × 1.375" = 0.019 sq ft — the smallest production catalog item on the Elliott account. Drawing dated 10/23/24, engineer LKM, model blank. Non-ANSI equipment control label (+ WORK LIGHTS / ON / OFF, black on white, interior Ø1/2" circle cutout). Sub-0.06 sq ft: per-label floor governs AND is complexity-dependent. 4-wave atomic AI validated (24 independent responses, 6 models × 4 waves). $2.50 at qty 20 — intentionally below 3024592 ($2.75, ANSI Z535.6 DANGER) per complexity differentiation. Tier table: $4.00/$3.00/$2.50/$2.25/$2.00/$1.75. Material cost $0.10 (§25 canonical: $0.038 calculated + incidental buffer). Margin ~96.0% at qty 20.
-
-**Key Decisions:**
-- Wave 1 (6/6) initially proposed $2.75 mirroring 3024592, citing complexity offset (interior Ø1/2" cutout vs simpler color scheme). Wave 2 (6/6 H on all four attack vectors) rejected: cutout adds ~5–10 sec weeding; eliminated ANSI compliance labor (multi-color registration, compliance inspection) exceeds cutout labor. True non-ANSI floor is below 3024592.
-- Wave 3: 3/6 approved at $2.75; 3/6 pushed back (threshold $2.25–$2.50, instant approval $1.50–$2.25).
-- Wave 4: 6/6 unanimous NO on $2.75; 6/6 unanimous YES on $2.50. Engine consensus accepted, no override.
-- Complexity-dependent per-label floor now confirmed with two live data points: ANSI regulated → $2.75 (3024592); simple non-ANSI → $2.50 (3024140). Documented in categories/printed-laminated-orajet.md.
-- do_not_benchmark = false. Added to BAND_EXCEPTIONS in validate.py ($/sq ft artifact, $131.58, is inapplicable).
-
-**Strategic Flags:**
-- Per-label floor is now formally complexity-dependent — this is a doctrinal addition. Future sub-0.06 sq ft items must classify complexity (ANSI vs non-ANSI) before applying the floor.
-- Item count: 28 → 29. Printed/Laminated category: 19 → 20 items.
-- The $/sq ft implied rate ($131.58 at qty 20) is a mathematical artifact. Never benchmark against it.
-
-**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 29 rows confirmed in Supabase.
-
----
-
-*Entries older than Session T (2026-06-16) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session U (2026-06-17) were removed per the 10-entry rolling window — git history retains them in full.*

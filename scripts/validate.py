@@ -33,6 +33,7 @@ STATE_FILE = REPO_ROOT / ".claude" / "STATE.yml"
 CATEGORY_MAP = {
     "3M 180mC Cut Vinyl": "categories/cut-vinyl-3m-180mc.md",
     "Orajet 3951 Cast + Polyester Lam": "categories/printed-laminated-orajet.md",
+    "Convex High Bond + Poly Lam": "categories/convex-high-bond-polycarbonate.md",
 }
 
 REQUIRED_FRONTMATTER = [
