@@ -6,7 +6,26 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-06-30 (Session AF — bug fix: hydrateFromDb() variants drop — dual-variant display now renders on live Supabase path. Previously Session AE — P/N 3017557 dual-variant display (5-mil + 10-mil), per-variant Copy for Email. Previously Session AD — P/N 3017557 founding Convex/polycarbonate item, material-proportional scaling, $30.75/$26.75 at qty 20.)
+> Last Updated: 2026-06-30 (Session AG — P/N 3020477 added, fourth sub-scope singles data point, $2.75/qty 20, 4-wave validated — explicitly NOT a parity exemption. Previously Session AF — bug fix: hydrateFromDb() variants drop — dual-variant display now renders on live Supabase path. Previously Session AE — P/N 3017557 dual-variant display (5-mil + 10-mil), per-variant Copy for Email.)
+
+---
+
+### 2026-06-30 — Session AG (new item): P/N 3020477 — LBL-MODULAR BOOM CONTROL HYDRAULIC CONTROL, fourth sub-scope data point, $2.75/qty 20, independently 4-wave validated
+
+**What:** New printed/laminated single label (title block: LBL-MODULAR BOOM CONTROL HYDRAULIC CONTROL; in-label artwork reads "CONTROL SELECTOR") at 11.50" × 1.63" = 0.130 sq ft. Single continuous rounded-rectangle outer cut, 1 piece — the two visually grouped icon clusters in the artwork are printed borders, not separate die cuts. Routes to sub-scope (0.1–0.5 sq ft). Ran full 4-wave atomic AI validation (24 independent responses, 6 models × 4 waves) and arrived at $2.75 at qty 20 = $21.15/sq ft, sitting correctly between 1279130 (0.148 sq ft, $20.95/sq ft) and 1247120 (0.122 sq ft, $22.54/sq ft) — now the fourth confirmed sub-scope data point. The resulting tier ladder is identical to 1247120's, but this is documented explicitly as NOT a direct parity exemption — both items were priced independently and happened to converge.
+
+**Key Decisions:**
+- Wave 1: 4/6 models independently landed at $2.75 (matching 1247120); 2/6 at $3.00 (steeper). Wave 2 (5/6 responded): unanimous kill of $3.00 — it produced $23.08/sq ft, exceeding 1247120's $22.54/sq ft despite 3020477 being the larger label, a gradient inversion. Surviving candidates split 3/5 $2.75 vs 2/5 $2.85 (strict interpolation).
+- Wave 3: 6/6 unanimous instant approval on $2.75; $2.85 drew a polite (non-blocking) clarification question in every simulation that saw it.
+- Wave 4: 6/6 unanimous YES on $2.75. Decisive reasoning: $2.85's tighter mathematical fit was outweighed by (a) introduced buyer friction for an immaterial $0.10/label difference, and (b) exposing Pro Label's interpolation methodology to Sean, who is actively co-developing a procurement/engineering labeling standard — a real strategic cost for no real benefit. $2.75 locked, no override.
+- Material cost $0.25/label (§25 canonical: $0.2534 calculated, filed $0.25). Margin ~90.9% at qty 20.
+
+**Strategic Flags:**
+- Sub-scope gradient now monotonic across four points: $22.54 (0.122 sq ft) → $21.15 (0.130 sq ft) → $20.95 (0.148 sq ft) → $16.27 (0.292 sq ft).
+- First article not requested by Sean — status unconfirmed, not a confirmed "No." Order quantity also not specified. Both flagged for follow-up alongside the quote.
+- Item count: 36 → 37. Printed/Laminated category: 24 → 25 items.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 37 rows confirmed in Supabase.
 
 ---
 
@@ -180,41 +199,4 @@
 
 ---
 
-### 2026-06-22 — Session W (new item): P/N 1279130 — LBL-MOVING OR WARNING E-SERIES, sub-scope single, $3.10 at qty 20, 4-wave validated
-
-**What:** New printed/laminated single label (LBL-MOVING OR WARNING E-SERIES) at 10.00" × 2.13" = 0.148 sq ft. Sub-scope routing (0.1–0.5 sq ft range). Third confirmed sub-scope data point, joining 1247120 (0.122 sq ft, $22.54/sq ft) and 1210810 (0.292 sq ft, $16.27/sq ft). $3.10 at qty 20 = $20.95/sq ft — sits correctly between the two brackets. Sub-scope $/sq ft gradient now monotonic across three points: $22.54 → $20.95 → $16.27. 4-wave atomic AI validated (24 independent responses, 6 models × 4 waves). Wave 4 unanimous YES 6/6. Tier table: $4.75/$3.50/$3.10/$2.55/$2.30/$2.00. Material cost $0.29 (§25 canonical: $0.2885 calculated + incidental buffer). Margin ~90.6% at qty 20. Model blank on drawing — P/N is the identifier.
-
-**Key Decisions:**
-- Wave 2 structural finding adopted: 100–199 raised $2.25→$2.30 to clear singles band floor ($15.43/sq ft); at $2.30 the implied $/sq ft is $15.54 — clears by $0.11/sq ft. Internal tripwire documented. 200+ raised $1.85→$2.00 to eliminate anchor risk.
-- do_not_benchmark = false (valid sub-scope data point); excluded from singles band DATA POINTS until production-volume acceptance.
-- Added to BAND_EXCEPTIONS in validate.py with rationale documenting the sub-scope premium and the 100-199 tripwire.
-- Quote email anchor line: "Pricing is consistent with the 1247120 and 1210810 brackets you've already approved."
-
-**Strategic Flags:**
-- Three-point sub-scope gradient now established — sufficient for interpolation on future items between 0.1–0.5 sq ft. The curve is calibrated at 0.122, 0.148, and 0.292 sq ft.
-- The 100-199 tier at $2.30 ($15.54/sq ft) operates with minimal headroom above the singles band floor ($15.43/sq ft). Any material cost increase on this account requires checking this tier first.
-- Item count: 31 → 32. Printed/Laminated category: 20 → 21 items.
-
-**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 32 rows confirmed in Supabase.
-
----
-
-### 2026-06-17 — Session V (item update): P/N 1278930 — 3-label kit → 2-label kit, tiers now match 1278890
-
-**What:** Updated P/N 1278930 (CHRT-E190 V3, Lifting Capacity Chart Kit) from a 3-label kit to a 2-label kit. Label dimensions unchanged (11.13" × 7.88" = 0.609 sq ft/label). sq_ft_per_kit updated 1.827 → 1.218. material_cost_per_unit updated $3.60 → $2.40 (§25 canonical: 1.218 × $1.9489 = $2.374 + incidental buffer = $2.40, identical to 1278890). All 6 tier prices updated to match 1278890 exactly ($30/$24/$20/$17/$14/$12 vs prior $45/$36/$30/$26/$21/$18). per_label_at_qty_20 unchanged at $10.00; margin_at_qty_20 unchanged at ~88%. Documentation and pricing update only — no items added or removed.
-
-**Key Decisions:**
-- Per-label parity governs: same label dimensions (11.13" × 7.88"), same material (Orajet 3951 + 1-mil polyester lam), ≤2 lam passes — per-label parity applies per PRICING_RULES.md §1–§2. Tier table identical to 1278890, validated by 1278890's 4-wave atomic AI process (24 runs, 6 models × 4 waves, Wave 4 unanimous YES at $10.00/label).
-- Material cost per §25 canonical formula for 1.218 sq ft: Orajet 1.218 × $1.21 = $1.474 + lam 1.218 × $0.2389 = $0.291 + ink 1.218 × $0.50 = $0.609 = $2.374 + incidental buffer = $2.40 (matching 1278890 exactly).
-- Historical 3-label derivation (25 model runs / 6 rounds, 1.5x off 1230820) preserved in Pricing Derivation section as superseded reference.
-- First article price ($65) and status (FA Accepted) unchanged — FA was for the original structure and is historical.
-
-**Strategic Flags:**
-- All three kit-family members (1278890, 1278930, 1245130) now explicitly maintain three-way per-label parity at $10.00/label at qty 20. 1278930 now matches 1278890's tier table exactly. January 2027 normalization strategy unchanged.
-- Item count unchanged at 31. No new Supabase rows required — updating existing row for 1278930.
-
-**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 31 rows confirmed in Supabase.
-
----
-
-*Entries older than Session V (2026-06-17) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session X (2026-06-22) were removed per the 10-entry rolling window — git history retains them in full.*
