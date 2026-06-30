@@ -52,6 +52,44 @@ notes: ""                                 # Anything that doesn't fit elsewhere
 
 ---
 
+## Multi-Variant Schema (Single P/N, Multiple Pricing Variants)
+
+When a single part number carries multiple independently-priced variants (e.g., different overlaminate thicknesses), the item file uses flat-key variant frontmatter alongside the standard fields. The standard `price_*` and `material_cost_per_unit` fields hold the **primary variant** pricing for backward compatibility.
+
+```yaml
+variant_count: 2                              # Number of independently-priced variants
+variant_a_name: "5-mil Polycarbonate Overlaminate"
+variant_a_material_cost: 3.50
+variant_a_price_1_9: 40.25
+variant_a_price_10_19: 32.00
+variant_a_price_20_49: 26.75
+variant_a_price_50_99: 22.75
+variant_a_price_100_199: 20.00
+variant_a_price_200_plus: 17.50
+variant_a_margin_at_qty_20: "~86.9%"
+variant_a_sq_ft_rate_at_qty_20: 24.27
+variant_b_name: "10-mil Polycarbonate Overlaminate"
+variant_b_material_cost: 4.00
+variant_b_price_1_9: 46.25
+variant_b_price_10_19: 37.00
+variant_b_price_20_49: 30.75
+variant_b_price_50_99: 26.25
+variant_b_price_100_199: 23.00
+variant_b_price_200_plus: 20.00
+variant_b_margin_at_qty_20: "~87%"
+variant_b_sq_ft_rate_at_qty_20: 27.90
+```
+
+**Rules:**
+1. The P/N is never split — Sean's part number stays singular.
+2. Each variant carries its own complete tier table, material cost, margin, and $/sq ft rate.
+3. The primary `price_*` frontmatter fields always reflect the primary variant (the one with `variant_b_*` fields by convention, or whichever is designated primary in the item notes).
+4. First Article is shared across variants unless Sean explicitly requests FA samples of both.
+5. The frontend displays each variant as a distinct, fully independent pricing section with its own "Copy for Email" button.
+6. Variant keys use `variant_a_`, `variant_b_`, etc. prefixes. Extend to `variant_c_` if a third variant is ever needed.
+
+---
+
 ## Required Sections (In This Exact Order)
 
 Every item file has these sections below the frontmatter:

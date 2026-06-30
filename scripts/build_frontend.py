@@ -160,8 +160,50 @@ NUMERIC_FIELDS = {
     'label_count', 'width_in', 'height_in', 'sq_ft_per_label', 'sq_ft_per_kit',
     'material_cost_per_unit', 'price_1_9', 'price_10_19', 'price_20_49',
     'price_50_99', 'price_100_199', 'price_200_plus', 'first_article_price',
-    'per_label_at_qty_20', 'lamination_passes', 'cut_runs'
+    'per_label_at_qty_20', 'lamination_passes', 'cut_runs',
+    'variant_count',
 }
+
+VARIANT_NUMERIC_FIELDS = {
+    'material_cost', 'price_1_9', 'price_10_19', 'price_20_49',
+    'price_50_99', 'price_100_199', 'price_200_plus',
+    'sq_ft_rate_at_qty_20',
+}
+
+
+def extract_variants(fm):
+    """Extract variant data from flat-key variant frontmatter fields.
+
+    Returns a list of variant dicts if variant_count >= 2, else None.
+    """
+    vc = fm.get('variant_count')
+    if vc is None or int(vc) < 2:
+        return None
+
+    prefixes = ['variant_a_', 'variant_b_', 'variant_c_', 'variant_d_']
+    labels = ['A', 'B', 'C', 'D']
+    variants = []
+
+    for i in range(int(vc)):
+        if i >= len(prefixes):
+            break
+        prefix = prefixes[i]
+        name_key = f'{prefix}name'
+        if name_key not in fm:
+            continue
+        v = {'label': labels[i], 'name': fm[name_key]}
+        for suffix in ['material_cost', 'price_1_9', 'price_10_19', 'price_20_49',
+                        'price_50_99', 'price_100_199', 'price_200_plus',
+                        'margin_at_qty_20', 'sq_ft_rate_at_qty_20']:
+            full_key = f'{prefix}{suffix}'
+            if full_key in fm:
+                val = fm[full_key]
+                if suffix in VARIANT_NUMERIC_FIELDS and val != '':
+                    val = coerce_numeric(val)
+                v[suffix] = val
+        variants.append(v)
+
+    return variants if variants else None
 
 
 def build_item(filepath):
@@ -175,6 +217,13 @@ def build_item(filepath):
     for key in NUMERIC_FIELDS:
         if key in fm and fm[key] != '':
             fm[key] = coerce_numeric(fm[key])
+
+    variants = extract_variants(fm)
+
+    # Coerce variant numeric fields
+    variant_keys = [k for k in fm if k.startswith('variant_') and k != 'variant_count']
+    for vk in variant_keys:
+        fm.pop(vk, None)
 
     for field in STRIP_FIELDS:
         fm.pop(field, None)
@@ -193,6 +242,10 @@ def build_item(filepath):
             'production_debrief': sections.get('Production Debrief', ''),
         }
     }
+
+    if variants:
+        item['variants'] = variants
+
     return item
 
 

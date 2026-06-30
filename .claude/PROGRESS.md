@@ -6,7 +6,26 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-06-30 (Session AD — P/N 3017557 founding Convex/polycarbonate item, material-proportional scaling, $30.75/$26.75 at qty 20. Previously Session AC — Convex/polycarbonate material family shell added. Item count 35 → 36.)
+> Last Updated: 2026-06-30 (Session AE — P/N 3017557 dual-variant display (5-mil + 10-mil), per-variant Copy for Email. Previously Session AD — P/N 3017557 founding Convex/polycarbonate item, material-proportional scaling, $30.75/$26.75 at qty 20. Previously Session AC — Convex/polycarbonate material family shell added. Item count 35 → 36.)
+
+---
+
+### 2026-06-30 — Session AE (item update): P/N 3017557 — added dual-variant display (5-mil + 10-mil), per-variant Copy for Email
+
+**What:** Structural update to P/N 3017557 (LBL-BASKET CONTROL BOX SINGLE AXIS). The frontend dashboard was only displaying ONE variant (Variant B, 10-mil). Sean requested pricing for BOTH 5-mil and 10-mil polycarbonate overlaminate options. Added variant-specific frontmatter fields (variant_count: 2, variant_a_*, variant_b_*) to the item file. Updated build_frontend.py to detect and extract variant data into data.json. Updated the dashboard to render two clearly separated pricing sections — "Variant A — 5-mil Polycarbonate Overlaminate" and "Variant B — 10-mil Polycarbonate Overlaminate" — each with its own stat cards, volume pricing table, and independent "Copy for Email" button. Multi-variant schema pattern documented in governance/STRUCTURE_RULES.md. Category file updated to note both variant bands ($24.27/sq ft for 5-mil, $27.90/sq ft for 10-mil). No pricing changes — both tier tables are locked.
+
+**Key Decisions:**
+- Variant frontmatter uses flat-key prefixes (variant_a_*, variant_b_*) for compatibility with the simple YAML parser. Primary `price_*` fields still hold Variant B (primary) for backward compatibility with validate.py and migration scripts.
+- First Article ($75.00) is shared across both variants — displayed once with a note, not duplicated per variant.
+- Each variant has its own Copy for Email button producing output with ONLY that variant's tier table.
+- This is a display/structure fix, not a new item — item_count remains 36.
+
+**Strategic Flags:**
+- The multi-variant schema pattern is now documented in governance/STRUCTURE_RULES.md and available for future items that need multiple pricing variants on a single P/N.
+- No pricing recalculation — both tier tables were locked by Nick in Session AD.
+- Item count unchanged at 36.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 36 rows confirmed in Supabase.
 
 ---
 
@@ -183,23 +202,4 @@
 
 ---
 
-### 2026-06-17 — Session U (new items): P/Ns 1277300 and 1279020 — direct parity clones of 1278980, $9.50 at qty 20, singles band
-
-**What:** Created P/N 1277300 (LABEL-LIFTING CAPACITY CHART MODEL E160 V3 NO WINCH) and P/N 1279020 (LABEL-RANGE CAPACITY CHART MODEL E190 V3) as direct parity clones of 1278980 (LABEL-PLTFM RANGE CAPACITY CHART MODEL E160 V3). All three items share identical dimensions (7.88" × 11.13" = 0.609 sq ft), material family (Orajet 3951 Cast + Polyester Lam), process (Print/Lam/Cut, 1 pass), material cost ($1.19/label, §25 canonical), and tier table ($14.50/$11.50/$9.50/$8.25/$7.50/$6.75). Only part numbers, descriptions, and artwork content differ.
-
-**Key Decisions:**
-- Direct parity exemption applied per `governance/PRICING_VALIDATION.md` — no multi-round AI validation run for either clone; 1278980's 4-wave atomic validation (24 independent responses, 6 models × 4 waves) is inherited by both.
-- Rule 15 (Pricing Profile band check) satisfied for both: $9.50 at qty 20 = $15.60/sq ft lands within the singles band ($15.43–$15.91/sq ft).
-- Neither clone is a new independent band data point — the 0.609 sq ft position is anchored by 1278980 exclusively. Band data point count remains 4.
-- Permanent three-way lockstep established: any future change to 1278980's dimensions, material cost, process, or tier table must be applied to both 1277300 and 1279020 in the same session.
-- Lockstep note added to 1278980.md Notes and Warnings section per governance requirement.
-
-**Strategic Flags:**
-- Three items now share the 0.609 sq ft / $9.50 tier table. Sean has multiple singles at this exact size — the table is the permanent reference for all E160 V3/E190 V3 capacity chart singles at this geometry.
-- Item count: 29 → 31. Printed/Laminated category: 20 → 22 items.
-
-**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 31 rows confirmed in Supabase.
-
----
-
-*Entries older than Session U (2026-06-17) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session V (2026-06-17) were removed per the 10-entry rolling window — git history retains them in full.*
