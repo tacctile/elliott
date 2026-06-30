@@ -6,7 +6,22 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-06-30 (Session AE — P/N 3017557 dual-variant display (5-mil + 10-mil), per-variant Copy for Email. Previously Session AD — P/N 3017557 founding Convex/polycarbonate item, material-proportional scaling, $30.75/$26.75 at qty 20. Previously Session AC — Convex/polycarbonate material family shell added. Item count 35 → 36.)
+> Last Updated: 2026-06-30 (Session AF — bug fix: hydrateFromDb() variants drop — dual-variant display now renders on live Supabase path. Previously Session AE — P/N 3017557 dual-variant display (5-mil + 10-mil), per-variant Copy for Email. Previously Session AD — P/N 3017557 founding Convex/polycarbonate item, material-proportional scaling, $30.75/$26.75 at qty 20.)
+
+---
+
+### 2026-06-30 — Session AF (bug fix): hydrateFromDb() variants drop — dual-variant display now renders on live Supabase path
+
+**What:** One-line fix in `frontend/index.html` `hydrateFromDb()`. The merge block that assembles the runtime `items` object was copying `image` and `sections` from static `data.json` but omitting `variants`. Because Supabase has no variants column, `data.json` is the sole source of variant data — so on the live Supabase path `item.variants` was always `undefined`, causing `renderPricing()` and `renderItemStats()` to fall through to single-variant rendering for P/N 3017557. Added `variants: st.variants || null` to the merge block alongside `image` and `sections`.
+
+**Key Decisions:**
+- Fix is entirely in `hydrateFromDb()` — no changes to `renderPricing()`, `renderItemStats()`, `build_frontend.py`, Supabase schema, or any item/category/pricing files.
+- Null fallback matches existing code style for `image` and `sections`; single-variant items unaffected (get `variants: null`, which the renderer already handles).
+
+**Strategic Flags:**
+- Any future multi-variant item will automatically benefit from this fix — `variants` will now be hydrated for all items that have it in `data.json`.
+
+**Status:** Complete — minimal targeted fix, no pricing or schema changes.
 
 ---
 

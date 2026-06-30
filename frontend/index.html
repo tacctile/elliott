@@ -2546,6 +2546,7 @@ function hydrateFromDb(mats, dbItems, bands, settings, combos, staticData) {
       frontmatter: fm,
       image: st.image || null,
       sections: st.sections || {},
+      variants: st.variants || null,
     };
   }
   ITEMS_DATA = { generated: new Date().toISOString(), item_count: Object.keys(itemMap).length, items: itemMap };
