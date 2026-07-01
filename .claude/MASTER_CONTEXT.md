@@ -123,24 +123,30 @@ elliott/
 │   ├── PRODUCTION.md              # Equipment, materials, nesting, process
 │   ├── CALCULATOR.md              # Calculator routing, flags, scope, relationship to AI validation
 │   └── VALIDATION_PROMPTS.md      # 4-wave AI validation prompt system — wave structure, attack angles, output schemas, behavioral rules
+├── audits/
+│   ├── 2026-05-28-pricing-integrity-audit.md
+│   └── 2026-06-09-full-system-audit.md
 ├── categories/
+│   ├── convex-high-bond-polycarbonate.md  # Convex 6-mil high bond + poly lam — material system + pricing profile + decision tree
 │   ├── cut-vinyl-3m-180mc.md      # Material system + pricing profile + decision tree
 │   └── printed-laminated-orajet.md
 ├── items/
-│   ├── 1230820.md                 # One file per item, YAML frontmatter + 9 sections
-│   ├── 1278930.md
-│   ├── 1245130.md
-│   ├── 1205720.md
-│   ├── 3017435.md
-│   ├── 3018378.md
-│   └── images/                    # Spec sheet PDFs and reference images
+│   ├── 40 item files              # One file per item, YAML frontmatter + 9 sections
+│   └── images/                    # Spec sheet PDFs and reference images (4 files)
 ├── materials/
-│   ├── orajet-3951-white.md        # Orafol Orajet 3951 cast vinyl (print media)
+│   ├── 10mil-polycarbonate-overlaminate.md  # Kapco 10-mil polycarbonate overlaminate
 │   ├── 1mil-polyester-overlaminate.md  # Flexcon FLX000233 1-mil polyester overlaminate
+│   ├── 3m-180mc-black.md          # 3M Controltac 180mC Black
+│   ├── 3m-180mc-cardinal-red-15in.md  # 3M Controltac 180mC-53 Cardinal Red, 15" roll
 │   ├── 3m-180mc-cardinal-red.md    # 3M Controltac 180mC-53 Cardinal Red
 │   ├── 3m-180mc-olympic-blue.md    # 3M Controltac 180mC-57 Olympic Blue
+│   ├── 3m-180mc-white-24in-50yd.md  # 3M Controltac 180mC-10 White, 24" roll, 50yd
 │   ├── 3m-180mc-white-24in.md      # 3M Controltac 180mC-10 White, 24" roll
 │   ├── 3m-180mc-white-48in.md      # 3M Controltac 180mC-10 White, 48" roll
+│   ├── 5mil-polycarbonate-overlaminate.md  # Kapco 5-mil polycarbonate overlaminate
+│   ├── convex-6mil-high-bond.md    # Convex 6-mil high bond base material
+│   ├── orajet-3951-white.md        # Orafol Orajet 3951 cast vinyl (print media)
+│   ├── transferrite-582u-30in.md   # TransferRite Ultra 582U application tape, 30" roll
 │   └── transferrite-582u.md        # TransferRite Ultra 582U application tape
 ├── scripts/
 │   ├── validate.py                # Structure compliance + math verification
