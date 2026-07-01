@@ -6,7 +6,25 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-07-01 (Session AH — P/N 1073950 added, third item at the established 0.503 sq ft singles-band position, $8.00/qty 20, independently 4-wave validated to exact parity with governing benchmark 1068270 — explicitly NOT a parity exemption. Previously Session AG — P/N 3020477 added, fourth sub-scope singles data point, $2.75/qty 20, 4-wave validated — explicitly NOT a parity exemption. Previously Session AF — bug fix: hydrateFromDb() variants drop — dual-variant display now renders on live Supabase path.)
+> Last Updated: 2026-07-01 (Session AI — P/N 1277020 added, fifth confirmed singles-band data point at a new 0.635 sq ft position, $10.00/qty 20 = $15.75/sq ft, 4-wave validated — explicitly NOT a parity exemption; priced above the 0.609 sq ft cluster as an accepted small-format-premium variance per Wave 4 consensus; $9.75 explored mid-validation and unanimously rejected in Wave 4. Previously Session AH — P/N 1073950 added, third item at the established 0.503 sq ft singles-band position, $8.00/qty 20, independently 4-wave validated to exact parity with governing benchmark 1068270 — explicitly NOT a parity exemption. Previously Session AG — P/N 3020477 added, fourth sub-scope singles data point, $2.75/qty 20, 4-wave validated — explicitly NOT a parity exemption.)
+
+---
+
+### 2026-07-01 — Session AI (new item): P/N 1277020 — CHRT-D100i FG PLTF, fifth confirmed singles-band data point at a new 0.635 sq ft position, $10.00/qty 20, 4-wave validated
+
+**What:** New printed/laminated single label at 8.5" × 10.75" = 0.635 sq ft — a genuinely new sq ft position in the singles band (≥0.5 sq ft), between the 0.609 sq ft cluster (1278980/1277300/1279020, $15.60/sq ft) and the 1.296 sq ft root benchmark (1230820, $15.43/sq ft — hard floor). Full 4-wave atomic AI validation (24 independent responses, 6 models × 4 waves, run in Claude Chat) locked $10.00/qty 20 = $15.75/sq ft — the fifth confirmed singles-band data point, not a parity exemption. Material cost computed fresh from the §25 canonical formula at $1.24/label using actual verified rates in `governance/PRODUCTION.md` — no invented cost figures from the validation record were carried forward, per session instruction.
+
+**Key Decisions:**
+- Wave 1 (Build): 5/6 models converged on $10.00 at qty 20, interpolating between the 0.609 sq ft cluster and root benchmark. Wave 2 (Destruction): unanimous 6/6 HIGH — flagged a minor inversion of $10.00 against the 0.609 sq ft point; the team moved to $9.75 mid-process. Wave 3 (Buyer Simulation): unanimous instant approval of $9.75, but flagged that it undercuts the root benchmark floor. Wave 4 (Final Synthesis): unanimous 6/6 NO on $9.75 — $10.00 is the only value simultaneously $0.25-compliant (§30), above the root benchmark floor, and inside Sean's confirmed pushback threshold. $10.00 locked; $9.75 explicitly rejected, do not revive in any future session.
+- Band positioning: $15.75/sq ft is the highest $/sq ft point in the band above 0.609 sq ft — an accepted small-format-premium variance per Wave 4 consensus (only 0.026 sq ft past that data point). Breaks strict monotonicity-by-size at this one point, but stays safely above the root benchmark floor. Documented as a deliberate exception, not an error.
+- No override — Wave 4 correction is the accepted engine outcome (override_type blank).
+
+**Strategic Flags:**
+- First article NOT confirmed with Sean — open item, flagged for follow-up alongside the quote. Order quantity not specified — standard 6-tier ladder quoted.
+- $9.75 was explored and unanimously rejected in Wave 4 — future sessions must not treat it as a candidate or benchmark for this item.
+- Item count: 38 → 39. Printed/Laminated category: 28 → 29 items.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 39 rows confirmed in Supabase.
 
 ---
 
@@ -181,23 +199,4 @@
 
 ---
 
-### 2026-06-22 — Session Y (governance): Remove $55 floor — no-floor job-economics doctrine + deep-tier standing instruction
-
-**What:** Two targeted governance-only changes — no items added or changed. (1) Removed the $55 one-off job-economics floor as a forward-looking rule from all five governance/category docs (PRICING_RULES.md, CALCULATOR.md, VALIDATION_PROMPTS.md, categories/printed-laminated-orajet.md, MASTER_CONTEXT.md). Added the no-floor job-economics doctrine as §28 in PRICING_RULES.md. §27 rush/favor floor ($50) is intact and unchanged. (2) Added deep-tier standing instruction to VALIDATION_PROMPTS.md §3 Wave 1 prompt template: the 100-199 and 200+ tiers are structural scaffolding only — clean round numbers stepping down monotonically from the 50-99 tier are sufficient; these tiers rarely transact (Sean's pattern is batches of 20-50). Historical pricing records in items/ untouched. validate.py 0/0; all three build scripts clean; elliott_items = 33 confirmed.
-
-**Key Decisions:**
-- No-floor doctrine: Every job priced from actual job economics (material cost + realistic production time). No minimum order charge, no job floor. For sub-0.1 sq ft production items → Micro-Format Band. For one-off field service → job economics only; Nick decides.
-- $55 removed only as a forward-looking rule. Historical records in items/ and category files (outrigger program 1277970-1278000, standalone one-offs 3017583/3017584) are accurate history and were NOT altered.
-- Calculator CALCULATOR.md: `tiny` route retained; $55 output is a technical implementation placeholder, not documented as an Elliott account floor. Route table, F9 flag, constants list, and Step 9 all updated.
-- VALIDATION_PROMPTS.md: deep-tier standing instruction positioned between rush/favor floor and Required Output Schema in Section 3.
-
-**Strategic Flags:**
-- §28 is now the canonical reference for the no-floor doctrine on this account. All future sessions that encounter a one-off or field service request should route here.
-- Deep-tier instruction applies to every Wave 1 prompt going forward — models should no longer obsess over exact cents at the 100-199/200+ tiers.
-- Item count unchanged at 33. No Supabase structural changes — only governance docs updated.
-
-**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 33 rows confirmed in Supabase.
-
----
-
-*Entries older than Session Y (2026-06-22) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session Z (2026-06-29) were removed per the 10-entry rolling window — git history retains them in full.*
