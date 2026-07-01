@@ -2658,12 +2658,18 @@ function setTab(tab) {
   bindSearch();
 }
 
+let searchDebounceTimer = null;
+
 function bindSearch() {
   const s = document.getElementById('search');
-  s.placeholder = activeTab === 'items' ? 'Search P/N, description…' : 'Search material name, color…';
+  s.placeholder = activeTab === 'items' ? 'Search P/N, description, dimensions…' : 'Search material name, color…';
   s.oninput = e => {
-    if (activeTab === 'items') renderItemList(e.target.value);
-    else renderMaterialList(e.target.value);
+    const value = e.target.value;
+    clearTimeout(searchDebounceTimer);
+    searchDebounceTimer = setTimeout(() => {
+      if (activeTab === 'items') renderItemList(value);
+      else renderMaterialList(value);
+    }, 150);
   };
 }
 
@@ -2706,8 +2712,14 @@ function renderItemList(query) {
   const matches = sortedPNs.filter(pn => {
     const fm = items[pn].frontmatter;
     if (activeFilter && fm.material_family !== activeFilter) return false;
+    if (!q) return true;
     const bandClass = fm.band_class || deriveBandClass(fm);
     const chip = BAND_CHIP[bandClass] || '';
+    const w = toNum(fm.width_in);
+    const h = toNum(fm.height_in);
+    const dimStr = (w != null && h != null) ? `${w}" × ${h}"`.toLowerCase() : '';
+    const sqFtLabel = toNum(fm.sq_ft_per_label);
+    const sqFtKit = toNum(fm.sq_ft_per_kit);
     return pn.includes(q)
       || (fm.description || '').toLowerCase().includes(q)
       || (fm.model || '').toLowerCase().includes(q)
@@ -2715,8 +2727,18 @@ function renderItemList(query) {
       || (fm.material_family || '').toLowerCase().includes(q)
       || (fm.status || '').toLowerCase().includes(q)
       || chip.toLowerCase().includes(q)
-      || bandClass.toLowerCase().includes(q);
+      || bandClass.toLowerCase().includes(q)
+      || dimStr.includes(q)
+      || (w != null && String(w).includes(q))
+      || (h != null && String(h).includes(q))
+      || (sqFtLabel != null && String(sqFtLabel).includes(q))
+      || (sqFtKit != null && String(sqFtKit).includes(q));
   });
+
+  if (!matches.length) {
+    el.innerHTML = '<div class="comp-empty" style="padding:20px 4px;">No items found.</div>';
+    return;
+  }
 
   el.innerHTML = matches.map(pn => {
     const fm = items[pn].frontmatter;
