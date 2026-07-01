@@ -2,7 +2,7 @@
 
 > **Non-negotiable constraints. Apply to every pricing decision on this account.**
 >
-> Last Updated: 2026-06-29 (§30 $0.25 increment rule added. Previously §29 ANSI account rule added. Previously 2026-06-22: §28 no-floor job-economics doctrine added)
+> Last Updated: 2026-07-01 (§31 sub-scope root floor applies at every tier doctrine added — P/N 3024595. Previously 2026-06-29: §30 $0.25 increment rule added. Previously §29 ANSI account rule added. Previously 2026-06-22: §28 no-floor job-economics doctrine added)
 
 ---
 
@@ -62,6 +62,8 @@
 §29 — **All items printed on Orajet 3951 with polyester laminate on this account are ANSI by default.** The per-label floor for new production items is $2.75 at qty 20 (ANSI). The $2.50 non-ANSI floor is a historical data point only — applicable solely to 3024140 and 1012080, which were priced under the prior framework. The ANSI checkbox has been removed from the calculator; ANSI = true is hardcoded for all Orajet/lam items. Established 2026-06-29.
 
 §30 — **All tier prices must be in $0.25 increments.** All tier table prices across all items, all material families, and all band classes must be expressed in $0.25 increments (e.g. $2.75, $3.00, $4.25). This rule is forward-looking only — items priced prior to this session are grandfathered and not subject to retroactive correction. Applies to every new item from this session forward, without exception. Established 2026-06-29.
+
+§31 — **Sub-scope root floor applies at every tier, not just the qty-20 comparable rate.** The $15.43/sq ft root benchmark (P/N 1230820, ROOT BENCHMARK, FA Accepted) is a hard floor that governs every quantity tier on every sub-scope item (0.1–0.5 sq ft band) — not merely the qty-20 rate used for band positioning. No tier on any sub-scope item, at any quantity including 200+, may price below $15.43/sq ft. Where a sub-scope item's material-cost economics reach the floor within the standard 6-tier ladder, a flat tier structure (holding a single $/sq ft rate across the tiers at and above that point) is the correct and only $0.25-compliant (§30) outcome — stepping the price down further at volume would breach the floor and teach the buyer the floor is negotiable, which is prohibited. Established 2026-07-01 (P/N 3024595 — the largest sub-scope item on file at 0.488 sq ft, sitting at the boundary with the singles band; Wave 2 unanimous ruling, 6/6, during 4-wave AI validation). This doctrine governs all future sub-scope items approaching the ~0.5 sq ft boundary without re-litigation. See `categories/printed-laminated-orajet.md` and `items/3024595.md` for the full validation record.
 
 ---
 

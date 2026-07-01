@@ -6,7 +6,26 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-07-01 (Session AI — P/N 1277020 added, fifth confirmed singles-band data point at a new 0.635 sq ft position, $10.00/qty 20 = $15.75/sq ft, 4-wave validated — explicitly NOT a parity exemption; priced above the 0.609 sq ft cluster as an accepted small-format-premium variance per Wave 4 consensus; $9.75 explored mid-validation and unanimously rejected in Wave 4. Previously Session AH — P/N 1073950 added, third item at the established 0.503 sq ft singles-band position, $8.00/qty 20, independently 4-wave validated to exact parity with governing benchmark 1068270 — explicitly NOT a parity exemption. Previously Session AG — P/N 3020477 added, fourth sub-scope singles data point, $2.75/qty 20, 4-wave validated — explicitly NOT a parity exemption.)
+> Last Updated: 2026-07-01 (Session AJ — P/N 3024595 added, largest sub-scope data point on file at 0.488 sq ft, sitting at the boundary with the singles band; 4-wave validated flat tier structure ($10.75/$9.25/$7.75/$7.75/$7.75/$7.75); Wave 2 unanimous ruling that the $15.43/sq ft root floor applies at every tier, not just qty 20, now codified as governance/PRICING_RULES.md §31. Previously Session AI — P/N 1277020 added, fifth confirmed singles-band data point at a new 0.635 sq ft position, $10.00/qty 20 = $15.75/sq ft, 4-wave validated — explicitly NOT a parity exemption; priced above the 0.609 sq ft cluster as an accepted small-format-premium variance per Wave 4 consensus; $9.75 explored mid-validation and unanimously rejected in Wave 4. Previously Session AH — P/N 1073950 added, third item at the established 0.503 sq ft singles-band position, $8.00/qty 20, independently 4-wave validated to exact parity with governing benchmark 1068270 — explicitly NOT a parity exemption.)
+
+---
+
+### 2026-07-01 — Session AJ (new item + governance): P/N 3024595 — LBL-DNGR TIP, ELEC, CRUSH, largest sub-scope data point on file, flat tier structure, floor-applies-at-every-tier doctrine established
+
+**What:** New printed/laminated single ANSI danger label at 15" × 4.687" = 0.488 sq ft — the largest sub-scope (0.1–0.5 sq ft) data point on file, sitting at the boundary with the singles band (~0.5 sq ft). Full 4-wave atomic AI validation (24 independent responses, 6 models × 4 waves, run in Claude Chat) locked a flat tier table: $10.75/$9.25/$7.75/$7.75/$7.75/$7.75 — the price holds flat from qty 20 through 200+. Material cost computed fresh from actual verified material files at $0.96/label (§25 canonical) — no invented figures from the validation record were carried forward, per session instruction. Lamination orientation is forced (only the 4.687" dimension fits the laminator; the 15" dimension does not), documented with process-neutral language in the production section per session instruction.
+
+**Key Decisions:**
+- Wave 1 (Build): 5/6 models converged on $7.75 at qty 20 ($15.88/sq ft), interpolating between 1210810 (0.292 sq ft, $16.27/sq ft) and the 0.503 sq ft singles-band neighbor (1068270/1073950, $15.91/sq ft); 1 outlier at $8.00 rejected as a gradient inversion.
+- Wave 2 (Destruction): presented two competing deep-tier structures — a flat $7.75 ladder from qty 20–200+ vs. stepping the price below the $15.43/sq ft root floor (1230820) at higher volumes. **Unanimous 6/6 ruling: the root floor applies at every tier, at every quantity — not just qty 20.** The stepped-down structure was rejected outright as precedent-damaging (it would teach the buyer the floor is negotiable at volume). This ruling is now codified as **governance/PRICING_RULES.md §31** — the account's first explicit doctrine on this question, established because 3024595 is the first sub-scope item large enough (closest to the singles-band boundary) to force it.
+- Wave 3 (Buyer Simulation): Sean approves the flat structure without pushback (threshold $8.00–$8.25/label), but flagged that the bare quote-language stub risked a clarifying email about volume step-downs. Wave 4 (Final Synthesis): 4/5 YES send-as-shown with the stronger anchor line required; 1/5 NO solely over the missing anchor line (not a pricing objection). Locked quote language adopted (cost-floor framing, not the bare stub).
+- No override — Nick locked the tier table prior to file-write per the 4-wave record; Claude Code did not re-derive or second-guess the price.
+
+**Strategic Flags:**
+- **New governance precedent:** §31 added to `governance/PRICING_RULES.md` — the $15.43/sq ft root floor applies at every quantity tier on every sub-scope item, not just the qty-20 comparable rate. Future sub-scope items approaching the ~0.5 sq ft boundary inherit this doctrine without re-litigating it.
+- First article NOT confirmed with Sean — flagged for follow-up. Order quantity not specified — standard 6-tier ladder quoted.
+- Item count: 39 → 40. Printed/Laminated category: 29 → 30 items. Sub-scope data points: 4 → 5.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 40 rows confirmed in Supabase.
 
 ---
 
@@ -180,23 +199,4 @@
 
 ---
 
-### 2026-06-29 — Session Z (bug-fix + governance): Remove tiny route + $55 floor from engine; fix inkComponent crash; §28 fully implemented in calculator
-
-**What:** Two-part calculator fix. FIX 1: inkComponent() crash on production_override inputs — two-part fix: (1A) added canonical ink_rates fallback in assembleConfigFromDb() so the full_bleed_flood_coat entry is always present even when Supabase settings.extra doesn't include it; (1B) added null guard in inkComponent() with `config.ink_rates || {}` and improved !def fallback to `r(sq_ft_per_label * 0.50, 4)`. FIX 2: §28 no-floor doctrine fully implemented in calculator — removed the tiny route and $55 floor entirely. Removed buildTinyTiers() function, production_override checkbox UI, all `route === 'tiny'` guards throughout engine (renderCalcOutput, renderCalcSummary, lam passes, tier build, tier enforcement, never-pay-more check, generateBrief). F9 flag definition changed to RETIRED/INFO (suppresses_output: false). All sub-0.1 sq ft items now unconditionally route to single_sub_scope (Micro-Format Band). Sanity test 1277970 (tiny route) removed; PROD-OVERRIDE test renamed MICRO-BAND. build_calculator_config.py: account.floor→null, DO_NOT_BENCHMARK updated to remove "$55 floor pricing" language, tiny_one_off_program marked RETIRED. Supabase elliott_account_settings: floor_value seeded to 0 (column NOT NULL), floor_label updated to §28 text. validate.py 0/0; all three build scripts clean; elliott_items = 33 confirmed.
-
-**Key Decisions:**
-- FIX 1 root cause: previous hydrateFromDb() patch (21937f6) was a post-assembly workaround; FIX 1A fixes assembleConfigFromDb() directly; FIX 1B adds defensive guard in inkComponent() as belt-and-suspenders.
-- FIX 2 approach: single unconditional branch for sub-0.1 sq ft items — no production_override escape hatch. §28 doctrine means ALL items price from job economics or Micro-Format Band, never from a flat floor.
-- F9 flag kept in flag registry (as RETIRED/INFO) for historical audit trail; suppresses_output: false so it can be surfaced for diagnostic purposes but no longer emitted on any live route.
-- Supabase floor_value set to 0 (not NULL) due to NOT NULL column constraint; floor_label updated to §28 text. The 0 value is semantically correct — "no floor."
-
-**Strategic Flags:**
-- Calculator engine is now §28-compliant. Any sub-0.1 sq ft item is priced from Micro-Format Band, not from a flat floor.
-- DO_NOT_BENCHMARK entries for 1277970/1277980/1277990/1278000/3017583/3017584 now reference "historical job-economics pricing" rather than "$55 floor pricing" — accurate framing post-§28.
-- Item count unchanged at 33. No new items added this session.
-
-**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 33 confirmed.
-
----
-
-*Entries older than Session Z (2026-06-29) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session AA (2026-06-29) were removed per the 10-entry rolling window — git history retains them in full.*
