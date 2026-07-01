@@ -1,6 +1,6 @@
 {
-  "generated": "2026-06-09T20:01:01Z",
-  "combination_count": 8,
+  "generated": "2026-07-01T20:58:58Z",
+  "combination_count": 10,
   "combinations": [
     {
       "id": "ae73820e-96d0-4e00-a434-9f1d2e7e3939",
@@ -244,6 +244,76 @@
           "cost_per_sq_ft": 0.5911,
           "cost_per_linear_yd": 1.1821,
           "verified_date": "2026-05-28"
+        }
+      ]
+    },
+    {
+      "id": "abecf2b7-2cae-4a9a-931c-deebdf44b18e",
+      "name": "Convex 6-mil High Bond + 10-mil Polycarbonate Overlaminate \u2014 Panel Decal",
+      "process_type": "panel_decal",
+      "description": "Panel Decal: Convex 6-mil High Bond with Kapco 10-mil PSA Velvet Polycarbonate Overlaminate (Combination B). Used on item 3017557.",
+      "is_active": true,
+      "components": [
+        {
+          "material_key": "convex-6mil-high-bond",
+          "engine_key": null,
+          "component_role": "substrate",
+          "usage_sq_ft_multiplier": 1.0,
+          "material_family": "print_media",
+          "product_name": "Convex 6-mil High Bond",
+          "color_name": "",
+          "roll_width_in": 30,
+          "cost_per_sq_ft": 1.5976,
+          "cost_per_linear_yd": null,
+          "verified_date": "2026-06-29"
+        },
+        {
+          "material_key": "10mil-polycarbonate-overlaminate",
+          "engine_key": null,
+          "component_role": "laminate",
+          "usage_sq_ft_multiplier": 1.0,
+          "material_family": "laminate",
+          "product_name": "Kapco 10-mil PSA Velvet Polycarbonate Overlaminate",
+          "color_name": "",
+          "roll_width_in": 38,
+          "cost_per_sq_ft": 1.4105,
+          "cost_per_linear_yd": null,
+          "verified_date": "2026-06-29"
+        }
+      ]
+    },
+    {
+      "id": "4c7e8915-fba3-4040-8878-34d67e051450",
+      "name": "Convex 6-mil High Bond + 5-mil Polycarbonate Overlaminate \u2014 Panel Decal",
+      "process_type": "panel_decal",
+      "description": "Panel Decal: Convex 6-mil High Bond with 5-mil Polycarbonate Overlaminate (Combination A). Used on item 3017557.",
+      "is_active": true,
+      "components": [
+        {
+          "material_key": "convex-6mil-high-bond",
+          "engine_key": null,
+          "component_role": "substrate",
+          "usage_sq_ft_multiplier": 1.0,
+          "material_family": "print_media",
+          "product_name": "Convex 6-mil High Bond",
+          "color_name": "",
+          "roll_width_in": 30,
+          "cost_per_sq_ft": 1.5976,
+          "cost_per_linear_yd": null,
+          "verified_date": "2026-06-29"
+        },
+        {
+          "material_key": "5mil-polycarbonate-overlaminate",
+          "engine_key": null,
+          "component_role": "laminate",
+          "usage_sq_ft_multiplier": 1.0,
+          "material_family": "laminate",
+          "product_name": "5-mil Polycarbonate Overlaminate",
+          "color_name": "",
+          "roll_width_in": 51,
+          "cost_per_sq_ft": 0.96,
+          "cost_per_linear_yd": null,
+          "verified_date": "2026-06-29"
         }
       ]
     },
