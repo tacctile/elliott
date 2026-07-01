@@ -6,7 +6,27 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-06-30 (Session AG — P/N 3020477 added, fourth sub-scope singles data point, $2.75/qty 20, 4-wave validated — explicitly NOT a parity exemption. Previously Session AF — bug fix: hydrateFromDb() variants drop — dual-variant display now renders on live Supabase path. Previously Session AE — P/N 3017557 dual-variant display (5-mil + 10-mil), per-variant Copy for Email.)
+> Last Updated: 2026-07-01 (Session AH — P/N 1073950 added, third item at the established 0.503 sq ft singles-band position, $8.00/qty 20, independently 4-wave validated to exact parity with governing benchmark 1068270 — explicitly NOT a parity exemption. Previously Session AG — P/N 3020477 added, fourth sub-scope singles data point, $2.75/qty 20, 4-wave validated — explicitly NOT a parity exemption. Previously Session AF — bug fix: hydrateFromDb() variants drop — dual-variant display now renders on live Supabase path.)
+
+---
+
+### 2026-07-01 — Session AH (new item): P/N 1073950 — CHART-TOP MOUNT JIB 500# G85 (80°) BASKET 500#, third item at the 0.503 sq ft singles-band position, $8.00/qty 20, independently 4-wave validated to exact parity with 1068270
+
+**What:** New printed/laminated single label at 7.25" × 10.00" = 0.503 sq ft — the identical footprint already held in the singles band. Rather than applying a direct parity exemption, ran the full 4-wave atomic AI validation (24 independent responses, 6 models × 4 waves); the process independently converged on exact parity with governing benchmark P/N 1068270 at $8.00/qty 20 = $15.90/sq ft. Tier table locked identical to 1068270 across all six tiers: $16.50/$10.50/$8.00/$6.25/$5.25/$4.25.
+
+**Key Decisions:**
+- Wave 1 split 4/6 at $7.75 (proportional scaling from root benchmark 1230820) vs 2/6 at $8.00 (direct nearest-neighbor parity). Wave 2 unanimously killed the $7.75 path — High-severity Buyer/Procurement, Cost Auditor, and Strategic-Precedent attacks all found that identical area to an already-quoted item makes parity the only defensible position. Waves 3 and 4 unanimous on $8.00, no modifications.
+- Material cost filed at $0.98/label (§25 canonical, rounded to the cent) rather than 1068270's $1.00 (rounded to the dollar) — same underlying $0.9803 calculation; filing-convention difference only, does not affect tier pricing.
+- No override — engine consensus accepted (Override Type: None).
+
+**Strategic Flags:**
+- Artwork/mount-designation relationship to 1068270 (Top Mount Jib vs EZR mount, same G85 Basket 500# load rating) is unresolved as of filing — flagged for Nick/Sean follow-up alongside the quote; does not affect pricing per unanimous Wave 1-4 findings.
+- Internal-only context, not part of the formal validation record and not citable to Sean: P/N 1082570 (a do-not-benchmark item — its current order is priced at $42 flat job-economics, not a catalog rate) happens to share the identical 0.503 sq ft footprint. This same-size confirmation supports internal pricing confidence but was deliberately excluded from the formal validation record.
+- This item does NOT add a new independent singles-band data point — the 0.503 sq ft position remains anchored where it already was, now shared by three items (1082570, 1068270, 1073950). Band stays at 4 confirmed data points.
+- First article confirmed NOT required (per Sean). Order quantity not yet specified — standard 6-tier ladder quoted.
+- Item count: 37 → 38. Printed/Laminated category: 25 → 26 items.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 38 rows confirmed in Supabase.
 
 ---
 
@@ -180,23 +200,4 @@
 
 ---
 
-### 2026-06-22 — Session X (new item): P/N 1012080 — LABEL, PTE SINGLE STICK CONTROLLER, Micro-Format Band parity-governed, $2.50 at qty 20, 4-wave validated
-
-**What:** New printed/laminated single label (LABEL, PTE SINGLE STICK CONTROLLER) at 2.8125" × 3.9375" = 0.077 sq ft. Micro-Format Band, parity-governed at qty 20. At 0.077 sq ft, above the ~0.06 sq ft per-label floor threshold — floor does NOT govern. Linear Micro-Format Band formula ($30.86/sq ft × 0.077 = $2.38); qty-20 price set to $2.50 by parity with P/N 3024140 (non-ANSI control label family, $2.50 at qty 20). First controller/panel label on the Elliott account. Model blank on drawing — P/N is the identifier. 4-wave atomic AI validated (24 independent responses, 6 models × 4 waves). Wave 4: 6/6 unanimous YES. Tier table: $3.75/$2.90/$2.50/$2.20/$1.95/$1.90. Material cost $0.16 (§25 canonical: $0.1501 calculated + $0.0099 buffer). Margin ~93.6% at qty 20.
-
-**Key Decisions:**
-- Parity governs over the linear formula at 0.077 sq ft: $2.50 (parity with 3024140) over $2.38 (linear formula output). The per-label floor (sub-0.06 sq ft) does NOT apply at 0.077 sq ft — above the threshold.
-- 200+ raised from initial $1.75 to $1.90 per Wave 2 structural finding: $1.75 sat 30% below the $2.50 anchor and would have anchored the controller/panel label catalog family below floor. Wave 4 unanimous YES on the corrected table.
-- Added to BAND_EXCEPTIONS in validate.py: $32.47/sq ft (= $2.50 ÷ 0.077) exceeds band anchor upper bound ($30.86 × 1.015 = $31.32). Exception documented with parity rationale and 4-wave validation date.
-- NOT a new independent Micro-Format Band data point — band anchor stays at 1279000 at $30.86/sq ft. Parity governed from 3024140.
-
-**Strategic Flags:**
-- First controller/panel label on the Elliott account. Future controller/panel labels should reference both 3024140 ($2.50, non-ANSI floor anchor) and 1012080 ($2.50 at 0.077 sq ft, parity-governed above the floor threshold) as the two data points for this family.
-- The $2.50 price point is inherited from the non-ANSI control label floor — if 3024140 ever changes, 1012080's parity basis changes with it.
-- Item count: 32 → 33. Printed/Laminated category: 21 → 22 items.
-
-**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 33 rows confirmed in Supabase.
-
----
-
-*Entries older than Session X (2026-06-22) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session Y (2026-06-22) were removed per the 10-entry rolling window — git history retains them in full.*
