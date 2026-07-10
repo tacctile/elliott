@@ -6,7 +6,27 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-07-01 (Session AJ — P/N 3024595 added, largest sub-scope data point on file at 0.488 sq ft, sitting at the boundary with the singles band; 4-wave validated flat tier structure ($10.75/$9.25/$7.75/$7.75/$7.75/$7.75); Wave 2 unanimous ruling that the $15.43/sq ft root floor applies at every tier, not just qty 20, now codified as governance/PRICING_RULES.md §31. Previously Session AI — P/N 1277020 added, fifth confirmed singles-band data point at a new 0.635 sq ft position, $10.00/qty 20 = $15.75/sq ft, 4-wave validated — explicitly NOT a parity exemption; priced above the 0.609 sq ft cluster as an accepted small-format-premium variance per Wave 4 consensus; $9.75 explored mid-validation and unanimously rejected in Wave 4. Previously Session AH — P/N 1073950 added, third item at the established 0.503 sq ft singles-band position, $8.00/qty 20, independently 4-wave validated to exact parity with governing benchmark 1068270 — explicitly NOT a parity exemption.)
+> Last Updated: 2026-07-10 (Session AK — P/N 3017572 added, sixth sub-scope data point at 0.365 sq ft; 4-wave AI validation locked the 1-9 through 50-99 tiers ($8.75/$7.25/$6.00/$5.75), all §31-compliant; Nick then directed a One-Time Exception override lowering 100-199 to $5.50 and 200+ to $5.25, both below the §31 sub-scope root floor — classified and logged, non-precedent-setting. Previously Session AJ — P/N 3024595 added, largest sub-scope data point on file at 0.488 sq ft, sitting at the boundary with the singles band; 4-wave validated flat tier structure ($10.75/$9.25/$7.75/$7.75/$7.75/$7.75); Wave 2 unanimous ruling that the $15.43/sq ft root floor applies at every tier, not just qty 20, now codified as governance/PRICING_RULES.md §31. Previously Session AI — P/N 1277020 added, fifth confirmed singles-band data point at a new 0.635 sq ft position, $10.00/qty 20 = $15.75/sq ft, 4-wave validated — explicitly NOT a parity exemption; priced above the 0.609 sq ft cluster as an accepted small-format-premium variance per Wave 4 consensus; $9.75 explored mid-validation and unanimously rejected in Wave 4.)
+
+---
+
+### 2026-07-10 — Session AK (new item): P/N 3017572 — LBL - HYDAC VLV OVERRIDE, sixth sub-scope data point, 4-wave validated 1-9 through 50-99, One-Time Exception override on 100-199/200+ below the §31 floor
+
+**What:** New printed/laminated single hydraulic valve manual override control-direction label at 7.5" × 7.0" = 0.365 sq ft — the sixth sub-scope (0.1–0.5 sq ft) data point on file. Full 4-wave atomic AI validation (24 independent responses, 6 models × 4 waves, run in Claude Chat) locked the 1-9 through 50-99 tiers at $8.75/$7.25/$6.00/$5.75 — all fully §31-compliant. Material cost computed fresh at $0.75/label (§25 canonical: $0.7114 calculated + $0.0386 buffer). Unlike 3024595, both label dimensions (7.0"/7.5") fit the 13.5" laminator independently, so orientation is a nesting-efficiency choice rather than a forced constraint — 7.0" across the 28" print bed nests 4 labels per row with zero waste.
+
+**Key Decisions:**
+- Wave 1 (Build): unanimous 6/6 on the §31 floor ($5.75 = 0.365 × $15.43 rounded up per §30) and flat termination from at least 50-99 onward; split 4/6 (flat $5.75 from 20-49) vs 2/6 (one step at $6.00 for 20-49, flat from 50-99).
+- Wave 2 (Destruction): unanimous 6/6 rejection of the flat-from-20-49 structure — it priced this smaller label at a LOWER $/sq ft ($15.75) than the larger governing comparable 3024595 (0.488 sq ft, $15.88/sq ft), a size-cost inversion. Unanimous fix: raise 20-49 to $6.00 ($16.44/sq ft), hold 50-99 flat at $5.75.
+- Wave 3 (Buyer Simulation): split verdict — 3/6 models had Sean question the $6.00 20-49 price and ask for ~$5.75-$5.80; 3/6 had Sean approve without friction, reading the premium as proportionate to the 25% smaller area vs 3024595. Universal finding: landing exactly at the $5.75 floor at Sean's real qty-20 order volume would let him permanently defend $15.75/sq ft as the class price — worse long-term than a contested $6.00.
+- Wave 4 (Final Synthesis): 5/6 YES ship $6.00 as-is; 1/6 NO recommending $5.80 to eliminate friction. No model at any wave proposed a 100-199 or 200+ tier below $5.75.
+- **Override:** Nick accepted the Wave 4 majority for 1-9 through 50-99, then separately directed a One-Time Exception override lowering 100-199 to $5.50 ($15.07/sq ft) and 200+ to $5.25 ($14.38/sq ft) — both below the §31 sub-scope root floor ($15.43/sq ft), against the unanimous validated recommendation of $5.75 for both tiers. Classified and logged per Core Rule 12/13 — non-precedent-setting; future sub-scope items must benchmark the deep tiers against the validated $5.75, not this item's overridden figures.
+
+**Strategic Flags:**
+- This is the first item where the §31 floor doctrine (established 9 days earlier on 3024595) was directly overridden by Nick. The doctrine itself is unweakened — the override is logged as item-specific and non-precedent-setting per Core Rule 13. `governance/PRICING_RULES.md` §31 and `categories/printed-laminated-orajet.md` both note this as the first tested exception.
+- First article NOT confirmed with Sean — flagged for follow-up. Order quantity not specified — standard 6-tier ladder quoted.
+- Item count: 40 → 41. Printed/Laminated category: 30 → 31 items. Sub-scope data points: 5 → 6.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 41 rows confirmed in Supabase.
 
 ---
 
@@ -180,23 +200,4 @@
 
 ---
 
-### 2026-06-29 — Session AA (governance): Hardcode ANSI for all Orajet/lam items; remove calc-ansi checkbox; §29 added
-
-**What:** Account-level rule change — all items printed on Orajet 3951 with polyester laminate are ANSI by definition going forward. Removed the `calc-ansi` checkbox and its `calc-ansi-wrap` wrapper from the calculator UI entirely. Removed `is_ansi_safety` from `gatherCalcInputs()`, `runCalculator()` defaults, `inputsForPN()` sanity-check helper, and two inline sanity test objects. Added fixed line "ANSI: Yes — account rule (all Orajet/lam items)" to `generateBrief()` for all printed/lam routes. Added §29 to `governance/PRICING_RULES.md` documenting the account-level ANSI rule. Updated `governance/CALCULATOR.md` Step 2 and Last Updated header. Updated `categories/printed-laminated-orajet.md` per-label floor section: $2.75 is the governing floor for all future sub-0.06 sq ft items; $2.50 floor is historical (3024140 / 1012080 only). No items added or repriced. No Supabase seed required (no item data changed).
-
-**Key Decisions:**
-- `is_ansi_safety` was collected from the checkbox but never used in any ANSI/non-ANSI branching in the per-label floor logic — removal is purely UI/brief cleanup, no engine routing changes.
-- The `calc-ansi-wrap` div and all references to `calc-ansi` / `is_ansi_safety` removed exhaustively: HTML, `gatherCalcInputs()`, `runCalculator()` defaults, `inputsForPN()` helper, and two inline test objects.
-- Brief now shows fixed "ANSI: Yes — account rule (all Orajet/lam items)" in the FUNDAMENTALS section for all printed/lam routes.
-- §29 codifies: all Orajet/lam items are ANSI by default; $2.75 floor governs new items; $2.50 non-ANSI floor is historical data only (3024140 and 1012080 only).
-
-**Strategic Flags:**
-- The $2.50 per-label floor (3024140, 1012080) remains unchanged — those two items were priced under the prior framework and are grandfathered. Do NOT apply $2.50 to any future item.
-- The governing floor for all new sub-0.06 sq ft production items is $2.75 (ANSI), per §29.
-- Item count unchanged at 33. No Supabase changes needed.
-
-**Status:** Complete — validate.py 0/0; all three build scripts clean; item_count = 33.
-
----
-
-*Entries older than Session AA (2026-06-29) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session AB (2026-06-29) were removed per the 10-entry rolling window — git history retains them in full.*
