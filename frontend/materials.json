@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-14T18:23:46Z",
+  "generated": "2026-07-14T19:47:18Z",
   "material_count": 14,
   "materials": {
     "10mil-polycarbonate-overlaminate": {
@@ -83,7 +83,8 @@
           "1073950",
           "1277020",
           "3024595",
-          "3017572"
+          "3017572",
+          "1062390"
         ],
         "notes": "Cost verified 2026-05-28 from invoice: 8 rolls, $705.36 material + $124.66 freight = $830.02 total. $830.02 \u00f7 8 rolls = $103.7525/roll. Roll = 13.5\" \u00d7 386 ft = 434.25 sq ft. $103.7525 \u00f7 434.25 = $0.2389/sq ft. Prior rate $0.98/sq ft was unreconciled (FLAG 1 in 2026-05-28 audit) \u2014 retired. 13.5\" is the hard constraint on current laminator. Wider laminator planned after 18 months locked-in orders."
       }
@@ -393,7 +394,8 @@
           "1073950",
           "1277020",
           "3024595",
-          "3017572"
+          "3017572",
+          "1062390"
         ],
         "notes": ""
       }
