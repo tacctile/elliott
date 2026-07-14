@@ -6,7 +6,28 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-07-14 (Session AL — P/N 1062390 added, fourth item at the established 0.503 sq ft singles-band position, alongside 1082570/1068270/1073950; Direct Parity Exemption applied per governance/PRICING_VALIDATION.md — no new AI validation session run, precedent inherited from 1073950's independent 4-wave validation converging on exact parity with 1068270 at this same footprint. Previously Session AK — P/N 3017572 added, sixth sub-scope data point at 0.365 sq ft; 4-wave AI validation locked the 1-9 through 50-99 tiers ($8.75/$7.25/$6.00/$5.75), all §31-compliant; Nick then directed a One-Time Exception override lowering 100-199 to $5.50 and 200+ to $5.25, both below the §31 sub-scope root floor — classified and logged, non-precedent-setting. Previously Session AJ — P/N 3024595 added, largest sub-scope data point on file at 0.488 sq ft, sitting at the boundary with the singles band; 4-wave validated flat tier structure ($10.75/$9.25/$7.75/$7.75/$7.75/$7.75); Wave 2 unanimous ruling that the $15.43/sq ft root floor applies at every tier, not just qty 20, now codified as governance/PRICING_RULES.md §31.)
+> Last Updated: 2026-07-14 (Session AM — P/N 1101250 added, seventh sub-scope data point at 0.132 sq ft; 4-wave AI validation locked $2.25 at qty 20 ($17.05/sq ft, +10.5% over root benchmark 1230820), correcting Wave 1's initial over-reliance on non-benchmarkable P/N 1210810 in Waves 2-4; Nick then directed a One-Time Exception on the 50-99/100-199/200+ tiers, priced below the §31 sub-scope root floor — classified and logged, non-precedent-setting. Previously Session AL — P/N 1062390 added, fourth item at the established 0.503 sq ft singles-band position, alongside 1082570/1068270/1073950; Direct Parity Exemption applied per governance/PRICING_VALIDATION.md — no new AI validation session run, precedent inherited from 1073950's independent 4-wave validation converging on exact parity with 1068270 at this same footprint. Previously Session AK — P/N 3017572 added, sixth sub-scope data point at 0.365 sq ft; 4-wave AI validation locked the 1-9 through 50-99 tiers ($8.75/$7.25/$6.00/$5.75), all §31-compliant; Nick then directed a One-Time Exception override lowering 100-199 to $5.50 and 200+ to $5.25, both below the §31 sub-scope root floor — classified and logged, non-precedent-setting.)
+
+---
+
+### 2026-07-14 — Session AM (new item): P/N 1101250 — LBL-DNGR MAX PLAT. 2100, seventh sub-scope data point, $2.25/qty 20, independently 4-wave validated, §31 One-Time Exception on deep tiers
+
+**What:** New printed/laminated single ANSI danger-class label at 4.00" × 4.75" = 0.132 sq ft — the seventh sub-scope (0.1–0.5 sq ft) data point on file. Full 4-wave atomic AI validation (24 independent responses, 6 models × 4 waves) run per `governance/PRICING_VALIDATION.md` / `governance/VALIDATION_PROMPTS.md` locked $2.25 at qty 20 = $17.05/sq ft — +10.5% over the sole governing benchmark, P/N 1230820 ($15.43/sq ft). Material cost $0.26/label (§25 canonical: $0.2572 calculated, filed at the cent).
+
+**Key Decisions:**
+- Wave 1 (Build): qty-20 prices ranged $2.35–$2.75, center of mass ~$2.50; all 6 models anchored heavily on P/N 1210810 — a process finding, not a benchmark citation. 1210810 is on the account's `do_not_benchmark` list and is NOT cited as a comp anywhere in the filed item; Waves 2-4 corrected course.
+- Wave 2 (Destruction): 5/6 No verdicts on $2.50; unanimous High-severity Cost Auditor finding (small-format premium modeled, not measured) and Strategic finding (this item becomes the account's sole official reference point below the 0.5 sq ft band floor); 1 dissent argued for $2.75 to avoid a ceiling too low for future interpolation. Consensus moved to $2.00–$2.25 at 20-49, $1.75/$1.50/$1.25 at 50-99/100-199/200+.
+- Wave 3 (Buyer Simulation as Sean Finn): 5/6 instant PO approval at $2.25, no friction; 1 dissent wanted $1.95. Pushback threshold ~$2.50 (+22-23%); instant-approval ~$2.00 (benchmark parity). Multiple models flagged pricing below $2.00 as the worse long-term outcome — it would anchor a floor Sean defends indefinitely.
+- Wave 4 (Final Synthesis): 5/6 YES send as shown; 1 dissent proposed raising 50-99/100-199/200+ by $0.25 each to smooth a "U-shaped" per-tier premium curve vs 1230820 (+10.5% at 20-49, narrowing to +1.1%/+5.2% at 50-199, widening to +11.6% at 200+). **Nick locked the table as shown** — the dissent's fix would have pushed 200+ to +33.9% over benchmark instead of +11.6%, a worse outcome at a tier Sean is unlikely to transact.
+- **Override:** the 50-99/100-199/200+ tiers ($13.26/$11.36/$9.47 per sq ft) price below the $15.43/sq ft absolute floor established by §31. Classified as a Nick-directed **One-Time Exception** per Core Rule 12/13 — non-precedent-setting, consistent with the P/N 3017572 precedent.
+
+**Strategic Flags:**
+- This item is now the account's **sole official reference point below the 0.5 sq ft band floor at this small a footprint** (0.132 sq ft) — future micro-format items will be compared against it. Flagged unanimously as High-severity by Wave 2.
+- First article NOT required — not requested by Sean this session. Order quantity not specified — standard 6-tier ladder quoted, flagged for follow-up.
+- do_not_benchmark = false — valid sub-scope data point, excluded from singles band DATA POINTS until production-volume acceptance, same status as P/N 1210810.
+- Item count: 42 → 43. Printed/Laminated category: 32 → 33 items. Sub-scope data points: 6 → 7.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 43 rows confirmed in Supabase.
 
 ---
 
@@ -181,24 +202,4 @@
 
 ---
 
-### 2026-06-29 — Session AC (audit + new material family): Convex/polycarbonate material family shell — 3 new material files + category shell
-
-**What:** Read-only audit of full repo (9-section structured report: §25 formula, band routing, per-label floor, tier table construction, ANSI rule, validation tiers, calculator role, Supabase sync, gaps/inconsistencies). New material family shell: (1) `materials/convex-6mil-high-bond.md` — 30" × 150 ft = 375 sq ft, $599.13/roll, $1.5976/sq ft, supplier Convex (provisional); (2) `materials/5mil-polycarbonate-overlaminate.md` — 51" × 150 ft = 637.5 sq ft, $612.00/roll, $0.9600/sq ft, supplier provisional; (3) `materials/10mil-polycarbonate-overlaminate.md` — Kapco KJ10VPC/38/150, 38" × 150 ft = 475 sq ft, $670.00/roll, $1.4105/sq ft, in stock at Kapco, single-roll buying. Category shell: `categories/convex-high-bond-polycarbonate.md` (SHELL — no items, no pricing profile). MASTER_CONTEXT.md Convex row updated. ARCHITECTURE.md Panel Decals row updated. PRODUCTION.md Convex/polycarbonate material costs added. Item count unchanged at 35.
-
-**Key Decisions:**
-- Two laminate combinations documented: Combination A (5-mil) = $3.0576/sq ft combined; Combination B (10-mil Kapco) = $3.5081/sq ft combined. Both vs Orajet/lam at $1.9489/sq ft — panel decals price significantly higher.
-- §25 ink ($0.50/sq ft) applies to Convex items. §29 (ANSI by account rule) does not extend to Convex family — ANSI status evaluated per item. §30 ($0.25 increment rule) applies.
-- No pricing this session. Band anchors, decision tree, pricing profile = PLACEHOLDER until first item spec received from Sean.
-- The 13.5" polyester laminator cannot handle 30" Convex base material. Polycarbonate lamination method (wide-format process) TBD at first item quote.
-
-**Strategic Flags:**
-- Supplier status provisional on Convex base and 5-mil lam — replacement suppliers may be evaluated before first production run.
-- Combination B (10-mil Kapco) is in stock and ready to source. Combination A (5-mil) supplier unconfirmed.
-- Audit finding: CALCULATOR.md still references `production_override: true` path removed in Session Z — documentation artifact, low priority.
-- Item count: unchanged at 35.
-
-**Status:** Complete — validate.py 0/0; build_materials.py 3 new materials; no Supabase migration (no new items).
-
----
-
-*Entries older than Session AC (2026-06-29) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session AD (2026-06-30) were removed per the 10-entry rolling window — git history retains them in full.*
