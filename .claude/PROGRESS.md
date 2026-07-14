@@ -6,7 +6,27 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-07-10 (Session AK — P/N 3017572 added, sixth sub-scope data point at 0.365 sq ft; 4-wave AI validation locked the 1-9 through 50-99 tiers ($8.75/$7.25/$6.00/$5.75), all §31-compliant; Nick then directed a One-Time Exception override lowering 100-199 to $5.50 and 200+ to $5.25, both below the §31 sub-scope root floor — classified and logged, non-precedent-setting. Previously Session AJ — P/N 3024595 added, largest sub-scope data point on file at 0.488 sq ft, sitting at the boundary with the singles band; 4-wave validated flat tier structure ($10.75/$9.25/$7.75/$7.75/$7.75/$7.75); Wave 2 unanimous ruling that the $15.43/sq ft root floor applies at every tier, not just qty 20, now codified as governance/PRICING_RULES.md §31. Previously Session AI — P/N 1277020 added, fifth confirmed singles-band data point at a new 0.635 sq ft position, $10.00/qty 20 = $15.75/sq ft, 4-wave validated — explicitly NOT a parity exemption; priced above the 0.609 sq ft cluster as an accepted small-format-premium variance per Wave 4 consensus; $9.75 explored mid-validation and unanimously rejected in Wave 4.)
+> Last Updated: 2026-07-14 (Session AL — P/N 1062390 added, fourth item at the established 0.503 sq ft singles-band position, alongside 1082570/1068270/1073950; Direct Parity Exemption applied per governance/PRICING_VALIDATION.md — no new AI validation session run, precedent inherited from 1073950's independent 4-wave validation converging on exact parity with 1068270 at this same footprint. Previously Session AK — P/N 3017572 added, sixth sub-scope data point at 0.365 sq ft; 4-wave AI validation locked the 1-9 through 50-99 tiers ($8.75/$7.25/$6.00/$5.75), all §31-compliant; Nick then directed a One-Time Exception override lowering 100-199 to $5.50 and 200+ to $5.25, both below the §31 sub-scope root floor — classified and logged, non-precedent-setting. Previously Session AJ — P/N 3024595 added, largest sub-scope data point on file at 0.488 sq ft, sitting at the boundary with the singles band; 4-wave validated flat tier structure ($10.75/$9.25/$7.75/$7.75/$7.75/$7.75); Wave 2 unanimous ruling that the $15.43/sq ft root floor applies at every tier, not just qty 20, now codified as governance/PRICING_RULES.md §31.)
+
+---
+
+### 2026-07-14 — Session AL (new item): P/N 1062390 — CHART-EZR WORKING RANGE G85R (80°) BASKET 500#, fourth item at the 0.503 sq ft singles-band position, Direct Parity Exemption, no wave validation
+
+**What:** New printed/laminated single label at 7.25" × 10.00" = 0.503 sq ft — the identical footprint already held by P/N 1082570, P/N 1068270, and P/N 1073950. Filed under the Direct Parity Exemption per `governance/PRICING_VALIDATION.md` (dimensionally and materially identical to items already quoted) — no new 4-wave AI validation session was run. Benchmark: P/N 1068270 (identical 0.503 sq ft area, identical G85/G85R Basket 500# load-chart class); precedent reinforced by P/N 1073950, which independently ran the full 4-wave process and converged unanimous 6/6 on exact parity with 1068270 at this same footprint. Tier table cloned exactly: $16.50/$10.50/$8.00/$6.25/$5.25/$4.25. Material cost $0.98/label (§25 canonical, filed at the cent — matches 1073950's filing convention).
+
+**Key Decisions:**
+- Direct Parity Exemption invoked rather than running a fresh 4-wave validation — per governance/PRICING_VALIDATION.md, items dimensionally and materially identical to something already quoted are exempt from multi-round AI validation. 1073950's independent Wave 1–4 unanimous convergence on exact parity with 1068270 at this identical 0.503 sq ft footprint is the governing precedent cited for this exemption.
+- Rule 15 (Pricing Profile band check) still applies and is satisfied — $15.90/sq ft at qty 20 lands cleanly within the singles band ($15.43–$15.91/sq ft).
+- No override — engine consensus (parity) accepted, override_type blank.
+
+**Strategic Flags:**
+- Open taxonomy item: model field reads G85R (vs plain G85 on 1068270/1073950) and drawing content is "WORKING RANGE" (vs BASKET JIB / TOP MOUNT JIB) — same 80° jib angle and Basket 500# load class. Does not affect pricing under the Direct Parity Exemption; flagged for Nick/Sean follow-up alongside the quote.
+- First article NOT specified this session — flagged for follow-up, does not block filing. Order quantity not specified — standard 6-tier ladder quoted.
+- This item does NOT add a new independent singles-band data point — the 0.503 sq ft position remains anchored where it already was, now shared by four items. Band stays at 5 confirmed data points.
+- Also backfilled a pre-existing sync gap: P/N 3017572 (Session AK) was missing from the ARCHITECTURE.md Item Catalog table — added this session, no data changed.
+- Item count: 41 → 42. Printed/Laminated category: 31 → 32 items.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 42 rows confirmed in Supabase.
 
 ---
 
@@ -181,23 +201,4 @@
 
 ---
 
-### 2026-06-29 — Session AB (new items + governance): P/Ns 1279260 and 1279270 — FRONT/REAR TIRE PRESSURE labels; §30 $0.25 increment rule
-
-**What:** Two new printed/laminated single labels: 1279260 (FRONT TIRE PRESSURE 120 PSI, UNIT 8835) and 1279270 (REAR TIRE PRESSURE 90 PSI, UNIT 8825). Both 4.750" × 1.000" = 0.033 sq ft, Orajet 3951 Cast + Polyester Lam, Print/Lam/Cut 1 pass. Sub-0.06 sq ft — per-label floor governs at $2.75/qty 20 per §29 (ANSI account rule). Tier table locked: $4.25/$3.25/$2.75/$2.50/$2.25/$2.00 — parity with 3024592. Material cost $0.10 (§25 canonical: $0.0643 calculated + incidental buffer). Margin ~96.4% at qty 20. Primary comparable: 3024592 (identical tier table, same per-label floor governance). Pricing locked per session prompt — no 4-wave AI validation run. §30 added to governance/PRICING_RULES.md: all tier prices must be in $0.25 increments (forward-looking only, existing items grandfathered). §30 requirement also added to governance/VALIDATION_PROMPTS.md Wave 1 Required Output Schema.
-
-**Key Decisions:**
-- Per-label floor governs at $2.75/qty 20 per §29 ANSI account rule. Linear Micro-Format Band formula ($30.86/sq ft × 0.033 = $1.02) is inapplicable — overridden by floor.
-- Tier table matches 3024592 exactly. All tiers in $0.25 increments per new §30 rule.
-- Material cost $0.10 — same as 3024140 despite different dimensions; material negligible at this size class.
-- No first article price on either item. No 4-wave AI validation — pricing locked per session prompt.
-
-**Strategic Flags:**
-- Both items are band data points for the sub-0.06 sq ft per-label floor (ANSI). The $2.75 floor at qty 20 is now confirmed across three independent items (3024592, 1279260, 1279270).
-- §30 ($0.25 increment rule) applies to all new items from this session forward. Existing items are grandfathered.
-- Item count: 33 → 35. Printed/Laminated category: 22 → 24 items.
-
-**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 35 rows confirmed in Supabase.
-
----
-
-*Entries older than Session AB (2026-06-29) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session AC (2026-06-29) were removed per the 10-entry rolling window — git history retains them in full.*
