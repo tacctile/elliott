@@ -6,7 +6,27 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-07-14 (Session AM — P/N 1101250 added, seventh sub-scope data point at 0.132 sq ft; 4-wave AI validation locked $2.25 at qty 20 ($17.05/sq ft, +10.5% over root benchmark 1230820), correcting Wave 1's initial over-reliance on non-benchmarkable P/N 1210810 in Waves 2-4; Nick then directed a One-Time Exception on the 50-99/100-199/200+ tiers, priced below the §31 sub-scope root floor — classified and logged, non-precedent-setting. Previously Session AL — P/N 1062390 added, fourth item at the established 0.503 sq ft singles-band position, alongside 1082570/1068270/1073950; Direct Parity Exemption applied per governance/PRICING_VALIDATION.md — no new AI validation session run, precedent inherited from 1073950's independent 4-wave validation converging on exact parity with 1068270 at this same footprint. Previously Session AK — P/N 3017572 added, sixth sub-scope data point at 0.365 sq ft; 4-wave AI validation locked the 1-9 through 50-99 tiers ($8.75/$7.25/$6.00/$5.75), all §31-compliant; Nick then directed a One-Time Exception override lowering 100-199 to $5.50 and 200+ to $5.25, both below the §31 sub-scope root floor — classified and logged, non-precedent-setting.)
+> Last Updated: 2026-07-14 (Session AN — P/N 1132950 added, fifth item at the established 0.503 sq ft singles-band position, alongside 1082570/1068270/1073950/1062390; Direct Parity Exemption applied per governance/PRICING_VALIDATION.md — no new AI validation session run, precedent inherited from 1073950's independent 4-wave validation and 1062390's direct-parity filing. Previously Session AM — P/N 1101250 added, seventh sub-scope data point at 0.132 sq ft; 4-wave AI validation locked $2.25 at qty 20 ($17.05/sq ft, +10.5% over root benchmark 1230820), correcting Wave 1's initial over-reliance on non-benchmarkable P/N 1210810 in Waves 2-4; Nick then directed a One-Time Exception on the 50-99/100-199/200+ tiers, priced below the §31 sub-scope root floor — classified and logged, non-precedent-setting. Previously Session AL — P/N 1062390 added, fourth item at the established 0.503 sq ft singles-band position, alongside 1082570/1068270/1073950; Direct Parity Exemption applied per governance/PRICING_VALIDATION.md — no new AI validation session run, precedent inherited from 1073950's independent 4-wave validation converging on exact parity with 1068270 at this same footprint.)
+
+---
+
+### 2026-07-14 — Session AN (new item): P/N 1132950 — CHRT JIB-I50 TP JIB 500# PLATFORM 600#, fifth item at the 0.503 sq ft singles-band position, Direct Parity Exemption, no wave validation
+
+**What:** New printed/laminated single label at 7.25" × 10.00" = 0.503 sq ft — the identical footprint already held by P/N 1082570, P/N 1068270, P/N 1073950, and P/N 1062390. Filed under the Direct Parity Exemption per `governance/PRICING_VALIDATION.md` (dimensionally and materially identical to items already quoted) — no new 4-wave AI validation session was run. Benchmark: P/N 1068270 (identical 0.503 sq ft area, identical process/material stack); precedent reinforced by P/N 1073950 (independent 4-wave validation, unanimous 6/6 exact parity) and by P/N 1062390 (filed at the same parity with no re-validation). Tier table cloned exactly: $16.50/$10.50/$8.00/$6.25/$5.25/$4.25. Material cost $0.98/label (§25 canonical, filed at the cent).
+
+**Key Decisions:**
+- Direct Parity Exemption invoked rather than running a fresh 4-wave validation — 1073950's independent Wave 1–4 unanimous convergence on exact parity with 1068270 at this identical 0.503 sq ft footprint (reinforced by 1062390's own exemption filing) is the governing precedent cited for this exemption.
+- Model/load-class distinction flagged but ruled non-blocking: 1132950 (I50, Platform 600# / Top Jib 500#) differs from the other three (G85/G85R, Basket 500#) in both model family and load-rating class — a bigger artwork difference than the mount-only variation between 1068270 and 1073950. Parity holds because cost is driven by dimensions, material stack, and process (all identical), not load-chart content; full-bleed ink is priced flat at $0.50/sq ft regardless of what's printed.
+- Rule 15 (Pricing Profile band check) still applies and is satisfied — $15.90/sq ft at qty 20 lands cleanly within the singles band ($15.43–$15.91/sq ft).
+- No override — engine consensus (parity) accepted, override_type blank.
+
+**Strategic Flags:**
+- Open taxonomy item: model field reads I50 / Platform 600# / Top Jib 500# (vs plain G85 Basket 500# on 1068270/1073950 and G85R Basket 500# on 1062390) — flagged for Nick/Sean follow-up alongside the quote; does not affect pricing under the exemption.
+- First article NOT specified this session — flagged for follow-up, does not block filing. Order quantity not specified — standard 6-tier ladder quoted.
+- This item does NOT add a new independent singles-band data point — the 0.503 sq ft position remains anchored where it already was, now shared by five items. Band stays at 5 confirmed data points.
+- Item count: 43 → 44. Printed/Laminated category: 33 → 34 items.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 44 rows confirmed in Supabase.
 
 ---
 
@@ -181,25 +201,4 @@
 
 ---
 
-### 2026-06-30 — Session AD (new item): P/N 3017557 — founding Convex/polycarbonate item, material-proportional scaling, $30.75/$26.75 at qty 20
-
-**What:** New panel decal — LBL-BASKET CONTROL BOX SINGLE AXIS at 17.75" × 8.9375" = 1.102 sq ft. FOUNDING item for the Convex High Bond + Polycarbonate material family. Two laminate variants quoted on one P/N: Variant B (10-mil Kapco, primary, in stock) at $30.75/qty 20 = $27.90/sq ft, material cost $4.00; Variant A (5-mil PC, supplier provisional) at $26.75/qty 20 = $24.27/sq ft, material cost $3.50. Pricing derived by material-proportional scaling from the Orajet singles band: interpolated Orajet $/sq ft at 1.102 sq ft (~$15.48) × material cost ratio (1.800× Var B, 1.569× Var A) = Convex/PC $/sq ft. Category file `categories/convex-high-bond-polycarbonate.md` transformed from SHELL to active with full Pricing Profile, band data, tier ratios, decision tree. Three material files updated (`used_in_items` → ["3017557"]). First article $75.00. Lifetime warranty embedded in margin.
-
-**Key Decisions:**
-- Pricing LOCKED by Nick — no multi-round AI validation run. Override type: Strategic Anchor.
-- Material-proportional scaling is the governing methodology. The Orajet band ($15.43–$15.91/sq ft) does NOT apply directly — the Convex/PC band is a scaled derivative.
-- §29 (ANSI account rule for Orajet/lam) does NOT extend to the Convex/PC family. This item is not ANSI — it is a control panel overlay.
-- Rollsroller flat laminating table handles all Convex/PC lamination (NOT the 13.5" polyester laminator). Lamination passes: 1.
-- Frontmatter uses Variant B (primary) pricing. Both variants documented in Pricing, Material Cost, and Margin sections.
-
-**Strategic Flags:**
-- Strategic Anchor — this price establishes the founding $/sq ft band for the entire Convex/polycarbonate material family. Every future Convex/PC item scales from this data point.
-- External market research ($40–$70/sq ft) confirmed price sits ~30% below market floor — consistent with the ~25–30% relationship concession on the Orajet band.
-- Combination B (10-mil Kapco) is in stock. Combination A (5-mil) supplier is provisional.
-- Item count: 35 → 36. Panel Decals category: 0 → 1 items.
-
-**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 36 rows confirmed in Supabase.
-
----
-
-*Entries older than Session AD (2026-06-30) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session AE (2026-06-30) were removed per the 10-entry rolling window — git history retains them in full.*
