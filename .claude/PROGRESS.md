@@ -6,7 +6,29 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-07-14 (Session AN — P/N 1132950 added, fifth item at the established 0.503 sq ft singles-band position, alongside 1082570/1068270/1073950/1062390; Direct Parity Exemption applied per governance/PRICING_VALIDATION.md — no new AI validation session run, precedent inherited from 1073950's independent 4-wave validation and 1062390's direct-parity filing. Previously Session AM — P/N 1101250 added, seventh sub-scope data point at 0.132 sq ft; 4-wave AI validation locked $2.25 at qty 20 ($17.05/sq ft, +10.5% over root benchmark 1230820), correcting Wave 1's initial over-reliance on non-benchmarkable P/N 1210810 in Waves 2-4; Nick then directed a One-Time Exception on the 50-99/100-199/200+ tiers, priced below the §31 sub-scope root floor — classified and logged, non-precedent-setting. Previously Session AL — P/N 1062390 added, fourth item at the established 0.503 sq ft singles-band position, alongside 1082570/1068270/1073950; Direct Parity Exemption applied per governance/PRICING_VALIDATION.md — no new AI validation session run, precedent inherited from 1073950's independent 4-wave validation converging on exact parity with 1068270 at this same footprint.)
+> Last Updated: 2026-07-14 (Session AO — P/N 1146650 added, second Band A interior data point at 2.971 sq ft, between the 2.512–2.564 sq ft cluster and 3010701; full 4-wave AI validation on 20-49 through 200+, Owner Judgment override on 1-9/10-19 after discovering P/N 3018378 was omitted from the wave benchmark set. Previously Session AN — P/N 1132950 added, fifth item at the established 0.503 sq ft singles-band position, alongside 1082570/1068270/1073950/1062390; Direct Parity Exemption applied per governance/PRICING_VALIDATION.md — no new AI validation session run, precedent inherited from 1073950's independent 4-wave validation and 1062390's direct-parity filing. Previously Session AM — P/N 1101250 added, seventh sub-scope data point at 0.132 sq ft; 4-wave AI validation locked $2.25 at qty 20 ($17.05/sq ft, +10.5% over root benchmark 1230820), correcting Wave 1's initial over-reliance on non-benchmarkable P/N 1210810 in Waves 2-4; Nick then directed a One-Time Exception on the 50-99/100-199/200+ tiers, priced below the §31 sub-scope root floor — classified and logged, non-precedent-setting.)
+
+---
+
+### 2026-07-14 — Session AO (new item): P/N 1146650 — LABEL "40142" MODEL DESIGNATION, second Band A interior data point, full 4-wave validation + Owner Judgment override on shallow tiers
+
+**What:** New Vinyl Cut Lettering single label at 40.75" × 10.5" = 2.971 sq ft — a new interior Band A data point sitting between the 2.512–2.564 sq ft small-format cluster (1205720, 1186310, 3017435, 3018378) and 3010701 (3.202 sq ft, $44/qty 20). Full 4-wave AI validation (24 attempted responses, 6 models × 4 waves, Wave 4 5/6) locked $40.75 at qty 20 = $13.72/sq ft on the 20-49 through 200+ tiers — inside the concession-phase band ($13.65–$13.94/sq ft) and between both neighboring anchors, no size/price inversion. Material cost $10.83/label (vinyl $10.07 + tape $0.77), computed with the account-standard length-based nesting method — this corrects the Round 0 calculator brief's $10.53 filing, which used raw label width with no row-spacing allocation and area-based tape costing (see items/3010701.md for the governing method).
+
+**Key Decisions:**
+- Wave 1 (Build): 5/6 models converged on proportional interpolation between the cluster and 3010701 ($40.75–$41.25); 1 outlier at flat cluster parity ($35.00) rejected as internally inconsistent.
+- Wave 2 (Destruction): unanimous HIGH severity — the Wave 1 build's $41.00 ($13.80/sq ft) inverted against both the cluster and 3010701; corrected to $40.75 ($13.72/sq ft). 1-9 also reduced from a raw-interpolation ~$52.68 to $50.00 at this stage.
+- Wave 3 (Buyer Simulation): 5/6 instant PO approval, pushback threshold $41.60–$44.00; 1/6 pushed back specifically on the 1-9 tier ($50.00) as suspiciously low.
+- Wave 4 (Final Synthesis): 4/5 YES send-as-shown ($50.00/$45.00 at 1-9/10-19); 1/5 NO flagged that $50.00 sits below the full Band A comp range (not just the two anchors supplied), recommending $52.00.
+- **Owner Judgment override:** reviewing the wave prompts post-Wave-4 found P/N 3018378 (2.512 sq ft, same tier table as the cluster, already Quoted) was never included as a benchmark anchor in any wave prompt — a template omission. Incorporating the full five-item comp set confirmed the Wave 4 dissent was correct; Nick raised 1-9 to $52.00 and 10-19 to $46.50. 20-49 through 200+ ($40.75/$35.50/$30.50/$26.50) held unchanged — no dissent at any wave on those four tiers.
+
+**Strategic Flags:**
+- **Process finding, not actioned this session:** `governance/VALIDATION_PROMPTS.md` Section 3's cut vinyl benchmark anchor set should add P/N 3018378 going forward, so future wave prompts don't repeat this omission.
+- Spec Extraction gap: revision, drawing number, engineer, DTR, and tolerances are BLOCKED — priced from a Round 0 calculator brief, not a full drawing review; documented as blocked, not invented, per the account convention (items/1267140.md precedent).
+- Weed labor complexity for the 40.75" run NOT independently measured against the 33.5"-and-under cluster benchmark — flagged for a 90-day post-production timing check (~2026-10-12).
+- First article and order quantity not specified — standard 6-tier ladder quoted, flagged for Sean follow-up.
+- Item count: 44 → 45. Cut Vinyl category: 9 → 10 items. Band A data points: 5 → 6.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 45 rows confirmed in Supabase.
 
 ---
 
@@ -182,23 +204,4 @@
 
 ---
 
-### 2026-06-30 — Session AE (item update): P/N 3017557 — added dual-variant display (5-mil + 10-mil), per-variant Copy for Email
-
-**What:** Structural update to P/N 3017557 (LBL-BASKET CONTROL BOX SINGLE AXIS). The frontend dashboard was only displaying ONE variant (Variant B, 10-mil). Sean requested pricing for BOTH 5-mil and 10-mil polycarbonate overlaminate options. Added variant-specific frontmatter fields (variant_count: 2, variant_a_*, variant_b_*) to the item file. Updated build_frontend.py to detect and extract variant data into data.json. Updated the dashboard to render two clearly separated pricing sections — "Variant A — 5-mil Polycarbonate Overlaminate" and "Variant B — 10-mil Polycarbonate Overlaminate" — each with its own stat cards, volume pricing table, and independent "Copy for Email" button. Multi-variant schema pattern documented in governance/STRUCTURE_RULES.md. Category file updated to note both variant bands ($24.27/sq ft for 5-mil, $27.90/sq ft for 10-mil). No pricing changes — both tier tables are locked.
-
-**Key Decisions:**
-- Variant frontmatter uses flat-key prefixes (variant_a_*, variant_b_*) for compatibility with the simple YAML parser. Primary `price_*` fields still hold Variant B (primary) for backward compatibility with validate.py and migration scripts.
-- First Article ($75.00) is shared across both variants — displayed once with a note, not duplicated per variant.
-- Each variant has its own Copy for Email button producing output with ONLY that variant's tier table.
-- This is a display/structure fix, not a new item — item_count remains 36.
-
-**Strategic Flags:**
-- The multi-variant schema pattern is now documented in governance/STRUCTURE_RULES.md and available for future items that need multiple pricing variants on a single P/N.
-- No pricing recalculation — both tier tables were locked by Nick in Session AD.
-- Item count unchanged at 36.
-
-**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 36 rows confirmed in Supabase.
-
----
-
-*Entries older than Session AE (2026-06-30) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session AF (2026-06-30) were removed per the 10-entry rolling window — git history retains them in full.*
