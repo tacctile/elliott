@@ -3674,6 +3674,7 @@ function buildCalcConfigOverride(combo) {
     if (tape && tape.overridden) {
       clone.material_constants.transferrite_582u = {
         cost_per_sq_ft: tape.cost_per_sq_ft,
+        cost_per_linear_yd: tape.cost_per_linear_yd,
         material_id: tape.material_key,
         verified_date: tape.verified_date,
       };
@@ -5322,7 +5323,7 @@ init();
   // ===== material cost: cut vinyl =====
   const CUT_VINYL_ALT_LOOKUP = { 'white_24in:48': 'white_48in' };
 
-  function computeCutVinylForRollWidth(roll_w, cost_per_yd, narrow, wide, sq_ft_per_label, tape_psf) {
+  function computeCutVinylForRollWidth(roll_w, cost_per_yd, narrow, wide, sq_ft_per_label, tape_cost_per_yd, row_spacing_in) {
     const labels_across = Math.floor(roll_w / narrow);
     if (labels_across < 1) {
       return { roll_width_in: roll_w, labels_across: 0, error: 'Label narrow dim exceeds roll width' };
@@ -5330,13 +5331,23 @@ init();
     const label_length_yd = wide / 36;
     const row_cost = label_length_yd * cost_per_yd;
     const vinyl_cost_per_label = row_cost / labels_across;
-    const tape_cost = sq_ft_per_label * tape_psf;
+    // Tape cost: length-based (feed length + row spacing), NOT
+    // sq_ft_per_label × cost_per_sq_ft (the deprecated pseudo-rate — see
+    // categories/cut-vinyl-3m-180mc.md 2026-06-09 tape cost method note and
+    // governance/PRODUCTION.md: "the 582U cost_per_sq_ft field is a derived
+    // convenience value — never use it in a per-label cost build"). Mirrors
+    // the vinyl calculation above but adds the row_spacing_in feed allowance
+    // and uses tape's own $/linear yd rate.
+    const tape_feed_length_yd = (wide + row_spacing_in) / 36;
+    const tape_row_cost = tape_feed_length_yd * tape_cost_per_yd;
+    const tape_cost = tape_row_cost / labels_across;
     return {
       roll_width_in: roll_w,
       labels_across,
       label_length_yd: r(label_length_yd, 4),
       row_cost: r(row_cost, 4),
       vinyl_cost_per_label: r(vinyl_cost_per_label, 4),
+      tape_feed_length_yd: r(tape_feed_length_yd, 4),
       tape_cost: r(tape_cost, 4),
       total: r(vinyl_cost_per_label + tape_cost, 4),
     };
@@ -5356,11 +5367,13 @@ init();
         error_key: colorKey,
       };
     }
-    const tape_psf = config.material_constants.transferrite_582u.cost_per_sq_ft;
+    const tapeMaterial = config.material_constants.transferrite_582u;
+    const tape_cost_per_yd = tapeMaterial.cost_per_linear_yd;
+    const row_spacing_in = (config.routing && config.routing.cut_vinyl_row_spacing_in) || 6;
     const narrow = Math.min(inp.width_in, inp.height_in);
     const wide = Math.max(inp.width_in, inp.height_in);
     const canonical = computeCutVinylForRollWidth(
-      color.roll_width_in, color.cost_per_linear_yd, narrow, wide, sq_ft_per_label, tape_psf);
+      color.roll_width_in, color.cost_per_linear_yd, narrow, wide, sq_ft_per_label, tape_cost_per_yd, row_spacing_in);
 
     // efficiency scenarios for other available widths
     const efficiency = [];
@@ -5371,7 +5384,7 @@ init();
       const altColor = altKey ? config.cut_vinyl_colors[altKey] : null;
       if (altColor) {
         const alt = computeCutVinylForRollWidth(
-          altColor.roll_width_in, altColor.cost_per_linear_yd, narrow, wide, sq_ft_per_label, tape_psf);
+          altColor.roll_width_in, altColor.cost_per_linear_yd, narrow, wide, sq_ft_per_label, tape_cost_per_yd, row_spacing_in);
         alt.color_key = altKey;
         efficiency.push(alt);
       }
@@ -5380,7 +5393,7 @@ init();
     const lines = [
       `Color: ${color.material_id} (canonical ${color.roll_width_in}" roll @ $${color.cost_per_linear_yd}/yd)`,
       `Vinyl (length-based): ${canonical.label_length_yd} yd × $${color.cost_per_linear_yd}/yd ÷ ${canonical.labels_across} labels across = $${canonical.vinyl_cost_per_label.toFixed(4)}/label`,
-      `Tape (TransferRite 582U): ${sq_ft_per_label.toFixed(3)} sq ft × $${tape_psf}/sq ft = $${canonical.tape_cost.toFixed(4)}/label`,
+      `Tape (TransferRite 582U, length-based): ${canonical.tape_feed_length_yd} yd feed (label + ${row_spacing_in}" spacing) × $${tape_cost_per_yd}/yd ÷ ${canonical.labels_across} labels across = $${canonical.tape_cost.toFixed(4)}/label`,
       `Total per label (${color.roll_width_in}" roll, canonical): $${canonical.total.toFixed(2)}`,
     ];
     for (const e of efficiency) {
@@ -5470,7 +5483,9 @@ init();
   }
 
   // ===== pricing tiers =====
-  function buildPrintLamSinglesTiers(sq_ft, config) {
+  const SUB_SCOPE_TIER_ORDER = ['price_1_9', 'price_10_19', 'price_20_49', 'price_50_99', 'price_100_199', 'price_200_plus'];
+
+  function buildPrintLamSinglesTiers(sq_ft, config, is_sub_scope) {
     const band = config.bands.printed_laminated_singles;
     const anchor_psf = band.anchor_psf;
     const ratios = band.tier_ratios;
@@ -5485,15 +5500,74 @@ init();
       price_100_199: snapPrice(anchor * ratios['100_199'], snap),
       price_200_plus: snapPrice(anchor * ratios['200_plus'], snap),
     };
-    return { tiers, anchor, anchor_psf, snap };
+
+    // §31 sub-scope root floor (governance/PRICING_RULES.md §31, established
+    // 2026-07-01 via P/N 3024595): on sub-scope items (0.1-0.5 sq ft), no
+    // tier at any quantity may price below the $15.43/sq ft root benchmark
+    // rate (P/N 1230820) — not just the qty-20 rate used for band
+    // positioning. Where a tier's raw ratio-scaled price would fall below
+    // the floor, that tier AND every deeper (higher-quantity, cheaper) tier
+    // is clamped flat to the cheapest $0.25-increment price that clears the
+    // floor. A flat floor never steps down further — stepping down at
+    // volume would teach the buyer the floor is negotiable, which §31
+    // prohibits. This does NOT apply to single_standard (>=0.5 sq ft) items:
+    // §31 governs sub-scope items only. Matches the manually-derived
+    // structure on P/N 3024595 (flat $7.75 from 20-49 through 200+) and
+    // P/N 1001220 (flat $3.75 from 50-99 through 200+).
+    let sub_scope_floor_applied = false;
+    let sub_scope_floor_price = null;
+    if (is_sub_scope) {
+      const floor_psf = (config.routing && config.routing.sub_scope_root_floor_psf) || anchor_psf;
+      sub_scope_floor_price = ceilSnap(floor_psf * sq_ft, snap);
+      let clamp_from = -1;
+      for (let i = 0; i < SUB_SCOPE_TIER_ORDER.length; i++) {
+        if (tiers[SUB_SCOPE_TIER_ORDER[i]] < sub_scope_floor_price) { clamp_from = i; break; }
+      }
+      if (clamp_from >= 0) {
+        sub_scope_floor_applied = true;
+        for (let i = clamp_from; i < SUB_SCOPE_TIER_ORDER.length; i++) {
+          tiers[SUB_SCOPE_TIER_ORDER[i]] = sub_scope_floor_price;
+        }
+      }
+    }
+
+    const template_source = sub_scope_floor_applied
+      ? `§31 sub-scope root floor applied — tiers from ${SUB_SCOPE_TIER_ORDER[SUB_SCOPE_TIER_ORDER.findIndex(k => tiers[k] === sub_scope_floor_price)]} onward held flat at $${sub_scope_floor_price.toFixed(2)} (cheapest $0.25 increment clearing the $${(config.routing && config.routing.sub_scope_root_floor_psf) || anchor_psf}/sq ft root floor, P/N 1230820). See governance/PRICING_RULES.md §31.`
+      : null;
+
+    return { tiers, anchor, anchor_psf, snap, sub_scope_floor_applied, sub_scope_floor_price, template_source };
   }
 
   function buildPrintLamMicroTiers(sq_ft, config) {
     const band = config.bands.printed_laminated_micro;
     if (!band) {
-      // Defensive fallback — if micro band missing from config, fall back to singles
-      return buildPrintLamSinglesTiers(sq_ft, config);
+      // Defensive fallback — if micro band missing from config, fall back to
+      // singles (still a sub-scope item — see runCalculator dispatch).
+      return buildPrintLamSinglesTiers(sq_ft, config, true);
     }
+
+    // Per-label floor doctrine (governance/PRICING_RULES.md, established
+    // 2026-06-16 via P/N 3024592 (ANSI) / P/N 3024140 (non-ANSI), reconfirmed
+    // 2026-07-15 via P/N 1205870): below ~0.06 sq ft the linear $/sq ft
+    // Micro-Format formula is not a valid pricing method — a per-label floor
+    // governs instead, and which floor applies (ANSI hazard/danger vs.
+    // non-ANSI instructional) depends on a complexity classification that
+    // dimensions alone cannot determine. Do NOT compute a linear-formula
+    // number here: a wrong silent number is worse than no number. STOP
+    // (F26) and point at the two governing comparables.
+    const floorThresholdSqFt = band.per_label_floor_threshold_sq_ft || 0.06;
+    if (sq_ft < floorThresholdSqFt) {
+      const ansiPn = band.per_label_floor_ansi_pn || '3024592';
+      const ansiPrice = band.per_label_floor_ansi_qty_20;
+      const nonAnsiPn = band.per_label_floor_non_ansi_pn || '3024140';
+      const nonAnsiPrice = band.per_label_floor_non_ansi_qty_20;
+      return {
+        tiers: null, anchor: null, anchor_psf: null, snap: null,
+        micro_band: true, per_label_floor_stop: true,
+        template_source: `Per-label floor governs below ${floorThresholdSqFt} sq ft — the linear $${band.anchor_psf_qty_20}/sq ft Micro-Format formula does not apply (F26). Classify this label's content (ANSI hazard/danger vs. non-ANSI instructional) and price against the governing comparable: P/N ${ansiPn}${ansiPrice != null ? ` ($${ansiPrice.toFixed(2)}/qty 20, ANSI)` : ' (ANSI)'} or P/N ${nonAnsiPn}${nonAnsiPrice != null ? ` ($${nonAnsiPrice.toFixed(2)}/qty 20, non-ANSI)` : ' (non-ANSI)'}. See governance/PRICING_RULES.md per-label floor doctrine.`,
+      };
+    }
+
     const anchor_psf = band.anchor_psf_qty_20;
     const anchor_sq_ft_ref = band.anchor_sq_ft;
     const ratios = band.tier_ratios;
@@ -6008,6 +6082,7 @@ init();
     F23: { severity: 'INFO',   text: 'Tier boundary cliff detected (REPORT-ONLY — tier table NOT modified). §26 invoice protection resolves at billing: buyer is charged the lesser adjacent-tier total.', suppresses_output: false },
     F24: { severity: 'STOP',   text: 'Invalid input — width, height, and label count must all be positive. Output blocked (W2 input-sanity guard).', suppresses_output: true },
     F25: { severity: 'STOP',   text: 'Unknown cut vinyl color — no verified material cost exists for this color key. Output blocked; add the material (Materials tab) or pick a configured color (W6 guard).', suppresses_output: true },
+    F26: { severity: 'STOP',   text: 'Sub-0.06 sq ft — per-label floor governs, complexity-dependent (ANSI hazard/danger vs. non-ANSI instructional). Linear Micro-Format formula not applied — engine cannot auto-classify complexity from dimensions alone. Output blocked; price against the governing comparable named in the brief (P/N 3024592 ANSI or P/N 3024140 non-ANSI) per the per-label floor doctrine in governance/PRICING_RULES.md.', suppresses_output: true },
   };
 
   function makeFlag(id, extra, detail) {
@@ -6072,6 +6147,14 @@ init();
     // W6: unknown cut vinyl color — STOP, no safe material cost exists.
     if (route === 'cut_vinyl' && material.error) {
       flags.push(makeFlag('F25', `(color key: ${material.error_key || 'unknown'})`));
+    }
+
+    // F26: sub-0.06 sq ft — per-label floor governs, complexity-dependent.
+    // buildPrintLamMicroTiers refuses to compute a linear-formula price
+    // below this threshold (routeMeta.per_label_floor_stop); STOP rather
+    // than let a wrong silent number reach the brief.
+    if (routeMeta.per_label_floor_stop) {
+      flags.push(makeFlag('F26'));
     }
 
     // band proximity F8 — fire when sq_ft within 30% of singles floor (above or below)
@@ -6498,12 +6581,13 @@ init();
           && config.bands && config.bands.printed_laminated_micro) {
         tierBuild = buildPrintLamMicroTiers(sq_ft_per_label, config);
       } else {
-        tierBuild = buildPrintLamSinglesTiers(sq_ft_per_label, config);
+        tierBuild = buildPrintLamSinglesTiers(sq_ft_per_label, config, route === 'single_sub_scope');
       }
     } else {
       // no_profile
       tierBuild = { tiers: null, anchor: null, anchor_psf: null, snap: null };
     }
+    routeMeta.per_label_floor_stop = !!tierBuild.per_label_floor_stop;
 
     // 5b. Tier boundary enforcement — REPORT-ONLY (Session H, audit C-1 /
     // decision fork D1). The cascade is computed on every route that produces
@@ -6690,8 +6774,8 @@ init();
       { route: 'single_standard', price_20: 7.75, flag_present: ['F8', 'F23'], flag_absent: ['F12'],
         note: 'algorithmic snap 0.503×15.43=7.76→$7.75; catalog locked $8.00 (documented divergence)' });
     record('1210810', runCalculator(inputsForPN('1210810')),
-      { route: 'single_sub_scope', price_20: 4.50, flag_present: ['F10', 'F8', 'F23'], flag_absent: ['F12'],
-        note: 'band-anchored $4.50; catalog locked $4.75 (Wave 4 premium — documented divergence)' });
+      { route: 'single_sub_scope', price_20: 4.75, flag_present: ['F10', 'F8', 'F23'], flag_absent: ['F12'],
+        note: '§31 root floor clamp now raises the algorithmic anchor from $4.50 (below the $15.43/sq ft floor) to $4.75 — exact match with the catalog-locked Wave 4 price for the first time (previously documented as a divergence)' });
     record('1278930', runCalculator(inputsForPN('1278930')),
       { route: 'kit', price_20: 30.00, per_label_20: 10.00, flag_present: ['F23'],
         note: '3-label template; per-label parity $10.00 consistent with kit total (H-1 desync gone)' });
@@ -6741,6 +6825,23 @@ init();
     record('3010701 (Band A 3.202)', runCalculator(inputsForPN('3010701', { cut_vinyl_color: 'cardinal_red' })),
       { route: 'cut_vinyl', price_20: 45.00, flag_present: ['F15'],
         note: 'Band A algorithmic: 3.202 × $13.795 mid-band = $44.17 → snap $45; catalog locked $44 (documented divergence)' });
+
+    // 15-17: governance drift remediation (audits/2026-07-15-governance-drift-audit.md)
+    const r3024595result = runCalculator(inputsForPN('3024595'));
+    const t3024595 = r3024595result.pricing.tiers || {};
+    record('3024595 (§31 sub-scope floor)', r3024595result,
+      { route: 'single_sub_scope', price_20: 7.75, flag_present: ['F10', 'F23'],
+        extra_check: ['§31 flat 20-49..200+ at $7.75', t3024595.price_20_49 === 7.75
+          && t3024595.price_50_99 === 7.75 && t3024595.price_100_199 === 7.75 && t3024595.price_200_plus === 7.75],
+        note: '§31 root floor clamp — engine now natively produces the flat $7.75 structure (pre-fix: $7.50/$6.50/$5.25/$4.25, all below the $15.43/sq ft floor)' });
+    record('1205870 (F26 per-label floor STOP)', runCalculator(inputsForPN('1205870')),
+      { route: 'single_sub_scope', stop: true, flag_present: ['F26'],
+        note: 'sub-0.06 sq ft — engine now STOPs instead of silently computing $1.50 (pre-fix: $1.50 @ qty 20, no flag)' });
+    const r1205720result = runCalculator(inputsForPN('1205720', { cut_vinyl_color: 'cardinal_red' }));
+    record('1205720 (cut vinyl length-based tape)', r1205720result,
+      { route: 'cut_vinyl', price_20: 35.00, flag_present: ['F15', 'F23'],
+        extra_check: ['material $7.88 (pre-fix: $8.74)', Math.abs(r1205720result.material.total_per_kit - 7.88) < 0.01],
+        note: 'tape now length-based ($0.65) instead of the deprecated area pseudo-rate ($1.52) — matches categories/cut-vinyl-3m-180mc.md 2026-06-09 method note' });
 
     const passed = out.filter(o => o.pass).length;
     console.table(out);

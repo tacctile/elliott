@@ -73,6 +73,18 @@ ROUTING = {
     "laminator_max_width_in": 13.5,
     "roland_max_print_width_in": 28.0,
     "parity_max_lam_passes": 2,
+    # §31 (governance/PRICING_RULES.md, established 2026-07-01 via P/N
+    # 3024595): the sub-scope root floor — no tier on a sub-scope item
+    # (0.1-0.5 sq ft) may price below this $/sq ft rate at any quantity.
+    # Same value as PRINTED_LAMINATED_SINGLES_BAND["anchor_psf"] (the 1230820
+    # root benchmark rate) by design — both trace to the same root item.
+    "sub_scope_root_floor_psf": 15.43,
+    # Row spacing (in inches) added to the label's feed-length dimension for
+    # cut-vinyl tape nesting — see categories/cut-vinyl-3m-180mc.md 2026-06-09
+    # tape cost method note (length-based: feed length + row spacing, ÷ labels
+    # per row). Vinyl feed length does not add this spacing (unchanged
+    # account convention — see PRODUCTION.md worked examples).
+    "cut_vinyl_row_spacing_in": 6,
     "cut_vinyl_band_thresholds": {
         "band_c_ceiling_sq_ft": 1.0,
         "band_b_floor_sq_ft": 5.0,
@@ -209,7 +221,17 @@ PRINTED_LAMINATED_MICRO_BAND = {
         "10_to_25": 0.50,
         "below_10": 0.10,
     },
-    "note": "Sub-0.1 sq ft micro-format band — founding data point 1279000 at 0.097 sq ft. 100% step-up from singles band. Fixed-labor dominance. 4-wave AI validated + final 6-model comprehensive review. Per-label floor ~$2.50-$3.00 overrides $/sq ft scaling below ~0.06 sq ft.",
+    # Per-label floor doctrine (governance/PRICING_RULES.md, established
+    # 2026-06-16 via P/N 3024592/3024140, reconfirmed 2026-07-15 via
+    # P/N 1205870): below this threshold the linear $/sq ft formula does not
+    # apply — the engine cannot auto-classify ANSI vs. non-ANSI complexity
+    # from dimensions alone, so it STOPs (F26) rather than guess.
+    "per_label_floor_threshold_sq_ft": 0.06,
+    "per_label_floor_ansi_pn": "3024592",
+    "per_label_floor_ansi_qty_20": 2.75,
+    "per_label_floor_non_ansi_pn": "3024140",
+    "per_label_floor_non_ansi_qty_20": 2.50,
+    "note": "Sub-0.1 sq ft micro-format band — founding data point 1279000 at 0.097 sq ft. 100% step-up from singles band. Fixed-labor dominance. 4-wave AI validated + final 6-model comprehensive review. Per-label floor (complexity-dependent: $2.75 ANSI per P/N 3024592, $2.50 non-ANSI per P/N 3024140) overrides $/sq ft scaling below ~0.06 sq ft — the engine cannot auto-classify complexity from dimensions alone, so it STOPs (F26) rather than emit a linear-formula number below this threshold.",
 }
 
 PRINTED_LAMINATED_KITS_BAND = {
@@ -517,6 +539,12 @@ def build_material_constants():
             "material_id": spec["material_id"],
             "verified_date": fm["verified_date"],
         }
+        # Length-based cost per linear yd — read dynamically when the
+        # material file carries it (tape: cut-vinyl tape costing is
+        # length-based per categories/cut-vinyl-3m-180mc.md 2026-06-09 method
+        # note; never derive it from cost_per_sq_ft, which is a pseudo-rate).
+        if "cost_per_linear_yd" in fm:
+            entry["cost_per_linear_yd"] = to_float(fm["cost_per_linear_yd"])
         entry.update(spec["extra"])
         out[key] = entry
     return out
