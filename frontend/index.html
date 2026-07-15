@@ -5528,6 +5528,20 @@ init();
         for (let i = clamp_from; i < SUB_SCOPE_TIER_ORDER.length; i++) {
           tiers[SUB_SCOPE_TIER_ORDER[i]] = sub_scope_floor_price;
         }
+        // Shallow-tier reclamp: price_1_9/price_10_19 (any tier with index
+        // < clamp_from) were computed above as snapPrice(anchor * ratios[...],
+        // snap) against the pre-floor raw `anchor`. Once the floor engages at
+        // a deeper tier, that raw anchor is superseded by sub_scope_floor_price
+        // — recompute any shallower tier from the corrected floor price using
+        // the same ratio relationships, so the volume-discount curve isn't
+        // silently compressed at the shallow end against a value governance
+        // has already overridden.
+        for (let i = 0; i < clamp_from; i++) {
+          const key = SUB_SCOPE_TIER_ORDER[i];
+          const ratio_key = key.replace('price_', '');
+          const rebuilt = sub_scope_floor_price * (ratios[ratio_key] / ratios['20_49']);
+          tiers[key] = snapPrice(rebuilt, snap);
+        }
       }
     }
 
@@ -6375,7 +6389,10 @@ init();
     lines.push('PRICING TIERS');
     lines.push('-------------');
     if (pricing.anchor !== null && pricing.anchor !== undefined) {
-      lines.push(`Anchor (qty 20-49): ${fmt(pricing.anchor)}${pricing.anchor_psf ? ` (${fmt(pricing.anchor_psf)}/sq ft)` : ''}`);
+      const displayAnchor = (pricing.sub_scope_floor_applied && pricing.tiers && pricing.tiers.price_20_49 !== undefined)
+        ? pricing.tiers.price_20_49
+        : pricing.anchor;
+      lines.push(`Anchor (qty 20-49): ${fmt(displayAnchor)}${pricing.anchor_psf ? ` (${fmt(pricing.anchor_psf)}/sq ft)` : ''}`);
     }
     if (pricing.template_source) lines.push(`Tier template: ${pricing.template_source}`);
     lines.push('Tier table is BAND-ANCHORED. Boundary cliffs are reported below (report-only enforcement) and resolved by §26 at billing — the table is never compressed by the generator.');

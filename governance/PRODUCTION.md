@@ -202,7 +202,7 @@ Canonical per the §25 formula (`sq ft × ($1.21 + $0.2389 + $0.50) + incidental
 
 ### Cut Vinyl at ~2.51–2.56 sq ft (Small-Format Band)
 
-Vinyl AND tape are both length-based (tape harmonized 2026-06-09, audit D3): `feed length (label length + 6" spacing) in yd × cost_per_linear_yd ÷ labels per row`.
+Vinyl is length-based using the label's own feed length (no row-spacing addition). Tape is length-based using feed length + 6" row spacing (tape harmonized 2026-06-09, audit D3; row-spacing-on-tape-only correction confirmed 2026-07-15 governance drift remediation): `(label length + 6" spacing) in yd × cost_per_linear_yd ÷ labels per row` for tape; `label length in yd × cost_per_linear_yd ÷ labels per row` for vinyl.
 
 - Cardinal Red, 24" roll: ~$7.23 vinyl + $0.65 tape = **~$7.88/label total** *(at 2.56 sq ft, P/N 1205720 / 1186310 — 2-up, feed 39.5625" = 1.0990 yd)*
 - Olympic Blue, 24" roll: ~$7.43 vinyl + $0.64 tape = **~$8.07/label total** *(at 2.512 sq ft, P/N 3018378 — 2-up, feed 38.88" = 1.0800 yd)*
