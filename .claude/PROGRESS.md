@@ -6,7 +6,27 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-07-15 (Session AP — P/N 1001220 added, eighth sub-scope data point at 0.231 sq ft; full 4-wave AI validation followed by a post-synthesis §31 compliance correction on the deep tiers, since §31 postdated this item's wave prompts — first sub-scope item to reach a fully §31-compliant flat structure directly, without a One-Time Exception override. Previously Session AO — P/N 1146650 added, second Band A interior data point at 2.971 sq ft, between the 2.512–2.564 sq ft cluster and 3010701; full 4-wave AI validation on 20-49 through 200+, Owner Judgment override on 1-9/10-19 after discovering P/N 3018378 was omitted from the wave benchmark set. Previously Session AN — P/N 1132950 added, fifth item at the established 0.503 sq ft singles-band position, alongside 1082570/1068270/1073950/1062390; Direct Parity Exemption applied per governance/PRICING_VALIDATION.md — no new AI validation session run, precedent inherited from 1073950's independent 4-wave validation and 1062390's direct-parity filing.)
+> Last Updated: 2026-07-15 (Session AQ — P/N 1205870 added, second sub-0.06 sq ft non-ANSI per-label floor data point at 0.049 sq ft, joining P/N 3024140; price locked directly against 3024140's floor and tier table, no 4-wave AI validation run, per the same session-prompt locking convention used for 1279260/1279270. Previously Session AP — P/N 1001220 added, eighth sub-scope data point at 0.231 sq ft; full 4-wave AI validation followed by a post-synthesis §31 compliance correction on the deep tiers, since §31 postdated this item's wave prompts — first sub-scope item to reach a fully §31-compliant flat structure directly, without a One-Time Exception override. Previously Session AO — P/N 1146650 added, second Band A interior data point at 2.971 sq ft, between the 2.512–2.564 sq ft cluster and 3010701; full 4-wave AI validation on 20-49 through 200+, Owner Judgment override on 1-9/10-19 after discovering P/N 3018378 was omitted from the wave benchmark set.)
+
+---
+
+### 2026-07-15 — Session AQ (new item): P/N 1205870 — LBL-RADIO QUICK START IFM TILT, second sub-0.06 sq ft non-ANSI per-label floor data point, price locked directly against 3024140, no AI validation
+
+**What:** New printed/laminated single label at 4.000" × 1.750" = 0.049 sq ft — the second sub-0.06 sq ft **non-ANSI** per-label floor data point on file, joining P/N 3024140. Content reviewed directly from the spec sheet artwork (not the calculator's generic title-block description): "LEVEL SENSOR QUICK START GUIDE," a plain black-on-white 4-step bulleted procedure for zeroing a level sensor via the radio remote — no signal word, no ANSI color header, no hazard pictogram. Classified non-ANSI/instructional, matching 3024140's category exactly rather than 3024592's ANSI hazard/danger category. Price locked directly against 3024140's existing $2.50 floor and full tier table ($4.00/$3.00/$2.50/$2.25/$2.00/$1.75) — no 4-wave AI validation run this session, per the same session-prompt locking convention used for P/N 1279260/1279270 (which matched 3024592's $2.75 ANSI floor without revalidation). Material cost $0.10/label (§25 canonical: $0.0955 calculated + incidental buffer, matches 3024140's filed cost exactly).
+
+**Key Decisions:**
+- The controlling judgment this session was the **classification call** (non-ANSI instructional vs. ANSI hazard/danger), made from direct review of the spec sheet artwork image rather than the calculator's generic title-block description — the calculator's Round 0 brief had surfaced 3024592 (0.054 sq ft, near-identical size) as the nearest comparable at $2.75 but never applied it.
+- No AI validation run — price and tier table locked directly by Nick against existing floor precedent. Claude Code did not re-derive or second-guess the tier table.
+- `categories/printed-laminated-orajet.md`'s Pricing Profile section previously stated the $2.50 non-ANSI floor was "historical only... applies solely to 3024140 and 1012080... do not apply to any new item" (written under `governance/PRICING_RULES.md` §29's ANSI-by-default rule). Updated the category file this session to reflect that a direct, artwork-based non-ANSI classification is a valid basis to apply the $2.50 floor to a new item — 1205870 is now the second independent confirmation, not a one-off exception. `governance/PRICING_RULES.md` §29 itself was **not** edited this session — out of scope; the tension between §29's literal text and this session's locked price is documented in the item file and here for future sessions to reconcile if it recurs.
+- Model field blank on the drawing/title block — documented as blank per account convention (the P/N is the identifier, never invented).
+
+**Strategic Flags:**
+- **Process finding, not actioned this session:** the calculator's own Round 0 brief computed this item using the linear Micro-Format Band formula ($30.86/sq ft × 0.049 = $1.50 at qty 20) despite surfacing 3024592 as the nearest comparable at $2.75 — that number was never used. This is the same category of gap as the §31 miss flagged in Session AP (calculator/validation tooling not yet updated for a routing rule — here, the ~0.06 sq ft per-label-floor threshold — that the tooling doesn't apply automatically). Worth a process note; out of scope to fix this session. Per session instruction, `governance/VALIDATION_PROMPTS.md` and the calculator's routing logic were not touched.
+- First article not confirmed with Sean — flag for follow-up. Order quantity not specified — standard 6-tier ladder quoted.
+- do_not_benchmark = false — valid classification-governed floor data point; added to `scripts/validate.py` BAND_EXCEPTIONS (sub-0.1 sq ft Micro band membership check would otherwise fail against the $30.86/sq ft linear anchor).
+- Item count: 46 → 47. Printed/Laminated category: 35 → 36 items. Sub-0.06 sq ft non-ANSI floor data points: 1 → 2.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 47 rows confirmed in Supabase.
 
 ---
 
@@ -192,23 +212,4 @@
 
 ---
 
-### 2026-06-30 — Session AG (new item): P/N 3020477 — LBL-MODULAR BOOM CONTROL HYDRAULIC CONTROL, fourth sub-scope data point, $2.75/qty 20, independently 4-wave validated
-
-**What:** New printed/laminated single label (title block: LBL-MODULAR BOOM CONTROL HYDRAULIC CONTROL; in-label artwork reads "CONTROL SELECTOR") at 11.50" × 1.63" = 0.130 sq ft. Single continuous rounded-rectangle outer cut, 1 piece — the two visually grouped icon clusters in the artwork are printed borders, not separate die cuts. Routes to sub-scope (0.1–0.5 sq ft). Ran full 4-wave atomic AI validation (24 independent responses, 6 models × 4 waves) and arrived at $2.75 at qty 20 = $21.15/sq ft, sitting correctly between 1279130 (0.148 sq ft, $20.95/sq ft) and 1247120 (0.122 sq ft, $22.54/sq ft) — now the fourth confirmed sub-scope data point. The resulting tier ladder is identical to 1247120's, but this is documented explicitly as NOT a direct parity exemption — both items were priced independently and happened to converge.
-
-**Key Decisions:**
-- Wave 1: 4/6 models independently landed at $2.75 (matching 1247120); 2/6 at $3.00 (steeper). Wave 2 (5/6 responded): unanimous kill of $3.00 — it produced $23.08/sq ft, exceeding 1247120's $22.54/sq ft despite 3020477 being the larger label, a gradient inversion. Surviving candidates split 3/5 $2.75 vs 2/5 $2.85 (strict interpolation).
-- Wave 3: 6/6 unanimous instant approval on $2.75; $2.85 drew a polite (non-blocking) clarification question in every simulation that saw it.
-- Wave 4: 6/6 unanimous YES on $2.75. Decisive reasoning: $2.85's tighter mathematical fit was outweighed by (a) introduced buyer friction for an immaterial $0.10/label difference, and (b) exposing Pro Label's interpolation methodology to Sean, who is actively co-developing a procurement/engineering labeling standard — a real strategic cost for no real benefit. $2.75 locked, no override.
-- Material cost $0.25/label (§25 canonical: $0.2534 calculated, filed $0.25). Margin ~90.9% at qty 20.
-
-**Strategic Flags:**
-- Sub-scope gradient now monotonic across four points: $22.54 (0.122 sq ft) → $21.15 (0.130 sq ft) → $20.95 (0.148 sq ft) → $16.27 (0.292 sq ft).
-- First article not requested by Sean — status unconfirmed, not a confirmed "No." Order quantity also not specified. Both flagged for follow-up alongside the quote.
-- Item count: 36 → 37. Printed/Laminated category: 24 → 25 items.
-
-**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 37 rows confirmed in Supabase.
-
----
-
-*Entries older than Session AG (2026-06-30) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session AH (2026-07-01) were removed per the 10-entry rolling window — git history retains them in full.*
