@@ -6,7 +6,31 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-07-15 (Session AW — P/N 3020335 added, E145 - LOWER TERMINAL STRIP BOX at 0.625 sq ft — sixth singles-band data point, sits between the 0.609 sq ft cluster and P/N 1277020 (0.635 sq ft); price pre-locked via a full 4-wave, 6-model AI validation process (24 independent model passes) run externally in ChatHub and synthesized in Claude Chat; Wave 2 unanimously corrected a size/price inversion in the calculator's original deep tiers, restoring proportional interpolation between both flanking anchors; Wave 4 unanimous YES on the final table. Previously Session AV — P/N 3018808 added, LBL-GREER SETUP INST at 0.222 sq ft — ninth sub-scope data point, nearest neighbor to P/N 1001220 on the entire sub-scope gradient (0.961 size ratio); price pre-locked via a full 4-wave, 6-model AI validation process (24 independent model passes) run externally in ChatHub and synthesized in Claude Chat; Wave 2 unanimously corrected a smaller-cheaper-than-larger inversion against 1001220; Wave 4 unanimous YES on full parity with 1001220 over an independent floor-hold; Nick locked the final table exactly as synthesized — byte-identical to 1001220 across all six tiers. Previously Session AU — P/N 3010736 added, LBL-I50 MED WHT at 1.012 sq ft — closest any Band A item has come to the Band C boundary (1.2% above the 1.0 sq ft threshold); priced via full 4-wave, 24-model AI validation using P/N 3010722 as the primary comparable; Wave 2 corrected a "premium stacked on a premium" risk against 3010722; Wave 4 unanimous 6/6 YES; Nick locked the price unmodified; material cost independently verified via direct calculator engine execution. Previously Session AT — P/Ns 3010722/3010723/3010724 added, G50 model designation label (Cardinal Red/Black/White) at 1.167 sq ft — new lower edge of Band A, priced via full 4-wave, 24-model AI validation rather than a benchmark scale-off; Nick locked the price unmodified.)
+> Last Updated: 2026-07-15 (Session AX — P/N 3020336 added, E145 - UPPER TERMINAL STRIP BOX at 0.625 sq ft — Direct Parity Exemption clone of P/N 3020335, identical dimensions/material/process/tier table; no new AI validation run, 3020335's full 4-wave/6-model record inherited; NOT a new independent band data point; permanent three-way lockstep with 3020335 and 3020482 (filed in the companion session) established. Previously Session AW — P/N 3020335 added, E145 - LOWER TERMINAL STRIP BOX at 0.625 sq ft — sixth singles-band data point, sits between the 0.609 sq ft cluster and P/N 1277020 (0.635 sq ft); price pre-locked via a full 4-wave, 6-model AI validation process (24 independent model passes) run externally in ChatHub and synthesized in Claude Chat; Wave 2 unanimously corrected a size/price inversion in the calculator's original deep tiers, restoring proportional interpolation between both flanking anchors; Wave 4 unanimous YES on the final table. Previously Session AV — P/N 3018808 added, LBL-GREER SETUP INST at 0.222 sq ft — ninth sub-scope data point, nearest neighbor to P/N 1001220 on the entire sub-scope gradient (0.961 size ratio); price pre-locked via a full 4-wave, 6-model AI validation process (24 independent model passes) run externally in ChatHub and synthesized in Claude Chat; Wave 2 unanimously corrected a smaller-cheaper-than-larger inversion against 1001220; Wave 4 unanimous YES on full parity with 1001220 over an independent floor-hold; Nick locked the final table exactly as synthesized — byte-identical to 1001220 across all six tiers. Previously Session AU — P/N 3010736 added, LBL-I50 MED WHT at 1.012 sq ft — closest any Band A item has come to the Band C boundary (1.2% above the 1.0 sq ft threshold); priced via full 4-wave, 24-model AI validation using P/N 3010722 as the primary comparable; Wave 2 corrected a "premium stacked on a premium" risk against 3010722; Wave 4 unanimous 6/6 YES; Nick locked the price unmodified; material cost independently verified via direct calculator engine execution. Previously Session AT — P/Ns 3010722/3010723/3010724 added, G50 model designation label (Cardinal Red/Black/White) at 1.167 sq ft — new lower edge of Band A, priced via full 4-wave, 24-model AI validation rather than a benchmark scale-off; Nick locked the price unmodified.)
+
+---
+
+### 2026-07-15 — Session AX (new item): P/N 3020336 — E145 - UPPER TERMINAL STRIP BOX, Direct Parity Exemption clone of 3020335, no new AI validation
+
+**What:** New printed/laminated single ANSI label at 10" × 9" = 0.625 sq ft — identical dimensions, material, and process to P/N 3020335 (E145 LOWER TERMINAL STRIP BOX), differing only in artwork content (Upper vs Lower terminal strip box, same E145 platform). Filed as a **Direct Parity Exemption** per `governance/PRICING_VALIDATION.md` — no new 4-wave AI validation session was run; 3020335's full 4-wave, 6-model validation record (24 independent model passes, run externally in ChatHub and synthesized in Claude Chat) is inherited unmodified. Filed tiers: $14.50/$12.00/$9.75/$8.50/$7.75/$7.00 — byte-identical to 3020335. Material cost $1.22/label (§25 canonical, identical calculation to 3020335 given identical dimensions/material).
+
+**Key Decisions:**
+- Rule 15 (Pricing Profile band check) still applies under the exemption and is satisfied — $9.75 at qty 20 = $15.60/sq ft lands within the singles band ($15.43–$15.91/sq ft), matching 3020335's own band position exactly.
+- **NOT a new independent band data point** — the 0.625 sq ft position remains anchored by 3020335; singles-band data point count stays at 6.
+- **Permanent three-way parity lockstep established: 3020335 ↔ 3020336 ↔ 3020482** (3020482 to be filed in the companion session) — any future change to dimensions, material cost, process, or tier table on any one of these three must be applied to the other two in lockstep, in the same session.
+- `items/3020335.md` downstream_items and notes updated with the reciprocal cross-reference to the new lockstep, plus a Notes and Warnings callout.
+- `categories/printed-laminated-orajet.md` updated: items table row + footnote ³⁰ added; Pricing Profile prose updated to mention this item explicitly without incrementing the data-point count (parity clone, same convention as 1277300/1278980/1279020 and 1062390/1132950).
+- `materials/orajet-3951-white.md` and `materials/1mil-polyester-overlaminate.md` `used_in_items` arrays both updated to include 3020336.
+- `.claude/ARCHITECTURE.md` catalog row added; Printed + Laminated category item count 38 → 39.
+- **Item count verified before proceeding, no discrepancy found this time:** repo's actual on-disk state (STATE.yml, PROGRESS.md's own Session AW entry, and a literal `items/*.md` file count) confirmed 54 items prior to this session, matching this session prompt's stated premise — filed 3020336 as the 55th item.
+
+**Strategic Flags:**
+- Direct Parity Exemption applied cleanly — identical dimensions/material/process to an already-quoted item, per the exemption clause in `governance/PRICING_VALIDATION.md`.
+- Margin figures are material-only ($1.22/label basis), identical caveat to 3020335 — no fully-loaded cost doctrine exists for this account.
+- First article not requested/confirmed by Sean — flagged for follow-up; does not block sending. Order quantity not specified — standard 6-tier ladder quoted.
+- Item count: 54 → 55. Printed/Laminated category: 38 → 39 items. Singles-band data points: unchanged at 6 (parity clone, not a new position).
+
+**Status:** Complete — validate.py 0/0; all build scripts clean; elliott_items = 55 rows confirmed in Supabase.
 
 ---
 
@@ -222,24 +246,4 @@
 
 ---
 
-### 2026-07-14 — Session AN (new item): P/N 1132950 — CHRT JIB-I50 TP JIB 500# PLATFORM 600#, fifth item at the 0.503 sq ft singles-band position, Direct Parity Exemption, no wave validation
-
-**What:** New printed/laminated single label at 7.25" × 10.00" = 0.503 sq ft — the identical footprint already held by P/N 1082570, P/N 1068270, P/N 1073950, and P/N 1062390. Filed under the Direct Parity Exemption per `governance/PRICING_VALIDATION.md` (dimensionally and materially identical to items already quoted) — no new 4-wave AI validation session was run. Benchmark: P/N 1068270 (identical 0.503 sq ft area, identical process/material stack); precedent reinforced by P/N 1073950 (independent 4-wave validation, unanimous 6/6 exact parity) and by P/N 1062390 (filed at the same parity with no re-validation). Tier table cloned exactly: $16.50/$10.50/$8.00/$6.25/$5.25/$4.25. Material cost $0.98/label (§25 canonical, filed at the cent).
-
-**Key Decisions:**
-- Direct Parity Exemption invoked rather than running a fresh 4-wave validation — 1073950's independent Wave 1–4 unanimous convergence on exact parity with 1068270 at this identical 0.503 sq ft footprint (reinforced by 1062390's own exemption filing) is the governing precedent cited for this exemption.
-- Model/load-class distinction flagged but ruled non-blocking: 1132950 (I50, Platform 600# / Top Jib 500#) differs from the other three (G85/G85R, Basket 500#) in both model family and load-rating class — a bigger artwork difference than the mount-only variation between 1068270 and 1073950. Parity holds because cost is driven by dimensions, material stack, and process (all identical), not load-chart content; full-bleed ink is priced flat at $0.50/sq ft regardless of what's printed.
-- Rule 15 (Pricing Profile band check) still applies and is satisfied — $15.90/sq ft at qty 20 lands cleanly within the singles band ($15.43–$15.91/sq ft).
-- No override — engine consensus (parity) accepted, override_type blank.
-
-**Strategic Flags:**
-- Open taxonomy item: model field reads I50 / Platform 600# / Top Jib 500# (vs plain G85 Basket 500# on 1068270/1073950 and G85R Basket 500# on 1062390) — flagged for Nick/Sean follow-up alongside the quote; does not affect pricing under the exemption.
-- First article NOT specified this session — flagged for follow-up, does not block filing. Order quantity not specified — standard 6-tier ladder quoted.
-- This item does NOT add a new independent singles-band data point — the 0.503 sq ft position remains anchored where it already was, now shared by five items. Band stays at 5 confirmed data points.
-- Item count: 43 → 44. Printed/Laminated category: 33 → 34 items.
-
-**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 44 rows confirmed in Supabase.
-
----
-
-*Entries older than Session AN (2026-07-14) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session AO (2026-07-14) were removed per the 10-entry rolling window — git history retains them in full.*
