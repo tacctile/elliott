@@ -6,7 +6,31 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-07-15 (Session AT — P/Ns 3010722/3010723/3010724 added, G50 model designation label (Cardinal Red/Black/White) at 1.167 sq ft — new lower edge of Band A, priced via full 4-wave, 24-model AI validation rather than a benchmark scale-off; Nick locked the price unmodified. Previously Session AS — governance drift remediation: fixed the 3 live-risk engine gaps confirmed still open by audits/2026-07-15-governance-drift-audit.md, merged forward onto Session AR. Previously Session AR — P/N 3010698 added, founding data point for the 1.5–2.5 sq ft Band A interior gap zone at 1.582 sq ft; confirmed SML member of the now-complete ELLIOTT S/M/L wordmark family (MED = 3010701, LRG = 3010704); price locked pre-session via full 4-wave AI validation (6 models × 4 waves, unanimous Wave 4), Claude Code filed it as given without re-deriving; material cost recomputed this session from the calculator's deprecated area-based tape formula to the account-standard length-based method ($6.09/label vs the brief's $5.73) — the exact defect Session AS's fix #3 below patches in the calculator itself. Previously Session AQ — P/N 1205870 added, second sub-0.06 sq ft non-ANSI per-label floor data point at 0.049 sq ft, joining P/N 3024140; price locked directly against 3024140's floor and tier table, no 4-wave AI validation run, per the same session-prompt locking convention used for 1279260/1279270.)
+> Last Updated: 2026-07-15 (Session AU — P/N 3010736 added, LBL-I50 MED WHT at 1.012 sq ft — closest any Band A item has come to the Band C boundary (1.2% above the 1.0 sq ft threshold); priced via full 4-wave, 24-model AI validation using P/N 3010722 as the primary comparable; Wave 2 corrected a "premium stacked on a premium" risk against 3010722; Wave 4 unanimous 6/6 YES; Nick locked the price unmodified; material cost independently verified via direct calculator engine execution. Previously Session AT — P/Ns 3010722/3010723/3010724 added, G50 model designation label (Cardinal Red/Black/White) at 1.167 sq ft — new lower edge of Band A, priced via full 4-wave, 24-model AI validation rather than a benchmark scale-off; Nick locked the price unmodified. Previously Session AS — governance drift remediation: fixed the 3 live-risk engine gaps confirmed still open by audits/2026-07-15-governance-drift-audit.md, merged forward onto Session AR. Previously Session AR — P/N 3010698 added, founding data point for the 1.5–2.5 sq ft Band A interior gap zone at 1.582 sq ft; confirmed SML member of the now-complete ELLIOTT S/M/L wordmark family (MED = 3010701, LRG = 3010704); price locked pre-session via full 4-wave AI validation (6 models × 4 waves, unanimous Wave 4), Claude Code filed it as given without re-deriving; material cost recomputed this session from the calculator's deprecated area-based tape formula to the account-standard length-based method ($6.09/label vs the brief's $5.73) — the exact defect Session AS's fix #3 below patches in the calculator itself.)
+
+---
+
+### 2026-07-15 — Session AU (new item): P/N 3010736 — LBL-I50 MED WHT, closest-to-Band-C-boundary Band A item, full 4-wave/24-model AI validation, price locked unmodified, verified material cost
+
+**What:** New Vinyl Cut Lettering single label at 19.18" × 7.6" = 1.012 sq ft — the closest any Band A item has come to the Band C boundary (1.0 sq ft), only 1.2% above the threshold. Like 3010722, this was priced via the full 4-wave, 24-model AI validation process (Waves 1-4, 6 models/wave) end to end, using P/N 3010722 as the primary comparable rather than the calculator brief's original (incorrect) Band C anchor. Nick locked the resulting price unmodified. Filed tiers: $19.75/$17.25/$14.50/$13.50/$13.25/$13.00 — $14.50 at qty 20 = $14.33/sq ft, just under 3010722's $14.36/sq ft, forming a converging small-format Band A pair rather than a stacked premium. Material cost ($2.47/label) was independently verified this session via direct execution of the committed calculator engine against committed config — no open cost-basis risk, unlike 3010722.
+
+**Key Decisions:**
+- Wave 1 (Build): 4/6 models converged at $14.50-$15.00 for the 20-49 tier, anchoring off 3010722's validated $14.36/sq ft small-format rate.
+- Wave 2 (Destruction): 2-4 split (Yes-with-mods / No), unanimous finding across all six models — the Wave 1 pricing created a "premium stacked on a premium," pricing this item (13.3% smaller than 3010722) even higher on a $/sq ft basis than 3010722's already-elevated rate, with no cost basis for a second premium layer. Consensus correction: cut 20-49 to $14.50 ($14.33/sq ft), just under 3010722's $14.36/sq ft.
+- Wave 3 (Buyer Simulation): 5/6 confirmed Sean approves without escalation — reads the corrected price as resolving, not repeating, the premium-stacking problem.
+- Wave 4 (Final Synthesis): unanimous 6/6 YES send as shown — no dissent, tighter consensus than 3010722's own Wave 4 (5/6 YES, 2 opposing dissents). **Nick locked the price as shown, unmodified.** `override_type` blank — wave-consensus locked price, not a Nick-directed deviation.
+- **Material cost VERIFIED, not a working figure.** $2.47/label confirmed 2026-07-15 via direct execution of the committed calculator engine (`frontend/index.html` `computeCutVinylMaterial()`/`computeCutVinylForRollWidth()`) against committed config (`scripts/build_calculator_config.py` `CUT_VINYL_COLORS_STATIC`, `frontend/calculator_config.json`). This verification was originally prompted by a suspected tape-cost bug, found to have already been fixed earlier the same day (commit 9780bc0, "governance drift remediation — cut vinyl tape costing in calculator engine"); the length-based tape formula is correctly applied for this color. No open cost-basis risk on this item — margin ~83.0% at qty 20, the highest of any Band A item on file.
+- `categories/cut-vinyl-3m-180mc.md` Band A profile updated: data point count 10 → 11; material-cost-per-label range widened down to $2.47 (new verified low end); margin-at-qty-20 range widened up to ~83.0%; margin-floor-at-200+ range widened up to ~81.0%; new prose paragraph on 3010736; decision tree's 1.0-1.5 sq ft note updated to reflect two validated points (3010736 and the G50 cluster) that converge rather than stack.
+- `scripts/validate.py` BAND_EXCEPTIONS extended for 3010736 — documented above-corridor premium, same pattern already used for 3010722/23/24.
+
+**Strategic Flags:**
+- **Closest-to-Band-C-boundary precedent.** At 1.012 sq ft, this is the reference point for how future 0.95-1.2 sq ft items should be evaluated — all 4 waves confirmed Band A routing is correct despite the proximity to the 1.0 sq ft threshold.
+- **Converging, not compounding, small-format pair with 3010722.** Both items land at ~$14.33-$14.36/sq ft at qty 20 despite a 13.3% size difference — Wave 2's explicit correction prevents the small-format premium from stacking as items get smaller within this range.
+- **Original Round 0 calculator brief benchmark error, not corrected in the tool this session.** The brief referenced the Band C anchor (3010707/08/09) instead of the correct same-band comparable (3010722); flagged as a separate calculator improvement, not addressed this session.
+- First article not requested this session. No MOQ, no job floor on this account.
+- Item count: 51 → 52. Cut Vinyl category: 14 → 15 items. Band A data points: 10 → 11.
+
+**Status:** Complete — validate.py 0/0; all build scripts clean; elliott_items = 52 rows confirmed in Supabase.
 
 ---
 
@@ -204,24 +228,4 @@
 
 ---
 
-### 2026-07-10 — Session AK (new item): P/N 3017572 — LBL - HYDAC VLV OVERRIDE, sixth sub-scope data point, 4-wave validated 1-9 through 50-99, One-Time Exception override on 100-199/200+ below the §31 floor
-
-**What:** New printed/laminated single hydraulic valve manual override control-direction label at 7.5" × 7.0" = 0.365 sq ft — the sixth sub-scope (0.1–0.5 sq ft) data point on file. Full 4-wave atomic AI validation (24 independent responses, 6 models × 4 waves, run in Claude Chat) locked the 1-9 through 50-99 tiers at $8.75/$7.25/$6.00/$5.75 — all fully §31-compliant. Material cost computed fresh at $0.75/label (§25 canonical: $0.7114 calculated + $0.0386 buffer). Unlike 3024595, both label dimensions (7.0"/7.5") fit the 13.5" laminator independently, so orientation is a nesting-efficiency choice rather than a forced constraint — 7.0" across the 28" print bed nests 4 labels per row with zero waste.
-
-**Key Decisions:**
-- Wave 1 (Build): unanimous 6/6 on the §31 floor ($5.75 = 0.365 × $15.43 rounded up per §30) and flat termination from at least 50-99 onward; split 4/6 (flat $5.75 from 20-49) vs 2/6 (one step at $6.00 for 20-49, flat from 50-99).
-- Wave 2 (Destruction): unanimous 6/6 rejection of the flat-from-20-49 structure — it priced this smaller label at a LOWER $/sq ft ($15.75) than the larger governing comparable 3024595 (0.488 sq ft, $15.88/sq ft), a size-cost inversion. Unanimous fix: raise 20-49 to $6.00 ($16.44/sq ft), hold 50-99 flat at $5.75.
-- Wave 3 (Buyer Simulation): split verdict — 3/6 models had Sean question the $6.00 20-49 price and ask for ~$5.75-$5.80; 3/6 had Sean approve without friction, reading the premium as proportionate to the 25% smaller area vs 3024595. Universal finding: landing exactly at the $5.75 floor at Sean's real qty-20 order volume would let him permanently defend $15.75/sq ft as the class price — worse long-term than a contested $6.00.
-- Wave 4 (Final Synthesis): 5/6 YES ship $6.00 as-is; 1/6 NO recommending $5.80 to eliminate friction. No model at any wave proposed a 100-199 or 200+ tier below $5.75.
-- **Override:** Nick accepted the Wave 4 majority for 1-9 through 50-99, then separately directed a One-Time Exception override lowering 100-199 to $5.50 ($15.07/sq ft) and 200+ to $5.25 ($14.38/sq ft) — both below the §31 sub-scope root floor ($15.43/sq ft), against the unanimous validated recommendation of $5.75 for both tiers. Classified and logged per Core Rule 12/13 — non-precedent-setting; future sub-scope items must benchmark the deep tiers against the validated $5.75, not this item's overridden figures.
-
-**Strategic Flags:**
-- This is the first item where the §31 floor doctrine (established 9 days earlier on 3024595) was directly overridden by Nick. The doctrine itself is unweakened — the override is logged as item-specific and non-precedent-setting per Core Rule 13. `governance/PRICING_RULES.md` §31 and `categories/printed-laminated-orajet.md` both note this as the first tested exception.
-- First article NOT confirmed with Sean — flagged for follow-up. Order quantity not specified — standard 6-tier ladder quoted.
-- Item count: 40 → 41. Printed/Laminated category: 30 → 31 items. Sub-scope data points: 5 → 6.
-
-**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 41 rows confirmed in Supabase.
-
----
-
-*Entries older than Session AK (2026-07-10) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session AL (2026-07-14) were removed per the 10-entry rolling window — git history retains them in full.*
