@@ -6,7 +6,34 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-07-15 (Session AU — P/N 3010736 added, LBL-I50 MED WHT at 1.012 sq ft — closest any Band A item has come to the Band C boundary (1.2% above the 1.0 sq ft threshold); priced via full 4-wave, 24-model AI validation using P/N 3010722 as the primary comparable; Wave 2 corrected a "premium stacked on a premium" risk against 3010722; Wave 4 unanimous 6/6 YES; Nick locked the price unmodified; material cost independently verified via direct calculator engine execution. Previously Session AT — P/Ns 3010722/3010723/3010724 added, G50 model designation label (Cardinal Red/Black/White) at 1.167 sq ft — new lower edge of Band A, priced via full 4-wave, 24-model AI validation rather than a benchmark scale-off; Nick locked the price unmodified. Previously Session AS — governance drift remediation: fixed the 3 live-risk engine gaps confirmed still open by audits/2026-07-15-governance-drift-audit.md, merged forward onto Session AR. Previously Session AR — P/N 3010698 added, founding data point for the 1.5–2.5 sq ft Band A interior gap zone at 1.582 sq ft; confirmed SML member of the now-complete ELLIOTT S/M/L wordmark family (MED = 3010701, LRG = 3010704); price locked pre-session via full 4-wave AI validation (6 models × 4 waves, unanimous Wave 4), Claude Code filed it as given without re-deriving; material cost recomputed this session from the calculator's deprecated area-based tape formula to the account-standard length-based method ($6.09/label vs the brief's $5.73) — the exact defect Session AS's fix #3 below patches in the calculator itself.)
+> Last Updated: 2026-07-15 (Session AV — P/N 3018808 added, LBL-GREER SETUP INST at 0.222 sq ft — ninth sub-scope data point, nearest neighbor to P/N 1001220 on the entire sub-scope gradient (0.961 size ratio); price pre-locked via a full 4-wave, 6-model AI validation process (24 independent model passes) run externally in ChatHub and synthesized in Claude Chat; Wave 2 unanimously corrected a smaller-cheaper-than-larger inversion against 1001220; Wave 4 unanimous YES on full parity with 1001220 over an independent floor-hold; Nick locked the final table exactly as synthesized — byte-identical to 1001220 across all six tiers. Previously Session AU — P/N 3010736 added, LBL-I50 MED WHT at 1.012 sq ft — closest any Band A item has come to the Band C boundary (1.2% above the 1.0 sq ft threshold); priced via full 4-wave, 24-model AI validation using P/N 3010722 as the primary comparable; Wave 2 corrected a "premium stacked on a premium" risk against 3010722; Wave 4 unanimous 6/6 YES; Nick locked the price unmodified; material cost independently verified via direct calculator engine execution. Previously Session AT — P/Ns 3010722/3010723/3010724 added, G50 model designation label (Cardinal Red/Black/White) at 1.167 sq ft — new lower edge of Band A, priced via full 4-wave, 24-model AI validation rather than a benchmark scale-off; Nick locked the price unmodified. Previously Session AS — governance drift remediation: fixed the 3 live-risk engine gaps confirmed still open by audits/2026-07-15-governance-drift-audit.md, merged forward onto Session AR.)
+
+---
+
+### 2026-07-15 — Session AV (new item): P/N 3018808 — LBL-GREER SETUP INST, ninth sub-scope data point, price pre-locked via external 4-wave/6-model AI validation, byte-identical parity with 1001220
+
+**What:** New printed/laminated single ANSI label at 4" × 8" = 0.222 sq ft — the ninth sub-scope (0.1–0.5 sq ft) data point on file, and the closest size-neighbor to P/N 1001220 (0.231 sq ft) on the entire sub-scope gradient (0.961 size ratio). Model "Greer" inferred from the part description ("LBL-GREER SETUP INST") — no separate title-block callout; does not affect pricing. Unlike this session's item-authoring norm, the price was **not** derived by Claude Code at all: Nick ran a full 4-wave, 6-model AI validation process externally in ChatHub (24 independent model passes), synthesized the result in Claude Chat, and locked the final table before this session began. This session's job was purely to document the validation record in full and sync every dependent file. Filed tiers: $7.00/$5.50/$4.00/$3.75/$3.75/$3.75 — **byte-identical to P/N 1001220 across all six tiers.** $4.00 at qty 20 = $18.02/sq ft (+16.8% over the $15.43/sq ft §31 root floor). Material cost $0.44/label (§25 canonical: $0.4326 calculated + conservative buffer round-up).
+
+**Key Decisions:**
+- Wave 1 (Build): baseline range $4.00–$4.50 at qty 20; unanimous convergence on the §31 floor math ($15.43/sq ft × 0.222 sq ft = $3.43 → $3.50, the cheapest §30-compliant increment) as the deep-tier reference point; split methodology on margin reporting (material-only, the account convention, vs. self-invented fully-loaded allocations with no basis in account doctrine).
+- Wave 2 (Destruction): Buyer/Procurement, Cost Auditor, and Strategic attacks unanimous High severity; Competitor attack M/H split — all four converged on one root finding: the raw $3.50 deep-tier price undercut nearest comp 1001220 ($3.75 flat from 50-99 through 200+), a smaller-cheaper-than-larger inversion risking a renegotiation vector on 1001220 itself. Verdict 5/6 Yes with modifications, 1/6 No — unanimous fix: raise 100-199 and 200+ to $3.75.
+- Wave 3 (Buyer Simulation as Sean Finn): unanimous simulated approval, zero price-change requests; pushback threshold identified at $4.50/label (20-49 tier); forward precedent noted — this item now shares an identical $3.75 floor with 1001220, anchoring the ~0.22–0.23 sq ft sub-scope class with two data points.
+- Wave 4 (Final Synthesis): unanimous YES across all 6 models, all six tiers confirmed correct with no changes. Explicit decision fork considered: full parity with 1001220 (byte-identical ladder) vs. an independent size-based floor-hold at $3.50. Consensus unanimously favored full parity — the $0.25/label difference at the deepest tiers is immaterial at any realistic order volume, while an independent floor-hold would recreate the exact smaller-cheaper-than-larger inversion Wave 2 flagged and risk the account's $140K pricing structure.
+- **No override** — Nick locked the Wave 4 synthesis exactly as returned. `override_type` blank.
+- Unlike P/N 1001220 (whose validation predated `governance/PRICING_RULES.md` §31 and required a post-synthesis correction), this item's validation ran with §31 already embedded in the Wave 2 attack analysis — all six tiers clear the floor with no correction needed.
+- `items/1001220.md` notes field updated with a reciprocal cross-reference to 3018808 as its paired sub-scope-class anchor.
+- `categories/printed-laminated-orajet.md` updated: items table row + footnote ²⁸ added; sub-scope gradient prose and Band isolation paragraph updated (eight → nine data points, gradient list extended); Pricing Profile band explicitly unchanged — sub-scope exclusion from band DATA POINTS respected, same treatment as 1001220.
+- `materials/orajet-3951-white.md` and `materials/1mil-polyester-overlaminate.md` `used_in_items` arrays both updated to include 3018808.
+- `.claude/ARCHITECTURE.md` catalog row added; Printed + Laminated category item count 36 → 37.
+
+**Strategic Flags:**
+- **Second data point anchoring the ~0.22–0.23 sq ft sub-scope class.** 3018808 and 1001220 now form a paired, byte-identical anchor for this size class — future items in this range should price at or below $3.75 at the deep tiers absent a spec-driven justification (different material, added process step, etc.).
+- **External validation process, not Claude Chat wave-by-wave.** This item's 4-wave, 6-model process (24 passes) was run entirely outside this session's tooling (ChatHub) and only synthesized in Claude Chat before reaching Claude Code — documented as a full pricing derivation record per governance/STRUCTURE_RULES.md regardless of where the waves were executed.
+- Margin figures are material-only ($0.44/label basis) — no fully-loaded cost doctrine exists for this account; Wave 2's Cost Auditor attack (severity High, unanimous) specifically flagged a self-invented fully-loaded allocation with no account basis appearing in some Wave 1 responses. Do not present margin % from this item to governance review without that caveat.
+- First article not requested/confirmed by Sean — flagged for follow-up, treated as a scheduling/process item per Wave 3 buyer simulation, not a price condition; does not block sending. Order quantity not specified — standard 6-tier ladder quoted.
+- Item count: 52 → 53. Printed/Laminated category: 36 → 37 items. Sub-scope data points: 8 → 9.
+
+**Status:** Complete — validate.py 0/0; all build scripts clean; elliott_items = 53 rows confirmed in Supabase.
 
 ---
 
@@ -208,24 +235,4 @@
 
 ---
 
-### 2026-07-14 — Session AL (new item): P/N 1062390 — CHART-EZR WORKING RANGE G85R (80°) BASKET 500#, fourth item at the 0.503 sq ft singles-band position, Direct Parity Exemption, no wave validation
-
-**What:** New printed/laminated single label at 7.25" × 10.00" = 0.503 sq ft — the identical footprint already held by P/N 1082570, P/N 1068270, and P/N 1073950. Filed under the Direct Parity Exemption per `governance/PRICING_VALIDATION.md` (dimensionally and materially identical to items already quoted) — no new 4-wave AI validation session was run. Benchmark: P/N 1068270 (identical 0.503 sq ft area, identical G85/G85R Basket 500# load-chart class); precedent reinforced by P/N 1073950, which independently ran the full 4-wave process and converged unanimous 6/6 on exact parity with 1068270 at this same footprint. Tier table cloned exactly: $16.50/$10.50/$8.00/$6.25/$5.25/$4.25. Material cost $0.98/label (§25 canonical, filed at the cent — matches 1073950's filing convention).
-
-**Key Decisions:**
-- Direct Parity Exemption invoked rather than running a fresh 4-wave validation — per governance/PRICING_VALIDATION.md, items dimensionally and materially identical to something already quoted are exempt from multi-round AI validation. 1073950's independent Wave 1–4 unanimous convergence on exact parity with 1068270 at this identical 0.503 sq ft footprint is the governing precedent cited for this exemption.
-- Rule 15 (Pricing Profile band check) still applies and is satisfied — $15.90/sq ft at qty 20 lands cleanly within the singles band ($15.43–$15.91/sq ft).
-- No override — engine consensus (parity) accepted, override_type blank.
-
-**Strategic Flags:**
-- Open taxonomy item: model field reads G85R (vs plain G85 on 1068270/1073950) and drawing content is "WORKING RANGE" (vs BASKET JIB / TOP MOUNT JIB) — same 80° jib angle and Basket 500# load class. Does not affect pricing under the Direct Parity Exemption; flagged for Nick/Sean follow-up alongside the quote.
-- First article NOT specified this session — flagged for follow-up, does not block filing. Order quantity not specified — standard 6-tier ladder quoted.
-- This item does NOT add a new independent singles-band data point — the 0.503 sq ft position remains anchored where it already was, now shared by four items. Band stays at 5 confirmed data points.
-- Also backfilled a pre-existing sync gap: P/N 3017572 (Session AK) was missing from the ARCHITECTURE.md Item Catalog table — added this session, no data changed.
-- Item count: 41 → 42. Printed/Laminated category: 31 → 32 items.
-
-**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 42 rows confirmed in Supabase.
-
----
-
-*Entries older than Session AL (2026-07-14) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session AM (2026-07-14) were removed per the 10-entry rolling window — git history retains them in full.*
