@@ -131,7 +131,7 @@ elliott/
 │   ├── cut-vinyl-3m-180mc.md      # Material system + pricing profile + decision tree
 │   └── printed-laminated-orajet.md
 ├── items/
-│   ├── 40 item files              # One file per item, YAML frontmatter + 9 sections
+│   ├── 47 item files              # One file per item, YAML frontmatter + 9 sections
 │   └── images/                    # Spec sheet PDFs and reference images (4 files)
 ├── materials/
 │   ├── 10mil-polycarbonate-overlaminate.md  # Kapco 10-mil polycarbonate overlaminate

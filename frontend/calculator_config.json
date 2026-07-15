@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-15T00:40:55Z",
+  "generated": "2026-07-15T01:27:16Z",
   "version": "1.0",
   "account": {
     "floor": null,
@@ -21,6 +21,8 @@
     "laminator_max_width_in": 13.5,
     "roland_max_print_width_in": 28.0,
     "parity_max_lam_passes": 2,
+    "sub_scope_root_floor_psf": 15.43,
+    "cut_vinyl_row_spacing_in": 6,
     "cut_vinyl_band_thresholds": {
       "band_c_ceiling_sq_ft": 1.0,
       "band_b_floor_sq_ft": 5.0
@@ -150,7 +152,12 @@
         "10_to_25": 0.5,
         "below_10": 0.1
       },
-      "note": "Sub-0.1 sq ft micro-format band \u2014 founding data point 1279000 at 0.097 sq ft. 100% step-up from singles band. Fixed-labor dominance. 4-wave AI validated + final 6-model comprehensive review. Per-label floor ~$2.50-$3.00 overrides $/sq ft scaling below ~0.06 sq ft."
+      "per_label_floor_threshold_sq_ft": 0.06,
+      "per_label_floor_ansi_pn": "3024592",
+      "per_label_floor_ansi_qty_20": 2.75,
+      "per_label_floor_non_ansi_pn": "3024140",
+      "per_label_floor_non_ansi_qty_20": 2.5,
+      "note": "Sub-0.1 sq ft micro-format band \u2014 founding data point 1279000 at 0.097 sq ft. 100% step-up from singles band. Fixed-labor dominance. 4-wave AI validated + final 6-model comprehensive review. Per-label floor (complexity-dependent: $2.75 ANSI per P/N 3024592, $2.50 non-ANSI per P/N 3024140) overrides $/sq ft scaling below ~0.06 sq ft \u2014 the engine cannot auto-classify complexity from dimensions alone, so it STOPs (F26) rather than emit a linear-formula number below this threshold."
     },
     "printed_laminated_kits": {
       "per_label_qty_20": 10.0,
@@ -190,17 +197,20 @@
       "cost_per_sq_ft": 0.2389,
       "material_id": "1mil-polyester-overlaminate",
       "verified_date": "2026-05-28",
+      "cost_per_linear_yd": 0.8063,
       "max_width_in": 13.5
     },
     "transferrite_582u": {
       "cost_per_sq_ft": 0.5911,
       "material_id": "transferrite-582u",
-      "verified_date": "2026-05-28"
+      "verified_date": "2026-05-28",
+      "cost_per_linear_yd": 1.1821
     },
     "transferrite_582u_30in": {
       "cost_per_sq_ft": 0.1891,
       "material_id": "transferrite-582u-30in",
       "verified_date": "2026-06-05",
+      "cost_per_linear_yd": 1.4186,
       "roll_width_in": 30
     }
   },

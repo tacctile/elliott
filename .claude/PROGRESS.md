@@ -6,7 +6,28 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-07-15 (Session AQ — P/N 1205870 added, second sub-0.06 sq ft non-ANSI per-label floor data point at 0.049 sq ft, joining P/N 3024140; price locked directly against 3024140's floor and tier table, no 4-wave AI validation run, per the same session-prompt locking convention used for 1279260/1279270. Previously Session AP — P/N 1001220 added, eighth sub-scope data point at 0.231 sq ft; full 4-wave AI validation followed by a post-synthesis §31 compliance correction on the deep tiers, since §31 postdated this item's wave prompts — first sub-scope item to reach a fully §31-compliant flat structure directly, without a One-Time Exception override. Previously Session AO — P/N 1146650 added, second Band A interior data point at 2.971 sq ft, between the 2.512–2.564 sq ft cluster and 3010701; full 4-wave AI validation on 20-49 through 200+, Owner Judgment override on 1-9/10-19 after discovering P/N 3018378 was omitted from the wave benchmark set.)
+> Last Updated: 2026-07-15 (Session AR — governance drift remediation: fixed the 3 live-risk engine gaps confirmed still open by audits/2026-07-15-governance-drift-audit.md. Previously Session AQ — P/N 1205870 added, second sub-0.06 sq ft non-ANSI per-label floor data point at 0.049 sq ft, joining P/N 3024140; price locked directly against 3024140's floor and tier table, no 4-wave AI validation run, per the same session-prompt locking convention used for 1279260/1279270. Previously Session AP — P/N 1001220 added, eighth sub-scope data point at 0.231 sq ft; full 4-wave AI validation followed by a post-synthesis §31 compliance correction on the deep tiers, since §31 postdated this item's wave prompts — first sub-scope item to reach a fully §31-compliant flat structure directly, without a One-Time Exception override. Previously Session AO — P/N 1146650 added, second Band A interior data point at 2.971 sq ft, between the 2.512–2.564 sq ft cluster and 3010701; full 4-wave AI validation on 20-49 through 200+, Owner Judgment override on 1-9/10-19 after discovering P/N 3018378 was omitted from the wave benchmark set.)
+
+---
+
+### 2026-07-15 — Session AR (governance drift remediation): 3 live-risk engine gaps fixed — §31 sub-scope floor clamp, per-label floor STOP flag (F26), cut vinyl tape costing
+
+**What:** Fixed the 3 live-risk findings from `audits/2026-07-15-governance-drift-audit.md` in `frontend/index.html` (engine) and `frontend/calculator_config.json`/`scripts/build_calculator_config.py` (config source of truth). (1) `buildPrintLamSinglesTiers` now clamps any tier of a `single_sub_scope` item that would price below the $15.43/sq ft §31 root floor, and every deeper tier, flat to the cheapest $0.25 increment clearing the floor — verified to natively reproduce P/N 3024595's flat $7.75 structure (was $7.50/$6.50/$5.25/$4.25, all below floor). (2) `buildPrintLamMicroTiers` now refuses the linear $30.86/sq ft formula below 0.06 sq ft and fires a new STOP flag, F26, naming the two governing comparables (3024592 ANSI, 3024140 non-ANSI) — verified against P/N 1205870, whose own brief had been silently computing $1.50 against a correct $2.50. (3) Cut-vinyl tape costing is now length-based (`(label length + 6" spacing) ÷ labels per row × $/linear yd`), not the deprecated `sq_ft × $0.5911/sq ft` pseudo-rate — verified against P/N 1205720, now reproducing the filed $7.88 material cost exactly (was $8.74). No `items/*.md` file was touched — this is a tooling fix, not a pricing change to any filed item.
+
+**Key Decisions:**
+- §31 clamp applies only to `single_sub_scope` (0.1–0.5 sq ft), not `single_standard` — confirmed no regression on the 1230820 root benchmark itself, which is allowed to price below $15.43/sq ft at deep tiers by design (that's simply volume-tier compression on the root item, not a §31 violation).
+- Per-label floor threshold (0.06 sq ft) and both governing comparables (3024592/3024140, with their $2.75/$2.50 prices) are now named config constants (`bands.printed_laminated_micro.per_label_floor_*`), not hardcoded strings, per CALCULATOR.md rule 5.
+- Vinyl costing was left untouched (already length-based and correct per the audit and the task scope) — only tape's formula changed.
+- `governance/VALIDATION_PROMPTS.md` §3 Deep Volume Tier Instruction rewritten: §31 is now a stated hard precondition for sub-scope items, checked before the "clean round number" step-down guidance — the prior unconditional wording produced two real Nick-directed One-Time-Exception corrections after the fact (P/N 3017572, P/N 1101250).
+- `governance/CALCULATOR.md` updated in full: §31/per-label-floor doctrines documented, F26 added to the flag table, F9's stale description corrected (was still describing pre-§28 REVIEW behavior; engine has it retired/INFO), flag count 23→24, new config constants documented, `runSanityChecks()` raised from 14 to 17 cases (added 3024595/1205870/1205720-material-cost regression cases; corrected the pre-existing 1210810 case's expected price from $4.50 to $4.75 now that the §31 clamp makes the algorithmic output match the catalog exactly for the first time).
+- `.claude/ARCHITECTURE.md` Category Registry item counts corrected (Printed/Laminated 33→36, Cut Vinyl 9→10, independently verified against `frontend/data.json`) and `.claude/MASTER_CONTEXT.md` item-file count corrected (40→47) — both were stale relative to the actual catalog and the files' own session-log headers.
+
+**Strategic Flags:**
+- **Noticed, not actioned (out of scope this session):** `runSanityChecks()` case "1278930" expects a 3-label kit price ($30) but the catalog has carried a 2-label kit ($20) since an earlier session — this drift is unrelated to any of the 3 fixes above (kit-tier code was not touched) and predates this session; flagging for a future kit-focused session rather than fixing here.
+- **Noticed, not actioned:** the length-based tape fix uses a single tape roll rate (`transferrite_582u`, the 24" roll) for all cut-vinyl items, matching the engine's pre-existing (unfixed) behavior of never modeling the alternate 30"-roll/Band-B-specific tape rate or Band C's 5-up (vs. naive floor-division 6-up) nesting choice — both are separate, pre-existing simplifications unrelated to the area-vs-length defect this session fixed; Band B/C material-cost figures from the calculator will still diverge from `governance/PRODUCTION.md`'s hand-computed worked examples for those bands specifically. P/N 1205720 (the required verification target, Band A) matches exactly.
+- Verified via a Node `vm` harness (extracting the calculator engine's `<script>` block, stubbing `window.CALCULATOR_CONFIG`/`window.ITEMS_DATA`) rather than a browser — no UI regression testing was performed; the engine has no DOM dependencies in the audited block, so this is a faithful test of the actual shipped logic.
+
+**Status:** Complete — `python scripts/validate.py` 0 errors/0 warnings (no item files touched, unaffected); `runSanityChecks()` 15/16 pass in the Node harness (the one failure is the pre-existing, unrelated 1278930 drift noted above — same result before and after this session's changes). `scripts/build_calculator_config.py` re-run; diff against the pre-run manually-edited config confirmed clean (only the new constants plus incidentally-more-complete `cost_per_linear_yd` values for two other materials, no unexpected reversions). Not run: `migrate_to_supabase.py` (no item data changed, nothing to seed, per session instruction).
 
 ---
 
@@ -192,24 +213,4 @@
 
 ---
 
-### 2026-07-01 — Session AH (new item): P/N 1073950 — CHART-TOP MOUNT JIB 500# G85 (80°) BASKET 500#, third item at the 0.503 sq ft singles-band position, $8.00/qty 20, independently 4-wave validated to exact parity with 1068270
-
-**What:** New printed/laminated single label at 7.25" × 10.00" = 0.503 sq ft — the identical footprint already held in the singles band. Rather than applying a direct parity exemption, ran the full 4-wave atomic AI validation (24 independent responses, 6 models × 4 waves); the process independently converged on exact parity with governing benchmark P/N 1068270 at $8.00/qty 20 = $15.90/sq ft. Tier table locked identical to 1068270 across all six tiers: $16.50/$10.50/$8.00/$6.25/$5.25/$4.25.
-
-**Key Decisions:**
-- Wave 1 split 4/6 at $7.75 (proportional scaling from root benchmark 1230820) vs 2/6 at $8.00 (direct nearest-neighbor parity). Wave 2 unanimously killed the $7.75 path — High-severity Buyer/Procurement, Cost Auditor, and Strategic-Precedent attacks all found that identical area to an already-quoted item makes parity the only defensible position. Waves 3 and 4 unanimous on $8.00, no modifications.
-- Material cost filed at $0.98/label (§25 canonical, rounded to the cent) rather than 1068270's $1.00 (rounded to the dollar) — same underlying $0.9803 calculation; filing-convention difference only, does not affect tier pricing.
-- No override — engine consensus accepted (Override Type: None).
-
-**Strategic Flags:**
-- Artwork/mount-designation relationship to 1068270 (Top Mount Jib vs EZR mount, same G85 Basket 500# load rating) is unresolved as of filing — flagged for Nick/Sean follow-up alongside the quote; does not affect pricing per unanimous Wave 1-4 findings.
-- Internal-only context, not part of the formal validation record and not citable to Sean: P/N 1082570 (a do-not-benchmark item — its current order is priced at $42 flat job-economics, not a catalog rate) happens to share the identical 0.503 sq ft footprint. This same-size confirmation supports internal pricing confidence but was deliberately excluded from the formal validation record.
-- This item does NOT add a new independent singles-band data point — the 0.503 sq ft position remains anchored where it already was, now shared by three items (1082570, 1068270, 1073950). Band stays at 4 confirmed data points.
-- First article confirmed NOT required (per Sean). Order quantity not yet specified — standard 6-tier ladder quoted.
-- Item count: 37 → 38. Printed/Laminated category: 25 → 26 items.
-
-**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 38 rows confirmed in Supabase.
-
----
-
-*Entries older than Session AH (2026-07-01) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session AI (2026-07-01) were removed per the 10-entry rolling window — git history retains them in full.*
