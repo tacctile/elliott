@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-15T01:46:59Z",
+  "generated": "2026-07-15T02:24:37Z",
   "material_count": 14,
   "materials": {
     "10mil-polycarbonate-overlaminate": {
@@ -116,7 +116,8 @@
           "transferrite-582u"
         ],
         "used_in_items": [
-          "3010708"
+          "3010708",
+          "3010723"
         ],
         "notes": "Length-based material cost method used for nesting calculations. cost_per_sq_ft derived as cost_per_linear_yd / roll_width_ft ($13.1852 / 2 ft = $6.5926/sq ft), consistent with Cardinal Red derivation method."
       }
@@ -179,7 +180,8 @@
           "3010701",
           "3010707",
           "1146650",
-          "3010698"
+          "3010698",
+          "3010722"
         ],
         "notes": "Length-based material cost method used for nesting calculations. cost_per_sq_ft is derived as cost_per_linear_yd / roll_width_ft ($15.502 / 2 ft = $7.751/sq ft), not the area method used by other 180mC color files. This is intentional \u2014 item pricing uses the length-based method directly, so cost_per_sq_ft reflects that same basis. Numeric value is correct; derivation method differs from Olympic Blue and White."
       }
@@ -235,7 +237,8 @@
           "transferrite-582u"
         ],
         "used_in_items": [
-          "3010709"
+          "3010709",
+          "3010724"
         ],
         "notes": "24\" \u00d7 50yd White roll for production volumes. Length-based material cost method used for nesting calculations. cost_per_sq_ft derived as cost_per_linear_yd / roll_width_ft ($12.3842 / 2 ft = $6.1921/sq ft), consistent with Cardinal Red derivation method. See also 3m-180mc-white-24in.md (24\" \u00d7 10yd roll, used for smaller production runs on other items)."
       }
@@ -472,7 +475,10 @@
           "3010708",
           "3010709",
           "1146650",
-          "3010698"
+          "3010698",
+          "3010722",
+          "3010723",
+          "3010724"
         ],
         "notes": "USAGE METHOD (2026-06-09): The correct usage method for per-label nesting calculations is LENGTH-BASED \u2014 feed_length_yd \u00d7 cost_per_linear_yd ($1.1821/yd) \u00f7 labels_per_row \u2014 NOT area \u00d7 cost_per_sq_ft. The cost_per_sq_ft field on this material ($0.5911 = $/yd \u00f7 roll_width_ft) is a derived convenience value and should not be used for per-label cost builds; using it as a true area rate overstates tape cost ~2.7\u00d7. All cut vinyl items harmonized to the length-based method 2026-06-09 (audit D3)."
       }
