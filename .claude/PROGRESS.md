@@ -6,7 +6,29 @@
 >
 > This file is the session memory layer: why decisions were made, what changed strategically, what a future session needs to know. It is not a commit log and not a validation archive — full validation records live in `items/*.md` (Pricing Derivation), file-level changes live in git history, and structure/math compliance is enforced by `scripts/validate.py`. Entry format (template in `.claude/COMPLETION_TEMPLATES.md`): What / Key Decisions / Strategic Flags / Status, 10–25 lines per entry, no other sections.
 >
-> Last Updated: 2026-07-14 (Session AO — P/N 1146650 added, second Band A interior data point at 2.971 sq ft, between the 2.512–2.564 sq ft cluster and 3010701; full 4-wave AI validation on 20-49 through 200+, Owner Judgment override on 1-9/10-19 after discovering P/N 3018378 was omitted from the wave benchmark set. Previously Session AN — P/N 1132950 added, fifth item at the established 0.503 sq ft singles-band position, alongside 1082570/1068270/1073950/1062390; Direct Parity Exemption applied per governance/PRICING_VALIDATION.md — no new AI validation session run, precedent inherited from 1073950's independent 4-wave validation and 1062390's direct-parity filing. Previously Session AM — P/N 1101250 added, seventh sub-scope data point at 0.132 sq ft; 4-wave AI validation locked $2.25 at qty 20 ($17.05/sq ft, +10.5% over root benchmark 1230820), correcting Wave 1's initial over-reliance on non-benchmarkable P/N 1210810 in Waves 2-4; Nick then directed a One-Time Exception on the 50-99/100-199/200+ tiers, priced below the §31 sub-scope root floor — classified and logged, non-precedent-setting.)
+> Last Updated: 2026-07-15 (Session AP — P/N 1001220 added, eighth sub-scope data point at 0.231 sq ft; full 4-wave AI validation followed by a post-synthesis §31 compliance correction on the deep tiers, since §31 postdated this item's wave prompts — first sub-scope item to reach a fully §31-compliant flat structure directly, without a One-Time Exception override. Previously Session AO — P/N 1146650 added, second Band A interior data point at 2.971 sq ft, between the 2.512–2.564 sq ft cluster and 3010701; full 4-wave AI validation on 20-49 through 200+, Owner Judgment override on 1-9/10-19 after discovering P/N 3018378 was omitted from the wave benchmark set. Previously Session AN — P/N 1132950 added, fifth item at the established 0.503 sq ft singles-band position, alongside 1082570/1068270/1073950/1062390; Direct Parity Exemption applied per governance/PRICING_VALIDATION.md — no new AI validation session run, precedent inherited from 1073950's independent 4-wave validation and 1062390's direct-parity filing.)
+
+---
+
+### 2026-07-15 — Session AP (new item): P/N 1001220 — DANGER ELECTROCUTION HAZARD, UNINSULATED PLATFORM, eighth sub-scope data point, post-synthesis §31 compliance correction
+
+**What:** New printed/laminated single ANSI danger label at 7.00" × 4.75" = 0.231 sq ft — the eighth sub-scope (0.1–0.5 sq ft) data point on file, sitting between 1279130 (0.148 sq ft, $20.95/sq ft) and 1210810 (0.292 sq ft, $16.27/sq ft) on the gradient. Full 4-wave AI validation (6 models × 4 waves, run in Claude Chat) produced a step-down ladder at Wave 4 ($4.00/$3.50/$3.00/$2.75 at 20-49 through 200+) that priced three deep tiers below the $15.43/sq ft §31 root floor — a violation none of the waves could catch because `governance/PRICING_RULES.md` §31 (established 2026-07-01) postdates `governance/VALIDATION_PROMPTS.md`'s last update and was never in this item's wave prompts. Corrected post-synthesis to hold flat at $3.75/ea ($16.23/sq ft) from 50-99 through 200+, mirroring 3024595's structure. Nick locked the corrected ladder: $7.00/$5.50/$4.00/$3.75/$3.75/$3.75. Material cost $0.46/label (§25 canonical: $0.4502 calculated + minimal buffer).
+
+**Key Decisions:**
+- Wave 1 (Build): no convergence — qty-20 prices ranged $3.25–$5.50.
+- Wave 2 (Destruction): median-based ladder attacked, 4/6 No — the small-format premium over root benchmark 1230820 widened with volume instead of shrinking (~19% at qty 20 → ~53% at 200+), backwards from genuine fixed-cost economics; deep tiers split flat-hold (~$3.75) vs step-down (~$3.00/$2.75).
+- Wave 3 (Buyer Simulation): unanimous 6/6 preferred the step-down path — a flat-hold structure would read to Sean Finn as "no volume curve exists" and trigger pushback at 100-199.
+- Wave 4 (Final Synthesis): 5/6 No on the step-down ladder, unanimously flagging a premium "wobble" at 50-99, recommending a corrected step-down ladder ($4.00/$3.50/$3.00/$2.75).
+- **Post-synthesis §31 correction:** before locking, the Wave 4 step-down ladder was checked against §31 and found in direct violation on 50-99/100-199/200+ (all priced below the $15.43/sq ft floor). Corrected to a flat $3.75/ea from 50-99 through 200+ — the cheapest $0.25-increment price clearing the floor, mirroring 3024595's own flat-ladder structure. This is the **first sub-scope item to reach a fully §31-compliant flat structure directly**, without a Nick-directed One-Time Exception override (unlike 3017572 and 1101250).
+- Editorial correction (no pricing impact): the session prompt described 1001220 as "larger than 1210810" — at 0.231 sq ft it is actually smaller than 1210810 (0.292 sq ft); corrected in the item file's Notes and Warnings.
+
+**Strategic Flags:**
+- **Process finding, not actioned this session:** `governance/VALIDATION_PROMPTS.md` Section 3 should embed §31 in the band-context block so future sub-scope wave prompts don't repeat this gap — this is the second consecutive sub-scope item (after 1101250) whose validation predated a governance rule that had to be applied post-hoc.
+- First article not confirmed with Sean — flag for follow-up. Order quantity not specified — standard 6-tier ladder quoted.
+- do_not_benchmark = false — valid sub-scope data point, excluded from singles band DATA POINTS until production-volume acceptance.
+- Item count: 45 → 46. Printed/Laminated category: 34 → 35 items. Sub-scope data points: 7 → 8.
+
+**Status:** Complete — validate.py 0/0; all three build scripts clean; elliott_items = 46 rows confirmed in Supabase.
 
 ---
 
@@ -189,19 +211,4 @@
 
 ---
 
-### 2026-06-30 — Session AF (bug fix): hydrateFromDb() variants drop — dual-variant display now renders on live Supabase path
-
-**What:** One-line fix in `frontend/index.html` `hydrateFromDb()`. The merge block that assembles the runtime `items` object was copying `image` and `sections` from static `data.json` but omitting `variants`. Because Supabase has no variants column, `data.json` is the sole source of variant data — so on the live Supabase path `item.variants` was always `undefined`, causing `renderPricing()` and `renderItemStats()` to fall through to single-variant rendering for P/N 3017557. Added `variants: st.variants || null` to the merge block alongside `image` and `sections`.
-
-**Key Decisions:**
-- Fix is entirely in `hydrateFromDb()` — no changes to `renderPricing()`, `renderItemStats()`, `build_frontend.py`, Supabase schema, or any item/category/pricing files.
-- Null fallback matches existing code style for `image` and `sections`; single-variant items unaffected (get `variants: null`, which the renderer already handles).
-
-**Strategic Flags:**
-- Any future multi-variant item will automatically benefit from this fix — `variants` will now be hydrated for all items that have it in `data.json`.
-
-**Status:** Complete — minimal targeted fix, no pricing or schema changes.
-
----
-
-*Entries older than Session AF (2026-06-30) were removed per the 10-entry rolling window — git history retains them in full.*
+*Entries older than Session AG (2026-06-30) were removed per the 10-entry rolling window — git history retains them in full.*
