@@ -465,18 +465,18 @@ DO_NOT_BENCHMARK = {
 # that scaling rather than testing it, so they are excluded from being a
 # chain-consistency NEIGHBOR — this is a DIFFERENT exclusion set than
 # DO_NOT_BENCHMARK above (e.g. 1210810 and 1082570 are do-not-benchmark for
-# band-DATA-POINT reasons but remain valid, independently-tested §32
-# comparables; the audit's own 20-item Orajet / 8-item cut-vinyl dataset
-# includes both). excluded_pn is the curated parity/owner-judgment/one-off
-# class (per audit §1.2's tables); kits are excluded structurally by
-# item_type in the engine, not listed here. The three sub-0.06 sq ft
-# floor-governed clones (1279260, 1279270, 1205870) are listed here for
-# audit-trail clarity, but the engine also derives this class structurally
-# (any candidate below per_label_floor_threshold_sq_ft that is not one of
-# the two governing per-label-floor comparables) so a FUTURE F26-routed
-# item is automatically exempt too, per §32's "Categorical exception...
-# any future item routed through F26 inherits this exemption automatically,
-# without a rule update."
+# band-DATA-POINT reasons but remain valid §32 comparables; the audit's own
+# 20-item Orajet / 8-item cut-vinyl dataset includes both). excluded_pn is
+# the curated parity/owner-judgment/one-off class (per audit §1.2's
+# tables); kits are excluded structurally by item_type in the engine, not
+# listed here. The three sub-0.06 sq ft floor-governed clones (1279260,
+# 1279270, 1205870) are listed here for audit-trail clarity, but the engine
+# also derives this class structurally (any candidate below
+# per_label_floor_threshold_sq_ft that is not one of the two governing
+# per-label-floor comparables) so a FUTURE F26-routed item is automatically
+# exempt too, per §32's "Categorical exception... any future item routed
+# through F26 inherits this exemption automatically, without a rule
+# update."
 # ---------------------------------------------------------------------------
 
 CHAIN_CONSISTENCY_EXCLUDED_PN = {
@@ -526,8 +526,8 @@ CHAIN_CONSISTENCY_PERMANENT_EXCEPTIONS = ["1230820", "1205720"]
 # requires raising the new item's own price by this many (or more) filing
 # increments of size increment_size. A single-increment residual is within
 # the account's own §30 filing granularity and is treated as rounding, not
-# a violation — validated against the account's own documented, accepted
-# exception at the 3020335↔1277020 boundary (categories/printed-laminated-orajet.md
+# a violation — validated against the account's own accepted exception at
+# the 3020335↔1277020 boundary (categories/printed-laminated-orajet.md
 # footnote ²⁰), which independently resolves to exactly one increment.
 CHAIN_CONSISTENCY_TOLERANCE_INCREMENTS = 2
 CHAIN_CONSISTENCY_INCREMENT_SIZE = 0.25
