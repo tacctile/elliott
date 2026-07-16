@@ -462,3 +462,50 @@ Scanning every item on §11.3's review-required list for proximity to the 0.1 sq
 ### 12.5 Updated review-required list
 
 Removing 3020370 leaves **seven** review-required items from §11.3: 1101250, 3017572, 3024595, 1279260, 1279270, 1205870, 1146650. The two permanent structural exceptions (1230820, 1205720) are unaffected by this section. 3020370 should instead be treated the way §10 treats its two "uncounted" Orajet pairs — a density gap (no valid same-band comparison exists), not a pricing exception requiring review.
+
+---
+
+## 13. 0.5 sq ft boundary check on 3024595, plus a final consolidated exception list
+
+Appended per follow-up request. No prices or files outside this audit doc were changed.
+
+### 13.1 3024595 at the sub-scope/singles 0.5 sq ft line
+
+**Which pair(s) flagged it:** exactly one, same as 3020370 — 3024595 (0.488 sq ft) vs its nearest smaller validated neighbor **3017572 (0.365 sq ft)**, from §11.2. Three tiers failed:
+
+| Tier | 3024595 $/sq ft | 3017572 (smaller) $/sq ft | Short by |
+|---|---|---|---|
+| 1-9 | $22.03 | $23.97 | 8.1% (worst) |
+| 10-19 | $18.95 | $19.86 | 4.6% |
+| 20-49 | $15.88 | $16.44 | 3.4% |
+
+**Does this pair cross the 0.5 sq ft line?** No. 3024595 (0.488) and 3017572 (0.365) are **both on the sub-scope side** (0.1–0.5 sq ft) of the boundary — neither is a singles-band item (≥0.5 sq ft). Re-partitioning at 0.5 sq ft changes nothing here: the pairing is unchanged, still legal, still the nearest same-side neighbor on both ends. **Unlike 3020370, this is not a boundary-crossing artifact.**
+
+**Structural exclusion check — the §31 floor clamp:** `governance/CALCULATOR.md`'s `single_sub_scope` routing entry documents exactly the mechanism the follow-up cites: *"§31 sub-scope root floor... for 0.1–0.5 sq ft items (`buildPrintLamSinglesTiers`), no tier at any quantity may price below $15.43/sq ft (P/N 1230820). Where a raw ratio-scaled tier would fall below the floor, that tier and every deeper (higher-quantity) tier is clamped flat to the cheapest $0.25-increment price that clears the floor."* 3024595's own ladder ($10.75 / $9.25 / $7.75 / $7.75 / $7.75 / $7.75) is the canonical example — the flat run from 20-49 through 200+ **is** that clamp; 3024595 is the item whose 2026-07-01 validation record established the doctrine that the engine rule above later codified.
+
+But the clamp only covers **part** of the failure: of the three failing tiers, only **20-49** falls inside the flat-clamped run (20-49 through 200+ are all $7.75 by floor-clamp construction, not by ratio scaling). **1-9 ($10.75) and 10-19 ($9.25) are not clamped** — they are 3024595's own freely-chosen, ratio-scaled prices, and they still land below 3017572's at those tiers. The floor-clamp mechanism has nothing to say about why *those* two tiers are short.
+
+**Plain verdict:** removing the boundary artifact question doesn't apply here — there wasn't one. The §31 floor-clamp reasoning validly explains **one** of the three failing tiers (20-49) as by-design and not something to "fix." It does **not** explain 1-9 or 10-19. **3024595 stays on the review-required list**, but rescoped: only its 1-9 and 10-19 tiers represent an open, unexplained gap; its 20-49 (and by extension 50-99/100-199/200+, which weren't even flagged) should not be touched — they are the floor doctrine working as intended.
+
+### 13.2 Classifying the remaining six
+
+| Item | Sq ft | Mechanism behind its own price | Classification |
+|---|---|---|---|
+| **1279260** | 0.033 | Sub-0.06 sq ft per-label floor (`governance/CALCULATOR.md` F26) — ANSI anchor, no AI validation run, own file disclaims its $/sq ft as an "artifact." | **(a) Category-excluded** — floor-governed by rule, not an individual pricing decision. |
+| **1279270** | 0.033 | Identical mechanism to 1279260 (identical price). | **(a) Category-excluded.** |
+| **1205870** | 0.049 | Sub-0.06 sq ft per-label floor (F26) — non-ANSI anchor, no AI validation run. | **(a) Category-excluded.** |
+| **1101250** | 0.132 | Normal ratio-scaled sub-scope single, independently 4-wave validated. Its `One-Time Exception` override is about its own **deep** tiers (50-99/100-199/200+) pricing *below* the §31 floor — the opposite of floor-governed protection. Its §11 failures (against both 3020477 and, per §9, 1279130) trace to a validation comp-set that checked only 1230820, never its true neighbors. | **(b) Genuine one-off** — no category rule explains this; needs individual comp-set review. Highest priority in this group (§11.2's sharpest finding). |
+| **3017572** | 0.365 | Normal ratio-scaled sub-scope single. Its `One-Time Exception` override is also about its own deep tiers (100-199/200+ below floor) — unrelated to its single §11 failure at 1-9 (8.1%→3.4% range seen elsewhere; here just 3.4% at 1-9 only, see §11.2). | **(b) Genuine one-off** — small, low-priority, but not explained by any existing rule. |
+| **1146650** | 2.971 | Cut vinyl — normal ratio-scaled Band A single. Its `Owner Judgment` override touches only 1-9/10-19 (raised after discovering 3018378 was omitted from the original comp set) — unrelated mechanically to why it fails at 1-9 (-0.4%) against 1205720. No cut-vinyl floor-clamp doctrine exists analogous to Orajet's §31. | **(b) Genuine one-off** — trivial magnitude, likely closed by a $0.05–$0.10 bump to its 1-9 tier. |
+
+Three of six (1279260, 1279270, 1205870) share the exact same mechanism and should be handled as a **category**, not as three individual line items — the eventual constraint should read something like *"items routed through the sub-0.06 sq ft per-label floor (`governance/CALCULATOR.md` F26) are exempt from the nearest-smaller-neighbor $/sq ft floor rule by size class"* rather than naming P/Ns. The other three (1101250, 3017572, 1146650) have no such shared mechanism — each is a standalone gap that happens to coexist with an unrelated override, and none of the three overrides on file actually explains the specific neighbor-chain failure found in this audit.
+
+### 13.3 Final consolidated exception list
+
+| Group | Items | Why | Action |
+|---|---|---|---|
+| **1 — Permanent / structural** | **1230820** (Orajet root benchmark), **1205720** (cut-vinyl root benchmark) | Each *is* the floor its own family's other items must stay above (§31 doctrine); the rule inverts if pointed at the benchmark itself. | Hard-code as permanent exceptions. Never re-evaluate. |
+| **2 — Category-excluded (floor-governed)** | **1279260, 1279270, 1205870** | All three route through the sub-0.06 sq ft per-label floor (`governance/CALCULATOR.md` F26) — priced by a fixed per-label floor mechanism, not $/sq ft area-scaling. Their own files already disclaim $/sq ft as a valid comparison basis at this size class. | Exclude the whole F26 routing class by rule. Do not list these three P/Ns individually — any future item that routes through F26 should inherit the same exemption automatically. |
+| **3 — True one-off, individual review required** | **1101250** (highest priority — full comp-set gap against both neighbors), **3024595** (rescoped — only 1-9/10-19 need review; 20-49+ is the §31 floor clamp working as designed, not an error), **3017572** (minor, single-tier, 3.4%), **1146650** (trivial, single-tier, 0.4%, likely closed by a small 1-9 bump) | No existing category rule explains any of these four. Each needs a human pricing decision, not an automatic repricing or a rule-based exemption. | Route to Nick/Sean for individual review, prioritized in the order listed. |
+
+Net change from §11.3/§12.5: **3020370 dropped entirely** (§12, boundary artifact — reclassify as a density gap, not an exception), **1279260/1279270/1205870 moved from individual listing to a single categorical carve-out**, **3024595 kept but rescoped to 2 of its 6 tiers**. Final individually-tracked exception count: 2 permanent + 4 one-off = **6 items**, plus one categorical rule covering the F26 floor-governed class.
