@@ -232,3 +232,51 @@ Any new item outside these bounds needs its own validation pass; any new item *i
 ## 8. Held out of scope (per prior session)
 
 Convex High Bond + Polycarbonate (`categories/convex-high-bond-polycarbonate.md`, 1 item file — `3017557`) — insufficient sample (single item), not read for chain-testing purposes in this audit, consistent with the prior session's determination.
+
+---
+
+## 9. Override/status trace for every violating pair (Direction A, §3.1/§4.1)
+
+Appended per follow-up request. This does not change any finding above — it adds the frontmatter `override_type` and `status` for both items in every pair that fails the literal hypothesis (Direction A: larger item L's $/sq ft < smaller neighbor S's $/sq ft, at one or more tiers) at 17/19 Orajet pairs and 7/7 cut-vinyl pairs.
+
+**Caveat on reading `override_type`:** the field records whether *that item's own price* carries a logged override (e.g. `One-Time Exception` on a below-floor deep tier, `Relationship Concession` on a qty-20 anchor, `Owner Judgment` on a ladder adopted without AI validation) — it is **not** a per-pair field and does not mean the account ever logged *this specific neighbor comparison* as a reviewed exception. A blank `override_type` on both sides of a pair means the pair's violation has no exception trail anywhere in the frontmatter — i.e. it was never flagged, reviewed, or accepted; it is simply present in the data. A non-blank `override_type` on one side means that item's price was deliberately overridden for *some* documented reason, which may or may not be the reason it also produces this chain violation (see per-pair notes in §3.2/§4.2 for the cases where the connection is direct, e.g. 3020335→1277020).
+
+### Orajet (17 violating pairs of 19)
+
+| Smaller item (S) | S sq ft | S status | S override_type | Larger item (L) | L sq ft | L status | L override_type | Tiers where L < S |
+|---|---|---|---|---|---|---|---|---|
+| 3024140 | 0.019 | Quoted | — | 3024592 | 0.054 | Quoted | — | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ |
+| 3024592 | 0.054 | Quoted | — | 1012080 | 0.077 | Quoted | — | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ |
+| 1012080 | 0.077 | Quoted | — | 1279000 | 0.097 | Quoted | — | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ |
+| 1279000 | 0.097 | Quoted | — | 1247120 | 0.122 | Quoted | — | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ |
+| 1247120 | 0.122 | Quoted | — | 3020477 | 0.130 | Quoted | — | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ |
+| 3020477 | 0.130 | Quoted | — | 1101250 | 0.132 | Quoted | **One-Time Exception** | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ |
+| 1279130 | 0.148 | Quoted | — | 3018808 | 0.222 | Quoted | — | 1-9, 20-49, 50-99 |
+| 3018808 | 0.222 | Quoted | — | 1001220 | 0.231 | Quoted | — | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ |
+| 1001220 | 0.231 | Quoted | — | 1210810 | 0.292 | Quoted | — | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ |
+| 1210810 | 0.292 | Quoted | — | 3017572 | 0.365 | Quoted | **One-Time Exception** | 1-9 |
+| 3017572 | 0.365 | Quoted | **One-Time Exception** | 3024595 | 0.488 | Quoted | — | 1-9, 10-19, 20-49 |
+| 3024595 | 0.488 | Quoted | — | 1073950 | 0.503 | Quoted | — | 50-99, 100-199, 200+ |
+| 1082570 | 0.503 | Quoted | — | 1267140 | 0.560 | Quoted | — | 1-9, 10-19, 20-49 |
+| 1267140 | 0.560 | Quoted | — | 1278980 | 0.609 | Quoted | — | 20-49, 100-199, 200+ |
+| 1278980 | 0.609 | Quoted | — | 3020335 | 0.625 | Quoted | — | 1-9 |
+| 3020335 | 0.625 | Quoted | — | 1277020 | 0.635 | Quoted | — | 1-9, 10-19, 50-99 |
+| 1277020 | 0.635 | Quoted | — | 1230820 | 1.296 | **FA Accepted** | — | 10-19, 20-49, 50-99, 100-199, 200+ |
+
+**14 of these 17 pairs have `—` (blank) `override_type` on *both* sides** — no exception trail at all in the frontmatter for either item. The remaining 3 (3020477↔1101250, 1210810↔3017572, 3017572↔3024595) each touch one of the two Orajet items carrying a `One-Time Exception` flag (1101250, 3017572) — both flags are about those items' own deep-tier floor overrides (§31), not a logged review of these specific neighbor pairs.
+
+### Cut vinyl (7 violating pairs of 7)
+
+| Smaller item (S) | S sq ft | S status | S override_type | Larger item (L) | L sq ft | L status | L override_type | Tiers where L < S |
+|---|---|---|---|---|---|---|---|---|
+| 3010707 | 0.969 | Quoted | — | 3010736 | 1.012 | Quoted | — | 1-9, 10-19, 20-49, 50-99, 100-199 |
+| 3010736 | 1.012 | Quoted | — | 3010722 | 1.167 | Quoted | — | 1-9, 10-19, 50-99, 100-199, 200+ |
+| 3010722 | 1.167 | Quoted | — | 3010698 | 1.582 | Quoted | — | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ |
+| 3010698 | 1.582 | Quoted | — | 1205720 | 2.560 | **FA Accepted** | **Relationship Concession** | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ |
+| 1205720 | 2.560 | **FA Accepted** | **Relationship Concession** | 1146650 | 2.971 | Quoted | **Owner Judgment** | 1-9 |
+| 1146650 | 2.971 | Quoted | **Owner Judgment** | 3010701 | 3.202 | Quoted | — | 10-19 |
+| 3010701 | 3.202 | Quoted | — | 3010704 | 7.069 | Quoted | — | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ |
+
+**4 of these 7 pairs have `—` on both sides** (3010707↔3010736, 3010736↔3010722, 3010722↔3010698, 3010701↔3010704) — no exception trail. The other 3 touch 1205720 (`Relationship Concession` — the deliberate below-consensus root anchor, §1205720's own record) or 1146650 (`Owner Judgment` — only on its 1-9/10-19 tiers, per its own file) on one side; neither override was logged as a review of the specific neighbor-pair violation shown here.
+
+**Rollup:** 18 of the 24 violating pairs across both families (14 Orajet + 4 cut vinyl) have zero override trail on either item — the chain-check flags them, but nothing in the account's own records shows anyone ever checked, flagged, or accepted that specific comparison. The remaining 6 pairs each touch at least one item that carries *some* documented override, but in every case that override was granted for a different, narrower reason (a below-floor deep-tier exception, a root-anchor concession, a skipped-validation ladder adoption) than "this neighbor pair is consistent" — so even those 6 should be read as override-adjacent, not override-explained.
