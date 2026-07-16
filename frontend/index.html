@@ -4172,6 +4172,20 @@ function renderCalcBandPositioning(result, inputs) {
     }
   }
 
+  let chainHtml = '';
+  const chainC = result.chain_consistency;
+  if (chainC && chainC.status !== 'not_applicable') {
+    const statusLabel = { gap: 'Data-coverage gap', exempt_permanent: 'Exempt — permanent root benchmark',
+      violation: 'F27 violation', ok: 'Holds' }[chainC.status] || chainC.status;
+    const color = chainC.status === 'violation' ? 'var(--flag-review)' : 'var(--text-tertiary)';
+    chainHtml = `
+      <div class="comp-section-label" style="margin-top: 14px;">Chain Consistency (§32)</div>
+      <div style="font-size: 12px; line-height: 1.5; color: ${color};">
+        <strong>${escapeHtml(statusLabel)}</strong> — ${escapeHtml(chainC.detail || '')}
+      </div>
+    `;
+  }
+
   return `
     <div class="calc-section">
       <details>
@@ -4179,6 +4193,7 @@ function renderCalcBandPositioning(result, inputs) {
         ${visualHtml}
         ${rule14}
         ${compsHtml}
+        ${chainHtml}
       </details>
     </div>
   `;
@@ -6071,6 +6086,184 @@ init();
     };
   }
 
+  // ===== §32 nearest-neighbor chain consistency (F27) =====
+  // governance/PRICING_RULES.md §32, audits/2026-07-16-deep-tier-chain-
+  // consistency.md. For any new item, find its nearest LARGER validated
+  // same-family neighbor by sq ft and require the new item's $/sq ft to
+  // hold at or above that neighbor's $/sq ft at all six tiers (Direction B
+  // — matches the account's own Wave 4 language, e.g. footnote ² on
+  // P/N 1210810, and the §31 floor doctrine). Applies to single-label
+  // Orajet and cut-vinyl routes only — kits carry an intentional per-sq-ft
+  // premium (see "Per-Sq-Ft Kit Premium" in PRICING_RULES.md) and are not
+  // comparable on this basis. All comparable data and exclusion/exception
+  // lists are sourced from config.chain_consistency (calculator_config.json
+  // / Supabase) — nothing item-specific is hardcoded here, same convention
+  // as do_not_benchmark and the F26 per-label-floor constants.
+  function chainConsistencyApplicableRoute(route) {
+    return route === 'single_standard' || route === 'single_sub_scope' || route === 'cut_vinyl';
+  }
+
+  function findNearestLargerChainNeighbor(inp, sq_ft_ref, config) {
+    const cc = config.chain_consistency;
+    const items = (window.ITEMS_DATA && window.ITEMS_DATA.items) || {};
+    const fam = inp.material_family;
+    const excluded = cc.excluded_pn || {};
+    const micro = config.bands && config.bands.printed_laminated_micro;
+    const floorThreshold = micro ? micro.per_label_floor_threshold_sq_ft : null;
+    const floorGoverningPns = micro ? [micro.per_label_floor_ansi_pn, micro.per_label_floor_non_ansi_pn] : [];
+    const itemTypeMatch = function(fm) {
+      if (fam === CUT_VINYL_FAMILY) return fm.item_type === 'Vinyl Cut Lettering';
+      return fm.item_type === 'Printed/Laminated Label';
+    };
+
+    const candidates = [];
+    for (const pn of Object.keys(items)) {
+      if (inp.part_number && pn === inp.part_number) continue; // an item is not its own neighbor
+      const fm = items[pn].frontmatter;
+      if (!fm || fm.material_family !== fam) continue;
+      if (!itemTypeMatch(fm)) continue; // structurally excludes kits (item_type mismatch)
+      const sf = parseFloat(fm.sq_ft_per_label);
+      if (!isFinite(sf) || !(sf > sq_ft_ref)) continue; // must be strictly LARGER — "nearest larger neighbor"
+
+      // Curated exclusions: direct-parity / owner-judgment / one-off job
+      // economics / floor-governed clones (§32 exclusion list).
+      if (excluded[pn]) continue;
+      // Structural F26 exclusion: any candidate below the per-label-floor
+      // threshold that is NOT one of the two governing floor comparables —
+      // covers any future F26-routed item automatically, without a rule
+      // update (§32 "Categorical exception").
+      if (floorThreshold != null && sf < floorThreshold && floorGoverningPns.indexOf(pn) === -1) continue;
+
+      candidates.push({ pn, fm, sq_ft: sf });
+    }
+    if (!candidates.length) return null;
+    candidates.sort(function(a, b) { return a.sq_ft - b.sq_ft; });
+    const nearest = candidates[0];
+    const fm = nearest.fm;
+    return {
+      pn: nearest.pn,
+      description: fm.description,
+      sq_ft: nearest.sq_ft,
+      tiers: {
+        price_1_9: parseFloat(fm.price_1_9),
+        price_10_19: parseFloat(fm.price_10_19),
+        price_20_49: parseFloat(fm.price_20_49),
+        price_50_99: parseFloat(fm.price_50_99),
+        price_100_199: parseFloat(fm.price_100_199),
+        price_200_plus: parseFloat(fm.price_200_plus),
+      },
+    };
+  }
+
+  function checkChainConsistency(inp, route, sq_ft_ref, tiers, config, routeMeta) {
+    const result = { status: 'not_applicable', neighbor: null, failing_tiers: [], detail: null };
+    const cc = config && config.chain_consistency;
+    if (!cc) {
+      result.detail = 'N/A — chain_consistency config not loaded.';
+      return result;
+    }
+    if (!chainConsistencyApplicableRoute(route)) {
+      result.detail = 'N/A for this route — §32 chain consistency compares single-label $/sq ft scaling only (not kits or no-profile/invalid-input routes).';
+      return result;
+    }
+    // Rule: never fire when the new item itself routes through F26 (per-label
+    // floor STOP) — §32's F26 routing-class exemption.
+    if (routeMeta && routeMeta.per_label_floor_stop) {
+      result.detail = 'N/A — this item routes through the F26 per-label floor (STOP). §32 exempts F26-routed items as a routing class: they are priced by a fixed per-label floor, not $/sq ft area-scaling.';
+      return result;
+    }
+    if (!tiers) {
+      result.detail = 'N/A — no tier table computed for this route.';
+      return result;
+    }
+
+    // Rule: the two permanent root benchmarks are excluded definitionally,
+    // "in either direction" — never re-evaluated against §32 regardless of
+    // which role they'd play. This covers not just their use as a NEIGHBOR
+    // (checked below, once one is actually found) but also re-running the
+    // calculator against one of these two P/Ns directly: each IS the floor
+    // its own family prices above, so testing it against ITS OWN nearest
+    // larger neighbor would be a different, unrelated inversion — the audit
+    // itself removes both roots from the chain entirely before simulating
+    // (audits/2026-07-16-deep-tier-chain-consistency.md §16.1) and keeps
+    // 1205720 in the permanent/structural exception group even though it is
+    // the smaller side of a real, documented gap against 1146650 (§13.3).
+    const permanentExceptionsSelf = cc.permanent_exceptions || [];
+    if (inp.part_number && permanentExceptionsSelf.indexOf(inp.part_number) !== -1) {
+      result.status = 'exempt_permanent';
+      result.detail = `P/N ${inp.part_number} is itself one of the two permanent §32 root-benchmark exceptions `
+        + '— never re-evaluated against this rule, in either direction, regardless of gap size.';
+      return result;
+    }
+
+    const fam = inp.material_family;
+    const range = cc.tested_range ? cc.tested_range[fam] : null;
+    if (!range || sq_ft_ref < range.min_sq_ft || sq_ft_ref > range.max_sq_ft) {
+      result.status = 'gap';
+      result.detail = `Data-coverage gap, not a §32 violation: ${sq_ft_ref} sq ft falls outside the ${fam} `
+        + `family's tested chain-consistency range (${range ? range.min_sq_ft + '–' + range.max_sq_ft : 'undefined'} sq ft, `
+        + 'per audits/2026-07-16-deep-tier-chain-consistency.md §7). No validated same-family neighbor covers this size — needs its own validation pass.';
+      return result;
+    }
+
+    const neighbor = findNearestLargerChainNeighbor(inp, sq_ft_ref, config);
+    if (!neighbor) {
+      result.status = 'gap';
+      result.detail = `Data-coverage gap, not a §32 violation: no independently-validated same-family neighbor larger than ${sq_ft_ref} sq ft exists in the chain-consistency comparable set.`;
+      return result;
+    }
+
+    const permanentExceptions = cc.permanent_exceptions || [];
+    if (permanentExceptions.indexOf(neighbor.pn) !== -1) {
+      result.status = 'exempt_permanent';
+      result.neighbor = neighbor;
+      result.detail = `Nearest larger validated neighbor is P/N ${neighbor.pn} — a permanent §32 root-benchmark `
+        + 'exception (it IS the floor its family prices above). Never re-evaluated against this rule, regardless of gap size.';
+      return result;
+    }
+
+    const tolerance = cc.tolerance_increments || 2;
+    const incrementSize = cc.increment_size || 0.25;
+    const failing = [];
+    for (const b of TIER_BOUNDS) {
+      const thisPrice = tiers[b.key];
+      const neighborPrice = neighbor.tiers[b.key];
+      if (thisPrice == null || isNaN(thisPrice) || neighborPrice == null || isNaN(neighborPrice) || !(neighbor.sq_ft > 0)) continue;
+      const neighborPsf = neighborPrice / neighbor.sq_ft;
+      const thisPsf = thisPrice / sq_ft_ref;
+      if (thisPsf >= neighborPsf - 1e-9) continue; // holds (or ties) at this tier
+
+      const rawNeeded = r(neighborPsf * sq_ft_ref, 6);
+      const neededPrice = r(Math.ceil(rawNeeded / incrementSize - 1e-9) * incrementSize, 2);
+      const increments = Math.round(r((neededPrice - thisPrice) / incrementSize, 6));
+      if (increments >= tolerance) {
+        failing.push({
+          tier: b.key, tier_label: b.label,
+          this_psf: r(thisPsf, 2), neighbor_psf: r(neighborPsf, 2),
+          this_price: r(thisPrice, 2), needed_price: neededPrice, increments,
+        });
+      }
+    }
+
+    result.neighbor = neighbor;
+    if (failing.length) {
+      result.status = 'violation';
+      result.failing_tiers = failing;
+      const worst = failing.slice().sort(function(a, b) { return b.increments - a.increments; })[0];
+      result.detail = `Undercuts nearest larger validated neighbor P/N ${neighbor.pn} (${neighbor.sq_ft} sq ft, `
+        + `${neighbor.description || ''}) beyond the §32 2-increment tolerance at ${failing.length} of 6 tiers `
+        + `(${failing.map(function(f) { return f.tier_label; }).join(', ')}) — worst at ${worst.tier_label}: `
+        + `$${worst.this_psf}/sq ft vs $${worst.neighbor_psf}/sq ft (${worst.increments} × $${incrementSize} increments short, `
+        + `$${worst.this_price.toFixed(2)} → $${worst.needed_price.toFixed(2)} would clear it). `
+        + 'Closing this gap is a pricing decision for Nick (§32), not an automatic recalculation.';
+    } else {
+      result.status = 'ok';
+      result.detail = `Holds at or above nearest larger validated neighbor P/N ${neighbor.pn} (${neighbor.sq_ft} sq ft) `
+        + 'at all six tiers, within the §32 2-increment tolerance.';
+    }
+    return result;
+  }
+
   // ===== flags =====
   const FLAG_DEFS = {
     F1:  { severity: 'STOP',   text: 'Material cost stale (>365 days from verified_date) — reverify before quoting.', suppresses_output: false },
@@ -6097,6 +6290,7 @@ init();
     F24: { severity: 'STOP',   text: 'Invalid input — width, height, and label count must all be positive. Output blocked (W2 input-sanity guard).', suppresses_output: true },
     F25: { severity: 'STOP',   text: 'Unknown cut vinyl color — no verified material cost exists for this color key. Output blocked; add the material (Materials tab) or pick a configured color (W6 guard).', suppresses_output: true },
     F26: { severity: 'STOP',   text: 'Sub-0.06 sq ft — per-label floor governs, complexity-dependent (ANSI hazard/danger vs. non-ANSI instructional). Linear Micro-Format formula not applied — engine cannot auto-classify complexity from dimensions alone. Output blocked; price against the governing comparable named in the brief (P/N 3024592 ANSI or P/N 3024140 non-ANSI) per the per-label floor doctrine in governance/PRICING_RULES.md.', suppresses_output: true },
+    F27: { severity: 'REVIEW', text: 'Nearest-neighbor chain-consistency (§32): this item’s $/sq ft undercuts its nearest larger validated same-family neighbor by 2 or more $0.25 increments at one or more tiers — beyond the account’s own filing-granularity tolerance. Does not fire against the two permanent root benchmarks (P/N 1230820, 1205720) or against F26-routed items. Acknowledge in the validation prompt before proceeding; closing the gap is a pricing decision (§32), not an automatic recalculation.', suppresses_output: false },
   };
 
   function makeFlag(id, extra, detail) {
@@ -6169,6 +6363,15 @@ init();
     // than let a wrong silent number reach the brief.
     if (routeMeta.per_label_floor_stop) {
       flags.push(makeFlag('F26'));
+    }
+
+    // F27: §32 nearest-neighbor chain consistency — REVIEW when the new
+    // item's $/sq ft undercuts its nearest larger validated same-family
+    // neighbor beyond the 2-increment tolerance. checkChainConsistency()
+    // already applies the route/F26/permanent-exception/data-coverage-gap
+    // exclusions (routeMeta.chain_consistency), so only 'violation' fires.
+    if (routeMeta.chain_consistency && routeMeta.chain_consistency.status === 'violation') {
+      flags.push(makeFlag('F27', '(' + routeMeta.chain_consistency.detail + ')', routeMeta.chain_consistency));
     }
 
     // band proximity F8 — fire when sq_ft within 30% of singles floor (above or below)
@@ -6458,6 +6661,25 @@ init();
       lines.push('No comparable items found in catalog (or all filtered by do_not_benchmark).');
     }
     lines.push('');
+    lines.push('CHAIN CONSISTENCY (Nearest-Neighbor, §32)');
+    lines.push('------------------------------------------');
+    const chainC = routeMeta.chain_consistency;
+    if (!chainC || chainC.status === 'not_applicable') {
+      lines.push((chainC && chainC.detail) || 'Not applicable for this route.');
+    } else {
+      const statusLabel = { gap: 'DATA-COVERAGE GAP', exempt_permanent: 'EXEMPT (permanent root benchmark)',
+        violation: 'VIOLATION (F27)', ok: 'HOLDS' }[chainC.status] || chainC.status;
+      lines.push(`Status: ${statusLabel}`);
+      lines.push(chainC.detail);
+      if (chainC.status === 'violation' && chainC.failing_tiers.length) {
+        const incSize = (config.chain_consistency && config.chain_consistency.increment_size) || 0.25;
+        lines.push('Failing tiers (this $/sq ft vs neighbor $/sq ft, increments short):');
+        for (const f of chainC.failing_tiers) {
+          lines.push(`  ${f.tier_label}: $${f.this_psf}/sq ft vs $${f.neighbor_psf}/sq ft (${f.increments} × $${incSize} increments)`);
+        }
+      }
+    }
+    lines.push('');
     lines.push('INVOICE PROTECTION (Never-Pay-More, §26)');
     lines.push('----------------------------------------');
     if (invoice.all_clear) {
@@ -6540,6 +6762,8 @@ init();
                 this_item_psf: null, position: 'out_of_scope',
                 ai_consensus_min: null, ai_consensus_max: null,
                 comparable_items: [] },
+        chain_consistency: { status: 'not_applicable', neighbor: null, failing_tiers: [],
+                              detail: 'N/A — invalid inputs (F24).' },
         invoice_protection: { violations: [], all_clear: true },
         flags: [f24],
         has_stop_flag: true,
@@ -6665,6 +6889,12 @@ init();
     // 9. Band positioning
     const band = computeBand(inp, route, sq_ft_per_label, sq_ft_per_kit, tierBuild.tiers, config);
 
+    // 9b. §32 nearest-neighbor chain consistency (F27) — single-label
+    // Orajet/cut-vinyl routes only; excludes kits, F26-STOPped items, the
+    // two permanent root benchmarks, and data-coverage gaps outside the
+    // family's tested sq ft range (see checkChainConsistency).
+    routeMeta.chain_consistency = checkChainConsistency(inp, route, sq_ft_per_label, tierBuild.tiers, config, routeMeta);
+
     // 10. Flags
     const flags = generateFlags(inp, route, material, pricing, margins, band, lamInfo, config, tier_enforcement, routeMeta);
 
@@ -6695,6 +6925,7 @@ init();
       },
       margins,
       band,
+      chain_consistency: routeMeta.chain_consistency || null,
       invoice_protection: {
         violations: invoice.violations,
         all_clear: invoice.all_clear,
@@ -6715,6 +6946,14 @@ init();
   // unconditional routing). Prices are the BAND-ANCHORED engine outputs
   // (report-only enforcement, C-1 fix). Where the algorithmic snap diverges from
   // the Nick-locked catalog value, the documented engine value is asserted.
+  // Cases 18-22 (F27 nearest-neighbor chain consistency, §32): the F27 check
+  // compares the ENGINE'S OWN freshly-computed tiers against a real neighbor's
+  // FILED tiers — like every other band/margin check in this suite, the fresh
+  // algorithmic output can diverge from an existing item's own Wave-negotiated
+  // catalog price (documented snap-divergence pattern, same as cases 2/13/17
+  // above), so a case built on an existing P/N's dimensions verifies the F27
+  // MECHANISM against the engine's live output, not a re-derivation of that
+  // item's filed price. All values below verified live via this harness.
   window.runSanityChecks = function() {
     const items = (window.ITEMS_DATA && window.ITEMS_DATA.items) || {};
 
@@ -6852,13 +7091,57 @@ init();
           && t3024595.price_50_99 === 7.75 && t3024595.price_100_199 === 7.75 && t3024595.price_200_plus === 7.75],
         note: '§31 root floor clamp — engine now natively produces the flat $7.75 structure (pre-fix: $7.50/$6.50/$5.25/$4.25, all below the $15.43/sq ft floor)' });
     record('1205870 (F26 per-label floor STOP)', runCalculator(inputsForPN('1205870')),
-      { route: 'single_sub_scope', stop: true, flag_present: ['F26'],
+      { route: 'single_sub_scope', stop: true, flag_present: ['F26'], flag_absent: ['F27'],
         note: 'sub-0.06 sq ft — engine now STOPs instead of silently computing $1.50 (pre-fix: $1.50 @ qty 20, no flag)' });
     const r1205720result = runCalculator(inputsForPN('1205720', { cut_vinyl_color: 'cardinal_red' }));
     record('1205720 (cut vinyl length-based tape)', r1205720result,
-      { route: 'cut_vinyl', price_20: 35.00, flag_present: ['F15', 'F23'],
+      { route: 'cut_vinyl', price_20: 35.00, flag_present: ['F15', 'F23'], flag_absent: ['F27'],
         extra_check: ['material $7.88 (pre-fix: $8.74)', Math.abs(r1205720result.material.total_per_kit - 7.88) < 0.01],
         note: 'tape now length-based ($0.65) instead of the deprecated area pseudo-rate ($1.52) — matches categories/cut-vinyl-3m-180mc.md 2026-06-09 method note' });
+
+    // 18-22: NEW F27 nearest-neighbor chain consistency (governance/PRICING_RULES.md
+    // §32, audits/2026-07-16-deep-tier-chain-consistency.md).
+    const r1101250result = runCalculator(inputsForPN('1101250'));
+    record('1101250 (F27 violation vs 1279130)', r1101250result,
+      { route: 'single_sub_scope', price_20: 2.25, flag_present: ['F27'],
+        extra_check: ['chain_consistency violation vs 1279130, 1-9/10-19/20-49 fail',
+          r1101250result.chain_consistency.status === 'violation'
+          && r1101250result.chain_consistency.neighbor.pn === '1279130'
+          && r1101250result.chain_consistency.failing_tiers.map(f => f.tier).sort().join(',') === 'price_10_19,price_1_9,price_20_49'],
+        note: '§32 audit’s sharpest documented finding (0.132 sq ft vs nearest larger neighbor 1279130, 0.148 sq ft) — engine’s fresh sub-scope computation reproduces a real, structural (≥2-increment) undercut; 50-99 sits within the 2-increment tolerance and correctly does not fail (tolerance mechanism verified live)' });
+    const rGapAbove = runCalculator({
+      part_number: '', description: 'chain-consistency gap probe — above tested range', model: '',
+      material_family: PRINTED_LAM_FAMILY, item_type: 'single',
+      width_in: 24, height_in: 12, label_count: 1, cut_vinyl_color: '',
+      ink_coverage: 'full_bleed_flood_coat', order_qty: 0, notes: '',
+    });
+    record('SYNTHETIC Orajet 2.0sqft (F27 data-coverage gap, above range)', rGapAbove,
+      { route: 'single_standard', price_20: 31.00, flag_absent: ['F27'],
+        extra_check: ['chain_consistency gap (no neighbor above 1.296 sq ft ceiling)',
+          rGapAbove.chain_consistency.status === 'gap' && rGapAbove.chain_consistency.neighbor === null],
+        note: '2.0 sq ft sits above the Orajet family’s §32 tested range (0.019–1.296 sq ft, §7 scope limits) — no neighbor exists above the ceiling, so this is a flagged data-coverage gap, distinct from a real F27 violation, and F27 correctly does not fire' });
+    record('SYNTHETIC cut vinyl 0.5sqft (F27 data-coverage gap, below range)', runCalculator({
+      part_number: '', description: 'chain-consistency gap probe — below tested range', model: '',
+      material_family: CUT_VINYL_FAMILY, item_type: 'single',
+      width_in: 12, height_in: 6, label_count: 1, cut_vinyl_color: 'cardinal_red',
+      ink_coverage: 'full_bleed_flood_coat', order_qty: 0, notes: '',
+    }), { route: 'cut_vinyl', price_20: 10.00, flag_absent: ['F27'],
+          note: '0.5 sq ft sits below the cut-vinyl family’s §32 tested range (0.969–7.069 sq ft — no cut-vinyl data at any smaller size, §4.3) — data-coverage gap, F27 correctly does not fire' });
+    const rPermExc = runCalculator({
+      part_number: '', description: 'chain-consistency permanent-exception probe', model: '',
+      material_family: PRINTED_LAM_FAMILY, item_type: 'single',
+      width_in: 12, height_in: 12, label_count: 1, cut_vinyl_color: '',
+      ink_coverage: 'full_bleed_flood_coat', order_qty: 0, notes: '',
+    });
+    record('SYNTHETIC Orajet 1.0sqft (F27 exempt — nearest larger is root benchmark 1230820)', rPermExc,
+      { route: 'single_standard', price_20: 15.50, flag_absent: ['F27'],
+        extra_check: ['chain_consistency exempt_permanent, neighbor=1230820',
+          rPermExc.chain_consistency.status === 'exempt_permanent' && rPermExc.chain_consistency.neighbor
+          && rPermExc.chain_consistency.neighbor.pn === '1230820'],
+        note: '1.0 sq ft’s nearest larger validated neighbor resolves to the Orajet root benchmark 1230820 (1.296 sq ft) — a permanent §32 exception (never re-evaluated, regardless of gap size); F27 correctly does not fire' });
+    record('1230820 (F27 exempt — self is a permanent root benchmark)', runCalculator(inputsForPN('1230820')),
+      { route: 'single_standard', price_20: 20.00, flag_absent: ['F27'],
+        note: 'the root benchmark itself is excluded from §32 in either direction (audit §16.1/§13.3) — re-running the calculator against 1230820’s own dimensions must never fire F27 against it' });
 
     const passed = out.filter(o => o.pass).length;
     console.table(out);
