@@ -335,3 +335,71 @@ No non-adjacent pairs in cut vinyl — every excluded cut-vinyl item (the parity
 | **Total** | | 14 | 4 | 18 |
 
 **Reading this against §7's proposed constraint:** the 14-item bucket-2 candidate set is where a nearest-neighbor floor rule would actually have teeth — these are genuinely close, genuinely adjacent pairs (Δ as small as 0.008–0.074 sq ft in Orajet, 0.043–0.415 sq ft in cut vinyl) with no logged override and, in several cases, deep-tier inversions of 30–47% that qty-20-only validation never would have caught (3024595↔1073950 at -46.8%, 1001220↔1210810 at -42.0%, 3024592↔1012080 at -39.2%). The 2-pair "low density" bucket (1277020↔1230820, 3010701↔3010704) is exactly the pair identified in §3.3/§4.3 as sitting on either side of this audit's two largest flagged sq-ft gaps — consistent with those gaps being real coverage holes rather than isolated pricing errors. The 2 uncounted Orajet pairs are a separate, third finding: they show that even some of the "adjacent" pairs in the independently-tested subset aren't adjacent at all once the excluded clones are put back on the sq-ft number line — a reason to re-run this density check against the full item population (not just the independently-tested subset) before finalizing any floor rule.
+
+---
+
+## 11. Deriving and stress-testing a candidate rule from the 14-pair Bucket 2 set
+
+Appended per follow-up request. This does not change any finding above.
+
+### 11.1 Derivation
+
+The proposed wording to test: *"At every tier, an item's $/sq ft may not price below its nearest smaller-sq-ft validated neighbor's $/sq ft at that same tier."*
+
+Checking this against all 6 tiers (not just the tiers where §10 flagged a Direction-A failure) for each of the 14 Bucket-2 pairs:
+
+| Holds at all 6 tiers (6 pairs) | Fails at 1+ tier (8 pairs) |
+|---|---|
+| 3024592↔1012080, 1012080↔1279000, 1247120↔3020477, 3018808↔1001220, 1001220↔1210810, 3010722↔3010698 | 1279130↔3018808, 3024595↔1073950, 1082570↔1267140, 1267140↔1278980, 1278980↔3020335, 3020335↔1277020, 3010707↔3010736, 3010736↔3010722 |
+
+**The direction is confirmed, not corrected** — it matches the account's own Wave 4 verdict (§1.1) and is the only one of the two possible directions that any of the 14 pairs satisfy cleanly at all. But "resolve all 14" cannot honestly be read as "the current data already complies" — **8 of the 14 (57%) already breach this exact wording at one or more tiers**, with no override on either item. Sorted by severity:
+
+| Pair | Failing tiers | Worst tier | Magnitude | Character |
+|---|---|---|---|---|
+| 1082570↔1267140 | 50-99, 100-199, 200+ | 200+ | **-37.4%** | Material — the curve genuinely crosses between 20-49 and 50-99; not a rounding artifact. |
+| 3024595↔1073950 | 1-9, 10-19, (20-49 negligible) | 1-9 | **-48.9%** (1-9); 20-49 is a $0.02/0.1% rounding-level blip | Material at the shallow end, driven by 3024595's flat §31-clamped ladder colliding with 1073950's normal steep ladder (same mechanism flagged in §3.2). |
+| 1279130↔3018808 | 10-19, 100-199, 200+ | 200+ | **-25.0%** | Material — 3018808's own flat deep-tier ladder (byte-identical to 1001220 by deliberate choice) undercuts 1279130's steeper one. |
+| 3020335↔1277020 | 20-49, 100-199, 200+ | 200+ | -1.9% | The one **documented, account-accepted exception** (footnote ²⁰). Small in magnitude, but real and intentional. |
+| 1267140↔1278980 | 1-9, 10-19, 50-99 | 1-9 | -2.6% | Small but real. |
+| 3010707↔3010736 | 200+ | 200+ | -8.2% | Material, single tier — the Band C→Band A boundary crossing. |
+| 1278980↔3020335 | 10-19, 20-49, 50-99, 100-199, 200+ | 200+ | -1.0% | Mostly $0.00–$0.12/sq ft — rounding/filing-precision noise from independent §0.25-increment tier tables landing a cent or two apart. |
+| 3010736↔3010722 | 20-49 | 20-49 | -0.2% | Rounding noise ($0.02/sq ft). |
+
+**Corrected framing:** the rule is the right shape, but it is a **forward-looking constraint to enforce, not a description of present compliance.** Roughly half of its own clean supporting evidence already violates it — mostly at the deep tiers (100-199/200+), which is exactly where §3.2/§4.2 already showed independently-chosen tier-compression ratios collide unchecked. A qty-20-only-scoped version does not meaningfully rescue this: 6 of these 8 pairs already fail *at* 20-49 too (1082570↔1267140 fails at 20-49; 1278980↔3020335 and 3010736↔3010722 fail at 20-49 by rounding-level cents; the other three's 20-49 tier already holds). So no simpler tier-scoping saves the wording — the rule stands as proposed, understood as a target to converge toward, with the 8 pairs above (2 real, 1 documented-accepted, 5 small/rounding) as known current gaps.
+
+### 11.2 Stress test against every governance-flagged item
+
+For each item explicitly named plus every other `override_type`-tagged or floor-governed item found in frontmatter, this section finds its nearest **smaller validated** neighbor (from the 20-Orajet / 8-cut-vinyl independently-tested set used throughout this audit) and checks the rule as written, at all 6 tiers, using the item's own locked price.
+
+| Item | Why flagged | Nearest smaller validated neighbor | Tiers that would fail | Worst tier | Magnitude |
+|---|---|---|---|---|---|
+| **1230820** | Root benchmark; §31 "floor — never invert below" doctrine | 1277020 (0.635) | 10-19, 20-49, 50-99, 100-199, 200+ | 200+ | **-25.7%** |
+| **1101250** | `override_type = One-Time Exception` | 3020477 (0.130) | **All 6** | 200+ | **-29.7%** |
+| **3017572** | `override_type = One-Time Exception` | 1210810 (0.292) | 1-9 | 1-9 | -3.4% |
+| **3024595** | §31 floor-doctrine flat-clamp (established this item) | 3017572 (0.365) | 1-9, 10-19, 20-49 | 1-9 | -8.1% |
+| **3020370** | `override_type = Owner Judgment`; ladder adopted verbatim, no AI validation | 1279000 (0.097) | **All 6** | 200+ | -23.0% |
+| **1279260** | Floor-governed clone of 3024592, no AI validation; own file disclaims its $/sq ft as an "artifact" | 3024140 (0.019) | **All 6** | 1-9 | **-38.8%** |
+| **1279270** | Same as 1279260 (identical price) | 3024140 (0.019) | **All 6** | 1-9 | **-38.8%** |
+| **1205870** | Floor-governed clone of 3024140, no AI validation | 3024140 (0.019) | **All 6** | 1-9 | **-58.8%** |
+| **1205720** | Root benchmark (cut vinyl); `override_type = Relationship Concession` | 3010698 (1.582) | **All 6** | 200+ | -9.4% |
+| **1146650** | `override_type = Owner Judgment` (1-9/10-19 tiers only) | 1205720 (2.560) | 1-9 | 1-9 | -0.4% |
+
+**Every one of the 10 targets would be touched — none pass cleanly.** Notably, **1101250 fails against both of its neighbors**: as the smaller item in the 3020477↔1101250 comparison above (fails all 6 tiers, -29.7% worst) *and* as the smaller item in the separately-documented 1101250↔1279130 comparison from §3.2/§9 (fails all 6 tiers there too, -42.7% worst against its *larger* neighbor). 1101250 sits at a local minimum on the $/sq ft curve — both the item smaller than it and the item larger than it are priced higher per sq ft, at every tier. That is the single sharpest data point in this whole audit.
+
+The floor-governed Micro-Format items (1279260, 1279270, 1205870, and by extension 3020370) fail hardest and most uniformly (all 6 tiers, 23–59% short) — not because their prices are wrong, but because they are priced by a **per-label floor mechanism that the category's own documentation explicitly says produces a $/sq ft figure that is "a mathematical artifact... NOT a pricing rate, never use as a benchmark"** (footnote ¹¹, `items/3024140.md`). Comparing them to a $/sq ft-based neighbor rule is applying the wrong yardstick by the account's own stated logic, not exposing a pricing error.
+
+### 11.3 Verdict
+
+**Not safe to implement as-is.** Applied unconditionally, the rule would immediately flag 8 of its own 14 founding "clean" pairs and all 10 stress-tested governance-flagged items — a false-positive rate high enough that a hard gate would be un-shippable without an exception list. The exception list needs two distinct tiers:
+
+**Permanent, structural exceptions (do not re-evaluate — these define the floor, they don't sit above it):**
+- **1230820** — the Orajet root benchmark; §31 already establishes it as the floor every *other* item must stay above. The rule inverts backwards if applied to the benchmark itself.
+- **1205720** — the cut-vinyl equivalent: the FA-accepted, Relationship-Concession-priced root anchor for Band A. Same structural role as 1230820.
+
+**Review-required exceptions (currently non-compliant, no reconciliation on file — each needs a one-time pricing/comp-set review, not an automatic repricing, because in most cases the item's whole pricing method is deliberately not area-scaled):**
+- **1101250** — the sharpest finding in this audit; needs a real comp-set review against both 3020477 and 1279130, not just a note.
+- **3017572, 3024595** — small-to-moderate shallow-tier gaps (3.4%, up to 8.1%) driven by flat §31-floor-clamp ladders meeting normal declining ladders; worth a one-time reconciliation but not urgent.
+- **3020370, 1279260, 1279270, 1205870** — all four are floor-governed Micro-Format/per-label-floor items whose own documentation already disclaims $/sq ft as a valid comparison basis at their size class. These should likely be **excluded from the rule by size class** (e.g., below the ~0.06–0.11 sq ft floor-governance threshold already documented in `categories/printed-laminated-orajet.md`) rather than carried as individual exceptions — that is a cleaner, more durable fix than four one-off entries.
+- **1146650** — the smallest, most easily closed gap (-0.4% at 1-9 only); a $0.05–$0.10 bump to its 1-9 tier would likely resolve it outright rather than requiring a standing exception.
+
+No changes were made to any locked price, rule, or engine file. This section is derivation and stress-testing only.
