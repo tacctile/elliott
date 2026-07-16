@@ -594,3 +594,59 @@ Checking each exception-list item's classification from §14.3 against the revis
 | **3 — True one-off, individual review required** | **1101250, 3024595 (rescoped), 3017572** | **1146650 removed** — within accepted $0.25 tolerance, no longer an exception. |
 
 Individually-tracked exception count drops from 6 to **5**, plus the same one categorical rule for the F26 floor-governed class. Applying the same 2+-increment threshold back to the general Bucket-2 population (informational, not part of the exception list) would similarly stop flagging 1247120↔3020477 and 3020335↔1277020 as violations, leaving 12 of the original 14 as the real candidate set for enforcement.
+
+---
+
+## 15. Simulating the minimum fix: does it cascade?
+
+Appended per follow-up request. **No prices were changed anywhere except in this simulation's in-memory calculation.** Nothing in `items/*.md` or any other file was modified.
+
+### 15.1 Method
+
+For the **12 structural pairs** from §14.2 (the 2 rounding-scale pairs, 1247120→3020477 and 3020335→1277020, are excluded — they're within tolerance per §14), the fix was applied to **every failing tier for that pair**, not just its single worst tier used for classification (per §10's original "Failing tiers" columns — several pairs fail at 3–6 tiers, not just one). At each failing tier, the larger item L's price was raised by the minimum number of $0.25 increments needed to clear the smaller item S's **original** rate at that tier — 53 individual [item, tier] price bumps across the 12 pairs in total. All 53 fixes were computed independently from the original (pre-simulation) price table and applied **simultaneously**, producing one post-fix price snapshot.
+
+That snapshot was then checked against **every adjacent pair in the full sorted chain** — all 19 Orajet pairs and all 7 cut-vinyl pairs among the 20/8 independently-validated items (not just the original 14 Bucket-2 pairs) — at all 6 tiers, comparing pre-fix vs. post-fix Direction-A status.
+
+### 15.2 Result: 0 of 12 are clean
+
+**Every one of the 12 fixes cascades. None are clean.**
+
+| Pair | Own pair fixed? | Causes new/worse violations elsewhere? |
+|---|---|---|
+| 3024592 → 1012080 | Yes | Yes — breaks 1012080→1279000 (already-flagged pair, now short by up to 41.3% instead of 12.3%) |
+| 1012080 → 1279000 | **No** — cascade from the prior fix already broke it further | Yes — breaks 1279000→1247120 (a **rounding-scale pair, not even in the 12**, now short by up to 46.5%, previously 33.7%) |
+| 1279130 → 3018808 | Yes | Yes — breaks 3018808→1001220 at 20-49 |
+| 3018808 → 1001220 | **No** | (inherits the 3018808 problem above) |
+| 1001220 → 1210810 | **No** | Yes — creates 5 brand-new violations at 1210810→3017572 (10-19 through 200+ — previously clean; 3017572 is an **exception-list, override-tagged item**, not part of Bucket-2 at all) |
+| 3024595 → 1073950 | Yes | Yes — creates 3 brand-new violations at 1073950→1082570 — **breaks the exact 0.503 sq ft byte-identical tie** between two items with historically identical tier tables (§2.1), because only one twin (1073950) was fixed |
+| 1082570 → 1267140 | Yes | Yes — same 1073950/1082570 breakage, plus 2 new violations at 1267140→1278980 |
+| 1267140 → 1278980 | **No** | Yes — creates 3 new violations at 1278980→3020335 (20-49, 100-199, 200+) |
+| 1278980 → 3020335 | Yes | Yes — worsens 3020335→1277020 at 1-9 (a **rounding-scale pair**, pushed from -1.6% to -4.9%, though still resolvable in 1 increment) |
+| 3010707 → 3010736 | Yes | Yes — breaks 3010736→3010722 at 20-49 (new) and worsens it at 4 other tiers |
+| 3010736 → 3010722 | **No** | (inherits the 3010707 problem above) |
+| 3010722 → 3010698 | **No** | Yes — sharply worsens the already-existing 3010698→1205720 violation at **every tier** (e.g. 200+ goes from -9.4% to -31.2%) — 1205720 is the cut-vinyl root benchmark |
+
+Aggregate: **14 tier-level violations created that did not exist before** (across 1210810→3017572 ×5, 1073950→1082570 ×3, 1267140→1278980 ×2, 1278980→3020335 ×3, 3010736→3010722 ×1), plus **25 tier-level instances where a pair in the original 12 is still failing after its own fix** (because its smaller-neighbor reference also moved), plus **4 distinct pairs outside the 12 that were already violating and measurably worsened** (not merely re-listed unchanged): 1279000→1247120 (all 6 tiers), 3020335→1277020 (1-9), 3010698→1205720 (all 6 tiers), and 1210810→3017572's pre-existing 1-9 tier (3.4%→22.2%, on top of the 5 brand-new tiers counted above for that same pair).
+
+### 15.3 Why: propagation, not conflict
+
+Every cascade above has the same shape: fixing item **L** against its smaller neighbor **S** raises L's price — but L is *also* the smaller neighbor for the *next* item up the chain, so that next item's already-computed fix (based on L's old, lower price) now falls short too. This is not two pairs pulling in opposite directions; it's a straight chain reaction running in one direction — up.
+
+**This means it is not "genuine tension" in the sense of two pairs being irreconcilable.** A direct test confirms it: running a single **sequential** pass up each family's sorted chain — process items smallest-to-largest, and for each one, use the neighbor's *already-updated* price (not the stale original) to compute the minimum fix — converges in **exactly one pass, with zero residual violations**, for both families. There is no cycle: nothing downstream ever needs a smaller item's price to be reduced, so a single forward sweep is guaranteed to terminate. In that narrow sense, §11's proposed constraint *can* be satisfied by a chain-wide (not pairwise) mechanism, exactly as the follow-up anticipated.
+
+### 15.4 But the converged answer is not usable
+
+Here is what that convergence actually requires, at qty 20 (20-49 tier):
+
+| | Original $/sq ft range | Converged $/sq ft range | What it means |
+|---|---|---|---|
+| Orajet | $15.43 (1230820) – $131.58 (3024140) | **$131.58 – $144.68**, flat | Every item from 0.054 to 1.296 sq ft collapses to within ~10% of the smallest item's rate. **1230820 — the FA-accepted root benchmark — would need to move from $15.43/sq ft to $144.68/sq ft, an 838% increase**, just to clear its immediate smaller neighbor, which itself only holds because everything below *it* was forced up first. |
+| Cut vinyl | $11.03 (3010704) – $20.64 (3010707) | **$20.64 – $21.01**, flat | Milder in absolute terms (cut vinyl's premium spread is much smaller to start), but the same shape: **1205720 — the cut-vinyl root benchmark — would move from $13.67/sq ft to $20.90/sq ft (+53%)**, and 3010704 (Band B, the account's large-format anchor) from $11.03 to $21.01/sq ft (+90%). |
+
+Enforcing §11's rule to full convergence doesn't fix 12 pairs — it erases the small-format premium for the entire family, flattening 1.3 sq ft of deliberately differentiated pricing into a single near-constant rate set by the smallest, most fixed-cost-dominated item on the account. That is the exact opposite of every Wave 4 verdict cited throughout this audit (footnote ²: *"a smaller label must carry equal or higher $/sq ft than a larger label"* — not *the same* $/sq ft).
+
+### 15.5 Verdict
+
+**Not tension between specific pairs — a structural mismatch between the rule and the pricing philosophy it's being applied to.** The 12 fixes cascade because Direction A (§1.1's literal hypothesis: `L ≥ S`, larger holds at or above smaller) is, as this audit has said since §3.1, the *reverse* of the account's actual governing rule (Direction B: `S ≥ L`, smaller holds at or above larger). A rule that runs backward from the pricing philosophy doesn't fail quietly when you try to enforce it locally — it fails by demanding the philosophy itself be abandoned once you trace it to a global fixed point. This also corrects an imprecise line in §11.1, which described the `L ≥ S` wording as matching "the account's own Wave 4 verdict" — it does not; §1.1's own intro has this right (Direction B matches Wave 4), and §11.1 should be read with that correction in mind.
+
+**Practical conclusion:** do not implement §11's rule, converged or not — not because the math doesn't resolve (it does, cleanly, in one pass), but because the resolved state is not a price list this account would ever want to file. The finding that stands from this whole exercise is the one from §13/§14: **Direction B, checked at all 6 tiers with a 2+-increment tolerance, with the 5-item true-one-off + 2-item permanent + 3-item categorical exception list from §14.6, is the constraint worth actually adopting.** Direction A's Bucket-2 pairs remain useful as a diagnostic (they correctly locate every place the small-format-premium curve isn't smooth), but "fixing" them by raising prices is the wrong tool — where a real gap exists, it should be closed by re-deriving that item's price from its own comp set (as §11.3/§13 already recommend for 1101250, 3024595, and 3017572), not by mechanically chasing the nearest-smaller-neighbor floor up the entire chain.
