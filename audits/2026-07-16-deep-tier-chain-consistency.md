@@ -1,0 +1,757 @@
+# Deep-Tier Chain-Consistency Audit — Orajet + Cut Vinyl
+
+**Date:** 2026-07-16
+**Scope:** `categories/printed-laminated-orajet.md` + all 41 `items/*.md` in the Orajet 3951 Cast + Polyester Lam family; `categories/cut-vinyl-3m-180mc.md` + all 15 `items/*.md` in the 3M 180mC Cut Vinyl family. All 57 item files in these two families were read (frontmatter + pricing derivation + notes). Convex High Bond + Polycarbonate (`items/3017557.md`) was **not** read for testing purposes — held out per the prior session's insufficient-sample call.
+**Files modified:** none. This is a read-only audit.
+**Reasoning effort:** increased, per request.
+
+---
+
+## 1. Method
+
+### 1.1 The hypothesis, tested exactly as specified
+
+> At every tier (1-9, 10-19, 20-49, 50-99, 100-199, 200+), does each item's $/sq ft hold **at or above its nearest smaller-sq-ft neighbor's** $/sq ft, at that same tier?
+
+Concretely: sort the independently-tested items in a family by sq ft, ascending. For every adjacent pair, let **S** = the smaller-sq-ft item, **L** = the larger-sq-ft item (its nearest smaller neighbor is S). At each of the six tiers, check `L.$/sqft ≥ S.$/sqft`. This is **Direction A** below.
+
+This direction was tested first, literally, with no adjustment — see §3.2 and §4.2. It fails at a majority of tier-pairs in both families, and the reason is structural, not accidental: both categories are deliberately built on a **small-format premium** — smaller items are priced at a *higher* $/sq ft than larger ones (explicitly, e.g. footnote ² on `1210810`: *"A smaller label must carry equal or higher $/sq ft than a larger label at the same tier"*). Under that design, $/sq ft is expected to **fall** as sq ft rises, so `L ≥ S` (a larger item priced at or above a smaller one) is the atypical case, not the norm — Direction A mostly fails by design, and the docs' own "root benchmark exemption" is simply the largest, most visible instance of that same pattern (§3.2).
+
+Because a literal reading of Direction A mostly just re-detects the account's own small-format-premium design rather than surfacing errors, this audit **also** runs the mirror-image check that the account's own governance actually asserts (Direction B: S.$/sqft ≥ L.$/sqft — the smaller item must not be *cheaper* per sq ft than its larger neighbor). Both directions are reported in full. Direction B is what §7 proposes as the standing constraint, because it is what the account's own Wave 4 verdicts and §31 floor doctrine already claim to enforce — this audit checks whether that claim holds at all six tiers, not just qty 20 (the only tier the account's own validation waves routinely check).
+
+### 1.2 Inclusion: "independently-validated" items
+
+Per the task's instruction, direct-parity clones are excluded because they inherit pricing rather than test it. The account's governance uses the literal term **"Direct Parity Exemption / Direct parity clone"** for eight items; this audit also extends the same *principle* ("inherits rather than tests") to four further patterns found in the files, all disclosed below so the classification is auditable rather than assumed:
+
+- **"Color parity" clones** (cut vinyl) — identical dimensions, identical tier table, price fixed to a sibling P/N's material cost, "not separately validated" — functionally the same act as a Direct Parity clone, just a different governance label.
+- **"Sq ft parity" / "Direct sq ft parity"** clones (cut vinyl) — item files that say verbatim *"AI Validation: Not separately run... direct parity with an accepted item at the same sq ft."*
+- **Verbatim floor-governed tier-table copies** (Orajet) — items priced with **no AI validation run** whose six-tier ladder is copied exactly from another item's floor anchor, and whose own file explicitly disclaims the resulting $/sq ft as "a mathematical artifact... NOT a pricing rate, never use as a benchmark."
+- **Owner Judgment ladder adoption** (Orajet, one item) — tier table adopted verbatim from another item "by Nick's direction," explicitly "No AI validation waves run on this item."
+
+Kits (multi-label, priced per-kit not per-label-sq-ft) and one-off job-economics items (explicitly flagged in their own files as "DO NOT BENCHMARK" / "arithmetic artifact only," priced flat from labor floor, not sq ft) were read but are **excluded** from the chain test — they are not testing the same $/sq ft scaling logic the hypothesis is about, and the account's own docs forbid using them as $/sq ft references.
+
+**All 57 items were read.** The full accounting:
+
+| Family | Total items | Independently-tested (chain-check set) | Excluded — parity/inherited | Excluded — kit | Excluded — one-off job economics |
+|---|---|---|---|---|---|
+| Orajet | 41 | **20** | 12 | 3 | 6 |
+| Cut vinyl | 15 | **8** | 7 | 0 | 0 |
+| Convex/polycarbonate | 1 | — (out of scope, prior session) | — | — | — |
+
+**Orajet exclusions (12 parity/inherited):**
+
+| P/N | Excluded as | Inherits from |
+|---|---|---|
+| 1068270 | Direct Parity Exemption (literal) | 1082570 |
+| 1062390 | Direct Parity Exemption (literal) | 1068270 |
+| 1132950 | Direct Parity Exemption (literal) | 1068270 |
+| 1278220 | Direct Parity Exemption (literal) | 1279000 |
+| 1277300 | Direct Parity Exemption (literal) | 1278980 |
+| 1279020 | Direct Parity Exemption (literal) | 1278980 |
+| 3020336 | Direct Parity Exemption (literal) | 3020335 |
+| 3020482 | Direct Parity Exemption (literal) | 3020335 |
+| 1205870 | Verbatim floor-table copy, no AI validation | 3024140 |
+| 1279260 | Verbatim floor-table copy, no AI validation; own file: "$83.33/sq ft... is NOT a pricing rate" | 3024592 |
+| 1279270 | Verbatim floor-table copy, no AI validation; identical to 1279260 | 3024592 |
+| 3020370 | Owner Judgment — ladder adopted verbatim, "No AI validation waves run" | 1247120 |
+
+**Orajet kits (3, excluded — kit $/sq ft is a per-kit rate carrying an intentional ~6% kit premium, not comparable to single-label scaling):** 1278890, 1278930, 1245130.
+**Orajet one-offs (6, excluded — job-economics pricing, explicitly non-benchmarkable):** 1277970, 1277980, 1277990, 1278000, 3017583, 3017584.
+
+**Cut vinyl exclusions (7 parity/inherited):**
+
+| P/N | Excluded as | Inherits from |
+|---|---|---|
+| 1186310 | "Direct sq ft parity... Not separately run" | 1205720 |
+| 3017435 | "Direct parity with an accepted item at the same sq ft. No ambiguity." | 1205720 |
+| 3018378 | "Direct sq ft parity... Not separately run" | 1205720 |
+| 3010708 | "Color-parity pricing" | 3010707 |
+| 3010709 | "Color-parity pricing" | 3010707 |
+| 3010723 | "Color parity with P/N 3010722... identical pricing" | 3010722 |
+| 3010724 | "Color parity with P/N 3010722... identical pricing" | 3010722 |
+
+**Notable side-finding:** the category page markets the "~2.51–2.56 sq ft cluster" (1205720, 1186310, 3017435, 3018378) as four converging data points confirming the Band A rate, and Band C (3010707/3010708/3010709) as "three founding data points." Once clones are excluded, **each of those is actually one independently-tested item wearing three price tags.** This doesn't make the price wrong (color/geometry-parity pricing is legitimate and clearly disclosed in each clone's own file), but it means the account's confidence narrative overstates its own sample size — 4 "data points" is 1, and 3 "founding data points" is 1.
+
+---
+
+## 2. Full dataset — $/sq ft at every tier, sorted by sq ft
+
+### 2.1 Orajet — 20 independently-tested items
+
+| P/N | Description | Sq Ft | $/sqft 1-9 | $/sqft 10-19 | $/sqft 20-49 | $/sqft 50-99 | $/sqft 100-199 | $/sqft 200+ |
+|---|---|---|---|---|---|---|---|---|
+| 3024140 | LBL-WRK LGHTS | 0.019 | $210.53 | $157.89 | $131.58 | $118.42 | $105.26 | $92.11 |
+| 3024592 | LBL-FALL PRTCT ANCHRG 1 PERSON | 0.054 | $78.70 | $60.19 | $50.93 | $46.30 | $41.67 | $37.04 |
+| 1012080 | LABEL, PTE SINGLE STICK CONTROLLER | 0.077 | $48.70 | $37.66 | $32.47 | $28.57 | $25.32 | $24.68 |
+| 1279000 | LBL-MAX PLTF CAP 1200 TIP HZRD | 0.097 | $46.39 | $36.08 | $30.93 | $26.80 | $23.71 | $21.65 |
+| 1247120 | LBL-DNGR TIP-OVER HAZARD | 0.122 | $34.84 | $26.64 | $22.54 | $18.44 | $16.39 | $14.34 |
+| 3020477 | LBL-MODULAR BOOM CONTROL | 0.130 | $32.69 | $25.00 | $21.15 | $17.31 | $15.38 | $13.46 |
+| 1101250 | LBL-DNGR MAX PLAT. 2100 | 0.132 | $30.30 | $22.73 | $17.05 | $13.26 | $11.36 | $9.47 |
+| 1279130 | LBL-MOVING OR WARNING E-SERIES | 0.148 | $32.09 | $23.65 | $20.95 | $17.23 | $15.54 | $13.51 |
+| 3018808 | LBL-GREER SETUP INST | 0.222 | $31.53 | $24.77 | $18.02 | $16.89 | $16.89 | $16.89 |
+| 1001220 | DANGER ELECTROCUTION HAZARD | 0.231 | $30.30 | $23.81 | $17.32 | $16.23 | $16.23 | $16.23 |
+| 1210810 | LBL - DANGER FALLING JIB | 0.292 | $24.83 | $19.69 | $16.27 | $13.70 | $11.99 | $9.42 |
+| 3017572 | LBL - HYDAC VLV OVERRIDE | 0.365 | $23.97 | $19.86 | $16.44 | $15.75 | $15.07 | $14.38 |
+| 3024595 | LBL-DNGR TIP, ELEC, CRUSH | 0.488 | $22.03 | $18.95 | $15.88 | $15.88 | $15.88 | $15.88 |
+| 1073950 | CHART-TOP MOUNT JIB 500# | 0.503 | $32.80 | $20.87 | $15.90 | $12.43 | $10.44 | $8.45 |
+| 1082570 | Load Chart, I70 EZR Mount 3.6K | 0.503 | $32.80 | $20.87 | $15.90 | $12.43 | $10.44 | $8.45 |
+| 1267140 | *(blank on drawing)* | 0.560 | $23.21 | $18.75 | $15.62 | $13.39 | $12.95 | $11.61 |
+| 1278980 | LABEL-PLTFM RANGE CAPACITY CHART E160 V3 | 0.609 | $23.81 | $18.88 | $15.60 | $13.55 | $12.32 | $11.08 |
+| 3020335 | E145 - LOWER TERMINAL STRIP BOX | 0.625 | $23.20 | $19.20 | $15.60 | $13.60 | $12.40 | $11.20 |
+| 1277020 | CHRT-D100i FG PLTF | 0.635 | $22.83 | $18.90 | $15.75 | $13.39 | $12.60 | $11.42 |
+| **1230820** | **Load Chart, Model D105 (root benchmark, FA Accepted)** | **1.296** | $23.15 | $18.52 | **$15.43** | $13.12 | $10.80 | $8.49 |
+
+### 2.2 Cut vinyl — 8 independently-tested items
+
+| P/N | Description | Sq Ft | $/sqft 1-9 | $/sqft 10-19 | $/sqft 20-49 | $/sqft 50-99 | $/sqft 100-199 | $/sqft 200+ |
+|---|---|---|---|---|---|---|---|---|
+| 3010707 | ElliottEquip.com Wordmark — Cardinal Red (Band C) | 0.969 | $28.90 | $24.77 | $20.64 | $17.03 | $13.93 | $11.87 |
+| 3010736 | LBL-I50 MED WHT | 1.012 | $19.52 | $17.05 | $14.33 | $13.34 | $13.09 | $12.85 |
+| 3010722 | G50 - CARDINAL RED | 1.167 | $18.85 | $16.50 | $14.35 | $13.07 | $12.64 | $12.43 |
+| 3010698 | LBL-ELLIOTT SML RED | 1.582 | $18.02 | $15.64 | $13.91 | $12.33 | $10.90 | $9.48 |
+| **1205720** | **E190 Cardinal Red (Band A root, FA Accepted)** | **2.560** | $17.58 | $15.62 | **$13.67** | $11.72 | $10.16 | $8.59 |
+| 1146650 | 40142 Cardinal Red Model Designation | 2.971 | $17.50 | $15.65 | $13.72 | $11.95 | $10.27 | $8.92 |
+| 3010701 | LBL-ELLIOTT MED RD | 3.202 | $17.80 | $15.62 | $13.74 | $13.12 | $12.49 | $12.18 |
+| 3010704 | LBL-ELLIOTT LRG RED (Band B, sole point) | 7.069 | $14.85 | $13.01 | $11.03 | $9.62 | $8.49 | $7.36 |
+
+---
+
+## 3. Orajet — chain-check results
+
+### 3.1 Direction A (literal): does the larger item hold at or above its nearest smaller neighbor?
+
+19 adjacent pairs × 6 tiers = **114 tier-tests. 73 violate (64.0%), 41 hold (36.0%).** Only two of the 19 pairs hold cleanly at all six tiers: the exact 0.503-sq-ft tie (1073950 ↔ 1082570, byte-identical tables) and 0.132→0.148 (1101250→1279130 — see §3.3, this "hold" under Direction A is itself the flag, because it means 1279130 is *not* cheaper than the smaller 1101250; see below).
+
+The **root benchmark's known exemption is real and correctly identified — but it is one of 73, not one of one.** 1230820 (1.296 sq ft, $15.43/sq ft at qty 20) fails Direction A against its nearest smaller neighbor, 1277020 (0.635 sq ft, $15.75/sq ft), at 5 of 6 tiers (all but 1-9). That is exactly the exemption the account's own footnote ²⁰ gestures at ("staying above the 1.296 sq ft root benchmark floor" while 1277020 sits above it). But the same failure mode — a larger item settling below its immediately-smaller neighbor's $/sq ft — recurs at 15 of the other 18 pairs too, because it is the *designed* behavior of a small-format-premium curve, not a one-off. Examples: 3024140→3024592 fails at all 6 tiers ($210.53 → $78.70 at 1-9); 1210810→3017572 fails at 5 of 6; 1082570→1267140 fails at 3 of 6. **Direction A, taken literally, is not a useful error-detector for this pricing model** — it mostly just re-confirms that small-format premium pricing is doing what it was designed to do. It is documented here in full because the task asked for it explicitly, not because it is the more informative test — see §3.2 vs §3.3.
+
+### 3.2 Direction B (the account's own stated rule): does the smaller item hold at or above its larger neighbor?
+
+This is the rule the account's own governance actually asserts (footnote ², Wave 4: *"a smaller label must carry equal or higher $/sq ft than a larger label"*; §31: the root floor "applies at every quantity tier... not just the qty-20 rate"). Testing it at all six tiers — not just qty 20, which is the only tier the account's own validation waves routinely check — gives:
+
+**114 tier-tests. 35 violate (30.7%), 79 hold (69.3%).**
+
+Filtering out sub-1%/sub-$0.10 rounding noise, the **material** (>2% or >$0.10/sq ft) violations are:
+
+| Smaller (S) | Larger (L) | Tiers violated | Worst gap | Documented as an accepted exception? |
+|---|---|---|---|---|
+| **1101250** (0.132, $2.25@20) | **1279130** (0.148, $3.10@20) | **All 6 tiers** | 200+: $9.47 vs $13.51/sq ft (**+42.7%**) | **No.** 1279130 was validated 2026-06-22 against 1247120/1210810 only; 1101250 was validated 2026-07-14 against 1230820 only ("P/N 1210810 is explicitly NOT used as a benchmark"). Neither validation record checked the other, despite sitting only 0.016 sq ft apart. This is the single clearest, largest, entirely undocumented inversion in the family. |
+| **1210810** (0.292, $4.75@20) | **3017572** (0.365, $6.00@20) | 5 of 6 (all but 1-9) | 200+: $9.42 vs $14.38/sq ft (**+52.7%**) | No. 3017572's governing comparable is 3024595 only; 1210810 (the nearer smaller neighbor at the time) is not checked. |
+| **1082570 / 1068270-family** (0.503) | **1267140** (0.560, $8.75@20) | 3 of 6 (50-99 through 200+) | 200+: $8.45 vs $11.61/sq ft (+37.4%) | No — 1267140's own footnote ⁶ raised its 200+ tier specifically to avoid falling below the *band floor*, but never checked it against the 0.503-position deep tiers directly. |
+| **3024595** (0.488, $7.75@20) | **1073950/1082570** (0.503, $8.00@20) | 1-9, 10-19 (20-49 is a $0.02/sq ft rounding artifact) | 1-9: $22.03 vs $32.80/sq ft (**+48.9%**) | Partially explainable, not documented: 3024595 carries a **flat** ladder (§31 floor doctrine forces $7.75 at every tier from 20-49 up, so its 1-9/10-19 are compressed relative to a normal declining ladder); 1073950/1082570 use a normal steep ladder. The two tier-shaping philosophies were never reconciled against each other. |
+| **3020335** (0.625, $9.75@20) | **1277020** (0.635, $10.00@20) | 20-49, 100-199, 200+ | 200+: $11.20 vs $11.42/sq ft (+1.9%) | **Yes** — this is the account's own documented exception (footnote ²⁰): "breaks strict $/sq ft monotonicity-by-size at this one point in the gradient — documented here as an accepted exception, not an error." |
+| 1278980→3020335, 1267140→1278980, 3017572→3024595 | | scattered, ≤$0.32/sqft | | Sub-2% noise around adjacent 0.5–0.65 sq ft cluster boundaries; not economically material. |
+
+**Bottom line for Orajet:** the account's own claimed chain rule ("smaller ≥ larger, always") holds at qty 20 almost everywhere it was actually checked. It **breaks down materially at the deep tiers (100-199, 200+)** in three places the account has never validated against each other (1101250↔1279130, 1210810↔3017572, 1082570-family↔1267140) — because each item's tier-compression ratio (how steeply price falls from 1-9 to 200+) was chosen independently per-item, and nobody re-checked that the resulting deep-tier numbers still respect the neighbor ordering established at qty 20. 1101250↔1279130 is the standout: a **flat, undocumented, 22.9%–42.7% inversion across every volume tier**, not a rounding artifact and not a disclosed exception.
+
+### 3.3 Sq ft gaps in the tested Orajet chain
+
+| Gap (sq ft) | Between | |
+|---|---|---|
+| **0.661** | **1277020 (0.635) → 1230820 (1.296)** | **The largest gap in the family — flagged explicitly by the task.** Nothing independently tested exists between 0.635 and 1.296 sq ft. (3020335/3020336/3020482 sit at 0.625, still below the gap; the kits 1278890/1278930 sit at a *kit* sq ft of 1.218 but are excluded as a different pricing basis — see §1.2.) |
+| 0.123 | 3017572 (0.365) → 3024595 (0.488) | |
+| 0.074 | 1279130 (0.148) → 3018808 (0.222) | |
+| 0.073 | 1210810 (0.292) → 3017572 (0.365) | |
+| 0.061 | 1001220 (0.231) → 1210810 (0.292) | |
+| 0.057 | 1082570 (0.503) → 1267140 (0.560) | |
+| 0.049 | 1267140 (0.560) → 1278980 (0.609) | |
+| ≤0.035 | (remaining 12 gaps, all sub-scope/singles-band interior points) | densely tested |
+
+**Tested range: 0.019 – 1.296 sq ft.** Below 0.019 or above 1.296, there is no independently-validated Orajet single-label data point at all — the tiny one-off items (down to 0.00174 sq ft) are explicitly non-benchmarkable job-economics pricing, not $/sq ft data.
+
+---
+
+## 4. Cut vinyl — chain-check results
+
+### 4.1 Direction A (literal)
+
+7 adjacent pairs × 6 tiers = **42 tier-tests. 30 violate (71.4%), 12 hold.** Same structural cause as Orajet — Band A/B/C are explicitly designed with a 51% $/sq ft step-up from Band A to Band C and a 19.3% step-down from Band A to Band B (both documented, intentional), so a literal "larger ≥ smaller neighbor" test fails constantly by design. Not a distinct finding from §3.1; not re-tabulated pair-by-pair here for brevity — full detail available on request, same computation method as §3.1.
+
+### 4.2 Direction B (account's stated rule)
+
+**42 tier-tests. 12 violate (28.6%), 30 hold.** Material (>2%/>$0.10) violations:
+
+| Smaller | Larger | Tiers violated | Worst gap | Documented? |
+|---|---|---|---|---|
+| **1205720** (2.560, Band A root, $35@20) | **1146650** (2.971, $40.75@20) | 5 of 6 (10-19 through 200+) | 200+: $8.59 vs $8.92/sq ft (+3.8%) | **No — contradicted.** The category page states outright: *"$40.75 at qty 20 = $13.72/sq ft — inside the concession-phase band and between both neighboring anchors, **no size/price inversion**."* That claim is true at qty 20 only (13.67 vs 13.72, a 0.4% rounding-level gap, immaterial). It is **not checked, and does not hold**, at 50-99 (+2.0%), 100-199 (+1.1%), and 200+ (+3.8%) — a genuine, if modest, deep-tier inversion the account's own text asserts doesn't exist. |
+| **1146650** (2.971, $40.75@20) | **3010701** (3.202, $44@20) | 1-9, 50-99, 100-199, 200+ | 200+: $8.92 vs $12.18/sq ft (**+36.6%**) | No. 3010701 was validated 2026-06-09, before 1146650 existed (2026-07-14) — 1146650's own validation record checked it against the 2.51–2.56 cluster and 3010701, and found "no size/price inversion" **at qty 20** (13.72 vs 13.74, immaterial) — but 3010701's own deep tiers were deliberately held flat-ish for Band B separation (200+ at $12.18/sq ft vs a normal declining curve), and nobody re-checked that against 1146650's steeper decline. Same pattern as the Orajet 3024595 case (§3.2): two different tier-compression philosophies colliding at a boundary, unvalidated. |
+| 3010707 → 3010736 | — | 200+ only | $11.87 vs $12.85/sq ft (+8.2%) | Band C → Band A boundary; this is the crossing the account's own docs single out as "the closest-to-Band-C-boundary" transition and 4-wave validated the qty-20 rate specifically for it — but the 200+ tier was not part of that comparison. Minor. |
+
+3010722→3010698 and 3010698→1205720 hold cleanly at all six tiers.
+
+### 4.3 Sq ft gaps and untested ranges
+
+| Gap (sq ft) | Between | |
+|---|---|---|
+| **3.867** | **3010701 (3.202) → 3010704 (7.069)** | **This is cut vinyl's equivalent of the Orajet 0.635–1.296 gap — larger, in fact.** Band B (5+ sq ft) rests on a **single confirmed data point** (3010704 at 7.069 sq ft); the entire 3.2–5.0 sq ft range and the entire 5.0–7.0 sq ft range are unvalidated, and there is nothing at all above 7.069 sq ft. The category doc itself flags this ("Band width: Single data point... will tighten as additional large-format items are quoted"), so this gap is *known* to the account, just not previously framed as a chain-consistency gap. |
+| 0.978 | 3010698 (1.582) → 1205720 (2.560) | Documented in the account's own text as "the 1.5–2.5 sq ft interior gap zone" — 3010698 is its sole founding point. |
+| 0.415 | 3010722 (1.167) → 3010698 (1.582) | |
+| 0.411 | 1205720 (2.560) → 1146650 (2.971) | |
+| 0.231 | 1146650 (2.971) → 3010701 (3.202) | |
+| 0.155 | 3010736 (1.012) → 3010722 (1.167) | |
+| 0.043 | 3010707 (0.969) → 3010736 (1.012) | |
+
+**Tested range: 0.969 – 7.069 sq ft.** Below 0.969 sq ft, there is **no cut-vinyl data at any sq ft** — not even a single point (unlike Orajet, which has tested data down to 0.019 sq ft). The category's own Decision Tree already requires 4-wave validation for anything below ~1.0 sq ft (Band C threshold) or between 4.5–5.5 sq ft (Band B boundary) — this audit confirms those cautions are warranted and, for the sub-0.969 sq ft range, actually understated (there is no floor data down there at all, whereas Orajet has floor data all the way to 0.019 sq ft).
+
+---
+
+## 5. Answering the specific questions asked
+
+1. **Root benchmark's known exemption — confirmed, and not the only one.** Under the literal hypothesis (Direction A), 1230820 fails against 1277020 at 5/6 tiers — real, matches the account's own framing. But 72 other tier-tests fail the same literal check elsewhere in Orajet (64.0% overall), and 29 more in cut vinyl (71.4%), because Direction A is structurally opposed to the account's own small-format-premium pricing design. It is not a rare exemption; it is the norm under a literal reading. The account's own actually-intended rule runs the other direction (§1.1) — under that direction (Direction B), 1230820 vs 1277020 isn't a violation at all (§3.2), and the real, previously-undocumented violations are the ones catalogued in §3.2/§4.2.
+2. **0.635–1.296 sq ft Orajet gap** — confirmed, and it is the largest gap in the tested Orajet chain (0.661 sq ft, §3.3).
+3. **Equivalent cut-vinyl gap** — confirmed and larger in absolute terms: 3.202–7.069 sq ft (3.867 sq ft, §4.3), where Band B's entire large-format range rests on one point.
+
+---
+
+## 6. What "holds" vs "violates" means here, in one table
+
+| | Direction A (literal: larger ≥ nearest smaller neighbor) | Direction B (account's stated rule: smaller ≥ nearest larger neighbor) |
+|---|---|---|
+| Orajet | 41/114 hold (36.0%) | 79/114 hold (69.3%) |
+| Cut vinyl | 12/42 hold (28.6%) | 30/42 hold (71.4%) |
+| What a "violation" means | Expected — small-format premium working as designed | A genuine deep-tier neighbor-ordering break, mostly undocumented |
+
+---
+
+## 7. Proposed constraint (not a ratio formula)
+
+**The chain-check that should actually govern future pricing:** for any two independently-validated items in the same material family, if item S has a smaller sq ft than item L, then at **every** tier (not just qty 20), S's $/sq ft must be **at or above** L's $/sq ft — a nearest-neighbor floor, re-checked at all six tiers, applied against the item's immediate neighbors on both sides (not just against the single root benchmark, and not just at the tier the item happened to be validated at).
+
+This is exactly the account's own documented Wave 4 rule (§1.1) — the contribution of this audit is establishing that it has only ever actually been checked at qty 20, and proposing it be checked at all six tiers going forward, since §3.2/§4.2 show that's where it actually breaks.
+
+**Tested range — do not extrapolate outside these bounds:**
+
+| Family | Constraint verified between | Unverified below | Unverified above |
+|---|---|---|---|
+| Orajet | **0.019 – 1.296 sq ft** | — (floor data exists down to 0.019) | Anything > 1.296 sq ft — no data point exists above the root benchmark |
+| Cut vinyl | **0.969 – 7.069 sq ft** | Anything < 0.969 sq ft — **no data at any size**, not even one point | Anything > 7.069 sq ft — Band B is a single point; treat 3.202–7.069 as effectively unverified interior too |
+
+Any new item outside these bounds needs its own validation pass; any new item *inside* these bounds should be checked against its actual nearest neighbors at all six tiers before filing, not just at qty 20.
+
+---
+
+## 8. Held out of scope (per prior session)
+
+Convex High Bond + Polycarbonate (`categories/convex-high-bond-polycarbonate.md`, 1 item file — `3017557`) — insufficient sample (single item), not read for chain-testing purposes in this audit, consistent with the prior session's determination.
+
+---
+
+## 9. Override/status trace for every violating pair (Direction A, §3.1/§4.1)
+
+Appended per follow-up request. This does not change any finding above — it adds the frontmatter `override_type` and `status` for both items in every pair that fails the literal hypothesis (Direction A: larger item L's $/sq ft < smaller neighbor S's $/sq ft, at one or more tiers) at 17/19 Orajet pairs and 7/7 cut-vinyl pairs.
+
+**Caveat on reading `override_type`:** the field records whether *that item's own price* carries a logged override (e.g. `One-Time Exception` on a below-floor deep tier, `Relationship Concession` on a qty-20 anchor, `Owner Judgment` on a ladder adopted without AI validation) — it is **not** a per-pair field and does not mean the account ever logged *this specific neighbor comparison* as a reviewed exception. A blank `override_type` on both sides of a pair means the pair's violation has no exception trail anywhere in the frontmatter — i.e. it was never flagged, reviewed, or accepted; it is simply present in the data. A non-blank `override_type` on one side means that item's price was deliberately overridden for *some* documented reason, which may or may not be the reason it also produces this chain violation (see per-pair notes in §3.2/§4.2 for the cases where the connection is direct, e.g. 3020335→1277020).
+
+### Orajet (17 violating pairs of 19)
+
+| Smaller item (S) | S sq ft | S status | S override_type | Larger item (L) | L sq ft | L status | L override_type | Tiers where L < S |
+|---|---|---|---|---|---|---|---|---|
+| 3024140 | 0.019 | Quoted | — | 3024592 | 0.054 | Quoted | — | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ |
+| 3024592 | 0.054 | Quoted | — | 1012080 | 0.077 | Quoted | — | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ |
+| 1012080 | 0.077 | Quoted | — | 1279000 | 0.097 | Quoted | — | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ |
+| 1279000 | 0.097 | Quoted | — | 1247120 | 0.122 | Quoted | — | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ |
+| 1247120 | 0.122 | Quoted | — | 3020477 | 0.130 | Quoted | — | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ |
+| 3020477 | 0.130 | Quoted | — | 1101250 | 0.132 | Quoted | **One-Time Exception** | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ |
+| 1279130 | 0.148 | Quoted | — | 3018808 | 0.222 | Quoted | — | 1-9, 20-49, 50-99 |
+| 3018808 | 0.222 | Quoted | — | 1001220 | 0.231 | Quoted | — | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ |
+| 1001220 | 0.231 | Quoted | — | 1210810 | 0.292 | Quoted | — | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ |
+| 1210810 | 0.292 | Quoted | — | 3017572 | 0.365 | Quoted | **One-Time Exception** | 1-9 |
+| 3017572 | 0.365 | Quoted | **One-Time Exception** | 3024595 | 0.488 | Quoted | — | 1-9, 10-19, 20-49 |
+| 3024595 | 0.488 | Quoted | — | 1073950 | 0.503 | Quoted | — | 50-99, 100-199, 200+ |
+| 1082570 | 0.503 | Quoted | — | 1267140 | 0.560 | Quoted | — | 1-9, 10-19, 20-49 |
+| 1267140 | 0.560 | Quoted | — | 1278980 | 0.609 | Quoted | — | 20-49, 100-199, 200+ |
+| 1278980 | 0.609 | Quoted | — | 3020335 | 0.625 | Quoted | — | 1-9 |
+| 3020335 | 0.625 | Quoted | — | 1277020 | 0.635 | Quoted | — | 1-9, 10-19, 50-99 |
+| 1277020 | 0.635 | Quoted | — | 1230820 | 1.296 | **FA Accepted** | — | 10-19, 20-49, 50-99, 100-199, 200+ |
+
+**14 of these 17 pairs have `—` (blank) `override_type` on *both* sides** — no exception trail at all in the frontmatter for either item. The remaining 3 (3020477↔1101250, 1210810↔3017572, 3017572↔3024595) each touch one of the two Orajet items carrying a `One-Time Exception` flag (1101250, 3017572) — both flags are about those items' own deep-tier floor overrides (§31), not a logged review of these specific neighbor pairs.
+
+### Cut vinyl (7 violating pairs of 7)
+
+| Smaller item (S) | S sq ft | S status | S override_type | Larger item (L) | L sq ft | L status | L override_type | Tiers where L < S |
+|---|---|---|---|---|---|---|---|---|
+| 3010707 | 0.969 | Quoted | — | 3010736 | 1.012 | Quoted | — | 1-9, 10-19, 20-49, 50-99, 100-199 |
+| 3010736 | 1.012 | Quoted | — | 3010722 | 1.167 | Quoted | — | 1-9, 10-19, 50-99, 100-199, 200+ |
+| 3010722 | 1.167 | Quoted | — | 3010698 | 1.582 | Quoted | — | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ |
+| 3010698 | 1.582 | Quoted | — | 1205720 | 2.560 | **FA Accepted** | **Relationship Concession** | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ |
+| 1205720 | 2.560 | **FA Accepted** | **Relationship Concession** | 1146650 | 2.971 | Quoted | **Owner Judgment** | 1-9 |
+| 1146650 | 2.971 | Quoted | **Owner Judgment** | 3010701 | 3.202 | Quoted | — | 10-19 |
+| 3010701 | 3.202 | Quoted | — | 3010704 | 7.069 | Quoted | — | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ |
+
+**4 of these 7 pairs have `—` on both sides** (3010707↔3010736, 3010736↔3010722, 3010722↔3010698, 3010701↔3010704) — no exception trail. The other 3 touch 1205720 (`Relationship Concession` — the deliberate below-consensus root anchor, §1205720's own record) or 1146650 (`Owner Judgment` — only on its 1-9/10-19 tiers, per its own file) on one side; neither override was logged as a review of the specific neighbor-pair violation shown here.
+
+**Rollup:** 18 of the 24 violating pairs across both families (14 Orajet + 4 cut vinyl) have zero override trail on either item — the chain-check flags them, but nothing in the account's own records shows anyone ever checked, flagged, or accepted that specific comparison. The remaining 6 pairs each touch at least one item that carries *some* documented override, but in every case that override was granted for a different, narrower reason (a below-floor deep-tier exception, a root-anchor concession, a skipped-validation ladder adoption) than "this neighbor pair is consistent" — so even those 6 should be read as override-adjacent, not override-explained.
+
+---
+
+## 10. Density check on the 18 override-clean pairs
+
+Appended per follow-up request. This does not change any finding above.
+
+**Definitions used:**
+- **Δ sq ft** — the raw sq-ft gap between the two items.
+- **Failing tiers** — only the tiers where L's $/sq ft actually falls below S's (same test as §9, Direction A).
+- **Worst-tier inversion** — the single tier with the largest relative drop, computed as `(S.$/sqft − L.$/sqft) / S.$/sqft × 100`, i.e. how far below the smaller neighbor's rate the larger item's rate falls, at its worst tier.
+- **Adjacent** — no other item *in that family's `items/*.md` set* (independently-tested **or** excluded — clones, floor-governed, Owner Judgment, kits, one-offs; anything with a real sq-ft value) sits strictly between the two sq-ft values. **Non-adjacent** means the comparison silently skips over one or more real, priced items that were excluded from the independent chain-check for unrelated reasons (parity, floor-governance, job economics) — so the pair isn't actually a physical nearest-neighbor pair once the full item population is considered, even though it is the nearest pair *within the 20/8-item independently-tested subset*.
+
+### Orajet (14 pairs)
+
+| S (P/N, sq ft) | L (P/N, sq ft) | Δ sq ft | Failing tiers | Worst-tier inversion | Adjacent? | Bucket |
+|---|---|---|---|---|---|---|
+| 3024140 (0.019) | 3024592 (0.054) | 0.035 | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ | 1-9: $210.53→$78.70/sq ft (**-62.6%**) | Non-adjacent (between: 3017583, 1279260, 1279270, 1205870) | *uncounted* |
+| 3024592 (0.054) | 1012080 (0.077) | 0.023 | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ | 100-199: $41.67→$25.32/sq ft (**-39.2%**) | Adjacent | **2** |
+| 1012080 (0.077) | 1279000 (0.097) | 0.020 | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ | 200+: $24.68→$21.65/sq ft (**-12.3%**) | Adjacent | **2** |
+| 1279000 (0.097) | 1247120 (0.122) | 0.025 | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ | 200+: $21.65→$14.34/sq ft (**-33.7%**) | Non-adjacent (between: 3020370) | *uncounted* |
+| 1247120 (0.122) | 3020477 (0.130) | 0.008 | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ | 20-49: $22.54→$21.15/sq ft (**-6.2%**) | Adjacent | **2** |
+| 1279130 (0.148) | 3018808 (0.222) | 0.074 | 1-9, 20-49, 50-99 | 20-49: $20.95→$18.02/sq ft (**-14.0%**) | Adjacent | **2** |
+| 3018808 (0.222) | 1001220 (0.231) | 0.009 | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ | 1-9: $31.53→$30.30/sq ft (**-3.9%**) | Adjacent | **2** |
+| 1001220 (0.231) | 1210810 (0.292) | 0.061 | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ | 200+: $16.23→$9.42/sq ft (**-42.0%**) | Adjacent | **2** |
+| 3024595 (0.488) | 1073950 (0.503) | 0.015 | 50-99, 100-199, 200+ | 200+: $15.88→$8.45/sq ft (**-46.8%**) | Adjacent | **2** |
+| 1082570 (0.503) | 1267140 (0.560) | 0.057 | 1-9, 10-19, 20-49 | 1-9: $32.80→$23.21/sq ft (**-29.2%**) | Adjacent | **2** |
+| 1267140 (0.560) | 1278980 (0.609) | 0.049 | 20-49, 100-199, 200+ | 100-199: $12.95→$12.32/sq ft (**-4.9%**) | Adjacent | **2** |
+| 1278980 (0.609) | 3020335 (0.625) | 0.016 | 1-9 | 1-9: $23.81→$23.20/sq ft (**-2.6%**) | Adjacent | **2** |
+| 3020335 (0.625) | 1277020 (0.635) | 0.010 | 1-9, 10-19, 50-99 | 10-19: $19.20→$18.90/sq ft (**-1.6%**) | Adjacent | **2** |
+| 1277020 (0.635) | 1230820 (1.296) | 0.661 | 10-19, 20-49, 50-99, 100-199, 200+ | 200+: $11.42→$8.49/sq ft (**-25.7%**) | Adjacent | **1** |
+
+Two pairs are non-adjacent even though their Δ sq ft is small: 3024140→3024592 skips over 3017583 (0.026, one-off), 1279260/1279270 (0.033 each, floor-governed clones of 3024592), and 1205870 (0.049, floor-governed clone of 3024140) — four real, priced items sit in that 0.035 sq ft window, all excluded from the independent set for reasons unrelated to this comparison. 1279000→1247120 skips over 3020370 (0.105, Owner Judgment). Per the instructions, these fall into neither named bucket — they are below both size-density thresholds but aren't a true nearest-neighbor comparison either, so they're reported here but left uncounted rather than force-fit into bucket 1 or 2.
+
+### Cut vinyl (4 pairs)
+
+| S (P/N, sq ft) | L (P/N, sq ft) | Δ sq ft | Failing tiers | Worst-tier inversion | Adjacent? | Bucket |
+|---|---|---|---|---|---|---|
+| 3010707 (0.969) | 3010736 (1.012) | 0.043 | 1-9, 10-19, 20-49, 50-99, 100-199 | 1-9: $28.90→$19.52/sq ft (**-32.5%**) | Adjacent | **2** |
+| 3010736 (1.012) | 3010722 (1.167) | 0.155 | 1-9, 10-19, 50-99, 100-199, 200+ | 100-199: $13.09→$12.64/sq ft (**-3.5%**) | Adjacent | **2** |
+| 3010722 (1.167) | 3010698 (1.582) | 0.415 | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ | 200+: $12.43→$9.48/sq ft (**-23.7%**) | Adjacent | **2** |
+| 3010701 (3.202) | 3010704 (7.069) | 3.867 | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ | 200+: $12.18→$7.36/sq ft (**-39.6%**) | Adjacent | **1** |
+
+No non-adjacent pairs in cut vinyl — every excluded cut-vinyl item (the parity clones) sits at the *exact same* sq ft as its source item, never strictly between two different independently-tested items, so it never breaks adjacency the way the Orajet floor-governed clones do.
+
+### Bucket counts
+
+| Bucket | Definition | Orajet | Cut vinyl | Total |
+|---|---|---|---|---|
+| **1 — low density, likely not a real neighbor relationship** | Δ sq ft > 0.3 (Orajet) / > 1.0 (cut vinyl) | 1 (1277020↔1230820, Δ0.661) | 1 (3010701↔3010704, Δ3.867) | **2** |
+| **2 — real candidate set for a nearest-neighbor floor rule** | Δ below threshold **and** adjacent | 11 | 3 | **14** |
+| *(uncounted)* — below threshold but non-adjacent | skips a real, excluded item | 2 | 0 | 2 |
+| **Total** | | 14 | 4 | 18 |
+
+**Reading this against §7's proposed constraint:** the 14-item bucket-2 candidate set is where a nearest-neighbor floor rule would actually have teeth — these are genuinely close, genuinely adjacent pairs (Δ as small as 0.008–0.074 sq ft in Orajet, 0.043–0.415 sq ft in cut vinyl) with no logged override and, in several cases, deep-tier inversions of 30–47% that qty-20-only validation never would have caught (3024595↔1073950 at -46.8%, 1001220↔1210810 at -42.0%, 3024592↔1012080 at -39.2%). The 2-pair "low density" bucket (1277020↔1230820, 3010701↔3010704) is exactly the pair identified in §3.3/§4.3 as sitting on either side of this audit's two largest flagged sq-ft gaps — consistent with those gaps being real coverage holes rather than isolated pricing errors. The 2 uncounted Orajet pairs are a separate, third finding: they show that even some of the "adjacent" pairs in the independently-tested subset aren't adjacent at all once the excluded clones are put back on the sq-ft number line — a reason to re-run this density check against the full item population (not just the independently-tested subset) before finalizing any floor rule.
+
+---
+
+## 11. Deriving and stress-testing a candidate rule from the 14-pair Bucket 2 set
+
+Appended per follow-up request. This does not change any finding above.
+
+### 11.1 Derivation
+
+The proposed wording to test: *"At every tier, an item's $/sq ft may not price below its nearest smaller-sq-ft validated neighbor's $/sq ft at that same tier."*
+
+Checking this against all 6 tiers (not just the tiers where §10 flagged a Direction-A failure) for each of the 14 Bucket-2 pairs:
+
+| Holds at all 6 tiers (6 pairs) | Fails at 1+ tier (8 pairs) |
+|---|---|
+| 3024592↔1012080, 1012080↔1279000, 1247120↔3020477, 3018808↔1001220, 1001220↔1210810, 3010722↔3010698 | 1279130↔3018808, 3024595↔1073950, 1082570↔1267140, 1267140↔1278980, 1278980↔3020335, 3020335↔1277020, 3010707↔3010736, 3010736↔3010722 |
+
+**The direction is confirmed, not corrected** — it matches the account's own Wave 4 verdict (§1.1) and is the only one of the two possible directions that any of the 14 pairs satisfy cleanly at all. But "resolve all 14" cannot honestly be read as "the current data already complies" — **8 of the 14 (57%) already breach this exact wording at one or more tiers**, with no override on either item. Sorted by severity:
+
+| Pair | Failing tiers | Worst tier | Magnitude | Character |
+|---|---|---|---|---|
+| 1082570↔1267140 | 50-99, 100-199, 200+ | 200+ | **-37.4%** | Material — the curve genuinely crosses between 20-49 and 50-99; not a rounding artifact. |
+| 3024595↔1073950 | 1-9, 10-19, (20-49 negligible) | 1-9 | **-48.9%** (1-9); 20-49 is a $0.02/0.1% rounding-level blip | Material at the shallow end, driven by 3024595's flat §31-clamped ladder colliding with 1073950's normal steep ladder (same mechanism flagged in §3.2). |
+| 1279130↔3018808 | 10-19, 100-199, 200+ | 200+ | **-25.0%** | Material — 3018808's own flat deep-tier ladder (byte-identical to 1001220 by deliberate choice) undercuts 1279130's steeper one. |
+| 3020335↔1277020 | 20-49, 100-199, 200+ | 200+ | -1.9% | The one **documented, account-accepted exception** (footnote ²⁰). Small in magnitude, but real and intentional. |
+| 1267140↔1278980 | 1-9, 10-19, 50-99 | 1-9 | -2.6% | Small but real. |
+| 3010707↔3010736 | 200+ | 200+ | -8.2% | Material, single tier — the Band C→Band A boundary crossing. |
+| 1278980↔3020335 | 10-19, 20-49, 50-99, 100-199, 200+ | 200+ | -1.0% | Mostly $0.00–$0.12/sq ft — rounding/filing-precision noise from independent §0.25-increment tier tables landing a cent or two apart. |
+| 3010736↔3010722 | 20-49 | 20-49 | -0.2% | Rounding noise ($0.02/sq ft). |
+
+**Corrected framing:** the rule is the right shape, but it is a **forward-looking constraint to enforce, not a description of present compliance.** Roughly half of its own clean supporting evidence already violates it — mostly at the deep tiers (100-199/200+), which is exactly where §3.2/§4.2 already showed independently-chosen tier-compression ratios collide unchecked. A qty-20-only-scoped version does not meaningfully rescue this: 6 of these 8 pairs already fail *at* 20-49 too (1082570↔1267140 fails at 20-49; 1278980↔3020335 and 3010736↔3010722 fail at 20-49 by rounding-level cents; the other three's 20-49 tier already holds). So no simpler tier-scoping saves the wording — the rule stands as proposed, understood as a target to converge toward, with the 8 pairs above (2 real, 1 documented-accepted, 5 small/rounding) as known current gaps.
+
+### 11.2 Stress test against every governance-flagged item
+
+For each item explicitly named plus every other `override_type`-tagged or floor-governed item found in frontmatter, this section finds its nearest **smaller validated** neighbor (from the 20-Orajet / 8-cut-vinyl independently-tested set used throughout this audit) and checks the rule as written, at all 6 tiers, using the item's own locked price.
+
+| Item | Why flagged | Nearest smaller validated neighbor | Tiers that would fail | Worst tier | Magnitude |
+|---|---|---|---|---|---|
+| **1230820** | Root benchmark; §31 "floor — never invert below" doctrine | 1277020 (0.635) | 10-19, 20-49, 50-99, 100-199, 200+ | 200+ | **-25.7%** |
+| **1101250** | `override_type = One-Time Exception` | 3020477 (0.130) | **All 6** | 200+ | **-29.7%** |
+| **3017572** | `override_type = One-Time Exception` | 1210810 (0.292) | 1-9 | 1-9 | -3.4% |
+| **3024595** | §31 floor-doctrine flat-clamp (established this item) | 3017572 (0.365) | 1-9, 10-19, 20-49 | 1-9 | -8.1% |
+| **3020370** | `override_type = Owner Judgment`; ladder adopted verbatim, no AI validation | 1279000 (0.097) | **All 6** | 200+ | -23.0% |
+| **1279260** | Floor-governed clone of 3024592, no AI validation; own file disclaims its $/sq ft as an "artifact" | 3024140 (0.019) | **All 6** | 1-9 | **-38.8%** |
+| **1279270** | Same as 1279260 (identical price) | 3024140 (0.019) | **All 6** | 1-9 | **-38.8%** |
+| **1205870** | Floor-governed clone of 3024140, no AI validation | 3024140 (0.019) | **All 6** | 1-9 | **-58.8%** |
+| **1205720** | Root benchmark (cut vinyl); `override_type = Relationship Concession` | 3010698 (1.582) | **All 6** | 200+ | -9.4% |
+| **1146650** | `override_type = Owner Judgment` (1-9/10-19 tiers only) | 1205720 (2.560) | 1-9 | 1-9 | -0.4% |
+
+**Every one of the 10 targets would be touched — none pass cleanly.** Notably, **1101250 fails against both of its neighbors**: as the smaller item in the 3020477↔1101250 comparison above (fails all 6 tiers, -29.7% worst) *and* as the smaller item in the separately-documented 1101250↔1279130 comparison from §3.2/§9 (fails all 6 tiers there too, -42.7% worst against its *larger* neighbor). 1101250 sits at a local minimum on the $/sq ft curve — both the item smaller than it and the item larger than it are priced higher per sq ft, at every tier. That is the single sharpest data point in this whole audit.
+
+The floor-governed Micro-Format items (1279260, 1279270, 1205870, and by extension 3020370) fail hardest and most uniformly (all 6 tiers, 23–59% short) — not because their prices are wrong, but because they are priced by a **per-label floor mechanism that the category's own documentation explicitly says produces a $/sq ft figure that is "a mathematical artifact... NOT a pricing rate, never use as a benchmark"** (footnote ¹¹, `items/3024140.md`). Comparing them to a $/sq ft-based neighbor rule is applying the wrong yardstick by the account's own stated logic, not exposing a pricing error.
+
+### 11.3 Verdict
+
+**Not safe to implement as-is.** Applied unconditionally, the rule would immediately flag 8 of its own 14 founding "clean" pairs and all 10 stress-tested governance-flagged items — a false-positive rate high enough that a hard gate would be un-shippable without an exception list. The exception list needs two distinct tiers:
+
+**Permanent, structural exceptions (do not re-evaluate — these define the floor, they don't sit above it):**
+- **1230820** — the Orajet root benchmark; §31 already establishes it as the floor every *other* item must stay above. The rule inverts backwards if applied to the benchmark itself.
+- **1205720** — the cut-vinyl equivalent: the FA-accepted, Relationship-Concession-priced root anchor for Band A. Same structural role as 1230820.
+
+**Review-required exceptions (currently non-compliant, no reconciliation on file — each needs a one-time pricing/comp-set review, not an automatic repricing, because in most cases the item's whole pricing method is deliberately not area-scaled):**
+- **1101250** — the sharpest finding in this audit; needs a real comp-set review against both 3020477 and 1279130, not just a note.
+- **3017572, 3024595** — small-to-moderate shallow-tier gaps (3.4%, up to 8.1%) driven by flat §31-floor-clamp ladders meeting normal declining ladders; worth a one-time reconciliation but not urgent.
+- **3020370, 1279260, 1279270, 1205870** — all four are floor-governed Micro-Format/per-label-floor items whose own documentation already disclaims $/sq ft as a valid comparison basis at their size class. These should likely be **excluded from the rule by size class** (e.g., below the ~0.06–0.11 sq ft floor-governance threshold already documented in `categories/printed-laminated-orajet.md`) rather than carried as individual exceptions — that is a cleaner, more durable fix than four one-off entries.
+- **1146650** — the smallest, most easily closed gap (-0.4% at 1-9 only); a $0.05–$0.10 bump to its 1-9 tier would likely resolve it outright rather than requiring a standing exception.
+
+No changes were made to any locked price, rule, or engine file. This section is derivation and stress-testing only.
+
+---
+
+## 12. Was 3020370's review-required flag a boundary-crossing artifact?
+
+Appended per follow-up request. No prices or files outside this audit doc were changed.
+
+### 12.1 Exactly what put 3020370 on the list
+
+3020370 was flagged in §11 off a **single neighbor pair**: 3020370 (0.105 sq ft) vs its nearest smaller validated neighbor **1279000 (0.097 sq ft)**. It failed at **all 6 tiers**, by the following exact margins:
+
+| Tier | 3020370 $/sq ft | 1279000 (smaller) $/sq ft | Short by |
+|---|---|---|---|
+| 1-9 | $40.48 | $46.39 | 12.8% |
+| 10-19 | $30.95 | $36.08 | 14.2% |
+| 20-49 | $26.19 | $30.93 | 15.3% |
+| 50-99 | $21.43 | $26.80 | 20.1% |
+| 100-199 | $19.05 | $23.71 | 19.7% |
+| **200+** | **$16.67** | **$21.65** | **23.0% (worst)** |
+
+That is the entire evidentiary basis for 3020370's inclusion — one pair, one neighbor.
+
+### 12.2 The boundary problem
+
+1279000 (0.097 sq ft) sits in the **Micro-Format Band** (< 0.1 sq ft, per `categories/printed-laminated-orajet.md`). 3020370 (0.105 sq ft) sits in the **sub-scope band** (0.1–0.5 sq ft) — by its own file's explicit routing: *"This item routes to the sub-scope band (0.1–0.5 sq ft) — below the singles band scope floor (0.5 sq ft) but above the Micro-Format Band threshold (0.1 sq ft)."* The category doc states as a governing principle that these size classes **"do NOT contaminate or interact."** The single pair that flagged 3020370 crosses that exact boundary — 1279000 is priced under Micro-Format Band economics (100% $/sq ft step-up over the singles-band rate, per §2.1's own doc), not sub-scope economics, so comparing the two on a shared $/sq ft floor was never a like-for-like test to begin with.
+
+### 12.3 Re-run with the 0.1 sq ft boundary enforced as a hard partition
+
+Partitioning the 20 independently-validated Orajet items at 0.1 sq ft:
+
+- **Micro-Format side (< 0.1):** 3024140 (0.019), 3024592 (0.054), 1012080 (0.077), 1279000 (0.097)
+- **Sub-scope-and-up side (≥ 0.1):** 1247120 (0.122), 3020477 (0.130), 1101250 (0.132), 1279130 (0.148), 3018808 (0.222), 1001220 (0.231), 1210810 (0.292), 3017572 (0.365), 3024595 (0.488), 1073950/1082570 (0.503), … up to 1230820 (1.296)
+
+3020370 (0.105) belongs on the sub-scope side. **The smallest independently-validated item on that same side is 1247120 at 0.122 sq ft — which is larger than 3020370, not smaller.** There is no validated item anywhere in the 0.1–0.105 sq ft window. So under a partition that forbids any pairing from crossing 0.1 sq ft, **3020370 has no valid smaller in-band neighbor to test against at all** — not "passes," but the check is inapplicable: the comparison that produced the failure literally cannot be re-formed without crossing the boundary.
+
+**3020370 was a pure boundary-crossing artifact and should be removed from §11.3's review-required list.** Its inclusion there was an artifact of the audit's own methodology (nearest-smaller-*validated*-neighbor, irrespective of band), not evidence of an actual pricing inconsistency — there is no same-band data to be inconsistent *with*. This is the same class of problem flagged for the two other Orajet pairs marked "uncounted" in §10 (3024140↔3024592 and 1279000↔1247120 also skip real, if excluded, items) — 3020370 is now a third, more severe instance: for it specifically, there is no in-band validated data at all, on the smaller side, within the entire family.
+
+**One aside, for transparency, not a new finding against 3020370:** flipping the comparison and checking 3020370's nearest same-side *larger* neighbor, 1247120, against 3020370 as *its* nearest smaller neighbor, also fails — at a constant **-13.9% at every one of the 6 tiers** (1247120 $34.84→$14.34 vs 3020370 $40.48→$16.67 across the ladder). This constant percentage is mechanical, not a new pricing signal: 3020370's tier table was adopted **verbatim** from 1247120 (footnote ³², Owner Judgment, no independent validation), so at every tier its price is identical in dollars to 1247120's — only the smaller area (0.105 vs 0.122) changes the $/sq ft. This is a mark against how 1247120's own §11 status should be read if 3020370 were ever added as a real chain neighbor, not evidence 3020370 was correctly flagged. 1247120 itself is not on the review-required list and this audit does not add it there — flagging it is out of scope for this section, noted only for completeness.
+
+### 12.4 Boundary check for the rest of the review-required list
+
+Scanning every item on §11.3's review-required list for proximity to the 0.1 sq ft line:
+
+| Item | Sq ft | \|Δ from 0.1\| | Within 0.02? | Notes |
+|---|---|---|---|---|
+| 3020370 | 0.105 | 0.005 | **Yes** | Covered above — removed. |
+| 1101250 | 0.132 | 0.032 | No | Both its flagged neighbors (3020477 at 0.130, 1279130 at 0.148) are on the same sub-scope side — no crossing. |
+| 1279260 | 0.033 | 0.067 | No | Deep inside the Micro-Format Band; its flagged neighbor (3024140, 0.019) is also Micro-Format-side — no crossing. |
+| 1279270 | 0.033 | 0.067 | No | Same as 1279260. |
+| 1205870 | 0.049 | 0.051 | No | Micro-Format-side; flagged neighbor 3024140 (0.019) is also Micro-Format-side — no crossing. |
+| 3017572 | 0.365 | 0.265 | No | Nowhere near 0.1. |
+| 3024595 | 0.488 | 0.388 | No | Nowhere near 0.1 — but sits 0.012 sq ft from the *different* singles-band floor boundary (~0.5 sq ft). Its flagged neighbor, 3017572 (0.365), is on the same sub-scope side of that boundary too, so no crossing there either — flagged here for completeness, not re-analyzed in full since it's outside the 0.1-line scope of this section. |
+| 1146650 | 2.971 | 2.871 | No | Cut vinyl — the 0.1 sq ft Micro-Format Band boundary doesn't exist in this material family at all (cut vinyl's nearest analogous boundary is the ~1.0 sq ft Band C/A line). |
+
+**Confirmed: 3020370 is the only review-required item whose flag was a boundary-crossing artifact.** None of the other seven were flagged off a pairing that crosses the 0.1 sq ft Micro-Format Band line — their flagged neighbor pairs sit entirely within a single band on both sides.
+
+### 12.5 Updated review-required list
+
+Removing 3020370 leaves **seven** review-required items from §11.3: 1101250, 3017572, 3024595, 1279260, 1279270, 1205870, 1146650. The two permanent structural exceptions (1230820, 1205720) are unaffected by this section. 3020370 should instead be treated the way §10 treats its two "uncounted" Orajet pairs — a density gap (no valid same-band comparison exists), not a pricing exception requiring review.
+
+---
+
+## 13. 0.5 sq ft boundary check on 3024595, plus a final consolidated exception list
+
+Appended per follow-up request. No prices or files outside this audit doc were changed.
+
+### 13.1 3024595 at the sub-scope/singles 0.5 sq ft line
+
+**Which pair(s) flagged it:** exactly one, same as 3020370 — 3024595 (0.488 sq ft) vs its nearest smaller validated neighbor **3017572 (0.365 sq ft)**, from §11.2. Three tiers failed:
+
+| Tier | 3024595 $/sq ft | 3017572 (smaller) $/sq ft | Short by |
+|---|---|---|---|
+| 1-9 | $22.03 | $23.97 | 8.1% (worst) |
+| 10-19 | $18.95 | $19.86 | 4.6% |
+| 20-49 | $15.88 | $16.44 | 3.4% |
+
+**Does this pair cross the 0.5 sq ft line?** No. 3024595 (0.488) and 3017572 (0.365) are **both on the sub-scope side** (0.1–0.5 sq ft) of the boundary — neither is a singles-band item (≥0.5 sq ft). Re-partitioning at 0.5 sq ft changes nothing here: the pairing is unchanged, still legal, still the nearest same-side neighbor on both ends. **Unlike 3020370, this is not a boundary-crossing artifact.**
+
+**Structural exclusion check — the §31 floor clamp:** `governance/CALCULATOR.md`'s `single_sub_scope` routing entry documents exactly the mechanism the follow-up cites: *"§31 sub-scope root floor... for 0.1–0.5 sq ft items (`buildPrintLamSinglesTiers`), no tier at any quantity may price below $15.43/sq ft (P/N 1230820). Where a raw ratio-scaled tier would fall below the floor, that tier and every deeper (higher-quantity) tier is clamped flat to the cheapest $0.25-increment price that clears the floor."* 3024595's own ladder ($10.75 / $9.25 / $7.75 / $7.75 / $7.75 / $7.75) is the canonical example — the flat run from 20-49 through 200+ **is** that clamp; 3024595 is the item whose 2026-07-01 validation record established the doctrine that the engine rule above later codified.
+
+But the clamp only covers **part** of the failure: of the three failing tiers, only **20-49** falls inside the flat-clamped run (20-49 through 200+ are all $7.75 by floor-clamp construction, not by ratio scaling). **1-9 ($10.75) and 10-19 ($9.25) are not clamped** — they are 3024595's own freely-chosen, ratio-scaled prices, and they still land below 3017572's at those tiers. The floor-clamp mechanism has nothing to say about why *those* two tiers are short.
+
+**Plain verdict:** removing the boundary artifact question doesn't apply here — there wasn't one. The §31 floor-clamp reasoning validly explains **one** of the three failing tiers (20-49) as by-design and not something to "fix." It does **not** explain 1-9 or 10-19. **3024595 stays on the review-required list**, but rescoped: only its 1-9 and 10-19 tiers represent an open, unexplained gap; its 20-49 (and by extension 50-99/100-199/200+, which weren't even flagged) should not be touched — they are the floor doctrine working as intended.
+
+### 13.2 Classifying the remaining six
+
+| Item | Sq ft | Mechanism behind its own price | Classification |
+|---|---|---|---|
+| **1279260** | 0.033 | Sub-0.06 sq ft per-label floor (`governance/CALCULATOR.md` F26) — ANSI anchor, no AI validation run, own file disclaims its $/sq ft as an "artifact." | **(a) Category-excluded** — floor-governed by rule, not an individual pricing decision. |
+| **1279270** | 0.033 | Identical mechanism to 1279260 (identical price). | **(a) Category-excluded.** |
+| **1205870** | 0.049 | Sub-0.06 sq ft per-label floor (F26) — non-ANSI anchor, no AI validation run. | **(a) Category-excluded.** |
+| **1101250** | 0.132 | Normal ratio-scaled sub-scope single, independently 4-wave validated. Its `One-Time Exception` override is about its own **deep** tiers (50-99/100-199/200+) pricing *below* the §31 floor — the opposite of floor-governed protection. Its §11 failures (against both 3020477 and, per §9, 1279130) trace to a validation comp-set that checked only 1230820, never its true neighbors. | **(b) Genuine one-off** — no category rule explains this; needs individual comp-set review. Highest priority in this group (§11.2's sharpest finding). |
+| **3017572** | 0.365 | Normal ratio-scaled sub-scope single. Its `One-Time Exception` override is also about its own deep tiers (100-199/200+ below floor) — unrelated to its single §11 failure at 1-9 (8.1%→3.4% range seen elsewhere; here just 3.4% at 1-9 only, see §11.2). | **(b) Genuine one-off** — small, low-priority, but not explained by any existing rule. |
+| **1146650** | 2.971 | Cut vinyl — normal ratio-scaled Band A single. Its `Owner Judgment` override touches only 1-9/10-19 (raised after discovering 3018378 was omitted from the original comp set) — unrelated mechanically to why it fails at 1-9 (-0.4%) against 1205720. No cut-vinyl floor-clamp doctrine exists analogous to Orajet's §31. | **(b) Genuine one-off** — trivial magnitude, likely closed by a $0.05–$0.10 bump to its 1-9 tier. |
+
+Three of six (1279260, 1279270, 1205870) share the exact same mechanism and should be handled as a **category**, not as three individual line items — the eventual constraint should read something like *"items routed through the sub-0.06 sq ft per-label floor (`governance/CALCULATOR.md` F26) are exempt from the nearest-smaller-neighbor $/sq ft floor rule by size class"* rather than naming P/Ns. The other three (1101250, 3017572, 1146650) have no such shared mechanism — each is a standalone gap that happens to coexist with an unrelated override, and none of the three overrides on file actually explains the specific neighbor-chain failure found in this audit.
+
+### 13.3 Final consolidated exception list
+
+| Group | Items | Why | Action |
+|---|---|---|---|
+| **1 — Permanent / structural** | **1230820** (Orajet root benchmark), **1205720** (cut-vinyl root benchmark) | Each *is* the floor its own family's other items must stay above (§31 doctrine); the rule inverts if pointed at the benchmark itself. | Hard-code as permanent exceptions. Never re-evaluate. |
+| **2 — Category-excluded (floor-governed)** | **1279260, 1279270, 1205870** | All three route through the sub-0.06 sq ft per-label floor (`governance/CALCULATOR.md` F26) — priced by a fixed per-label floor mechanism, not $/sq ft area-scaling. Their own files already disclaim $/sq ft as a valid comparison basis at this size class. | Exclude the whole F26 routing class by rule. Do not list these three P/Ns individually — any future item that routes through F26 should inherit the same exemption automatically. |
+| **3 — True one-off, individual review required** | **1101250** (highest priority — full comp-set gap against both neighbors), **3024595** (rescoped — only 1-9/10-19 need review; 20-49+ is the §31 floor clamp working as designed, not an error), **3017572** (minor, single-tier, 3.4%), **1146650** (trivial, single-tier, 0.4%, likely closed by a small 1-9 bump) | No existing category rule explains any of these four. Each needs a human pricing decision, not an automatic repricing or a rule-based exemption. | Route to Nick/Sean for individual review, prioritized in the order listed. |
+
+Net change from §11.3/§12.5: **3020370 dropped entirely** (§12, boundary artifact — reclassify as a density gap, not an exception), **1279260/1279270/1205870 moved from individual listing to a single categorical carve-out**, **3024595 kept but rescoped to 2 of its 6 tiers**. Final individually-tracked exception count: 2 permanent + 4 one-off = **6 items**, plus one categorical rule covering the F26 floor-governed class.
+
+---
+
+## 14. Rounding-scale vs. structural: a $0.25-increment test
+
+Appended per follow-up request. No prices or files outside this audit doc were changed.
+
+### 14.1 Method
+
+For each pair/item below, take its **worst tier** exactly as already identified in §10 (Bucket-2 pairs, Direction A — the larger item L pricing below its smaller neighbor S) or §11.2/§13 (exception-list items, same direction: the flagged item is L, its nearest smaller validated neighbor is S). At that tier, compute the minimum whole number of $0.25 increments that would need to be added to **L's filed price** (not its $/sq ft) so that `(L.price + 0.25×N) / L.sqft ≥ S.$/sqft`:
+
+- **N = 1 → "rounding-scale."** The gap is smaller than one $0.25 step — the account's own filing convention (§30, all tiers in $0.25 increments) cannot express anything finer than this, so a single-increment residual is indistinguishable from ordinary price-filing rounding. This is the same class of gap this audit has repeatedly called out as immaterial when it appeared incidentally (e.g. the sub-cent $/sq ft deltas noted in §11.1 for 1278980-adjacent pairs) — here it's given a precise, mechanical definition instead of an eyeballed one.
+- **N ≥ 2 → "structural."** The gap survives the coarsest possible rounding correction and represents a real, multi-increment pricing decision that was never made — not noise.
+
+### 14.2 The 14 Bucket-2 pairs (§10)
+
+| Pair (S → L) | Worst tier (§10) | L's filed price at that tier | Minimum price to clear S | New price after N increments | Increments (N) | Classification |
+|---|---|---|---|---|---|---|
+| 3024592 → 1012080 | 100-199, -39.2% | $1.95 | $3.21 | $3.45 | 6 | **Structural** |
+| 1012080 → 1279000 | 200+, -12.3% | $2.10 | $2.39 | $2.60 | 2 | **Structural** |
+| 1247120 → 3020477 | 20-49, -6.2% | $2.75 | $2.93 | $3.00 | **1** | **Rounding-scale** |
+| 1279130 → 3018808 | 20-49, -14.0% | $4.00 | $4.65 | $4.75 | 3 | **Structural** |
+| 3018808 → 1001220 | 1-9, -3.9% | $7.00 | $7.28 | $7.50 | 2 | **Structural** |
+| 1001220 → 1210810 | 200+, -42.0% | $2.75 | $4.74 | $4.75 | 8 | **Structural** |
+| 3024595 → 1073950 | 200+, -46.8% | $4.25 | $7.99 | $8.00 | 15 | **Structural** |
+| 1082570 → 1267140 | 1-9, -29.2% | $13.00 | $18.37 | $18.50 | 22 | **Structural** |
+| 1267140 → 1278980 | 100-199, -4.9% | $7.50 | $7.88 | $8.00 | 2 | **Structural** |
+| 1278980 → 3020335 | 1-9, -2.6% | $14.50 | $14.88 | $15.00 | 2 | **Structural** |
+| 3020335 → 1277020 | 10-19, -1.6% | $12.00 | $12.19 | $12.25 | **1** | **Rounding-scale** |
+| 3010707 → 3010736 | 1-9, -32.5% | $19.75 | $29.24 | $29.25 | 38 | **Structural** |
+| 3010736 → 3010722 | 100-199, -3.5% | $14.75 | $15.28 | $15.50 | 3 | **Structural** |
+| 3010722 → 3010698 | 200+, -23.7% | $15.00 | $19.66 | $19.75 | 19 | **Structural** |
+
+**Bucket-2 result: 2 rounding-scale, 12 structural** (0 already-compliant — every pair on this list has ≥1 failing tier by §10's own construction). Notably, **3020335→1277020 is the account's own single documented, accepted exception (footnote ²⁰)** — and it independently comes out "rounding-scale" under this mechanical test, a one-increment residual. That's a good sign for the method: the one gap the account already decided to live with is also the one this test says is genuinely negligible. The other rounding-scale pair, 1247120→3020477, was never flagged as an exception anywhere in the account's records — it simply happens to be small.
+
+One correction to an earlier characterization: §11.1 loosely described 1278980↔3020335's *20-49* tier gap ($15.5993 vs $15.60, a Direction-B micro-difference) as "rounding-level noise." That is a different tier and a different direction than the one that actually put this pair on the Bucket-2 list (§10 flagged it at **1-9**, Direction A, -2.6%). At its real flagged tier, this pair needs **2** increments — it classifies as structural, not rounding-scale. The mechanical test in this section supersedes that earlier loose characterization.
+
+### 14.3 The 9 consolidated-exception-list items (§13)
+
+Using each item's flagging comparator from §11.2/§13 (3024595 uses its §13-rescoped worst tier — 20-49 excluded as floor-clamp-by-design, so only 1-9/10-19 are eligible):
+
+| Item | Comparator (smaller neighbor) | Worst eligible tier | Item's filed price | Minimum price to clear comparator | New price after N increments | Increments (N) | Classification |
+|---|---|---|---|---|---|---|---|
+| 1230820 | 1277020 | 200+, -25.7% | $11.00 | $14.80 | $15.00 | 16 | **Structural** |
+| 1205720 | 3010698 | 200+, -9.4% | $22.00 | $24.27 | $24.50 | 10 | **Structural** |
+| 1279260 | 3024140 | 1-9, -38.8% | $4.25 | $6.95 | $7.00 | 11 | **Structural** |
+| 1279270 | 3024140 | 1-9, -38.8% | $4.25 | $6.95 | $7.00 | 11 | **Structural** |
+| 1205870 | 3024140 | 1-9, -58.8% | $4.25 | $10.32 | $10.50 | 25 | **Structural** |
+| 1101250 | 3020477 | 200+, -29.7% | $1.25 | $1.78 | $2.00 | 3 | **Structural** |
+| 3017572 | 1210810 | 1-9, -3.4% | $8.75 | $9.06 | $9.25 | 2 | **Structural** |
+| 1146650 | 1205720 | 1-9, -0.4% | $52.00 | $52.22 | $52.25 | **1** | **Rounding-scale** |
+| 3024595 (rescoped) | 3017572 | 1-9, -8.1% | $10.75 | $11.70 | $11.75 | 4 | **Structural** |
+
+**Exception-list result: 1 rounding-scale (1146650), 8 structural.**
+
+### 14.4 Combined counts
+
+| | Rounding-scale (N=1) | Structural (N≥2) |
+|---|---|---|
+| Bucket-2 pairs (14) | 2 | 12 |
+| Exception-list items (9) | 1 | 8 |
+| **Combined (23)** | **3** | **20** |
+
+### 14.5 Revised constraint
+
+Restating §11's candidate rule with the correction: **"Flag a nearest-smaller-neighbor inversion only if closing it would require 2 or more $0.25 increments on the larger item's price. Do not flag single-increment residuals — they are within the account's own $0.25 filing granularity and are indistinguishable from rounding."**
+
+### 14.6 Effect on the exception list
+
+Checking each exception-list item's classification from §14.3 against the revised threshold:
+
+- **1146650 drops out entirely.** It was the smallest, most marginal entry in §13's "true one-off" group (-0.4% at 1-9), and it is the one item that turns out to need exactly one increment. Under the revised constraint it is **not a violation at all** — no exception needed, no review needed, nothing to fix.
+- **1101250, 3017572, 3024595 (rescoped) all remain flagged** — 3, 2, and 4 increments respectively. The revised threshold doesn't change their status; it just confirms none of them are rounding artifacts.
+- **1279260, 1279270, 1205870 remain flagged**, and by a wide margin (11–25 increments) — this reinforces §13's recommendation that these three need a *categorical* exemption (they're priced by a per-label floor mechanism that was never designed to satisfy $/sq ft scaling at all), not a numeric-tolerance argument. A tolerance threshold was never going to rescue these; the mechanism itself is the reason they're exempted.
+- **1230820, 1205720 remain flagged** (16 and 10 increments) — irrelevant to their exemption, which is definitional (they *are* the floor), not magnitude-based. The revised threshold doesn't add or remove anything for the permanent/structural group; it just confirms their gaps are large in the literal sense too.
+
+**Updated final exception list (supersedes §13.3's Group 3):**
+
+| Group | Items | Change from §13.3 |
+|---|---|---|
+| **1 — Permanent / structural** | 1230820, 1205720 | Unchanged. |
+| **2 — Category-excluded (floor-governed)** | 1279260, 1279270, 1205870 | Unchanged. |
+| **3 — True one-off, individual review required** | **1101250, 3024595 (rescoped), 3017572** | **1146650 removed** — within accepted $0.25 tolerance, no longer an exception. |
+
+Individually-tracked exception count drops from 6 to **5**, plus the same one categorical rule for the F26 floor-governed class. Applying the same 2+-increment threshold back to the general Bucket-2 population (informational, not part of the exception list) would similarly stop flagging 1247120↔3020477 and 3020335↔1277020 as violations, leaving 12 of the original 14 as the real candidate set for enforcement.
+
+---
+
+## 15. Simulating the minimum fix: does it cascade?
+
+Appended per follow-up request. **No prices were changed anywhere except in this simulation's in-memory calculation.** Nothing in `items/*.md` or any other file was modified.
+
+### 15.1 Method
+
+For the **12 structural pairs** from §14.2 (the 2 rounding-scale pairs, 1247120→3020477 and 3020335→1277020, are excluded — they're within tolerance per §14), the fix was applied to **every failing tier for that pair**, not just its single worst tier used for classification (per §10's original "Failing tiers" columns — several pairs fail at 3–6 tiers, not just one). At each failing tier, the larger item L's price was raised by the minimum number of $0.25 increments needed to clear the smaller item S's **original** rate at that tier — 53 individual [item, tier] price bumps across the 12 pairs in total. All 53 fixes were computed independently from the original (pre-simulation) price table and applied **simultaneously**, producing one post-fix price snapshot.
+
+That snapshot was then checked against **every adjacent pair in the full sorted chain** — all 19 Orajet pairs and all 7 cut-vinyl pairs among the 20/8 independently-validated items (not just the original 14 Bucket-2 pairs) — at all 6 tiers, comparing pre-fix vs. post-fix Direction-A status.
+
+### 15.2 Result: 0 of 12 are clean
+
+**Every one of the 12 fixes cascades. None are clean.**
+
+| Pair | Own pair fixed? | Causes new/worse violations elsewhere? |
+|---|---|---|
+| 3024592 → 1012080 | Yes | Yes — breaks 1012080→1279000 (already-flagged pair, now short by up to 41.3% instead of 12.3%) |
+| 1012080 → 1279000 | **No** — cascade from the prior fix already broke it further | Yes — breaks 1279000→1247120 (a **rounding-scale pair, not even in the 12**, now short by up to 46.5%, previously 33.7%) |
+| 1279130 → 3018808 | Yes | Yes — breaks 3018808→1001220 at 20-49 |
+| 3018808 → 1001220 | **No** | (inherits the 3018808 problem above) |
+| 1001220 → 1210810 | **No** | Yes — creates 5 brand-new violations at 1210810→3017572 (10-19 through 200+ — previously clean; 3017572 is an **exception-list, override-tagged item**, not part of Bucket-2 at all) |
+| 3024595 → 1073950 | Yes | Yes — creates 3 brand-new violations at 1073950→1082570 — **breaks the exact 0.503 sq ft byte-identical tie** between two items with historically identical tier tables (§2.1), because only one twin (1073950) was fixed |
+| 1082570 → 1267140 | Yes | Yes — same 1073950/1082570 breakage, plus 2 new violations at 1267140→1278980 |
+| 1267140 → 1278980 | **No** | Yes — creates 3 new violations at 1278980→3020335 (20-49, 100-199, 200+) |
+| 1278980 → 3020335 | Yes | Yes — worsens 3020335→1277020 at 1-9 (a **rounding-scale pair**, pushed from -1.6% to -4.9%, though still resolvable in 1 increment) |
+| 3010707 → 3010736 | Yes | Yes — breaks 3010736→3010722 at 20-49 (new) and worsens it at 4 other tiers |
+| 3010736 → 3010722 | **No** | (inherits the 3010707 problem above) |
+| 3010722 → 3010698 | **No** | Yes — sharply worsens the already-existing 3010698→1205720 violation at **every tier** (e.g. 200+ goes from -9.4% to -31.2%) — 1205720 is the cut-vinyl root benchmark |
+
+Aggregate: **14 tier-level violations created that did not exist before** (across 1210810→3017572 ×5, 1073950→1082570 ×3, 1267140→1278980 ×2, 1278980→3020335 ×3, 3010736→3010722 ×1), plus **25 tier-level instances where a pair in the original 12 is still failing after its own fix** (because its smaller-neighbor reference also moved), plus **4 distinct pairs outside the 12 that were already violating and measurably worsened** (not merely re-listed unchanged): 1279000→1247120 (all 6 tiers), 3020335→1277020 (1-9), 3010698→1205720 (all 6 tiers), and 1210810→3017572's pre-existing 1-9 tier (3.4%→22.2%, on top of the 5 brand-new tiers counted above for that same pair).
+
+### 15.3 Why: propagation, not conflict
+
+Every cascade above has the same shape: fixing item **L** against its smaller neighbor **S** raises L's price — but L is *also* the smaller neighbor for the *next* item up the chain, so that next item's already-computed fix (based on L's old, lower price) now falls short too. This is not two pairs pulling in opposite directions; it's a straight chain reaction running in one direction — up.
+
+**This means it is not "genuine tension" in the sense of two pairs being irreconcilable.** A direct test confirms it: running a single **sequential** pass up each family's sorted chain — process items smallest-to-largest, and for each one, use the neighbor's *already-updated* price (not the stale original) to compute the minimum fix — converges in **exactly one pass, with zero residual violations**, for both families. There is no cycle: nothing downstream ever needs a smaller item's price to be reduced, so a single forward sweep is guaranteed to terminate. In that narrow sense, §11's proposed constraint *can* be satisfied by a chain-wide (not pairwise) mechanism, exactly as the follow-up anticipated.
+
+### 15.4 But the converged answer is not usable
+
+Here is what that convergence actually requires, at qty 20 (20-49 tier):
+
+| | Original $/sq ft range | Converged $/sq ft range | What it means |
+|---|---|---|---|
+| Orajet | $15.43 (1230820) – $131.58 (3024140) | **$131.58 – $144.68**, flat | Every item from 0.054 to 1.296 sq ft collapses to within ~10% of the smallest item's rate. **1230820 — the FA-accepted root benchmark — would need to move from $15.43/sq ft to $144.68/sq ft, an 838% increase**, just to clear its immediate smaller neighbor, which itself only holds because everything below *it* was forced up first. |
+| Cut vinyl | $11.03 (3010704) – $20.64 (3010707) | **$20.64 – $21.01**, flat | Milder in absolute terms (cut vinyl's premium spread is much smaller to start), but the same shape: **1205720 — the cut-vinyl root benchmark — would move from $13.67/sq ft to $20.90/sq ft (+53%)**, and 3010704 (Band B, the account's large-format anchor) from $11.03 to $21.01/sq ft (+90%). |
+
+Enforcing §11's rule to full convergence doesn't fix 12 pairs — it erases the small-format premium for the entire family, flattening 1.3 sq ft of deliberately differentiated pricing into a single near-constant rate set by the smallest, most fixed-cost-dominated item on the account. That is the exact opposite of every Wave 4 verdict cited throughout this audit (footnote ²: *"a smaller label must carry equal or higher $/sq ft than a larger label"* — not *the same* $/sq ft).
+
+### 15.5 Verdict
+
+**Not tension between specific pairs — a structural mismatch between the rule and the pricing philosophy it's being applied to.** The 12 fixes cascade because Direction A (§1.1's literal hypothesis: `L ≥ S`, larger holds at or above smaller) is, as this audit has said since §3.1, the *reverse* of the account's actual governing rule (Direction B: `S ≥ L`, smaller holds at or above larger). A rule that runs backward from the pricing philosophy doesn't fail quietly when you try to enforce it locally — it fails by demanding the philosophy itself be abandoned once you trace it to a global fixed point. This also corrects an imprecise line in §11.1, which described the `L ≥ S` wording as matching "the account's own Wave 4 verdict" — it does not; §1.1's own intro has this right (Direction B matches Wave 4), and §11.1 should be read with that correction in mind.
+
+**Practical conclusion:** do not implement §11's rule, converged or not — not because the math doesn't resolve (it does, cleanly, in one pass), but because the resolved state is not a price list this account would ever want to file. The finding that stands from this whole exercise is the one from §13/§14: **Direction B, checked at all 6 tiers with a 2+-increment tolerance, with the 5-item true-one-off + 2-item permanent + 3-item categorical exception list from §14.6, is the constraint worth actually adopting.** Direction A's Bucket-2 pairs remain useful as a diagnostic (they correctly locate every place the small-format-premium curve isn't smooth), but "fixing" them by raising prices is the wrong tool — where a real gap exists, it should be closed by re-deriving that item's price from its own comp set (as §11.3/§13 already recommend for 1101250, 3024595, and 3017572), not by mechanically chasing the nearest-smaller-neighbor floor up the entire chain.
+
+---
+
+## 16. Simulating Direction B: does the actual rule converge cleanly?
+
+Appended per follow-up request. **No prices were changed anywhere.** Simulation only.
+
+### 16.1 Method
+
+Same rule shape as §15 — a single sequential pass, each item checked against an **already-updated** neighbor, minimum $0.25-increment fix applied where required — but three things change to match this follow-up's spec:
+
+1. **Direction B**, not A: the constraint is `S.$/sqft ≥ L.$/sqft` (smaller item must not undercut its larger neighbor).
+2. **§14 tolerance applied throughout the pass**: at every step, if the gap needs 0 or 1 increments, it's left alone; only 2+-increment gaps are fixed. This is re-checked dynamically at each step (not just pre-filtered once), so a gap that grows past 1 increment because of an upstream fix still gets caught.
+3. **§13's permanent exceptions removed from the chain before the pass runs**: 1230820 (Orajet root) and 1205720 (cut-vinyl root) are excluded entirely — 19 Orajet items and 7 cut-vinyl items remain. (The 3 categorical items, 1279260/1279270/1205870, were never part of the 20/8 independently-validated chain to begin with — see §1.2 — so excluding them is a no-op; nothing changes because of it.)
+
+**One necessary adaptation from §15, not a deviation from it:** Direction A's dependency runs smaller→larger (each item's floor is set by the item *below* it), so §15's pass went bottom-up, ascending. Direction B's dependency runs the opposite way — each item's floor is set by its *larger* neighbor — so the "always use the already-updated neighbor" rule requires processing **top-down, descending from the largest item to the smallest** in each reduced chain (starting at 1277020 for Orajet and 3010704 for cut vinyl, since the roots that would normally anchor the top are excluded). This is the same algorithm as §15, correctly oriented to the direction actually being tested.
+
+### 16.2 Result: converges in one pass, zero residual violations
+
+Both chains converge in a **single descending pass** — re-verifying the full chain afterward finds **0 remaining 2+-increment violations** in either family. No second pass was needed.
+
+**Far fewer items need touching than under Direction A:** 12 of 19 Orajet items (7 are already fully compliant against their larger neighbor and need no change at all) and 3 of 7 cut-vinyl items. Total: **38 individual [item, tier] fixes** (30 Orajet + 8 cut vinyl) — compare to §15's 53 fixes that still didn't converge.
+
+**The qty-20 (20-49) tier is untouched everywhere except one item.** Across all 19 Orajet + 7 cut-vinyl items, the 20-49 price is identical before and after in every case but one: **1101250**, which needed its 20-49 price raised from $2.25 to $3.00 (+33.3%, 3 increments). Every other qty-20 price — the tier the account's own Wave 4 process actually validates — was already correct. This is exactly what should happen if Direction B is the real rule: the account already got the tier it checks right almost everywhere, and this simulation's fixes land precisely in the tiers it doesn't check (1-9, 10-19, 50-99, 100-199, 200+).
+
+### 16.3 Family roots and largest jumps
+
+**At the roots:** 1230820 and 1205720 are excluded from the pass by construction, so they are unchanged — $15.43/sq ft and $13.67/sq ft at qty 20 respectively, exactly as filed. For completeness: even if 1230820 *had* been left in the chain, the one Direction-B gap it has against its nearest smaller neighbor (1277020 at 1-9, $22.83 vs $23.15/sq ft) needs only 1 increment to close — inside tolerance, so it would not have been touched anyway. Excluding the roots doesn't quietly let anything real slip through.
+
+**Largest jump by percent:** **1210810, 200+ tier: $2.75 → $5.00 (+81.8%, +$2.25)** — fixed against its larger neighbor 3017572. Second largest: 1101250, 200+: $1.25 → $2.25 (+80.0%, +$1.00).
+
+**Largest jump by dollar amount:** **1146650, 200+ tier: $26.50 → $36.25 (+$9.75, +36.8%)** — fixed against its larger neighbor 3010701. Second largest: 1146650, 100-199: $30.50 → $37.25 (+$6.75, +22.1%).
+
+Every touched item and tier:
+
+| Family | Item | Tiers touched | Range of increases |
+|---|---|---|---|
+| Orajet | 1267140 | 1-9 | +$0.50 (+3.8%) |
+| Orajet | 1082570 | 50-99, 100-199, 200+ | +$0.50 to +$1.75 (+8.0% to +41.2%) |
+| Orajet | 1073950 | 50-99, 100-199, 200+ | +$0.50 to +$1.75 (+8.0% to +41.2%) |
+| Orajet | 3024595 | 1-9, 10-19 | +$1.00 to +$5.50 (+10.8% to +51.2%) |
+| Orajet | 3017572 | 1-9, 10-19, 100-199, 200+ | +$0.50 to +$3.50 (+6.9% to +40.0%) |
+| Orajet | 1210810 | 1-9, 10-19, 50-99, 100-199, 200+ | +$0.50 to +$2.25 (+8.7% to +81.8%) |
+| Orajet | 1001220 | 1-9 | +$1.00 (+14.3%) |
+| Orajet | 3018808 | 1-9 | +$0.75 (+10.7%) |
+| Orajet | 1279130 | 1-9, 200+ | +$0.50 (+10.5% to +25.0%) |
+| Orajet | 1101250 | 1-9, 20-49, 50-99, 100-199, 200+ | +$0.75 to +$1.00 (+18.8% to +80.0%) |
+| Orajet | 3020477 | 1-9, 200+ | +$0.50 (+11.8% to +28.6%) |
+| Orajet | 1247120 | 200+ | +$0.50 (+28.6%) |
+| Cut vinyl | 1146650 | 1-9, 50-99, 100-199, 200+ | +$1.00 to +$9.75 (+1.9% to +36.8%) |
+| Cut vinyl | 3010698 | 50-99, 100-199, 200+ | +$1.50 to +$4.50 (+7.7% to +30.0%) |
+| Cut vinyl | 3010707 | 200+ | +$1.00 (+8.7%) |
+
+### 16.4 Plausibility check
+
+**No item moves by an implausible amount, and nothing here would need to be rejected on sight.** Every increase stays below 2× the original price (the largest, +81.8%, is on a $2.75 base — a $2.25 absolute move); nothing approaches Direction A's 838% root-benchmark blowout. No root benchmark is touched (both are structurally excluded). Every affected tier is either the 1-9 fringe (lowest-volume, rarely the buyer's actual order quantity) or 50-99/100-199/200+ (the deep-volume tail that Wave 4 records repeatedly describe as "structural completeness only... not expected to transact" for several of these exact items — 3024595, 1278980's kit-family siblings, and others). The one item that changes at qty 20 — 1101250 — is not a surprise: it's the item this audit already identified in §11.2 as its single sharpest, most clearly under-reviewed finding, and a $0.75 qty-20 correction ($2.25→$3.00) is a small, defensible number for a real comp-set gap, not a red flag.
+
+**This result independently reproduces two of the audit's own earlier manual conclusions, via a different, mechanical route:**
+- 1101250 gets fixed — confirming §11.2/§13's flag on it was correct and quantifying the fix.
+- 3024595 gets fixed **only** at 1-9/10-19 — its 20-49 through 200+ tiers are untouched, exactly matching §13.1's finding that those deep tiers are the §31 floor clamp working as designed and should not be changed. The simulation arrived at the same boundary independently, without being told about the floor-clamp mechanism.
+
+### 16.5 Verdict
+
+**This converges cleanly to a reasonable, defensible price set — this is the actual finish line for the audit phase.** Unlike §15's Direction-A simulation, there is no cascade, no multi-pass requirement, and no output that reads as absurd or in need of a human override. The fixes are few (38 cells across 15 of 26 items), concentrated in exactly the tiers the account's own validation process doesn't check, silent everywhere the account already got it right (qty 20, almost without exception), and consistent with conclusions this audit reached independently through manual review in §11–§13. If this account wants to act on this audit's findings, **the 38-cell Direction-B fix set in §16.3, applied to the 12+3 items listed, respecting the §13 exception list, is the concrete, converged, human-reviewable output to hand to Nick** — not the Direction-A chain from §15, which was correctly diagnosed there as unusable.
+
+---
+
+## 17. Does the largest gap pair (3010701↔3010704) contaminate the §16.3 result?
+
+Appended per follow-up request. No prices or files outside this audit doc were changed.
+
+### 17.1 Check
+
+§16.3's 15 touched items, restated: Orajet — 1267140, 1082570, 1073950, 3024595, 3017572, 1210810, 1001220, 3018808, 1279130, 1101250, 3020477, 1247120 (12). Cut vinyl — 1146650, 3010698, 3010707 (3).
+
+**Neither 3010701 nor 3010704 appears on that list.** Confirmed directly by re-deriving §16's fix log for the cut-vinyl chain and checking membership: `3010701 in touched? False` / `3010704 in touched? False`.
+
+The reason is clean, not incidental: **3010701 vs 3010704 already holds Direction B at every one of the 6 tiers, on original prices, with no fix of any kind.**
+
+| Tier | 3010701 (S) $/sq ft | 3010704 (L) $/sq ft | Status |
+|---|---|---|---|
+| 1-9 | $17.80 | $14.85 | Hold |
+| 10-19 | $15.62 | $13.01 | Hold |
+| 20-49 | $13.74 | $11.03 | Hold |
+| 50-99 | $13.12 | $9.62 | Hold |
+| 100-199 | $12.49 | $8.49 | Hold |
+| 200+ | $12.18 | $7.36 | Hold |
+
+3010704 (Band B) is priced at a deliberate, large step *down* in $/sq ft from Band A (§4's own text: "19.3% step-down... reflects three structural advantages of the large-format size class") — comfortably clearing Direction B in the correct direction (smaller ≥ larger) with room to spare at every tier, not by a hair. There's no borderline case here for the sparse 3.867 sq ft gap between them to have swayed.
+
+### 17.2 Conclusion
+
+**Stated plainly: the gap pair had no bearing on the §16.3 result.** 3010701 and 3010704 aren't just uninvolved in any fix — the relationship between them was never even close to needing one. The 38-cell fix set from §16.3 stands exactly as reported, with no gap-dependent, lower-confidence cells to flag and nothing to remove.
+
+This also closes the loop opened in §4.3 and reaffirmed in §7's tested-range table: that gap remains a **data-coverage** finding (no independently-validated item exists between 3.202 and 7.069 sq ft, so nothing in that range can be verified against a real neighbor) — but it is not a **pricing-consistency** finding. The two are different claims, and this section confirms the audit never conflated them: the gap limits what can be *tested*, but it did not limit or distort what §16 *fixed*.
+
+### 17.3 Audit phase: complete
+
+This comes back clean. **The audit phase for Orajet and cut-vinyl chain consistency is complete.** Its output is:
+
+- The full sorted $/sq ft dataset for both families (§2), tested against the literal hypothesis as commissioned (§3–§10) and against the account's actual governing rule (§11–§14).
+- A named, justified exception list — 2 permanent (root benchmarks), 3 categorical (F26 floor-governed), 3 individual one-offs (§14.6) — with every boundary and tolerance question raised along the way checked and resolved (§12, §13, §14).
+- A converged, human-reviewable, 38-cell fix set (§16.3) that a human would not need to reject on sight, independently corroborates two of the audit's own manual findings, and is now confirmed (§17.1–17.2) to be untouched by the one open data-coverage gap large enough to have been a concern.
+
+**Turning §16.3 into an actual `governance/CALCULATOR.md` spec change — updated tier tables, routing rules, or engine logic — is a separate piece of work and should be its own session, not a continuation of this one.** This audit found and converged on the numbers; it did not write engine code, and per every prior section's standing instruction, no file outside this audit document has been modified at any point across §1–§17.
