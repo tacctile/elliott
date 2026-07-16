@@ -1,10 +1,10 @@
 {
-  "generated": "2026-07-16T20:39:44Z",
+  "generated": "2026-07-16T21:13:29Z",
   "version": "1.0",
   "account": {
     "floor": null,
     "floor_source_pn": null,
-    "floor_label": "No job floor \u2014 \u00a728 no-floor job-economics doctrine. All items price from Micro-Format Band or job economics.",
+    "floor_label": "No job floor — §28 no-floor job-economics doctrine. All items price from Micro-Format Band or job economics.",
     "moq": {
       "printed_laminated": {
         "applies": false,
@@ -34,7 +34,7 @@
         "min_per_sq_ft_qty_20": 13.65,
         "max_per_sq_ft_qty_20": 13.94,
         "anchor_pn": "1205720",
-        "note": "Relationship Concession phase \u2014 Rule 14 deviation acknowledged. All 5 Band A cut vinyl items (1205720, 1186310, 3017435, 3018378, 3010701) priced within this band by design; Band B/C items have their own independent bands."
+        "note": "Relationship Concession phase — Rule 14 deviation acknowledged. All 5 Band A cut vinyl items (1205720, 1186310, 3017435, 3018378, 3010701) priced within this band by design; Band B/C items have their own independent bands."
       },
       "ai_consensus": {
         "min_per_sq_ft_qty_20": 14.84,
@@ -76,7 +76,7 @@
           "price_100_199": 60,
           "price_200_plus": 52
         },
-        "note": "Band B \u2014 founding data point 3010704 at 7.069 sq ft. 19.3% step-down from Band A. 4-wave AI validated."
+        "note": "Band B — founding data point 3010704 at 7.069 sq ft. 19.3% step-down from Band A. 4-wave AI validated."
       },
       "sub_1_sqft": {
         "threshold_sq_ft": 1.0,
@@ -92,7 +92,7 @@
           "price_100_199": 13.5,
           "price_200_plus": 11.5
         },
-        "note": "Band C \u2014 founding data point cluster 3010707/08/09 at 0.969 sq ft. 51% step-up from Band A. 4-wave AI validated + final industry audit."
+        "note": "Band C — founding data point cluster 3010707/08/09 at 0.969 sq ft. 51% step-up from Band A. 4-wave AI validated + final industry audit."
       }
     },
     "printed_laminated_singles": {
@@ -157,7 +157,7 @@
       "per_label_floor_ansi_qty_20": 2.75,
       "per_label_floor_non_ansi_pn": "3024140",
       "per_label_floor_non_ansi_qty_20": 2.5,
-      "note": "Sub-0.1 sq ft micro-format band \u2014 founding data point 1279000 at 0.097 sq ft. 100% step-up from singles band. Fixed-labor dominance. 4-wave AI validated + final 6-model comprehensive review. Per-label floor (complexity-dependent: $2.75 ANSI per P/N 3024592, $2.50 non-ANSI per P/N 3024140) overrides $/sq ft scaling below ~0.06 sq ft \u2014 the engine cannot auto-classify complexity from dimensions alone, so it STOPs (F26) rather than emit a linear-formula number below this threshold."
+      "note": "Sub-0.1 sq ft micro-format band — founding data point 1279000 at 0.097 sq ft. 100% step-up from singles band. Fixed-labor dominance. 4-wave AI validated + final 6-model comprehensive review. Per-label floor (complexity-dependent: $2.75 ANSI per P/N 3024592, $2.50 non-ANSI per P/N 3024140) overrides $/sq ft scaling below ~0.06 sq ft — the engine cannot auto-classify complexity from dimensions alone, so it STOPs (F26) rather than emit a linear-formula number below this threshold."
     },
     "printed_laminated_kits": {
       "per_label_qty_20": 10.0,
@@ -183,7 +183,7 @@
         "price_100_199": 35,
         "price_200_plus": 30
       },
-      "note": "Per-label parity at $10.00/label qty 20. Kit premium ~6% over singles intentional \u2014 matched-set collation, multi-label inspection, controlled-set packaging."
+      "note": "Per-label parity at $10.00/label qty 20. Kit premium ~6% over singles intentional — matched-set collation, multi-label inspection, controlled-set packaging."
     }
   },
   "material_constants": {
@@ -204,7 +204,8 @@
       "cost_per_sq_ft": 0.5911,
       "material_id": "transferrite-582u",
       "verified_date": "2026-05-28",
-      "cost_per_linear_yd": 1.1821
+      "cost_per_linear_yd": 1.1821,
+      "roll_width_in": 24
     },
     "transferrite_582u_30in": {
       "cost_per_sq_ft": 0.1891,
@@ -216,26 +217,26 @@
   },
   "ink_rates": {
     "default_coverage": "full_bleed_flood_coat",
-    "default_note": "Account-wide standard for ALL Elliott printed/laminated items. Established 2026-06-01. See PRICING_RULES.md \u00a725 and PRODUCTION.md Account-Wide Ink Coverage Standard.",
+    "default_note": "Account-wide standard for ALL Elliott printed/laminated items. Established 2026-06-01. See PRICING_RULES.md §25 and PRODUCTION.md Account-Wide Ink Coverage Standard.",
     "full_bleed_flood_coat": {
       "account_default": true,
       "cost_per_sq_ft": 0.5,
       "incidental_buffer": "judgment-applied; round material total conservatively upward (setup scrap, registration pulls, minor waste). Not a fixed value.",
-      "applies_to": "All Elliott printed/laminated items \u2014 past, present, and future. No partial coverage routing permitted.",
-      "canonical_formula": "(Orajet 3951 sq ft \u00d7 $1.21) + (laminate sq ft \u00d7 $0.2389) + (label sq ft \u00d7 $0.50) + incidental buffer",
+      "applies_to": "All Elliott printed/laminated items — past, present, and future. No partial coverage routing permitted.",
+      "canonical_formula": "(Orajet 3951 sq ft × $1.21) + (laminate sq ft × $0.2389) + (label sq ft × $0.50) + incidental buffer",
       "note": "Full bleed / full coverage at $0.50/sq ft. This is the only ink routing on this account."
     },
     "low": {
       "cost_per_label_typical": 0.1,
-      "note": "DEPRECATED for routing \u2014 historical reference only. Account uses full_bleed_flood_coat exclusively."
+      "note": "DEPRECATED for routing — historical reference only. Account uses full_bleed_flood_coat exclusively."
     },
     "medium": {
       "cost_per_sq_ft": 0.44,
-      "note": "DEPRECATED for routing \u2014 historical reference only. Account uses full_bleed_flood_coat exclusively."
+      "note": "DEPRECATED for routing — historical reference only. Account uses full_bleed_flood_coat exclusively."
     },
     "high": {
       "cost_per_label_typical": 0.4,
-      "note": "DEPRECATED for routing \u2014 historical reference only. Account uses full_bleed_flood_coat exclusively."
+      "note": "DEPRECATED for routing — historical reference only. Account uses full_bleed_flood_coat exclusively."
     },
     "flood_coat": {
       "cost_per_label_min": 0.4,
@@ -285,7 +286,7 @@
       "available_widths_in": [
         24
       ],
-      "pms_note": "Visual approximation of PMS 2386 C \u2014 not a certified Pantone match. Disclose in quote.",
+      "pms_note": "Visual approximation of PMS 2386 C — not a certified Pantone match. Disclose in quote.",
       "verified_date": "2026-05-22"
     },
     "white_24in": {
@@ -335,43 +336,59 @@
       "verified_date": "2026-06-05"
     }
   },
+  "application_tape_rolls": [
+    {
+      "engine_key": "transferrite_582u",
+      "material_id": "transferrite-582u",
+      "roll_width_in": 24.0,
+      "cost_per_linear_yd": 1.1821,
+      "verified_date": "2026-05-28"
+    },
+    {
+      "engine_key": "transferrite_582u_30in",
+      "material_id": "transferrite-582u-30in",
+      "roll_width_in": 30.0,
+      "cost_per_linear_yd": 1.4186,
+      "verified_date": "2026-06-05"
+    }
+  ],
   "do_not_benchmark": {
-    "1277970": "One-off program peer \u2014 historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
-    "1277980": "One-off program peer \u2014 historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
-    "1277990": "One-off program peer \u2014 historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
-    "1278000": "One-off program peer \u2014 historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
-    "3017583": "Standalone one-off \u2014 historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
-    "3017584": "Standalone one-off \u2014 historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
-    "1210810": "Sub-scope single \u2014 excluded from band data points until production-volume acceptance",
+    "1277970": "One-off program peer — historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
+    "1277980": "One-off program peer — historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
+    "1277990": "One-off program peer — historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
+    "1278000": "One-off program peer — historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
+    "3017583": "Standalone one-off — historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
+    "3017584": "Standalone one-off — historical job-economics pricing, not a catalog rate. Do not use as a pricing benchmark.",
+    "1210810": "Sub-scope single — excluded from band data points until production-volume acceptance",
     "1082570": "Initial order was $42 flat job-economics (not a catalog rate). Production tier table is valid for reorder volumes."
   },
   "chain_consistency": {
     "excluded_pn": {
-      "1068270": "direct_parity_clone \u2014 dimensionally/materially identical clone of 1082570",
-      "1062390": "direct_parity_clone \u2014 Direct Parity Exemption clone of 1068270",
-      "1132950": "direct_parity_clone \u2014 Direct Parity Exemption clone of 1068270",
-      "1278220": "direct_parity_clone \u2014 Direct Parity Exemption clone of 1279000",
-      "1277300": "direct_parity_clone \u2014 Direct Parity Exemption clone of 1278980",
-      "1279020": "direct_parity_clone \u2014 Direct Parity Exemption clone of 1278980",
-      "3020336": "direct_parity_clone \u2014 Direct Parity Exemption clone of 3020335",
-      "3020482": "direct_parity_clone \u2014 Direct Parity Exemption clone of 3020335",
-      "3020370": "owner_judgment_clone \u2014 tier table adopted verbatim from 1247120, no independent AI validation run",
-      "1279260": "floor_governed_clone \u2014 verbatim floor-table copy of 3024592, no AI validation; own file disclaims its $/sq ft as an artifact",
-      "1279270": "floor_governed_clone \u2014 identical to 1279260 (verbatim floor-table copy of 3024592)",
-      "1205870": "floor_governed_clone \u2014 verbatim floor-table copy of 3024140, no AI validation",
-      "1277970": "one_off_job_economics \u2014 outrigger switch program, job-economics floor pricing, not $/sq ft scaling",
-      "1277980": "one_off_job_economics \u2014 outrigger switch program, job-economics floor pricing, not $/sq ft scaling",
-      "1277990": "one_off_job_economics \u2014 outrigger switch program, job-economics floor pricing, not $/sq ft scaling",
-      "1278000": "one_off_job_economics \u2014 outrigger switch program, job-economics floor pricing, not $/sq ft scaling",
-      "3017583": "one_off_job_economics \u2014 standalone one-off, job-economics floor pricing, not $/sq ft scaling",
-      "3017584": "one_off_job_economics \u2014 standalone one-off, job-economics floor pricing, not $/sq ft scaling",
-      "1186310": "direct_parity_clone \u2014 direct sq ft parity with 1205720, not separately validated",
-      "3017435": "direct_parity_clone \u2014 direct parity with 1205720 at the same sq ft",
-      "3018378": "direct_parity_clone \u2014 direct sq ft parity with 1205720, not separately validated",
-      "3010708": "direct_parity_clone \u2014 color-parity pricing with 3010707",
-      "3010709": "direct_parity_clone \u2014 color-parity pricing with 3010707",
-      "3010723": "direct_parity_clone \u2014 color parity with 3010722, identical pricing",
-      "3010724": "direct_parity_clone \u2014 color parity with 3010722, identical pricing"
+      "1068270": "direct_parity_clone — dimensionally/materially identical clone of 1082570",
+      "1062390": "direct_parity_clone — Direct Parity Exemption clone of 1068270",
+      "1132950": "direct_parity_clone — Direct Parity Exemption clone of 1068270",
+      "1278220": "direct_parity_clone — Direct Parity Exemption clone of 1279000",
+      "1277300": "direct_parity_clone — Direct Parity Exemption clone of 1278980",
+      "1279020": "direct_parity_clone — Direct Parity Exemption clone of 1278980",
+      "3020336": "direct_parity_clone — Direct Parity Exemption clone of 3020335",
+      "3020482": "direct_parity_clone — Direct Parity Exemption clone of 3020335",
+      "3020370": "owner_judgment_clone — tier table adopted verbatim from 1247120, no independent AI validation run",
+      "1279260": "floor_governed_clone — verbatim floor-table copy of 3024592, no AI validation; own file disclaims its $/sq ft as an artifact",
+      "1279270": "floor_governed_clone — identical to 1279260 (verbatim floor-table copy of 3024592)",
+      "1205870": "floor_governed_clone — verbatim floor-table copy of 3024140, no AI validation",
+      "1277970": "one_off_job_economics — outrigger switch program, job-economics floor pricing, not $/sq ft scaling",
+      "1277980": "one_off_job_economics — outrigger switch program, job-economics floor pricing, not $/sq ft scaling",
+      "1277990": "one_off_job_economics — outrigger switch program, job-economics floor pricing, not $/sq ft scaling",
+      "1278000": "one_off_job_economics — outrigger switch program, job-economics floor pricing, not $/sq ft scaling",
+      "3017583": "one_off_job_economics — standalone one-off, job-economics floor pricing, not $/sq ft scaling",
+      "3017584": "one_off_job_economics — standalone one-off, job-economics floor pricing, not $/sq ft scaling",
+      "1186310": "direct_parity_clone — direct sq ft parity with 1205720, not separately validated",
+      "3017435": "direct_parity_clone — direct parity with 1205720 at the same sq ft",
+      "3018378": "direct_parity_clone — direct sq ft parity with 1205720, not separately validated",
+      "3010708": "direct_parity_clone — color-parity pricing with 3010707",
+      "3010709": "direct_parity_clone — color-parity pricing with 3010707",
+      "3010723": "direct_parity_clone — color parity with 3010722, identical pricing",
+      "3010724": "direct_parity_clone — color parity with 3010722, identical pricing"
     },
     "permanent_exceptions": [
       "1230820",
@@ -399,9 +416,9 @@
     "Strategic Anchor": true
   },
   "quote_language": {
-    "tiny_one_off_program": "RETIRED (\u00a728 no-floor doctrine) \u2014 tiny one-off route removed. All items price from Micro-Format Band.",
-    "anchor_line_template": "Label measures {width}\" \u00d7 {height}\" ({sq_ft} sq ft) in {material} \u2014 priced at ${price} at your projected monthly volume.",
-    "pms_caveat_template": "{color} is a visual approximation of {pms_code} \u2014 not a certified Pantone match.",
+    "tiny_one_off_program": "RETIRED (§28 no-floor doctrine) — tiny one-off route removed. All items price from Micro-Format Band.",
+    "anchor_line_template": "Label measures {width}\" × {height}\" ({sq_ft} sq ft) in {material} — priced at ${price} at your projected monthly volume.",
+    "pms_caveat_template": "{color} is a visual approximation of {pms_code} — not a certified Pantone match.",
     "ink_unverified_note": "Ink cost is a placeholder pending first production run. Update material_cost_per_unit after run.",
     "sub_scope_note": "Dimensional scope exclusion: this item is below the 0.5 sq ft singles band floor. Band-consistent $/sq ft applies. Excluded from band data points until production-volume acceptance confirmed.",
     "rule_14_note": "Rule 14 deviation: benchmarked against a Relationship Concession item. AI consensus band: ${min}-${max}/sq ft."
