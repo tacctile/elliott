@@ -259,7 +259,7 @@ The calculator is the **Round 1 brief generator**. It does not replace any of th
                            ▼
 ┌──────────────────────────────────────────────────────────────────┐
 │             Round 4 — Final Synthesis (6 models)                 │
-│   Send-as-shown verdict. Long-term precedent check.               │
+│   Send-as-shown verdict. Long-term precedent check.              │
 └──────────────────────────┬───────────────────────────────────────┘
                            │
                            ▼
