@@ -432,6 +432,100 @@ DO_NOT_BENCHMARK = {
 }
 
 # ---------------------------------------------------------------------------
+# CHAIN CONSISTENCY (F27) — governance/PRICING_RULES.md §32, sourced from
+# audits/2026-07-16-deep-tier-chain-consistency.md §1.2/§2/§7.
+#
+# §32's nearest-neighbor chain-consistency constraint only compares items
+# that independently test $/sq ft scaling. Direct-parity clones, floor-
+# governed copies, kits, and one-off job-economics items inherit or bypass
+# that scaling rather than testing it, so they are excluded from being a
+# chain-consistency NEIGHBOR — this is a DIFFERENT exclusion set than
+# DO_NOT_BENCHMARK above (e.g. 1210810 and 1082570 are do-not-benchmark for
+# band-DATA-POINT reasons but remain valid, independently-tested §32
+# comparables; the audit's own 20-item Orajet / 8-item cut-vinyl dataset
+# includes both). excluded_pn is the curated parity/owner-judgment/one-off
+# class (per audit §1.2's tables); kits are excluded structurally by
+# item_type in the engine, not listed here. The three sub-0.06 sq ft
+# floor-governed clones (1279260, 1279270, 1205870) are listed here for
+# audit-trail clarity, but the engine also derives this class structurally
+# (any candidate below per_label_floor_threshold_sq_ft that is not one of
+# the two governing per-label-floor comparables) so a FUTURE F26-routed
+# item is automatically exempt too, per §32's "Categorical exception...
+# any future item routed through F26 inherits this exemption automatically,
+# without a rule update."
+# ---------------------------------------------------------------------------
+
+CHAIN_CONSISTENCY_EXCLUDED_PN = {
+    # Orajet — direct-parity clones (literal "Direct Parity Exemption")
+    "1068270": "direct_parity_clone — dimensionally/materially identical clone of 1082570",
+    "1062390": "direct_parity_clone — Direct Parity Exemption clone of 1068270",
+    "1132950": "direct_parity_clone — Direct Parity Exemption clone of 1068270",
+    "1278220": "direct_parity_clone — Direct Parity Exemption clone of 1279000",
+    "1277300": "direct_parity_clone — Direct Parity Exemption clone of 1278980",
+    "1279020": "direct_parity_clone — Direct Parity Exemption clone of 1278980",
+    "3020336": "direct_parity_clone — Direct Parity Exemption clone of 3020335",
+    "3020482": "direct_parity_clone — Direct Parity Exemption clone of 3020335",
+    # Orajet — Owner Judgment ladder adoption (verbatim, no independent AI validation)
+    "3020370": "owner_judgment_clone — tier table adopted verbatim from 1247120, no independent AI validation run",
+    # Orajet — floor-governed verbatim tier-table copies (sub-0.06 sq ft, F26 class).
+    # Also derived structurally by the engine (see module docstring above);
+    # listed explicitly for audit-trail clarity.
+    "1279260": "floor_governed_clone — verbatim floor-table copy of 3024592, no AI validation; own file disclaims its $/sq ft as an artifact",
+    "1279270": "floor_governed_clone — identical to 1279260 (verbatim floor-table copy of 3024592)",
+    "1205870": "floor_governed_clone — verbatim floor-table copy of 3024140, no AI validation",
+    # Orajet — one-off job economics (explicitly non-benchmarkable; same items as
+    # DO_NOT_BENCHMARK above, listed again here under the §32-specific reason)
+    "1277970": "one_off_job_economics — outrigger switch program, job-economics floor pricing, not $/sq ft scaling",
+    "1277980": "one_off_job_economics — outrigger switch program, job-economics floor pricing, not $/sq ft scaling",
+    "1277990": "one_off_job_economics — outrigger switch program, job-economics floor pricing, not $/sq ft scaling",
+    "1278000": "one_off_job_economics — outrigger switch program, job-economics floor pricing, not $/sq ft scaling",
+    "3017583": "one_off_job_economics — standalone one-off, job-economics floor pricing, not $/sq ft scaling",
+    "3017584": "one_off_job_economics — standalone one-off, job-economics floor pricing, not $/sq ft scaling",
+    # Cut vinyl — direct sq ft parity / color-parity clones
+    "1186310": "direct_parity_clone — direct sq ft parity with 1205720, not separately validated",
+    "3017435": "direct_parity_clone — direct parity with 1205720 at the same sq ft",
+    "3018378": "direct_parity_clone — direct sq ft parity with 1205720, not separately validated",
+    "3010708": "direct_parity_clone — color-parity pricing with 3010707",
+    "3010709": "direct_parity_clone — color-parity pricing with 3010707",
+    "3010723": "direct_parity_clone — color parity with 3010722, identical pricing",
+    "3010724": "direct_parity_clone — color parity with 3010722, identical pricing",
+}
+
+# Permanent exceptions — excluded definitionally, not by magnitude (§32).
+# Each of these root benchmarks IS the floor its own family prices above;
+# the constraint inverts if pointed at the benchmark itself. Never fire F27
+# when the new item's nearest larger validated neighbor resolves to one of
+# these two P/Ns, regardless of gap size.
+CHAIN_CONSISTENCY_PERMANENT_EXCEPTIONS = ["1230820", "1205720"]
+
+# §32 tolerance (audit §14.5/§16.1): flag an inversion only if closing it
+# requires raising the new item's own price by this many (or more) filing
+# increments of size increment_size. A single-increment residual is within
+# the account's own §30 filing granularity and is treated as rounding, not
+# a violation — validated against the account's own accepted exception at
+# the 3020335↔1277020 boundary (categories/printed-laminated-orajet.md
+# footnote ²⁰), which independently resolves to exactly one increment.
+CHAIN_CONSISTENCY_TOLERANCE_INCREMENTS = 2
+CHAIN_CONSISTENCY_INCREMENT_SIZE = 0.25
+
+# Tested sq ft range per family — audit §7 "Tested range — do not
+# extrapolate outside these bounds." An item outside its family's range, or
+# whose nearest larger neighbor search comes up empty inside the range, is a
+# data-coverage gap (§32 Scope limits), not an automatic F27 pass.
+CHAIN_CONSISTENCY_TESTED_RANGE = {
+    "Orajet 3951 Cast + Polyester Lam": {"min_sq_ft": 0.019, "max_sq_ft": 1.296},
+    "3M 180mC Cut Vinyl": {"min_sq_ft": 0.969, "max_sq_ft": 7.069},
+}
+
+CHAIN_CONSISTENCY = {
+    "excluded_pn": CHAIN_CONSISTENCY_EXCLUDED_PN,
+    "permanent_exceptions": CHAIN_CONSISTENCY_PERMANENT_EXCEPTIONS,
+    "tolerance_increments": CHAIN_CONSISTENCY_TOLERANCE_INCREMENTS,
+    "increment_size": CHAIN_CONSISTENCY_INCREMENT_SIZE,
+    "tested_range": CHAIN_CONSISTENCY_TESTED_RANGE,
+}
+
+# ---------------------------------------------------------------------------
 # OVERRIDE TYPE PRECEDENT
 # Source: ARCHITECTURE.md Override Types table, PRICING_RULES.md §13.
 # ---------------------------------------------------------------------------
@@ -581,6 +675,7 @@ def build_config():
         "ink_rates": INK_RATES,
         "cut_vinyl_colors": build_cut_vinyl_colors(),
         "do_not_benchmark": DO_NOT_BENCHMARK,
+        "chain_consistency": CHAIN_CONSISTENCY,
         "override_type_precedent": OVERRIDE_TYPE_PRECEDENT,
         "quote_language": QUOTE_LANGUAGE,
         "flag_thresholds": FLAG_THRESHOLDS,
@@ -594,9 +689,11 @@ def main():
     n_materials = len(config["material_constants"])
     n_bands = len(config["bands"])
     n_dnb = len(config["do_not_benchmark"])
+    n_cc = len(config["chain_consistency"]["excluded_pn"])
     print(
         f"✓ Built frontend/calculator_config.json — "
-        f"{n_materials} material constants, {n_bands} bands, {n_dnb} do_not_benchmark items"
+        f"{n_materials} material constants, {n_bands} bands, {n_dnb} do_not_benchmark items, "
+        f"{n_cc} chain_consistency excluded_pn"
     )
 
 
