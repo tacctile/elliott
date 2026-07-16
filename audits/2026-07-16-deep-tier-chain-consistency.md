@@ -650,3 +650,67 @@ Enforcing §11's rule to full convergence doesn't fix 12 pairs — it erases the
 **Not tension between specific pairs — a structural mismatch between the rule and the pricing philosophy it's being applied to.** The 12 fixes cascade because Direction A (§1.1's literal hypothesis: `L ≥ S`, larger holds at or above smaller) is, as this audit has said since §3.1, the *reverse* of the account's actual governing rule (Direction B: `S ≥ L`, smaller holds at or above larger). A rule that runs backward from the pricing philosophy doesn't fail quietly when you try to enforce it locally — it fails by demanding the philosophy itself be abandoned once you trace it to a global fixed point. This also corrects an imprecise line in §11.1, which described the `L ≥ S` wording as matching "the account's own Wave 4 verdict" — it does not; §1.1's own intro has this right (Direction B matches Wave 4), and §11.1 should be read with that correction in mind.
 
 **Practical conclusion:** do not implement §11's rule, converged or not — not because the math doesn't resolve (it does, cleanly, in one pass), but because the resolved state is not a price list this account would ever want to file. The finding that stands from this whole exercise is the one from §13/§14: **Direction B, checked at all 6 tiers with a 2+-increment tolerance, with the 5-item true-one-off + 2-item permanent + 3-item categorical exception list from §14.6, is the constraint worth actually adopting.** Direction A's Bucket-2 pairs remain useful as a diagnostic (they correctly locate every place the small-format-premium curve isn't smooth), but "fixing" them by raising prices is the wrong tool — where a real gap exists, it should be closed by re-deriving that item's price from its own comp set (as §11.3/§13 already recommend for 1101250, 3024595, and 3017572), not by mechanically chasing the nearest-smaller-neighbor floor up the entire chain.
+
+---
+
+## 16. Simulating Direction B: does the actual rule converge cleanly?
+
+Appended per follow-up request. **No prices were changed anywhere.** Simulation only.
+
+### 16.1 Method
+
+Same rule shape as §15 — a single sequential pass, each item checked against an **already-updated** neighbor, minimum $0.25-increment fix applied where required — but three things change to match this follow-up's spec:
+
+1. **Direction B**, not A: the constraint is `S.$/sqft ≥ L.$/sqft` (smaller item must not undercut its larger neighbor).
+2. **§14 tolerance applied throughout the pass**: at every step, if the gap needs 0 or 1 increments, it's left alone; only 2+-increment gaps are fixed. This is re-checked dynamically at each step (not just pre-filtered once), so a gap that grows past 1 increment because of an upstream fix still gets caught.
+3. **§13's permanent exceptions removed from the chain before the pass runs**: 1230820 (Orajet root) and 1205720 (cut-vinyl root) are excluded entirely — 19 Orajet items and 7 cut-vinyl items remain. (The 3 categorical items, 1279260/1279270/1205870, were never part of the 20/8 independently-validated chain to begin with — see §1.2 — so excluding them is a no-op; nothing changes because of it.)
+
+**One necessary adaptation from §15, not a deviation from it:** Direction A's dependency runs smaller→larger (each item's floor is set by the item *below* it), so §15's pass went bottom-up, ascending. Direction B's dependency runs the opposite way — each item's floor is set by its *larger* neighbor — so the "always use the already-updated neighbor" rule requires processing **top-down, descending from the largest item to the smallest** in each reduced chain (starting at 1277020 for Orajet and 3010704 for cut vinyl, since the roots that would normally anchor the top are excluded). This is the same algorithm as §15, correctly oriented to the direction actually being tested.
+
+### 16.2 Result: converges in one pass, zero residual violations
+
+Both chains converge in a **single descending pass** — re-verifying the full chain afterward finds **0 remaining 2+-increment violations** in either family. No second pass was needed.
+
+**Far fewer items need touching than under Direction A:** 12 of 19 Orajet items (7 are already fully compliant against their larger neighbor and need no change at all) and 3 of 7 cut-vinyl items. Total: **38 individual [item, tier] fixes** (30 Orajet + 8 cut vinyl) — compare to §15's 53 fixes that still didn't converge.
+
+**The qty-20 (20-49) tier is untouched everywhere except one item.** Across all 19 Orajet + 7 cut-vinyl items, the 20-49 price is identical before and after in every case but one: **1101250**, which needed its 20-49 price raised from $2.25 to $3.00 (+33.3%, 3 increments). Every other qty-20 price — the tier the account's own Wave 4 process actually validates — was already correct. This is exactly what should happen if Direction B is the real rule: the account already got the tier it checks right almost everywhere, and this simulation's fixes land precisely in the tiers it doesn't check (1-9, 10-19, 50-99, 100-199, 200+).
+
+### 16.3 Family roots and largest jumps
+
+**At the roots:** 1230820 and 1205720 are excluded from the pass by construction, so they are unchanged — $15.43/sq ft and $13.67/sq ft at qty 20 respectively, exactly as filed. For completeness: even if 1230820 *had* been left in the chain, the one Direction-B gap it has against its nearest smaller neighbor (1277020 at 1-9, $22.83 vs $23.15/sq ft) needs only 1 increment to close — inside tolerance, so it would not have been touched anyway. Excluding the roots doesn't quietly let anything real slip through.
+
+**Largest jump by percent:** **1210810, 200+ tier: $2.75 → $5.00 (+81.8%, +$2.25)** — fixed against its larger neighbor 3017572. Second largest: 1101250, 200+: $1.25 → $2.25 (+80.0%, +$1.00).
+
+**Largest jump by dollar amount:** **1146650, 200+ tier: $26.50 → $36.25 (+$9.75, +36.8%)** — fixed against its larger neighbor 3010701. Second largest: 1146650, 100-199: $30.50 → $37.25 (+$6.75, +22.1%).
+
+Every touched item and tier:
+
+| Family | Item | Tiers touched | Range of increases |
+|---|---|---|---|
+| Orajet | 1267140 | 1-9 | +$0.50 (+3.8%) |
+| Orajet | 1082570 | 50-99, 100-199, 200+ | +$0.50 to +$1.75 (+8.0% to +41.2%) |
+| Orajet | 1073950 | 50-99, 100-199, 200+ | +$0.50 to +$1.75 (+8.0% to +41.2%) |
+| Orajet | 3024595 | 1-9, 10-19 | +$1.00 to +$5.50 (+10.8% to +51.2%) |
+| Orajet | 3017572 | 1-9, 10-19, 100-199, 200+ | +$0.50 to +$3.50 (+6.9% to +40.0%) |
+| Orajet | 1210810 | 1-9, 10-19, 50-99, 100-199, 200+ | +$0.50 to +$2.25 (+8.7% to +81.8%) |
+| Orajet | 1001220 | 1-9 | +$1.00 (+14.3%) |
+| Orajet | 3018808 | 1-9 | +$0.75 (+10.7%) |
+| Orajet | 1279130 | 1-9, 200+ | +$0.50 (+10.5% to +25.0%) |
+| Orajet | 1101250 | 1-9, 20-49, 50-99, 100-199, 200+ | +$0.75 to +$1.00 (+18.8% to +80.0%) |
+| Orajet | 3020477 | 1-9, 200+ | +$0.50 (+11.8% to +28.6%) |
+| Orajet | 1247120 | 200+ | +$0.50 (+28.6%) |
+| Cut vinyl | 1146650 | 1-9, 50-99, 100-199, 200+ | +$1.00 to +$9.75 (+1.9% to +36.8%) |
+| Cut vinyl | 3010698 | 50-99, 100-199, 200+ | +$1.50 to +$4.50 (+7.7% to +30.0%) |
+| Cut vinyl | 3010707 | 200+ | +$1.00 (+8.7%) |
+
+### 16.4 Plausibility check
+
+**No item moves by an implausible amount, and nothing here would need to be rejected on sight.** Every increase stays below 2× the original price (the largest, +81.8%, is on a $2.75 base — a $2.25 absolute move); nothing approaches Direction A's 838% root-benchmark blowout. No root benchmark is touched (both are structurally excluded). Every affected tier is either the 1-9 fringe (lowest-volume, rarely the buyer's actual order quantity) or 50-99/100-199/200+ (the deep-volume tail that Wave 4 records repeatedly describe as "structural completeness only... not expected to transact" for several of these exact items — 3024595, 1278980's kit-family siblings, and others). The one item that changes at qty 20 — 1101250 — is not a surprise: it's the item this audit already identified in §11.2 as its single sharpest, most clearly under-reviewed finding, and a $0.75 qty-20 correction ($2.25→$3.00) is a small, defensible number for a real comp-set gap, not a red flag.
+
+**This result independently reproduces two of the audit's own earlier manual conclusions, via a different, mechanical route:**
+- 1101250 gets fixed — confirming §11.2/§13's flag on it was correct and quantifying the fix.
+- 3024595 gets fixed **only** at 1-9/10-19 — its 20-49 through 200+ tiers are untouched, exactly matching §13.1's finding that those deep tiers are the §31 floor clamp working as designed and should not be changed. The simulation arrived at the same boundary independently, without being told about the floor-clamp mechanism.
+
+### 16.5 Verdict
+
+**This converges cleanly to a reasonable, defensible price set — this is the actual finish line for the audit phase.** Unlike §15's Direction-A simulation, there is no cascade, no multi-pass requirement, and no output that reads as absurd or in need of a human override. The fixes are few (38 cells across 15 of 26 items), concentrated in exactly the tiers the account's own validation process doesn't check, silent everywhere the account already got it right (qty 20, almost without exception), and consistent with conclusions this audit reached independently through manual review in §11–§13. If this account wants to act on this audit's findings, **the 38-cell Direction-B fix set in §16.3, applied to the 12+3 items listed, respecting the §13 exception list, is the concrete, converged, human-reviewable output to hand to Nick — not the Direction-A chain from §15, which was correctly diagnosed there as unusable.
