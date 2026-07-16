@@ -424,7 +424,13 @@ def assemble_config(bands, settings, materials):
     mc_specs = {
         "orajet_3951": ["roll_width_in"],
         "polyester_lam_1mil": ["max_laminator_width_in"],
-        "transferrite_582u": [],
+        # roll_width_in was missing for the 24" tape here (latent gap that
+        # left the JSON fallback's default tape entry with no width to
+        # validate a label against -- part of what let tape selection be
+        # hardcoded to this one key regardless of label size; see
+        # application_tape_rolls below and resolveApplicationTape() in
+        # frontend/index.html).
+        "transferrite_582u": ["roll_width_in"],
         "transferrite_582u_30in": ["roll_width_in"],
     }
     material_constants = {}
@@ -475,6 +481,29 @@ def assemble_config(bands, settings, materials):
         entry["verified_date"] = m["verified_date"]
         cut_vinyl_colors[m["engine_key"]] = entry
 
+    # application_tape_rolls: every tape material on file, independent of
+    # vinyl color or any Combinations row -- mirrors
+    # build_application_tape_rolls() in build_calculator_config.py and
+    # application_tape_rolls in frontend/index.html's
+    # assembleConfigFromDb(). resolveApplicationTape() picks the narrowest
+    # roll_width_in >= the label's fit dimension from this list.
+    application_tape_rolls = sorted(
+        (
+            {
+                "engine_key": m.get("engine_key"),
+                "material_id": m["material_key"],
+                "roll_width_in": fnum(m["roll_width_in"]),
+                "cost_per_linear_yd": fnum(m["cost_per_linear_yd"]),
+                "verified_date": m["verified_date"],
+            }
+            for m in materials
+            if m.get("material_family") == "tape"
+            and m.get("roll_width_in") is not None
+            and m.get("cost_per_linear_yd") is not None
+        ),
+        key=lambda r: r["roll_width_in"],
+    )
+
     return {
         "generated": now_iso,
         "version": extra.get("version", "1.0"),
@@ -495,6 +524,7 @@ def assemble_config(bands, settings, materials):
         "material_constants": material_constants,
         "ink_rates": extra.get("ink_rates", {}),
         "cut_vinyl_colors": cut_vinyl_colors,
+        "application_tape_rolls": application_tape_rolls,
         "do_not_benchmark": None,  # filled by caller from items
         "override_type_precedent": extra.get("override_type_precedent", {}),
         "quote_language": extra.get("quote_language", {}),
