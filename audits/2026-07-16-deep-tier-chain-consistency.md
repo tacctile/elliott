@@ -509,3 +509,88 @@ Three of six (1279260, 1279270, 1205870) share the exact same mechanism and shou
 | **3 — True one-off, individual review required** | **1101250** (highest priority — full comp-set gap against both neighbors), **3024595** (rescoped — only 1-9/10-19 need review; 20-49+ is the §31 floor clamp working as designed, not an error), **3017572** (minor, single-tier, 3.4%), **1146650** (trivial, single-tier, 0.4%, likely closed by a small 1-9 bump) | No existing category rule explains any of these four. Each needs a human pricing decision, not an automatic repricing or a rule-based exemption. | Route to Nick/Sean for individual review, prioritized in the order listed. |
 
 Net change from §11.3/§12.5: **3020370 dropped entirely** (§12, boundary artifact — reclassify as a density gap, not an exception), **1279260/1279270/1205870 moved from individual listing to a single categorical carve-out**, **3024595 kept but rescoped to 2 of its 6 tiers**. Final individually-tracked exception count: 2 permanent + 4 one-off = **6 items**, plus one categorical rule covering the F26 floor-governed class.
+
+---
+
+## 14. Rounding-scale vs. structural: a $0.25-increment test
+
+Appended per follow-up request. No prices or files outside this audit doc were changed.
+
+### 14.1 Method
+
+For each pair/item below, take its **worst tier** exactly as already identified in §10 (Bucket-2 pairs, Direction A — the larger item L pricing below its smaller neighbor S) or §11.2/§13 (exception-list items, same direction: the flagged item is L, its nearest smaller validated neighbor is S). At that tier, compute the minimum whole number of $0.25 increments that would need to be added to **L's filed price** (not its $/sq ft) so that `(L.price + 0.25×N) / L.sqft ≥ S.$/sqft`:
+
+- **N = 1 → "rounding-scale."** The gap is smaller than one $0.25 step — the account's own filing convention (§30, all tiers in $0.25 increments) cannot express anything finer than this, so a single-increment residual is indistinguishable from ordinary price-filing rounding. This is the same class of gap this audit has repeatedly called out as immaterial when it appeared incidentally (e.g. the sub-cent $/sq ft deltas noted in §11.1 for 1278980-adjacent pairs) — here it's given a precise, mechanical definition instead of an eyeballed one.
+- **N ≥ 2 → "structural."** The gap survives the coarsest possible rounding correction and represents a real, multi-increment pricing decision that was never made — not noise.
+
+### 14.2 The 14 Bucket-2 pairs (§10)
+
+| Pair (S → L) | Worst tier (§10) | L's filed price at that tier | Minimum price to clear S | New price after N increments | Increments (N) | Classification |
+|---|---|---|---|---|---|---|
+| 3024592 → 1012080 | 100-199, -39.2% | $1.95 | $3.21 | $3.45 | 6 | **Structural** |
+| 1012080 → 1279000 | 200+, -12.3% | $2.10 | $2.39 | $2.60 | 2 | **Structural** |
+| 1247120 → 3020477 | 20-49, -6.2% | $2.75 | $2.93 | $3.00 | **1** | **Rounding-scale** |
+| 1279130 → 3018808 | 20-49, -14.0% | $4.00 | $4.65 | $4.75 | 3 | **Structural** |
+| 3018808 → 1001220 | 1-9, -3.9% | $7.00 | $7.28 | $7.50 | 2 | **Structural** |
+| 1001220 → 1210810 | 200+, -42.0% | $2.75 | $4.74 | $4.75 | 8 | **Structural** |
+| 3024595 → 1073950 | 200+, -46.8% | $4.25 | $7.99 | $8.00 | 15 | **Structural** |
+| 1082570 → 1267140 | 1-9, -29.2% | $13.00 | $18.37 | $18.50 | 22 | **Structural** |
+| 1267140 → 1278980 | 100-199, -4.9% | $7.50 | $7.88 | $8.00 | 2 | **Structural** |
+| 1278980 → 3020335 | 1-9, -2.6% | $14.50 | $14.88 | $15.00 | 2 | **Structural** |
+| 3020335 → 1277020 | 10-19, -1.6% | $12.00 | $12.19 | $12.25 | **1** | **Rounding-scale** |
+| 3010707 → 3010736 | 1-9, -32.5% | $19.75 | $29.24 | $29.25 | 38 | **Structural** |
+| 3010736 → 3010722 | 100-199, -3.5% | $14.75 | $15.28 | $15.50 | 3 | **Structural** |
+| 3010722 → 3010698 | 200+, -23.7% | $15.00 | $19.66 | $19.75 | 19 | **Structural** |
+
+**Bucket-2 result: 2 rounding-scale, 12 structural** (0 already-compliant — every pair on this list has ≥1 failing tier by §10's own construction). Notably, **3020335→1277020 is the account's own single documented, accepted exception (footnote ²⁰)** — and it independently comes out "rounding-scale" under this mechanical test, a one-increment residual. That's a good sign for the method: the one gap the account already decided to live with is also the one this test says is genuinely negligible. The other rounding-scale pair, 1247120→3020477, was never flagged as an exception anywhere in the account's records — it simply happens to be small.
+
+One correction to an earlier characterization: §11.1 loosely described 1278980↔3020335's *20-49* tier gap ($15.5993 vs $15.60, a Direction-B micro-difference) as "rounding-level noise." That is a different tier and a different direction than the one that actually put this pair on the Bucket-2 list (§10 flagged it at **1-9**, Direction A, -2.6%). At its real flagged tier, this pair needs **2** increments — it classifies as structural, not rounding-scale. The mechanical test in this section supersedes that earlier loose characterization.
+
+### 14.3 The 9 consolidated-exception-list items (§13)
+
+Using each item's flagging comparator from §11.2/§13 (3024595 uses its §13-rescoped worst tier — 20-49 excluded as floor-clamp-by-design, so only 1-9/10-19 are eligible):
+
+| Item | Comparator (smaller neighbor) | Worst eligible tier | Item's filed price | Minimum price to clear comparator | New price after N increments | Increments (N) | Classification |
+|---|---|---|---|---|---|---|---|
+| 1230820 | 1277020 | 200+, -25.7% | $11.00 | $14.80 | $15.00 | 16 | **Structural** |
+| 1205720 | 3010698 | 200+, -9.4% | $22.00 | $24.27 | $24.50 | 10 | **Structural** |
+| 1279260 | 3024140 | 1-9, -38.8% | $4.25 | $6.95 | $7.00 | 11 | **Structural** |
+| 1279270 | 3024140 | 1-9, -38.8% | $4.25 | $6.95 | $7.00 | 11 | **Structural** |
+| 1205870 | 3024140 | 1-9, -58.8% | $4.25 | $10.32 | $10.50 | 25 | **Structural** |
+| 1101250 | 3020477 | 200+, -29.7% | $1.25 | $1.78 | $2.00 | 3 | **Structural** |
+| 3017572 | 1210810 | 1-9, -3.4% | $8.75 | $9.06 | $9.25 | 2 | **Structural** |
+| 1146650 | 1205720 | 1-9, -0.4% | $52.00 | $52.22 | $52.25 | **1** | **Rounding-scale** |
+| 3024595 (rescoped) | 3017572 | 1-9, -8.1% | $10.75 | $11.70 | $11.75 | 4 | **Structural** |
+
+**Exception-list result: 1 rounding-scale (1146650), 8 structural.**
+
+### 14.4 Combined counts
+
+| | Rounding-scale (N=1) | Structural (N≥2) |
+|---|---|---|
+| Bucket-2 pairs (14) | 2 | 12 |
+| Exception-list items (9) | 1 | 8 |
+| **Combined (23)** | **3** | **20** |
+
+### 14.5 Revised constraint
+
+Restating §11's candidate rule with the correction: **"Flag a nearest-smaller-neighbor inversion only if closing it would require 2 or more $0.25 increments on the larger item's price. Do not flag single-increment residuals — they are within the account's own $0.25 filing granularity and are indistinguishable from rounding."**
+
+### 14.6 Effect on the exception list
+
+Checking each exception-list item's classification from §14.3 against the revised threshold:
+
+- **1146650 drops out entirely.** It was the smallest, most marginal entry in §13's "true one-off" group (-0.4% at 1-9), and it is the one item that turns out to need exactly one increment. Under the revised constraint it is **not a violation at all** — no exception needed, no review needed, nothing to fix.
+- **1101250, 3017572, 3024595 (rescoped) all remain flagged** — 3, 2, and 4 increments respectively. The revised threshold doesn't change their status; it just confirms none of them are rounding artifacts.
+- **1279260, 1279270, 1205870 remain flagged**, and by a wide margin (11–25 increments) — this reinforces §13's recommendation that these three need a *categorical* exemption (they're priced by a per-label floor mechanism that was never designed to satisfy $/sq ft scaling at all), not a numeric-tolerance argument. A tolerance threshold was never going to rescue these; the mechanism itself is the reason they're exempted.
+- **1230820, 1205720 remain flagged** (16 and 10 increments) — irrelevant to their exemption, which is definitional (they *are* the floor), not magnitude-based. The revised threshold doesn't add or remove anything for the permanent/structural group; it just confirms their gaps are large in the literal sense too.
+
+**Updated final exception list (supersedes §13.3's Group 3):**
+
+| Group | Items | Change from §13.3 |
+|---|---|---|
+| **1 — Permanent / structural** | 1230820, 1205720 | Unchanged. |
+| **2 — Category-excluded (floor-governed)** | 1279260, 1279270, 1205870 | Unchanged. |
+| **3 — True one-off, individual review required** | **1101250, 3024595 (rescoped), 3017572** | **1146650 removed** — within accepted $0.25 tolerance, no longer an exception. |
+
+Individually-tracked exception count drops from 6 to **5**, plus the same one categorical rule for the F26 floor-governed class. Applying the same 2+-increment threshold back to the general Bucket-2 population (informational, not part of the exception list) would similarly stop flagging 1247120↔3020477 and 3020335↔1277020 as violations, leaving 12 of the original 14 as the real candidate set for enforcement.
