@@ -713,4 +713,45 @@ Every touched item and tier:
 
 ### 16.5 Verdict
 
-**This converges cleanly to a reasonable, defensible price set — this is the actual finish line for the audit phase.** Unlike §15's Direction-A simulation, there is no cascade, no multi-pass requirement, and no output that reads as absurd or in need of a human override. The fixes are few (38 cells across 15 of 26 items), concentrated in exactly the tiers the account's own validation process doesn't check, silent everywhere the account already got it right (qty 20, almost without exception), and consistent with conclusions this audit reached independently through manual review in §11–§13. If this account wants to act on this audit's findings, **the 38-cell Direction-B fix set in §16.3, applied to the 12+3 items listed, respecting the §13 exception list, is the concrete, converged, human-reviewable output to hand to Nick — not the Direction-A chain from §15, which was correctly diagnosed there as unusable.
+**This converges cleanly to a reasonable, defensible price set — this is the actual finish line for the audit phase.** Unlike §15's Direction-A simulation, there is no cascade, no multi-pass requirement, and no output that reads as absurd or in need of a human override. The fixes are few (38 cells across 15 of 26 items), concentrated in exactly the tiers the account's own validation process doesn't check, silent everywhere the account already got it right (qty 20, almost without exception), and consistent with conclusions this audit reached independently through manual review in §11–§13. If this account wants to act on this audit's findings, **the 38-cell Direction-B fix set in §16.3, applied to the 12+3 items listed, respecting the §13 exception list, is the concrete, converged, human-reviewable output to hand to Nick** — not the Direction-A chain from §15, which was correctly diagnosed there as unusable.
+
+---
+
+## 17. Does the largest gap pair (3010701↔3010704) contaminate the §16.3 result?
+
+Appended per follow-up request. No prices or files outside this audit doc were changed.
+
+### 17.1 Check
+
+§16.3's 15 touched items, restated: Orajet — 1267140, 1082570, 1073950, 3024595, 3017572, 1210810, 1001220, 3018808, 1279130, 1101250, 3020477, 1247120 (12). Cut vinyl — 1146650, 3010698, 3010707 (3).
+
+**Neither 3010701 nor 3010704 appears on that list.** Confirmed directly by re-deriving §16's fix log for the cut-vinyl chain and checking membership: `3010701 in touched? False` / `3010704 in touched? False`.
+
+The reason is clean, not incidental: **3010701 vs 3010704 already holds Direction B at every one of the 6 tiers, on original prices, with no fix of any kind.**
+
+| Tier | 3010701 (S) $/sq ft | 3010704 (L) $/sq ft | Status |
+|---|---|---|---|
+| 1-9 | $17.80 | $14.85 | Hold |
+| 10-19 | $15.62 | $13.01 | Hold |
+| 20-49 | $13.74 | $11.03 | Hold |
+| 50-99 | $13.12 | $9.62 | Hold |
+| 100-199 | $12.49 | $8.49 | Hold |
+| 200+ | $12.18 | $7.36 | Hold |
+
+3010704 (Band B) is priced at a deliberate, large step *down* in $/sq ft from Band A (§4's own text: "19.3% step-down... reflects three structural advantages of the large-format size class") — comfortably clearing Direction B in the correct direction (smaller ≥ larger) with room to spare at every tier, not by a hair. There's no borderline case here for the sparse 3.867 sq ft gap between them to have swayed.
+
+### 17.2 Conclusion
+
+**Stated plainly: the gap pair had no bearing on the §16.3 result.** 3010701 and 3010704 aren't just uninvolved in any fix — the relationship between them was never even close to needing one. The 38-cell fix set from §16.3 stands exactly as reported, with no gap-dependent, lower-confidence cells to flag and nothing to remove.
+
+This also closes the loop opened in §4.3 and reaffirmed in §7's tested-range table: that gap remains a **data-coverage** finding (no independently-validated item exists between 3.202 and 7.069 sq ft, so nothing in that range can be verified against a real neighbor) — but it is not a **pricing-consistency** finding. The two are different claims, and this section confirms the audit never conflated them: the gap limits what can be *tested*, but it did not limit or distort what §16 *fixed*.
+
+### 17.3 Audit phase: complete
+
+This comes back clean. **The audit phase for Orajet and cut-vinyl chain consistency is complete.** Its output is:
+
+- The full sorted $/sq ft dataset for both families (§2), tested against the literal hypothesis as commissioned (§3–§10) and against the account's actual governing rule (§11–§14).
+- A named, justified exception list — 2 permanent (root benchmarks), 3 categorical (F26 floor-governed), 3 individual one-offs (§14.6) — with every boundary and tolerance question raised along the way checked and resolved (§12, §13, §14).
+- A converged, human-reviewable, 38-cell fix set (§16.3) that a human would not need to reject on sight, independently corroborates two of the audit's own manual findings, and is now confirmed (§17.1–17.2) to be untouched by the one open data-coverage gap large enough to have been a concern.
+
+**Turning §16.3 into an actual `governance/CALCULATOR.md` spec change — updated tier tables, routing rules, or engine logic — is a separate piece of work and should be its own session, not a continuation of this one.** This audit found and converged on the numbers; it did not write engine code, and per every prior section's standing instruction, no file outside this audit document has been modified at any point across §1–§17.
