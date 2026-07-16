@@ -465,18 +465,18 @@ DO_NOT_BENCHMARK = {
 # that scaling rather than testing it, so they are excluded from being a
 # chain-consistency NEIGHBOR — this is a DIFFERENT exclusion set than
 # DO_NOT_BENCHMARK above (e.g. 1210810 and 1082570 are do-not-benchmark for
-# band-DATA-POINT reasons but remain valid §32 comparables; the audit's own
-# 20-item Orajet / 8-item cut-vinyl dataset includes both). excluded_pn is
-# the curated parity/owner-judgment/one-off class (per audit §1.2's
-# tables); kits are excluded structurally by item_type in the engine, not
-# listed here. The three sub-0.06 sq ft floor-governed clones (1279260,
-# 1279270, 1205870) are listed here for audit-trail clarity, but the engine
-# also derives this class structurally (any candidate below
-# per_label_floor_threshold_sq_ft that is not one of the two governing
-# per-label-floor comparables) so a FUTURE F26-routed item is automatically
-# exempt too, per §32's "Categorical exception... any future item routed
-# through F26 inherits this exemption automatically, without a rule
-# update."
+# band-DATA-POINT reasons but remain valid, independently-tested §32
+# comparables; the audit's own 20-item Orajet / 8-item cut-vinyl dataset
+# includes both). excluded_pn is the curated parity/owner-judgment/one-off
+# class (per audit §1.2's tables); kits are excluded structurally by
+# item_type in the engine, not listed here. The three sub-0.06 sq ft
+# floor-governed clones (1279260, 1279270, 1205870) are listed here for
+# audit-trail clarity, but the engine also derives this class structurally
+# (any candidate below per_label_floor_threshold_sq_ft that is not one of
+# the two governing per-label-floor comparables) so a FUTURE F26-routed
+# item is automatically exempt too, per §32's "Categorical exception...
+# any future item routed through F26 inherits this exemption automatically,
+# without a rule update."
 # ---------------------------------------------------------------------------
 
 CHAIN_CONSISTENCY_EXCLUDED_PN = {
