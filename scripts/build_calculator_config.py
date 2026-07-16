@@ -278,13 +278,37 @@ MATERIAL_CONSTANTS_STATIC = {
     },
     "transferrite_582u": {
         "material_id": "transferrite-582u",
-        "extra": {},
+        # roll_width_in was missing here (latent gap -- see tape-width
+        # resolution fix below): the JSON fallback's "24-inch" tape entry
+        # carried no width at all, which is part of why the engine had no
+        # way to validate tape fit and instead hardcoded this single key
+        # for every cut-vinyl item regardless of label size.
+        "extra": {"roll_width_in": 24},
     },
     "transferrite_582u_30in": {
         "material_id": "transferrite-582u-30in",
         "extra": {"roll_width_in": 30},
     },
 }
+
+# ---------------------------------------------------------------------------
+# APPLICATION TAPE ROLLS (tape-width resolution fix, 2026-07-16)
+#
+# Every application tape material on file, independent of vinyl color or
+# any Combinations row. The frontend engine (frontend/index.html,
+# resolveApplicationTape()) uses this list to pick the NARROWEST tape roll
+# width >= the label's fit dimension dynamically, instead of depending on a
+# pre-built "vinyl color X + tape width Y" Combinations row existing for
+# every pairing. Adding a wider tape roll to the account's Materials only
+# requires registering it here (one new entry, exactly like registering any
+# other material) -- it does NOT require a new Combinations row per vinyl
+# color. See governance/CALCULATOR.md and the P/N 3023921 tape-selection
+# gap (30" tape needed for a label whose across-roll dimension exceeded the
+# existing 24" combination on file -> $undefined -> $NaN material cost)
+# that prompted this fix.
+# ---------------------------------------------------------------------------
+
+APPLICATION_TAPE_KEYS = ["transferrite_582u", "transferrite_582u_30in"]
 
 # ---------------------------------------------------------------------------
 # CUT VINYL COLORS
@@ -502,8 +526,8 @@ CHAIN_CONSISTENCY_PERMANENT_EXCEPTIONS = ["1230820", "1205720"]
 # requires raising the new item's own price by this many (or more) filing
 # increments of size increment_size. A single-increment residual is within
 # the account's own §30 filing granularity and is treated as rounding, not
-# a violation — validated against the account's own accepted exception at
-# the 3020335↔1277020 boundary (categories/printed-laminated-orajet.md
+# a violation — validated against the account's own documented, accepted
+# exception at the 3020335↔1277020 boundary (categories/printed-laminated-orajet.md
 # footnote ²⁰), which independently resolves to exactly one increment.
 CHAIN_CONSISTENCY_TOLERANCE_INCREMENTS = 2
 CHAIN_CONSISTENCY_INCREMENT_SIZE = 0.25
@@ -659,6 +683,41 @@ def build_cut_vinyl_colors():
     return out
 
 
+def build_application_tape_rolls():
+    """Every application tape roll on file, sorted narrowest-first.
+
+    This is the dynamic tape-selection source: given a label's across-roll
+    (narrow) dimension, the engine picks the narrowest roll_width_in >= that
+    dimension from this list. It is independent of vinyl color and does NOT
+    require a Combinations row -- a new tape width becomes available to
+    every color/item the moment it is added to APPLICATION_TAPE_KEYS
+    (mirroring how any other material is registered on this account),
+    closing the structural gap where tape selection previously required one
+    Combinations row per (vinyl color x tape width) pairing.
+    """
+    rolls = []
+    for key in APPLICATION_TAPE_KEYS:
+        spec = MATERIAL_CONSTANTS_STATIC[key]
+        fm = read_material(spec["material_id"])
+        roll_width_in = spec["extra"].get("roll_width_in")
+        if roll_width_in is None:
+            raise ValueError(
+                f"Application tape '{key}' has no roll_width_in -- tape "
+                "width resolution requires every entry in "
+                "APPLICATION_TAPE_KEYS to declare a roll_width_in in "
+                "MATERIAL_CONSTANTS_STATIC[...]['extra']."
+            )
+        rolls.append({
+            "engine_key": key,
+            "material_id": spec["material_id"],
+            "roll_width_in": to_float(roll_width_in),
+            "cost_per_linear_yd": to_float(fm["cost_per_linear_yd"]),
+            "verified_date": fm["verified_date"],
+        })
+    rolls.sort(key=lambda r: r["roll_width_in"])
+    return rolls
+
+
 def build_config():
     return {
         "generated": datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
@@ -674,6 +733,7 @@ def build_config():
         "material_constants": build_material_constants(),
         "ink_rates": INK_RATES,
         "cut_vinyl_colors": build_cut_vinyl_colors(),
+        "application_tape_rolls": build_application_tape_rolls(),
         "do_not_benchmark": DO_NOT_BENCHMARK,
         "chain_consistency": CHAIN_CONSISTENCY,
         "override_type_precedent": OVERRIDE_TYPE_PRECEDENT,
@@ -690,10 +750,11 @@ def main():
     n_bands = len(config["bands"])
     n_dnb = len(config["do_not_benchmark"])
     n_cc = len(config["chain_consistency"]["excluded_pn"])
+    n_tape = len(config["application_tape_rolls"])
     print(
         f"✓ Built frontend/calculator_config.json — "
         f"{n_materials} material constants, {n_bands} bands, {n_dnb} do_not_benchmark items, "
-        f"{n_cc} chain_consistency excluded_pn"
+        f"{n_cc} chain_consistency excluded_pn, {n_tape} application_tape_rolls"
     )
 
 
