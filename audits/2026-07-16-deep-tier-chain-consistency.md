@@ -280,3 +280,58 @@ Appended per follow-up request. This does not change any finding above — it ad
 **4 of these 7 pairs have `—` on both sides** (3010707↔3010736, 3010736↔3010722, 3010722↔3010698, 3010701↔3010704) — no exception trail. The other 3 touch 1205720 (`Relationship Concession` — the deliberate below-consensus root anchor, §1205720's own record) or 1146650 (`Owner Judgment` — only on its 1-9/10-19 tiers, per its own file) on one side; neither override was logged as a review of the specific neighbor-pair violation shown here.
 
 **Rollup:** 18 of the 24 violating pairs across both families (14 Orajet + 4 cut vinyl) have zero override trail on either item — the chain-check flags them, but nothing in the account's own records shows anyone ever checked, flagged, or accepted that specific comparison. The remaining 6 pairs each touch at least one item that carries *some* documented override, but in every case that override was granted for a different, narrower reason (a below-floor deep-tier exception, a root-anchor concession, a skipped-validation ladder adoption) than "this neighbor pair is consistent" — so even those 6 should be read as override-adjacent, not override-explained.
+
+---
+
+## 10. Density check on the 18 override-clean pairs
+
+Appended per follow-up request. This does not change any finding above.
+
+**Definitions used:**
+- **Δ sq ft** — the raw sq-ft gap between the two items.
+- **Failing tiers** — only the tiers where L's $/sq ft actually falls below S's (same test as §9, Direction A).
+- **Worst-tier inversion** — the single tier with the largest relative drop, computed as `(S.$/sqft − L.$/sqft) / S.$/sqft × 100`, i.e. how far below the smaller neighbor's rate the larger item's rate falls, at its worst tier.
+- **Adjacent** — no other item *in that family's `items/*.md` set* (independently-tested **or** excluded — clones, floor-governed, Owner Judgment, kits, one-offs; anything with a real sq-ft value) sits strictly between the two sq-ft values. **Non-adjacent** means the comparison silently skips over one or more real, priced items that were excluded from the independent chain-check for unrelated reasons (parity, floor-governance, job economics) — so the pair isn't actually a physical nearest-neighbor pair once the full item population is considered, even though it is the nearest pair *within the 20/8-item independently-tested subset*.
+
+### Orajet (14 pairs)
+
+| S (P/N, sq ft) | L (P/N, sq ft) | Δ sq ft | Failing tiers | Worst-tier inversion | Adjacent? | Bucket |
+|---|---|---|---|---|---|---|
+| 3024140 (0.019) | 3024592 (0.054) | 0.035 | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ | 1-9: $210.53→$78.70/sq ft (**-62.6%**) | Non-adjacent (between: 3017583, 1279260, 1279270, 1205870) | *uncounted* |
+| 3024592 (0.054) | 1012080 (0.077) | 0.023 | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ | 100-199: $41.67→$25.32/sq ft (**-39.2%**) | Adjacent | **2** |
+| 1012080 (0.077) | 1279000 (0.097) | 0.020 | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ | 200+: $24.68→$21.65/sq ft (**-12.3%**) | Adjacent | **2** |
+| 1279000 (0.097) | 1247120 (0.122) | 0.025 | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ | 200+: $21.65→$14.34/sq ft (**-33.7%**) | Non-adjacent (between: 3020370) | *uncounted* |
+| 1247120 (0.122) | 3020477 (0.130) | 0.008 | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ | 20-49: $22.54→$21.15/sq ft (**-6.2%**) | Adjacent | **2** |
+| 1279130 (0.148) | 3018808 (0.222) | 0.074 | 1-9, 20-49, 50-99 | 20-49: $20.95→$18.02/sq ft (**-14.0%**) | Adjacent | **2** |
+| 3018808 (0.222) | 1001220 (0.231) | 0.009 | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ | 1-9: $31.53→$30.30/sq ft (**-3.9%**) | Adjacent | **2** |
+| 1001220 (0.231) | 1210810 (0.292) | 0.061 | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ | 200+: $16.23→$9.42/sq ft (**-42.0%**) | Adjacent | **2** |
+| 3024595 (0.488) | 1073950 (0.503) | 0.015 | 50-99, 100-199, 200+ | 200+: $15.88→$8.45/sq ft (**-46.8%**) | Adjacent | **2** |
+| 1082570 (0.503) | 1267140 (0.560) | 0.057 | 1-9, 10-19, 20-49 | 1-9: $32.80→$23.21/sq ft (**-29.2%**) | Adjacent | **2** |
+| 1267140 (0.560) | 1278980 (0.609) | 0.049 | 20-49, 100-199, 200+ | 100-199: $12.95→$12.32/sq ft (**-4.9%**) | Adjacent | **2** |
+| 1278980 (0.609) | 3020335 (0.625) | 0.016 | 1-9 | 1-9: $23.81→$23.20/sq ft (**-2.6%**) | Adjacent | **2** |
+| 3020335 (0.625) | 1277020 (0.635) | 0.010 | 1-9, 10-19, 50-99 | 10-19: $19.20→$18.90/sq ft (**-1.6%**) | Adjacent | **2** |
+| 1277020 (0.635) | 1230820 (1.296) | 0.661 | 10-19, 20-49, 50-99, 100-199, 200+ | 200+: $11.42→$8.49/sq ft (**-25.7%**) | Adjacent | **1** |
+
+Two pairs are non-adjacent even though their Δ sq ft is small: 3024140→3024592 skips over 3017583 (0.026, one-off), 1279260/1279270 (0.033 each, floor-governed clones of 3024592), and 1205870 (0.049, floor-governed clone of 3024140) — four real, priced items sit in that 0.035 sq ft window, all excluded from the independent set for reasons unrelated to this comparison. 1279000→1247120 skips over 3020370 (0.105, Owner Judgment). Per the instructions, these fall into neither named bucket — they are below both size-density thresholds but aren't a true nearest-neighbor comparison either, so they're reported here but left uncounted rather than force-fit into bucket 1 or 2.
+
+### Cut vinyl (4 pairs)
+
+| S (P/N, sq ft) | L (P/N, sq ft) | Δ sq ft | Failing tiers | Worst-tier inversion | Adjacent? | Bucket |
+|---|---|---|---|---|---|---|
+| 3010707 (0.969) | 3010736 (1.012) | 0.043 | 1-9, 10-19, 20-49, 50-99, 100-199 | 1-9: $28.90→$19.52/sq ft (**-32.5%**) | Adjacent | **2** |
+| 3010736 (1.012) | 3010722 (1.167) | 0.155 | 1-9, 10-19, 50-99, 100-199, 200+ | 100-199: $13.09→$12.64/sq ft (**-3.5%**) | Adjacent | **2** |
+| 3010722 (1.167) | 3010698 (1.582) | 0.415 | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ | 200+: $12.43→$9.48/sq ft (**-23.7%**) | Adjacent | **2** |
+| 3010701 (3.202) | 3010704 (7.069) | 3.867 | 1-9, 10-19, 20-49, 50-99, 100-199, 200+ | 200+: $12.18→$7.36/sq ft (**-39.6%**) | Adjacent | **1** |
+
+No non-adjacent pairs in cut vinyl — every excluded cut-vinyl item (the parity clones) sits at the *exact same* sq ft as its source item, never strictly between two different independently-tested items, so it never breaks adjacency the way the Orajet floor-governed clones do.
+
+### Bucket counts
+
+| Bucket | Definition | Orajet | Cut vinyl | Total |
+|---|---|---|---|---|
+| **1 — low density, likely not a real neighbor relationship** | Δ sq ft > 0.3 (Orajet) / > 1.0 (cut vinyl) | 1 (1277020↔1230820, Δ0.661) | 1 (3010701↔3010704, Δ3.867) | **2** |
+| **2 — real candidate set for a nearest-neighbor floor rule** | Δ below threshold **and** adjacent | 11 | 3 | **14** |
+| *(uncounted)* — below threshold but non-adjacent | skips a real, excluded item | 2 | 0 | 2 |
+| **Total** | | 14 | 4 | 18 |
+
+**Reading this against §7's proposed constraint:** the 14-item bucket-2 candidate set is where a nearest-neighbor floor rule would actually have teeth — these are genuinely close, genuinely adjacent pairs (Δ as small as 0.008–0.074 sq ft in Orajet, 0.043–0.415 sq ft in cut vinyl) with no logged override and, in several cases, deep-tier inversions of 30–47% that qty-20-only validation never would have caught (3024595↔1073950 at -46.8%, 1001220↔1210810 at -42.0%, 3024592↔1012080 at -39.2%). The 2-pair "low density" bucket (1277020↔1230820, 3010701↔3010704) is exactly the pair identified in §3.3/§4.3 as sitting on either side of this audit's two largest flagged sq-ft gaps — consistent with those gaps being real coverage holes rather than isolated pricing errors. The 2 uncounted Orajet pairs are a separate, third finding: they show that even some of the "adjacent" pairs in the independently-tested subset aren't adjacent at all once the excluded clones are put back on the sq-ft number line — a reason to re-run this density check against the full item population (not just the independently-tested subset) before finalizing any floor rule.
