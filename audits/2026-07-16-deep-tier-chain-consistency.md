@@ -403,3 +403,62 @@ The floor-governed Micro-Format items (1279260, 1279270, 1205870, and by extensi
 - **1146650** — the smallest, most easily closed gap (-0.4% at 1-9 only); a $0.05–$0.10 bump to its 1-9 tier would likely resolve it outright rather than requiring a standing exception.
 
 No changes were made to any locked price, rule, or engine file. This section is derivation and stress-testing only.
+
+---
+
+## 12. Was 3020370's review-required flag a boundary-crossing artifact?
+
+Appended per follow-up request. No prices or files outside this audit doc were changed.
+
+### 12.1 Exactly what put 3020370 on the list
+
+3020370 was flagged in §11 off a **single neighbor pair**: 3020370 (0.105 sq ft) vs its nearest smaller validated neighbor **1279000 (0.097 sq ft)**. It failed at **all 6 tiers**, by the following exact margins:
+
+| Tier | 3020370 $/sq ft | 1279000 (smaller) $/sq ft | Short by |
+|---|---|---|---|
+| 1-9 | $40.48 | $46.39 | 12.8% |
+| 10-19 | $30.95 | $36.08 | 14.2% |
+| 20-49 | $26.19 | $30.93 | 15.3% |
+| 50-99 | $21.43 | $26.80 | 20.1% |
+| 100-199 | $19.05 | $23.71 | 19.7% |
+| **200+** | **$16.67** | **$21.65** | **23.0% (worst)** |
+
+That is the entire evidentiary basis for 3020370's inclusion — one pair, one neighbor.
+
+### 12.2 The boundary problem
+
+1279000 (0.097 sq ft) sits in the **Micro-Format Band** (< 0.1 sq ft, per `categories/printed-laminated-orajet.md`). 3020370 (0.105 sq ft) sits in the **sub-scope band** (0.1–0.5 sq ft) — by its own file's explicit routing: *"This item routes to the sub-scope band (0.1–0.5 sq ft) — below the singles band scope floor (0.5 sq ft) but above the Micro-Format Band threshold (0.1 sq ft)."* The category doc states as a governing principle that these size classes **"do NOT contaminate or interact."** The single pair that flagged 3020370 crosses that exact boundary — 1279000 is priced under Micro-Format Band economics (100% $/sq ft step-up over the singles-band rate, per §2.1's own doc), not sub-scope economics, so comparing the two on a shared $/sq ft floor was never a like-for-like test to begin with.
+
+### 12.3 Re-run with the 0.1 sq ft boundary enforced as a hard partition
+
+Partitioning the 20 independently-validated Orajet items at 0.1 sq ft:
+
+- **Micro-Format side (< 0.1):** 3024140 (0.019), 3024592 (0.054), 1012080 (0.077), 1279000 (0.097)
+- **Sub-scope-and-up side (≥ 0.1):** 1247120 (0.122), 3020477 (0.130), 1101250 (0.132), 1279130 (0.148), 3018808 (0.222), 1001220 (0.231), 1210810 (0.292), 3017572 (0.365), 3024595 (0.488), 1073950/1082570 (0.503), … up to 1230820 (1.296)
+
+3020370 (0.105) belongs on the sub-scope side. **The smallest independently-validated item on that same side is 1247120 at 0.122 sq ft — which is larger than 3020370, not smaller.** There is no validated item anywhere in the 0.1–0.105 sq ft window. So under a partition that forbids any pairing from crossing 0.1 sq ft, **3020370 has no valid smaller in-band neighbor to test against at all** — not "passes," but the check is inapplicable: the comparison that produced the failure literally cannot be re-formed without crossing the boundary.
+
+**3020370 was a pure boundary-crossing artifact and should be removed from §11.3's review-required list.** Its inclusion there was an artifact of the audit's own methodology (nearest-smaller-*validated*-neighbor, irrespective of band), not evidence of an actual pricing inconsistency — there is no same-band data to be inconsistent *with*. This is the same class of problem flagged for the two other Orajet pairs marked "uncounted" in §10 (3024140↔3024592 and 1279000↔1247120 also skip real, if excluded, items) — 3020370 is now a third, more severe instance: for it specifically, there is no in-band validated data at all, on the smaller side, within the entire family.
+
+**One aside, for transparency, not a new finding against 3020370:** flipping the comparison and checking 3020370's nearest same-side *larger* neighbor, 1247120, against 3020370 as *its* nearest smaller neighbor, also fails — at a constant **-13.9% at every one of the 6 tiers** (1247120 $34.84→$14.34 vs 3020370 $40.48→$16.67 across the ladder). This constant percentage is mechanical, not a new pricing signal: 3020370's tier table was adopted **verbatim** from 1247120 (footnote ³², Owner Judgment, no independent validation), so at every tier its price is identical in dollars to 1247120's — only the smaller area (0.105 vs 0.122) changes the $/sq ft. This is a mark against how 1247120's own §11 status should be read if 3020370 were ever added as a real chain neighbor, not evidence 3020370 was correctly flagged. 1247120 itself is not on the review-required list and this audit does not add it there — flagging it is out of scope for this section, noted only for completeness.
+
+### 12.4 Boundary check for the rest of the review-required list
+
+Scanning every item on §11.3's review-required list for proximity to the 0.1 sq ft line:
+
+| Item | Sq ft | \|Δ from 0.1\| | Within 0.02? | Notes |
+|---|---|---|---|---|
+| 3020370 | 0.105 | 0.005 | **Yes** | Covered above — removed. |
+| 1101250 | 0.132 | 0.032 | No | Both its flagged neighbors (3020477 at 0.130, 1279130 at 0.148) are on the same sub-scope side — no crossing. |
+| 1279260 | 0.033 | 0.067 | No | Deep inside the Micro-Format Band; its flagged neighbor (3024140, 0.019) is also Micro-Format-side — no crossing. |
+| 1279270 | 0.033 | 0.067 | No | Same as 1279260. |
+| 1205870 | 0.049 | 0.051 | No | Micro-Format-side; flagged neighbor 3024140 (0.019) is also Micro-Format-side — no crossing. |
+| 3017572 | 0.365 | 0.265 | No | Nowhere near 0.1. |
+| 3024595 | 0.488 | 0.388 | No | Nowhere near 0.1 — but sits 0.012 sq ft from the *different* singles-band floor boundary (~0.5 sq ft). Its flagged neighbor, 3017572 (0.365), is on the same sub-scope side of that boundary too, so no crossing there either — flagged here for completeness, not re-analyzed in full since it's outside the 0.1-line scope of this section. |
+| 1146650 | 2.971 | 2.871 | No | Cut vinyl — the 0.1 sq ft Micro-Format Band boundary doesn't exist in this material family at all (cut vinyl's nearest analogous boundary is the ~1.0 sq ft Band C/A line). |
+
+**Confirmed: 3020370 is the only review-required item whose flag was a boundary-crossing artifact.** None of the other seven were flagged off a pairing that crosses the 0.1 sq ft Micro-Format Band line — their flagged neighbor pairs sit entirely within a single band on both sides.
+
+### 12.5 Updated review-required list
+
+Removing 3020370 leaves **seven** review-required items from §11.3: 1101250, 3017572, 3024595, 1279260, 1279270, 1205870, 1146650. The two permanent structural exceptions (1230820, 1205720) are unaffected by this section. 3020370 should instead be treated the way §10 treats its two "uncounted" Orajet pairs — a density gap (no valid same-band comparison exists), not a pricing exception requiring review.
