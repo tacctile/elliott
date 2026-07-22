@@ -10,6 +10,46 @@
 
 ---
 
+### 2026-07-22 — Session BE (investigation, no changes to Supabase): P/N 1001530 orphan-row investigation — NOT migration debris, real quoted item, session stopped for Nick's review
+
+**What:** Investigated the suspected orphan Supabase row for P/N 1001530 "ARROW LABEL INSULATED BOOM," flagged because it has no `items/*.md` file, no category table row, and no `.claude/ARCHITECTURE.md` catalog entry. Queried `elliott_items`, `elliott_items_internal`, and `elliott_audit_log` in full. **Finding: this is NOT debris — it is a complete, real, quoted item that was priced through the account's own calculator/frontend tooling and written to Supabase, but never synced to the repo's markdown files.**
+
+**Key Findings:**
+- `elliott_items` row is fully populated: 15.875" × 2.375" = 0.262 sq ft, Orajet 3951 Cast + Polyester Lam, Print/Lam/Cut (1 pass), full 6-tier pricing ($7.50/$6.00/$4.50/$4.25/$4.25/$4.25), material cost $0.52/label, margin ~88.4% at qty 20, status "Quoted," date_quoted 2026-07-21.
+- `created_at` = `updated_at` = **2026-07-21 20:24:58 UTC** — created one day before this session, not stale.
+- `elliott_items_internal` row contains a full Pricing Derivation narrative: complete 4-wave AI validation record (Wave 1 build, Wave 2 destruction round that rejected a step-down tail for breaching §30 and §32, Wave 3 unanimous buyer-simulation approval, Wave 4 unanimous YES with zero changes), and a §32 chain-consistency check already run against P/N 1001220 and P/N 3017572 (flagging a 1-9 tier gap against 3017572, same class as the account's other flagged-not-corrected §32 gaps).
+- `elliott_audit_log` confirms an `insert` on `elliott_items`, `changed_by: "frontend"`, at the same timestamp — created through the account's own tooling, not a manual/test insert. Two `elliott_materials` rows' `used_in_items` arrays were updated in the same transaction to include "1001530" — the Supabase-side material cross-ref bookkeeping is correct.
+- No reference to 1001530 exists anywhere in the repo (`items/*.md`, `categories/*.md`, `ARCHITECTURE.md`, `PROGRESS.md`, `materials/*.md` `used_in_items` arrays) — confirmed via repo-wide grep. The item sits conceptually between P/N 1001220 (0.231 sq ft) and P/N 3017572 (0.365 sq ft) on the sub-scope gradient (documented as the "eleventh sub-scope data point" in its own Supabase notes), but its own governance file was never authored.
+- `spec_sheet_paths` is empty — no drawing/spec sheet reference on file for this item.
+
+**Action taken:** **None.** Per explicit session instruction, since real history/usage exists (a full validation record, not a bare row), the row was **not deleted** from `elliott_items` or `elliott_items_internal`, and no retroactive item file was auto-generated. This session stops here for Nick's review.
+
+**Strategic Flags:**
+- This reveals a process gap: a prior session (or a direct calculator run) wrote a fully-priced, 4-wave-validated item straight to Supabase without the corresponding repo-side item file / category update / ARCHITECTURE.md entry / materials cross-ref sync ever happening. Worth a process check on whether other orphan rows exist beyond 1001530.
+- Nick's input needed: confirm the spec details (no spec sheet on file), then either author `items/1001530.md` (+ category file + ARCHITECTURE.md + materials cross-refs) from the existing Supabase record, or provide corrected specs if the on-file data is wrong.
+- Do NOT delete this row — it is real, quoted, validated data.
+
+**Status:** Investigation complete, no file or database changes made. Awaiting Nick's direction on how to reconcile 1001530 into the repo.
+
+---
+
+### 2026-07-22 — Session BD (governance fix): §32 amended to scope chain-consistency to same-corridor pairs; P/N 1257750's flag re-verified as legitimate, not a false positive
+
+**What:** `governance/PRICING_RULES.md` §32 (nearest-neighbor chain consistency) was firing on cross-corridor comparisons within Band A cut vinyl — comparing the Small-Format Premium Corridor (items <~1.2 sq ft, deliberately priced $14.33–$14.36/sq ft) against the Relationship Concession Corridor (items ≥~1.5 sq ft, $13.65–$13.94/sq ft) treats a deliberate, validated structural gap as an inversion. §32 amended to state explicitly that Direction B only applies to same-corridor pairs, with both corridors' current membership defined in the rule text. `scripts/validate.py` was checked for enforced §32 logic — there is none; §32 exists only as prose in the `BAND_EXCEPTIONS` dict and in item-file Pricing Derivation sections, so no code change was needed (confirmed via a clean `python scripts/validate.py` run, 0 errors/0 warnings, unchanged from before this session).
+
+**Key Decisions:**
+- **Re-ran the §32 check against P/N 1257750 (1.076 sq ft) under the amended corridor rule — the flag against P/N 3010722 (1.167 sq ft) is NOT exempted.** Both items sit inside the Small-Format Premium Corridor (<1.2 sq ft) — this is a same-corridor pair, not the cross-corridor case the amendment targets. Confirmed the violation is real and correctly scoped, not a false positive; `items/1257750.md` updated (frontmatter `pricing_logic`, Pricing Derivation, Notes and Warnings) to document the re-check and its outcome — the flag itself was **not removed**, since it legitimately applies within-corridor.
+- The originating session brief assumed 1257750 vs. 3010722 was the false-positive case this fix would resolve; verifying against the corridor definitions in §32 itself showed that assumption was wrong — 3010722 is a small-format-premium item, not a concession-corridor item, so no cross-corridor exemption applies here. No actual false-positive instance was identified or corrected this session; the fix is prospective (protects against a real class of error going forward) rather than resolving the specific case named in the brief.
+- No item file other than `items/1257750.md` was touched. No pricing was changed on any item — only the §32 documentation and the 1257750 flag annotation.
+
+**Strategic Flags:**
+- The 1257750 vs. 3010722 §32 violation remains open and unresolved, exactly as before this session — still Nick's call per the flagged-not-corrected precedent (joining 3023921 on that list).
+- Future items filed in the ~1.2–1.5 sq ft gap between the two corridors have no corridor home yet and need independent 4-wave validation before §32 can be run against them in either direction.
+
+**Status:** Complete — `governance/PRICING_RULES.md` §32 amended with corridor definitions; `scripts/validate.py` confirmed to have no enforced §32 logic (none added, none needed); `python scripts/validate.py` — 0 errors, 0 warnings.
+
+---
+
 ### 2026-07-22 — Session BC (new item): P/N 1257750 — LBL-V63 MED WHT, direct price replication of P/N 3010736, §32 chain-consistency violation flagged
 
 **What:** New Vinyl Cut Lettering single label at 20" × 7.75" = 1.076 sq ft — sits between P/N 3010736 (1.012 sq ft) and the P/N 3010722/3010723/3010724 G50 color-parity set (1.167 sq ft) on the Band A gradient. Per explicit session instruction, this item's tier table is a **direct, byte-identical replication of 3010736's filed prices** ($19.75/$17.25/$14.50/$13.50/$13.25/$13.00) — not scaled by the sq ft ratio between the two items (1.076/1.012 = 1.063), and not independently re-validated. No new 4-wave AI validation was run. `override_type: "Owner Judgment"`.
