@@ -17,6 +17,6 @@ cost_per_sq_ft: 2.19
 verified_date: "2026-05-21"
 distributor: "GRIMCO"
 compatible_tapes: ["transferrite-582u"]
-used_in_items: ["3017435"]
-notes: "Length-based material cost method used for nesting calculations. 24\" roll runs on Roland SG3-300. NOTE: A separate 24\" × 50yd White roll exists at materials/3m-180mc-white-24in-50yd.md for production volumes (P/N 3010709 uses that larger roll, not this 10yd roll)."
+used_in_items: ["3017435", "1257750"]
+notes: "Length-based material cost method used for nesting calculations. 24\" roll runs on Roland SG3-300. NOTE: A separate 24\" × 50yd White roll exists at materials/3m-180mc-white-24in-50yd.md for production volumes (P/N 3010709 uses that larger roll, not this 10yd roll). P/N 1257750 (added 2026-07-22) is filed against this 10yd roll per governance/STRUCTURE_RULES.md's higher-cost-scenario convention; the 50yd roll is documented in that item's file as a lower-cost operational alternative, not filed canonically."
 ---
