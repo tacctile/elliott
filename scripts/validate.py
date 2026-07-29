@@ -85,6 +85,7 @@ S25_EXCEPTIONS = {
     "1278000": "job-based one-off costing (production-footprint method, documented)",
     "3017583": "job-based one-off costing (production-footprint method, documented)",
     "3017584": "job-based one-off costing (production-footprint method, documented)",
+    "1277630": "20% multiplicative waste buffer (not the standard cents-level incidental buffer) per Wave 2 of the external 4-wave AI validation, 2026-07-29 — contour-cut cast vinyl + polyester lam sequence judged to carry elevated scrap risk vs the flat-label baseline the standard buffer assumes; $1.6917 calculated × 1.20 = $2.03 filed; see items/1277630.md Nesting and Material Cost",
 }
 
 # Documented band-membership exceptions
