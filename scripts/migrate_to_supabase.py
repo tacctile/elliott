@@ -51,13 +51,42 @@ Usage:
     python scripts/migrate_to_supabase.py --dry-run   # report only, no writes
     python scripts/migrate_to_supabase.py --emit-sql  # print idempotent SQL
                                                       # (for psql / MCP runs)
+    python scripts/migrate_to_supabase.py --pn 1257750 --verify
+                                                      # sync one item (or a
+                                                      # comma-separated /
+                                                      # repeated --pn list)
+                                                      # and confirm it landed
+    python scripts/migrate_to_supabase.py --verify --all
+                                                      # verify-only: check
+                                                      # every repo item is
+                                                      # present in Supabase,
+                                                      # no writes
+
+MCP fallback (no local SUPABASE_SERVICE_ROLE_KEY required):
+    Claude Code sessions do not have local service-role credentials. When
+    SUPABASE_SERVICE_ROLE_KEY is not set (env or .env) and --pn is given,
+    this script prints the exact, scoped upsert SQL for just those part
+    numbers instead of failing. The session executes that SQL directly via
+    the `mcp__Supabase__execute_sql` MCP tool, then re-runs the same command
+    with --verify to confirm the rows landed. This is the required sync path
+    for every new-item session per `.claude/COMPLETION_TEMPLATES.md` — no
+    credentials, no `.env` file, and no deferral to Nick are needed.
 """
 
+import argparse
 import json
 import re
 import sys
 from datetime import date
 from pathlib import Path
+
+KNOWN_ORPHAN_PNS = {
+    # Pre-existing elliott_items row with no repo file — investigated and
+    # confirmed real/quoted in Session BE (2026-07-22), left in place
+    # pending Nick's reconciliation decision. Not a sync defect — do not
+    # treat as a --verify --all failure.
+    "1001530",
+}
 
 REPO_ROOT = Path(__file__).parent.parent
 MATERIALS_DIR = REPO_ROOT / "materials"
@@ -599,12 +628,33 @@ def emit_sql(material_rows, item_rows, internal_rows, band_rows, settings_row,
     return "\n".join(out)
 
 
+def emit_scoped_sql(item_rows, internal_rows, item_combo):
+    """Idempotent upsert SQL for a --pn-scoped subset only: elliott_items,
+    elliott_items_internal, and the material_combination_id link for those
+    part numbers. Deliberately omits materials/bands/settings/combinations —
+    those are shared reference rows a scoped single/few-item sync has no
+    reason to rewrite, and skipping them keeps the fallback path from
+    touching anything beyond the items actually being synced."""
+    out = ["begin;"]
+    out.append(multirow_upsert("elliott_items", item_rows, "part_number"))
+    out.append(multirow_upsert("elliott_items_internal", internal_rows, "part_number"))
+    for pn, combo_name in item_combo.items():
+        out.append(
+            f"update elliott_items set material_combination_id = "
+            f"(select id from elliott_material_combinations where account_id = {sql_lit(ACCOUNT_ID)} "
+            f"and name = {sql_lit(combo_name)}) where part_number = {sql_lit(pn)};")
+    out.append("commit;")
+    return "\n".join(out)
+
+
 # ---------------------------------------------------------------------------
-# Live run via supabase-py
+# Credentials
 # ---------------------------------------------------------------------------
 
-def run_live(material_rows, item_rows, internal_rows, band_rows, settings_row,
-             combos, item_combo):
+def get_credentials():
+    """(url, service_role_key) from env or repo-root .env, or None if either
+    is missing. Claude Code sessions normally have neither — callers must
+    fall back to the MCP path rather than treat this as fatal."""
     import os
     url = os.environ.get("SUPABASE_URL")
     key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
@@ -618,10 +668,93 @@ def run_live(material_rows, item_rows, internal_rows, band_rows, settings_row,
                         url = url or v.strip()
                     if k.strip() == "SUPABASE_SERVICE_ROLE_KEY":
                         key = key or v.strip()
-    if not (url and key):
+    return (url, key) if (url and key) else None
+
+
+def get_public_supabase_config():
+    """(url, anon_key) — read from frontend/index.html, the single source
+    of truth for these already-public values (the anon key is embedded in
+    the deployed frontend; RLS grants it SELECT on every elliott_* table).
+    Used for --verify reads, which need no service-role credentials."""
+    text = (REPO_ROOT / "frontend" / "index.html").read_text()
+    url = re.search(r"SUPABASE_URL\s*=\s*'([^']+)'", text).group(1)
+    key = re.search(r"SUPABASE_ANON_KEY\s*=\s*'([^']+)'", text).group(1)
+    return url, key
+
+
+# ---------------------------------------------------------------------------
+# Verification (anon-key read — credential-independent)
+# ---------------------------------------------------------------------------
+
+def fetch_elliott_items_part_numbers():
+    import requests
+    url, key = get_public_supabase_config()
+    resp = requests.get(
+        f"{url}/rest/v1/elliott_items",
+        params={"select": "part_number", "is_active": "eq.true"},
+        headers={"apikey": key, "Authorization": f"Bearer {key}"},
+        timeout=30,
+    )
+    resp.raise_for_status()
+    return {row["part_number"] for row in resp.json()}
+
+
+def verify_pns(pns):
+    try:
+        db_pns = fetch_elliott_items_part_numbers()
+    except Exception as e:
+        print(f"VERIFY ERROR: could not reach Supabase via the anon key: {e}")
+        return False
+    missing = pns - db_pns
+    if missing:
+        print(f"VERIFY FAILED: {len(missing)} of {len(pns)} part number(s) "
+              f"not found in elliott_items: {', '.join(sorted(missing))}")
+        return False
+    print(f"VERIFY OK: all {len(pns)} part number(s) confirmed present in "
+          f"elliott_items: {', '.join(sorted(pns))}")
+    return True
+
+
+def verify_all_repo_items_present():
+    repo_pns = {f.stem for f in ITEMS_DIR.glob("*.md")}
+    try:
+        db_pns = fetch_elliott_items_part_numbers()
+    except Exception as e:
+        print(f"VERIFY ERROR: could not reach Supabase via the anon key: {e}")
+        return False
+    missing = repo_pns - db_pns
+    extra = db_pns - repo_pns
+    print(f"Repo items: {len(repo_pns)}  |  elliott_items rows: {len(db_pns)}")
+    if extra:
+        undocumented = extra - KNOWN_ORPHAN_PNS
+        documented = extra & KNOWN_ORPHAN_PNS
+        if documented:
+            print(f"  Extra DB row(s), documented orphan (see PROGRESS.md "
+                  f"Session BE): {', '.join(sorted(documented))}")
+        if undocumented:
+            print(f"  WARNING: undocumented extra DB row(s), not in the "
+                  f"known-orphan list: {', '.join(sorted(undocumented))}")
+    if missing:
+        print(f"VERIFY FAILED: {len(missing)} repo item(s) missing from "
+              f"elliott_items: {', '.join(sorted(missing))}")
+        return False
+    print(f"VERIFY OK: all {len(repo_pns)} repo items confirmed present in elliott_items.")
+    return True
+
+
+# ---------------------------------------------------------------------------
+# Live run via supabase-py
+# ---------------------------------------------------------------------------
+
+def run_live(material_rows, item_rows, internal_rows, band_rows, settings_row,
+             combos, item_combo):
+    creds = get_credentials()
+    if not creds:
         print("ERROR: SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY not set "
-              "(env or .env). Use --emit-sql to generate SQL instead.")
+              "(env or .env). Use --emit-sql to generate SQL instead, or "
+              "pass --pn <PN> to use the credential-free MCP fallback.")
         sys.exit(1)
+    url, key = creds
     from supabase import create_client
     sb = create_client(url, key)
 
@@ -652,6 +785,25 @@ def run_live(material_rows, item_rows, internal_rows, band_rows, settings_row,
             sb.table("elliott_material_combination_components").insert(
                 {"combination_id": combo_id, "material_id": mat_id,
                  "component_role": role, "usage_sq_ft_multiplier": mult}).execute()
+    for pn, combo_name in item_combo.items():
+        combo_id = (sb.table("elliott_material_combinations").select("id")
+                    .eq("account_id", ACCOUNT_ID).eq("name", combo_name)
+                    .single().execute().data["id"])
+        sb.table("elliott_items").update(
+            {"material_combination_id": combo_id}).eq("part_number", pn).execute()
+
+
+def run_live_items_only(item_rows, internal_rows, item_combo, url, key):
+    """Scoped live sync (creds present + --pn given): elliott_items,
+    elliott_items_internal, and the combination link for just these part
+    numbers — mirrors emit_scoped_sql's scope, doesn't touch materials/
+    bands/settings/combinations."""
+    from supabase import create_client
+    sb = create_client(url, key)
+    sb.table("elliott_items").upsert(
+        [dict(r) for r in item_rows], on_conflict="part_number").execute()
+    sb.table("elliott_items_internal").upsert(
+        [dict(r) for r in internal_rows], on_conflict="part_number").execute()
     for pn, combo_name in item_combo.items():
         combo_id = (sb.table("elliott_material_combinations").select("id")
                     .eq("account_id", ACCOUNT_ID).eq("name", combo_name)
@@ -695,12 +847,36 @@ def print_report(material_rows, item_rows, band_rows, combos, item_combo,
         p("  Skipped rows: none")
 
 
+def parse_args():
+    ap = argparse.ArgumentParser(description=__doc__,
+                                  formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--dry-run", action="store_true", help="Report only, no writes.")
+    ap.add_argument("--emit-sql", action="store_true", help="Print idempotent SQL, no writes.")
+    ap.add_argument("--pn", action="append", metavar="PN[,PN...]",
+                     help="Scope this run to specific part number(s). Comma-"
+                          "separated and/or repeated. Required for the "
+                          "credential-free MCP fallback.")
+    ap.add_argument("--verify", action="store_true",
+                     help="After sync, confirm via anon-key read that the "
+                          "affected part number(s) (or, with --all, every "
+                          "repo item) are present in elliott_items. Exits "
+                          "non-zero on failure.")
+    ap.add_argument("--all", action="store_true",
+                     help="With --verify and no --pn: verify every repo "
+                          "item against elliott_items with no sync attempt.")
+    return ap.parse_args()
+
+
 def main():
-    mode = "live"
-    if "--emit-sql" in sys.argv:
-        mode = "emit-sql"
-    elif "--dry-run" in sys.argv:
-        mode = "dry-run"
+    args = parse_args()
+
+    pns = set()
+    if args.pn:
+        for chunk in args.pn:
+            pns.update(p.strip() for p in chunk.split(",") if p.strip())
+
+    if args.verify and args.all and not pns and not args.emit_sql and not args.dry_run:
+        sys.exit(0 if verify_all_repo_items_present() else 1)
 
     material_rows, skipped_m = build_material_rows()
     item_rows, internal_rows, skipped_i = build_item_rows()
@@ -708,17 +884,72 @@ def main():
     settings_row = build_account_settings_row()
     combos, item_combo = build_combinations(material_rows, item_rows)
 
+    if pns:
+        known_pns = {r["part_number"] for r in item_rows}
+        unknown = pns - known_pns
+        if unknown:
+            print(f"ERROR: --pn value(s) not found among items/*.md: "
+                  f"{', '.join(sorted(unknown))}")
+            sys.exit(1)
+        item_rows = [r for r in item_rows if r["part_number"] in pns]
+        internal_rows = [r for r in internal_rows if r["part_number"] in pns]
+        item_combo = {pn: n for pn, n in item_combo.items() if pn in pns}
+
+    mode = "emit-sql" if args.emit_sql else ("dry-run" if args.dry_run else "live")
+
     if mode == "emit-sql":
-        print(emit_sql(material_rows, item_rows, internal_rows, band_rows,
-                       settings_row, combos, item_combo))
+        sql = (emit_scoped_sql(item_rows, internal_rows, item_combo) if pns else
+               emit_sql(material_rows, item_rows, internal_rows, band_rows,
+                        settings_row, combos, item_combo))
+        print(sql)
         print_report(material_rows, item_rows, band_rows, combos, item_combo,
                      skipped_m, skipped_i, mode, out=sys.stderr)
         return
+
     if mode == "live":
-        run_live(material_rows, item_rows, internal_rows, band_rows,
-                 settings_row, combos, item_combo)
+        creds = get_credentials()
+        if creds:
+            url, key = creds
+            if pns:
+                run_live_items_only(item_rows, internal_rows, item_combo, url, key)
+            else:
+                run_live(material_rows, item_rows, internal_rows, band_rows,
+                         settings_row, combos, item_combo)
+        else:
+            if not pns:
+                print("ERROR: SUPABASE_SERVICE_ROLE_KEY not set (env or "
+                      ".env) and no --pn given, so there is no scoped set "
+                      "for the credential-free MCP fallback. Pass "
+                      "--pn <PN>[,<PN>...] to sync specific items without "
+                      "credentials, or provide credentials for a full sync.")
+                sys.exit(1)
+            sql = emit_scoped_sql(item_rows, internal_rows, item_combo)
+            print("=" * 64)
+            print("CREDENTIAL-FREE MCP FALLBACK")
+            print("No SUPABASE_SERVICE_ROLE_KEY (env or .env) available in this session.")
+            print(f"Scoped upsert SQL below is for: {', '.join(sorted(pns))}")
+            print("Execute it now via the mcp__Supabase__execute_sql tool, "
+                  "then re-run this exact command with --verify to confirm.")
+            print("=" * 64)
+            print(sql)
+            if args.verify:
+                print()
+                print("--verify was requested but the SQL above has not "
+                      "been executed yet in this process — execute it via "
+                      "mcp__Supabase__execute_sql now, then re-run:")
+                print(f"    python scripts/migrate_to_supabase.py --pn "
+                      f"{','.join(sorted(pns))} --verify")
+            sys.exit(0)
+
     print_report(material_rows, item_rows, band_rows, combos, item_combo,
                  skipped_m, skipped_i, mode)
+
+    if args.verify:
+        ok = verify_pns(pns) if pns else verify_all_repo_items_present()
+        if not ok:
+            print("SESSION INCOMPLETE: Supabase verification failed. Do "
+                  "not commit, do not push, do not mark this session done.")
+            sys.exit(2)
 
 
 if __name__ == "__main__":
