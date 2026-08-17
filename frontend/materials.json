@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-10T19:30:37Z",
+  "generated": "2026-08-17T17:02:18Z",
   "material_count": 14,
   "materials": {
     "10mil-polycarbonate-overlaminate": {
@@ -126,7 +126,8 @@
         ],
         "used_in_items": [
           "3010708",
-          "3010723"
+          "3010723",
+          "ELLIOTT-BOOM-DECAL"
         ],
         "notes": "Length-based material cost method used for nesting calculations. cost_per_sq_ft derived as cost_per_linear_yd / roll_width_ft ($13.1852 / 2 ft = $6.5926/sq ft), consistent with Cardinal Red derivation method."
       }
@@ -191,7 +192,8 @@
           "1146650",
           "3010698",
           "3010722",
-          "3023921"
+          "3023921",
+          "ELLIOTT-BOOM-DECAL"
         ],
         "notes": "Length-based material cost method used for nesting calculations. cost_per_sq_ft is derived as cost_per_linear_yd / roll_width_ft ($15.502 / 2 ft = $7.751/sq ft), not the area method used by other 180mC color files. This is intentional \u2014 item pricing uses the length-based method directly, so cost_per_sq_ft reflects that same basis. Numeric value is correct; derivation method differs from Olympic Blue and White."
       }
@@ -278,9 +280,10 @@
         ],
         "used_in_items": [
           "3017435",
-          "1257750"
+          "1257750",
+          "ELLIOTT-BOOM-DECAL"
         ],
-        "notes": "Length-based material cost method used for nesting calculations. 24\" roll runs on Roland SG3-300. NOTE: A separate 24\" \u00d7 50yd White roll exists at materials/3m-180mc-white-24in-50yd.md for production volumes (P/N 3010709 uses that larger roll, not this 10yd roll). P/N 1257750 (added 2026-07-22) is filed against this 10yd roll per governance/STRUCTURE_RULES.md's higher-cost-scenario convention; the 50yd roll is documented in that item's file as a lower-cost operational alternative, not filed canonically."
+        "notes": "Length-based material cost method used for nesting calculations. 24\" roll runs on Roland SG3-300. NOTE: A separate 24\" \u00d7 50yd White roll exists at materials/3m-180mc-white-24in-50yd.md for production volumes (P/N 3010709 uses that larger roll, not this 10yd roll). P/N 1257750 (added 2026-07-22) is filed against this 10yd roll per governance/STRUCTURE_RULES.md's higher-cost-scenario convention; the 50yd roll is documented in that item's file as a lower-cost operational alternative, not filed canonically. P/N ELLIOTT BOOM DECAL (added 2026-08-17) is also filed against this 10yd roll as its Config A (White, single-color) canonical material cost \u2014 this item is variable-BOM and also ships as Config B (Black + Cardinal Red); see items/ELLIOTT-BOOM-DECAL.md."
       }
     },
     "3m-180mc-white-48in": {
@@ -502,7 +505,8 @@
           "3010723",
           "3010724",
           "3010736",
-          "1257750"
+          "1257750",
+          "ELLIOTT-BOOM-DECAL"
         ],
         "notes": "USAGE METHOD (2026-06-09): The correct usage method for per-label nesting calculations is LENGTH-BASED \u2014 feed_length_yd \u00d7 cost_per_linear_yd ($1.1821/yd) \u00f7 labels_per_row \u2014 NOT area \u00d7 cost_per_sq_ft. The cost_per_sq_ft field on this material ($0.5911 = $/yd \u00f7 roll_width_ft) is a derived convenience value and should not be used for per-label cost builds; using it as a true area rate overstates tape cost ~2.7\u00d7. All cut vinyl items harmonized to the length-based method 2026-06-09 (audit D3)."
       }
