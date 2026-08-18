@@ -28,31 +28,19 @@ Idempotent: upserts on material_key (materials), part_number (items),
 band_key (bands), account_id (settings), (account_id, name) (combinations).
 Combination components are replaced atomically per combination.
 
-KNOWN SCHEMA DRIFT — elliott_items.status / date_quoted (2026-08 cleanup):
-items/*.md no longer carries `status` or `date_quoted` frontmatter fields
-(quote-status tracking removed repo-wide) and this script no longer reads
-or writes either one. The live `elliott_items` table was NOT migrated to
-match: `status` is still a NOT NULL Postgres enum (elliott_item_status —
-Quoted / FA Ordered / FA Accepted / In Production / Active Reorder /
-Discontinued) with no column default, and `date_quoted` is still a
-nullable `date` column. Practical effect: `date_quoted` is harmless to
-omit (nullable, no default needed) — an upsert simply leaves whatever is
-already there untouched. `status` is NOT harmless — Postgres checks NOT
-NULL while building the row to insert, before ON CONFLICT is evaluated,
-so an upsert that omits `status` fails that constraint for every row in
-the batch (existing rows included, not just new ones). Concretely: the
-next live sync (`run_live()` / `run_live_items_only()`, or the raw SQL
-from `emit_sql()` / `emit_scoped_sql()`) will error out on elliott_items
-and not write anything, rather than silently dropping or nulling the
-column. This is a deliberate hard-fail, not a workaround — do not
-"fix" it by hardcoding a literal status value here, since 3 of the 65
-live rows are already `FA Accepted` (not `Quoted`) and a blind default
-would silently corrupt them back to `Quoted` on every resync. A real
-fix requires a schema migration on the `prolabel` Supabase project
-(drop the two columns, or make `status` nullable / give it a default) —
-not run as part of this repo cleanup. Until that migration happens, do
-not run a live sync against `elliott_items`; the `--emit-sql`/`--verify`
-paths that don't touch `elliott_items` writes remain safe.
+RESOLVED SCHEMA DRIFT — elliott_items.status / date_quoted (2026-08):
+items/*.md dropped `status`/`date_quoted` frontmatter entirely (quote-
+status tracking removed repo-wide) and this script stopped reading or
+writing either field. That temporarily left the live `elliott_items`
+table out of sync — `status` was a NOT NULL enum (elliott_item_status)
+with no default, so any upsert omitting it hard-failed the whole batch.
+Migration `drop_elliott_items_status_date_quoted` (applied to the
+`prolabel` project) dropped both columns and the now-unused
+`elliott_item_status` enum type — confirmed via `pg_depend` beforehand
+that nothing else (no other column/table, view, trigger, function, index,
+or RLS policy) referenced either the columns or the enum type. Live syncs
+against `elliott_items` are safe again; this note is kept only as a
+record of the drift and its resolution.
 
 AUTH / RLS APPROACH (documented per Phase 1.4):
   - The deployed frontend uses the `anon` key (constants at the top of
