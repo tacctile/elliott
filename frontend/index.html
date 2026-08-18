@@ -2725,7 +2725,6 @@ function renderItemList(query) {
       || (fm.model || '').toLowerCase().includes(q)
       || (fm.item_type || '').toLowerCase().includes(q)
       || (fm.material_family || '').toLowerCase().includes(q)
-      || (fm.status || '').toLowerCase().includes(q)
       || chip.toLowerCase().includes(q)
       || bandClass.toLowerCase().includes(q)
       || dimStr.includes(q)
@@ -3103,8 +3102,6 @@ function renderSpecs(fm) {
   html += row('Process', fm.process || '—');
   html += row('Lam Passes', fm.lamination_passes != null && fm.lamination_passes !== '' ? fm.lamination_passes : '—');
   html += row('Cut Runs', fm.cut_runs != null && fm.cut_runs !== '' ? fm.cut_runs : '—');
-  html += row('Status', fm.status || '—');
-  html += row('Date Quoted', fm.date_quoted || '—');
 
   el.innerHTML = html;
 }
@@ -6046,7 +6043,6 @@ init();
         sq_ft: sf,
         price_20: r(price20, 2),
         psf: psf !== null ? r(psf, 2) : null,
-        status: fm.status,
         override_type: inferOverrideType(pn, fm, route),
         // W4: full 6-tier benchmark table for the brief (not just price_20_49)
         tiers: {
@@ -6631,20 +6627,19 @@ init();
     }
     if (band.comparable_items && band.comparable_items.length) {
       lines.push('Comparable items (same family + type, ±15% sq ft, not in do_not_benchmark):');
-      lines.push('  | P/N     | Description                            | Sq Ft  | Price@20 | $/SqFt  | Status      | Override Type           |');
+      lines.push('  | P/N     | Description                            | Sq Ft  | Price@20 | $/SqFt  | Override Type           |');
       for (const c of band.comparable_items) {
         const pn = (c.pn + '        ').slice(0, 7);
         const desc = ((c.description || '') + '                                       ').slice(0, 38);
         const sf = (String(c.sq_ft) + '       ').slice(0, 6);
         const p20 = (fmt(c.price_20) + '         ').slice(0, 8);
         const psf = (fmt(c.psf) + '        ').slice(0, 7);
-        const st = ((c.status || '') + '            ').slice(0, 11);
-        lines.push(`  | ${pn} | ${desc} | ${sf} | ${p20} | ${psf} | ${st} | ${c.override_type}`);
+        lines.push(`  | ${pn} | ${desc} | ${sf} | ${p20} | ${psf} | ${c.override_type}`);
       }
       lines.push('');
       lines.push('Benchmark tier tables (full 6 tiers — W4):');
       for (const c of band.comparable_items.slice(0, 3)) {
-        lines.push(`  ${c.pn} (${c.status || '?'}): ${fmtCompactTiers(c.tiers || {}, c.label_count || 1)}`);
+        lines.push(`  ${c.pn}: ${fmtCompactTiers(c.tiers || {}, c.label_count || 1)}`);
       }
       lines.push('');
       lines.push('KEY COMPARISONS (vs nearest benchmark — W4)');

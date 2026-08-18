@@ -27,7 +27,7 @@
 - **First multi-piece nested-set item on the account — establishes a new structural class, not a new Band A data point.** A future session filing a similar-looking multi-piece kit must independently derive that item's own feed-pitch and roll-width-consumption calculation — this item's $2.86/set, 7.5" feed pitch, and full-30"-roll-width logic are specific to its own production layout and must not be assumed to transfer.
 - **§32 chain-consistency does not apply** — §32 explicitly excludes kits from its nearest-neighbor $/sq ft comparison by definition, not merely as a documented exception.
 - **Do not surface internal Wave 1-4 dollar figures, rejected anchors, or the rejected "5x weeding labor" argument to Sean.** Sean-facing quote language should state only that this is priced as one complete 5-piece set, with a brief cost-basis note per Wave 3's guidance.
-- First article not requested — flagged for Sean follow-up, does not block filing. Order quantity not specified — standard 6-tier ladder quoted, though Elliott's history (no orders above qty 20 on this account) means the 1-9/10-19 tiers are the ones expected to actually transact.
+- First article not requested — flagged for Sean follow-up, does not block filing. Order quantity not specified — standard 6-tier ladder used, though Elliott's history (no orders above qty 20 on this account) means the 1-9/10-19 tiers are the ones expected to actually transact.
 - Item count: 64 → 65. Cut Vinyl category: 18 → 19 items.
 
 **Status:** Complete — `items/3021615.md`, `materials/3m-180mc-white-30in-50yd.md` (new), `materials/transferrite-582u-30in.md` (verified + used_in_items), category file, `.claude/ARCHITECTURE.md`, `scripts/validate.py`, `.claude/STATE.yml`, and this entry all updated. `python scripts/build_frontend.py`, `python scripts/build_materials.py`, `python scripts/build_calculator_config.py` all run clean. `python scripts/validate.py` — 0 errors, 0 warnings (1 informational band-exception entry for 3021615, expected). Supabase synced via the credential-free MCP fallback: `python scripts/migrate_to_supabase.py --pn 3021615 --verify` printed the scoped upsert SQL, executed via `mcp__Supabase__execute_sql` against the `prolabel` project, confirmed via `--dry-run --verify` (VERIFY OK: 3021615 present) and a direct `elliott_items` count query — 66 total rows (65 repo items + 1 known 1001530 orphan, per the established Session BE/BL convention).
@@ -47,7 +47,7 @@
 **Strategic Flags:**
 - **Do not resolve the color-configuration question in a future session.** Both Config A and Config B are current, valid, ongoing order patterns for this P/N — a future order may repeat either one. Price stays fixed regardless.
 - **Config B carries materially lower margin than Config A** (~59% vs ~81% at qty 20, per `items/ELLIOTT-BOOM-DECAL.md` Margin Analysis) because two full-footprint color passes are priced under one flat table — accepted account-level pricing simplicity, not a costing error; do not surcharge Config B differently without Nick's direction.
-- First article not specified this session — flagged for Sean follow-up, does not block sending (already quoted). Order quantity not specified — standard 6-tier ladder quoted.
+- First article not specified this session — flagged for Sean follow-up, does not block sending. Order quantity not specified — standard 6-tier ladder used.
 - Item count: 63 → 64. Cut Vinyl category: 17 → 18 items. Band A data points: unchanged at 12 (direct price-match filing excluded, same as 1257750).
 
 **Status:** Complete — `items/ELLIOTT-BOOM-DECAL.md`, category file, `.claude/ARCHITECTURE.md`, `scripts/validate.py`, four materials cross-refs, `.claude/STATE.yml`, and this entry all updated. `python scripts/build_frontend.py`, `python scripts/build_materials.py`, `python scripts/build_calculator_config.py` all run clean. `python scripts/validate.py` — 0 errors, 0 warnings. Supabase synced via the credential-free MCP fallback: `python scripts/migrate_to_supabase.py --pn "ELLIOTT BOOM DECAL" --verify` printed the scoped upsert SQL, executed via `mcp__Supabase__execute_sql` against the `prolabel` project, confirmed via `--verify` — `elliott_items` row count = 65 (64 repo items + 1 known 1001530 orphan).
@@ -56,7 +56,7 @@
 
 ### 2026-08-10 — Session BK (new item): P/N 101903A — LBL-BM EXT SELECT DIGGER, sub-0.06 sq ft non-ANSI control label, per-label floor governs, direct match to P/N 3024140
 
-**What:** New printed/laminated single label at 2.0" × 1.625" = 0.023 sq ft. Priced via direct match to P/N 3024140 (0.019 sq ft, non-ANSI simple control label, $2.50 at qty 20) per Nick's manual routing on 2026-08-10. The calculator's own F26 STOP flag (sub-0.06 sq ft, per-label floor governs) independently confirmed 3024140 as the correct non-ANSI governing comparable — Nick's manual match is consistent with the calculator's routing. NOT run through the calculator or 4-wave AI validation. Tier table byte-identical to 3024140 across all six tiers: $4.00/$3.00/$2.50/$2.25/$2.00/$1.75. Pricing already quoted to Sean.
+**What:** New printed/laminated single label at 2.0" × 1.625" = 0.023 sq ft. Priced via direct match to P/N 3024140 (0.019 sq ft, non-ANSI simple control label, $2.50 at qty 20) per Nick's manual routing on 2026-08-10. The calculator's own F26 STOP flag (sub-0.06 sq ft, per-label floor governs) independently confirmed 3024140 as the correct non-ANSI governing comparable — Nick's manual match is consistent with the calculator's routing. NOT run through the calculator or 4-wave AI validation. Tier table byte-identical to 3024140 across all six tiers: $4.00/$3.00/$2.50/$2.25/$2.00/$1.75. Pricing already locked and communicated to Sean.
 
 **Key Decisions:**
 - **Per-label floor governs, not $/sq ft.** At 0.023 sq ft the linear Micro-Format Band formula ($30.86/sq ft × 0.023 = $0.71) is inapplicable. The implied $/sq ft ($108.70 at qty 20) is a mathematical artifact, not the pricing basis. The governing number is $2.50 per label at qty 20 — the complexity-dependent non-ANSI floor established by 3024140.
@@ -65,7 +65,7 @@
 - `categories/printed-laminated-orajet.md` updated: items table row + footnote ³⁶ added. `.claude/ARCHITECTURE.md` catalog row added; Category Registry Printed + Laminated updated (44 → 45 items). `materials/orajet-3951-white.md` and `materials/1mil-polyester-overlaminate.md` `used_in_items` arrays both updated. `scripts/validate.py` BAND_EXCEPTIONS entry added.
 
 **Strategic Flags:**
-- Pricing is already quoted to Sean — do not alter. No override_type (no rule was overridden; the per-label floor is the governing logic, and the price matches it exactly).
+- Pricing is Nick-locked — do not alter. No override_type (no rule was overridden; the per-label floor is the governing logic, and the price matches it exactly).
 - First article not requested. Order quantity not confirmed with Sean.
 - Margin figures are material-only ($0.10/label basis) — no fully-loaded cost doctrine exists for this account.
 - Item count: 62 → 63. Printed/Laminated category: 44 → 45 items.
@@ -76,18 +76,18 @@
 
 ### 2026-08-03 — Session BJ (new item): P/N 127763A — CHART-V63 V1 METRIC AERIAL OPERATION, Direct Parity Exemption from P/N 1062390, sub-scope classification (below the ~0.5 sq ft singles-band floor), §31 deviation flagged
 
-**What:** New printed/laminated single label at 7.0" × 10.0" = 0.4861 sq ft, Model V63. Read `items/1062390.md` in full before filing to confirm material family (Orajet 3951 Cast + Polyester Lam), process (Print/Lam/Cut, 1 pass), and ANSI status (§29 default) — this item matches all three. Filed via **Direct Parity Exemption** from P/N 1062390 (7.25" × 10.00" = 0.503 sq ft, ~3.4% larger, same material/process/ANSI class): tier table is Nick-locked and was already quoted to the customer prior to this session — byte-identical to 1062390, $16.50/$10.50/$8.00/$6.25/$5.25/$4.25, filed as given with no derivation, scaling, or validation run against it.
+**What:** New printed/laminated single label at 7.0" × 10.0" = 0.4861 sq ft, Model V63. Read `items/1062390.md` in full before filing to confirm material family (Orajet 3951 Cast + Polyester Lam), process (Print/Lam/Cut, 1 pass), and ANSI status (§29 default) — this item matches all three. Filed via **Direct Parity Exemption** from P/N 1062390 (7.25" × 10.00" = 0.503 sq ft, ~3.4% larger, same material/process/ANSI class): tier table is Nick-locked and was already communicated to the customer prior to this session — byte-identical to 1062390, $16.50/$10.50/$8.00/$6.25/$5.25/$4.25, filed as given with no derivation, scaling, or validation run against it.
 
 **Key Decisions:**
 - **Sub-scope classification, not a new band data point.** At 0.4861 sq ft this item sits below the ~0.5 sq ft singles-band scope floor that governing benchmark 1062390 (0.503 sq ft) sits inside — it routes sub-scope per the category decision tree. It is NOT a new singles-band data point (unlike 1062390 itself), and it is also NOT a new independent sub-scope data point — this is a parity-clone filing of a standard-band item's price, not a fresh sub-scope validation, mirroring how direct-parity clones elsewhere on the account (e.g., 3020336/3020482 vs. 3020335) are excluded from data-point counts. Added to `scripts/validate.py` `BAND_EXCEPTIONS`.
 - **Material cost independently calculated, not cloned.** $0.95/label, computed fresh this session via the §25 canonical formula for this item's own 0.4861 sq ft footprint (Orajet $0.5882 + lam $0.1161 + ink $0.2431 = $0.9474 calculated + incidental buffer = $0.95) — explicitly NOT copied from 1062390's filed $0.98/label, which reflects 1062390's own, larger 0.503 sq ft area.
-- **§31 sub-scope root floor NOT applied — deviation flagged, not corrected.** At this item's own 0.4861 sq ft, the 50-99/100-199/200+ tiers ($12.86/$10.80/$8.74 per sq ft) price below the `governance/PRICING_RULES.md` §31 floor ($15.43/sq ft at every tier). Per explicit session instruction, §31 floor recalculation is out of scope for this filing — the pricing is Nick-locked and already quoted to the customer. This is documented in `items/127763A.md` Pricing Derivation Step 4 and category footnote ³⁵ for Nick's awareness, not auto-corrected. `override_type` filed as `"Direct Parity Exemption"` (not a One-Time Exception) — the underlying decision was cloning a standard-band benchmark's price onto a sub-scope-sized label, not overriding an engine recommendation.
+- **§31 sub-scope root floor NOT applied — deviation flagged, not corrected.** At this item's own 0.4861 sq ft, the 50-99/100-199/200+ tiers ($12.86/$10.80/$8.74 per sq ft) price below the `governance/PRICING_RULES.md` §31 floor ($15.43/sq ft at every tier). Per explicit session instruction, §31 floor recalculation is out of scope for this filing — the pricing is Nick-locked and already communicated to the customer. This is documented in `items/127763A.md` Pricing Derivation Step 4 and category footnote ³⁵ for Nick's awareness, not auto-corrected. `override_type` filed as `"Direct Parity Exemption"` (not a One-Time Exception) — the underlying decision was cloning a standard-band benchmark's price onto a sub-scope-sized label, not overriding an engine recommendation.
 - At the qty-20 tier, $8.00/0.4861 sq ft = $16.46/sq ft — above the singles band ceiling ($15.91/sq ft), consistent with the account's sub-scope small-format-premium doctrine (expected direction, not a concern).
 - `categories/printed-laminated-orajet.md` updated: items table row + footnote ³⁵ added; sub-scope Pricing Profile prose updated to reference 127763A explicitly, without incrementing either the singles-band or sub-scope data-point counts. `materials/orajet-3951-white.md` and `materials/1mil-polyester-overlaminate.md` `used_in_items` arrays both updated. `.claude/ARCHITECTURE.md` catalog row added; Category Registry Printed + Laminated row updated (43 → 44 items).
 
 **Strategic Flags:**
 - This is the first item on file where a Direct Parity Exemption clone crosses the singles-band/sub-scope boundary that its own benchmark does not — future sessions filing similarly-sized parity clones of standard-band items should expect the same sub-scope routing and §31 flag pattern.
-- The §31 deviation on the deep tiers is a documented, Nick-directed decision (pricing already quoted to the customer) — not a data error. Do not "fix" it in a future session without Nick's explicit direction, consistent with how the account handles other locked-but-below-floor tiers (cf. 1101250, 3017572).
+- The §31 deviation on the deep tiers is a documented, Nick-directed decision (pricing already communicated to the customer) — not a data error. Do not "fix" it in a future session without Nick's explicit direction, consistent with how the account handles other locked-but-below-floor tiers (cf. 1101250, 3017572).
 - First article not yet requested — flagged for follow-up, does not block sending. Order quantity not yet confirmed.
 - Item count: 61 → 62. Printed/Laminated category: 43 → 44 items.
 
@@ -146,7 +146,7 @@
 **Strategic Flags:**
 - **§32 flagged-list status after this session:** P/N 1277630 — RESOLVED (One-Time Exception). P/N 3023921 and P/N 1257750 — still OPEN, unresolved. Future cleanup sessions should continue working through the open pair.
 - **3024180's ANSI/non-ANSI parity flag is a genuine open question for Nick**, not a data error — a future session should not treat this parity as precedent for pricing other ANSI items at non-ANSI-family rates without explicit direction.
-- First article not yet requested by Sean on 3024180 — flagged for follow-up. Order quantity not specified — standard 6-tier ladder quoted.
+- First article not yet requested by Sean on 3024180 — flagged for follow-up. Order quantity not specified — standard 6-tier ladder used.
 - Item count: 60 → 61. Printed/Laminated category: 42 → 43 items.
 
 **Status:** Complete — items/1277630.md, items/3024180.md, category file, ARCHITECTURE.md, PROGRESS.md, STATE.yml, materials cross-refs, and scripts/validate.py all updated. `scripts/build_frontend.py` run (61 items). `scripts/validate.py` run — 0 errors, 0 warnings. Committed and pushed directly to `main` per this session's explicit instruction (Task 4) — both items live on Vercel after this push.
@@ -167,19 +167,19 @@
 **Strategic Flags:**
 - **This is the fourth item on file with a documented, unresolved §32 chain-consistency flag** (joining P/N 3023921, P/N 1257750, and the pre-existing "true one-off" list) — Nick should schedule a dedicated session to work through the accumulating flagged-not-corrected list rather than let it grow indefinitely.
 - **Margin at this item (~84.9% at qty 20, ~81.5% at 200+) sits below the rest of the singles band (~82.6–88%)** solely because of the 20% waste buffer on material cost, not a pricing weakness — do not read this as an underpriced item in future comparative analysis.
-- First article not yet requested by Sean — flagged for follow-up, does not block sending. Order quantity not specified — standard 6-tier ladder quoted.
+- First article not yet requested by Sean — flagged for follow-up, does not block sending. Order quantity not specified — standard 6-tier ladder used.
 - Item count: 59 → 60. Printed/Laminated category: 41 → 42 items. Singles-band data points: 6 → 7.
 
 **Status:** Complete — item file, category file, ARCHITECTURE.md, STATE.yml updated; `scripts/build_frontend.py` run (60 items); `scripts/validate.py` run — 0 errors, 0 warnings. `scripts/migrate_to_supabase.py` NOT run in live mode — no `SUPABASE_URL`/`SUPABASE_SERVICE_ROLE_KEY` credentials available in this session environment (same deferral as prior sessions); Nick to run manually to bring `elliott_items` to 60 rows.
 
 ---
 
-### 2026-07-22 — Session BE (investigation, no changes to Supabase): P/N 1001530 orphan-row investigation — NOT migration debris, real quoted item, session stopped for Nick's review
+### 2026-07-22 — Session BE (investigation, no changes to Supabase): P/N 1001530 orphan-row investigation — NOT migration debris, real priced item, session stopped for Nick's review
 
 **What:** Investigated the suspected orphan Supabase row for P/N 1001530 "ARROW LABEL INSULATED BOOM," flagged because it has no `items/*.md` file, no category table row, and no `.claude/ARCHITECTURE.md` catalog entry. Queried `elliott_items`, `elliott_items_internal`, and `elliott_audit_log` in full. **Finding: this is NOT debris — it is a complete, real, quoted item that was priced through the account's own calculator/frontend tooling and written to Supabase, but never synced to the repo's markdown files.**
 
 **Key Findings:**
-- `elliott_items` row is fully populated: 15.875" × 2.375" = 0.262 sq ft, Orajet 3951 Cast + Polyester Lam, Print/Lam/Cut (1 pass), full 6-tier pricing ($7.50/$6.00/$4.50/$4.25/$4.25/$4.25), material cost $0.52/label, margin ~88.4% at qty 20, status "Quoted," date_quoted 2026-07-21.
+- `elliott_items` row is fully populated: 15.875" × 2.375" = 0.262 sq ft, Orajet 3951 Cast + Polyester Lam, Print/Lam/Cut (1 pass), full 6-tier pricing ($7.50/$6.00/$4.50/$4.25/$4.25/$4.25), material cost $0.52/label, margin ~88.4% at qty 20.
 - `created_at` = `updated_at` = **2026-07-21 20:24:58 UTC** — created one day before this session, not stale.
 - `elliott_items_internal` row contains a full Pricing Derivation narrative: complete 4-wave AI validation record (Wave 1 build, Wave 2 destruction round that rejected a step-down tail for breaching §30 and §32, Wave 3 unanimous buyer-simulation approval, Wave 4 unanimous YES with zero changes), and a §32 chain-consistency check already run against P/N 1001220 and P/N 3017572 (flagging a 1-9 tier gap against 3017572, same class as the account's other flagged-not-corrected §32 gaps).
 - `elliott_audit_log` confirms an `insert` on `elliott_items`, `changed_by: "frontend"`, at the same timestamp — created through the account's own tooling, not a manual/test insert. Two `elliott_materials` rows' `used_in_items` arrays were updated in the same transaction to include "1001530" — the Supabase-side material cross-ref bookkeeping is correct.
@@ -191,7 +191,7 @@
 **Strategic Flags:**
 - This reveals a process gap: a prior session (or a direct calculator run) wrote a fully-priced, 4-wave-validated item straight to Supabase without the corresponding repo-side item file / category update / ARCHITECTURE.md entry / materials cross-ref sync ever happening. Worth a process check on whether other orphan rows exist beyond 1001530.
 - Nick's input needed: confirm the spec details (no spec sheet on file), then either author `items/1001530.md` (+ category file + ARCHITECTURE.md + materials cross-refs) from the existing Supabase record, or provide corrected specs if the on-file data is wrong.
-- Do NOT delete this row — it is real, quoted, validated data.
+- Do NOT delete this row — it is real, priced, validated data.
 
 **Status:** Investigation complete, no file or database changes made. Awaiting Nick's direction on how to reconcile 1001530 into the repo.
 

@@ -43,7 +43,7 @@ REQUIRED_FRONTMATTER = [
     "price_20_49", "price_50_99", "price_100_199", "price_200_plus",
     "first_article_price", "per_label_at_qty_20", "margin_at_qty_20",
     "pricing_logic", "benchmark_item", "downstream_items", "process",
-    "lamination_passes", "cut_runs", "status", "date_quoted",
+    "lamination_passes", "cut_runs",
     "override_type", "notes"
 ]
 
@@ -228,15 +228,6 @@ def check_architecture_registry():
         pn = match.group(1)
         if pn not in item_pns:
             errors.append(f"[{pn}] Listed in ARCHITECTURE.md but no item file exists")
-
-
-def check_status_values(fm, filepath):
-    """Verify status is a valid lifecycle value."""
-    pn = filepath.stem
-    valid = ["Quoted", "FA Ordered", "FA Accepted", "In Production", "Active Reorder", "Discontinued"]
-    status = fm.get("status", "")
-    if status not in valid:
-        errors.append(f"[{pn}] Invalid status: '{status}'. Must be one of: {valid}")
 
 
 def check_category_registry():
@@ -505,7 +496,6 @@ def main():
         check_frontmatter_fields(filepath, fm)
         check_math(filepath, fm)
         check_sections(filepath, content)
-        check_status_values(fm, filepath)
         check_tier_monotonicity(filepath, fm)
         check_s25_compliance(filepath, fm)
 

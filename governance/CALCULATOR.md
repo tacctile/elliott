@@ -428,7 +428,7 @@ Claude Code then:
 - Updates `categories/[relevant].md` (items table + Pricing Profile if band shifts)
 - Updates `.claude/ARCHITECTURE.md` (catalog row + precedent chain + category registry counts)
 - Updates `.claude/PROGRESS.md` (full session entry)
-- Updates `.claude/STATE.yml` (item_count + last_session + next_action)
+- Updates `.claude/STATE.yml` (item_count + last_session)
 - Updates relevant `materials/*.md` `used_in_items` lists
 - Runs all build scripts (`build_frontend.py`, `build_materials.py`, `build_calculator_config.py`) and commits the regenerated JSON
 - Runs `python scripts/validate.py` — must end at 0 errors, 0 warnings

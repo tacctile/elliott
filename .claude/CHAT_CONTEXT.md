@@ -11,7 +11,7 @@
 Nick uses Claude Chat for two purposes:
 
 1. **Generating prompts for Claude Code** — new item pricing, bulk updates, system changes. The prompt is pasted into Claude Code (Opus 4.7, max effort) which has the full repo mounted.
-2. **Operating directly in conversation** — status changes, Sean feedback logging, quick audits, material cost checks. Lighter tasks that don't need Claude Code.
+2. **Operating directly in conversation** — Sean feedback logging, quick audits, material cost checks. Lighter tasks that don't need Claude Code.
 
 This file defines how both paths work.
 
@@ -135,7 +135,6 @@ Claude Chat must resolve all bracketed placeholders to real values before genera
 
 ### When to Use This Path
 
-- Status changes (item moved from Quoted to FA Accepted)
 - Sean feedback logging
 - Material cost updates
 - Quick sanity checks on pricing logic

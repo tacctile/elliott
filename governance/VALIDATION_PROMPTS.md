@@ -117,7 +117,7 @@ The following must be true before Wave 1 starts. Claude Chat verifies all items 
 
 ### Benchmark Anchors to Embed — Printed / Laminated
 
-P/N **1230820** — Load Chart Label D105, 15" × 12.44" (1.296 sq ft), Orajet 3951 cast vinyl + 1-mil polyester overlaminate. **ROOT BENCHMARK. FA Accepted. $20/ea at qty 20 ($15.43/sq ft).**
+P/N **1230820** — Load Chart Label D105, 15" × 12.44" (1.296 sq ft), Orajet 3951 cast vinyl + 1-mil polyester overlaminate. **ROOT BENCHMARK. $20/ea at qty 20 ($15.43/sq ft).**
 
 Full tier table:
 
@@ -132,20 +132,20 @@ Full tier table:
 
 For sub-0.1 sq ft production items, also include:
 
-- P/N **1279000** — LBL-MAX PLTF CAP 1200 TIP HZRD, 8.00" × 1.75" (0.097 sq ft). **Micro-Format Band founding data point. $3.00/ea at qty 20 ($30.86/sq ft = 2.0× benchmark).** Tiers $4.50 / $3.50 / $3.00 / $2.60 / $2.30 / $2.10. Quoted.
+- P/N **1279000** — LBL-MAX PLTF CAP 1200 TIP HZRD, 8.00" × 1.75" (0.097 sq ft). **Micro-Format Band founding data point. $3.00/ea at qty 20 ($30.86/sq ft = 2.0× benchmark).** Tiers $4.50 / $3.50 / $3.00 / $2.60 / $2.30 / $2.10.
 
 For kits, also include (three-way per-label parity at $10.00/label at qty 20):
 
-- P/N **1278890** — 2-Label Lifting Capacity Chart Kit, E160 V3. Same-dim, 7.88" × 11.13" per label (1.218 sq ft/kit). $20/kit at qty 20 ($10.00/label, $16.42/sq ft). Quoted. Tiers $30 / $24 / $20 / $17 / $14 / $12.
-- P/N **1278930** — 3-Label Lifting Capacity Chart Kit, E190. Same-dim, 11.13" × 7.88" per label (1.827 sq ft/kit). $30/kit at qty 20 ($10.00/label). FA Accepted. Tiers $45 / $36 / $30 / $26 / $21 / $18.
-- P/N **1245130** — 5-Label Lifting Capacity Chart Kit, E160. Same-dim, 11.13" × 7.88" per label (3.045 sq ft/kit). $50/kit at qty 20 ($10.00/label). Quoted. Tiers $75 / $60 / $50 / $43 / $35 / $30.
+- P/N **1278890** — 2-Label Lifting Capacity Chart Kit, E160 V3. Same-dim, 7.88" × 11.13" per label (1.218 sq ft/kit). $20/kit at qty 20 ($10.00/label, $16.42/sq ft). Tiers $30 / $24 / $20 / $17 / $14 / $12.
+- P/N **1278930** — 3-Label Lifting Capacity Chart Kit, E190. Same-dim, 11.13" × 7.88" per label (1.827 sq ft/kit). $30/kit at qty 20 ($10.00/label). Tiers $45 / $36 / $30 / $26 / $21 / $18.
+- P/N **1245130** — 5-Label Lifting Capacity Chart Kit, E160. Same-dim, 11.13" × 7.88" per label (3.045 sq ft/kit). $50/kit at qty 20 ($10.00/label). Tiers $75 / $60 / $50 / $43 / $35 / $30.
 
 ### Benchmark Anchors to Embed — Cut Vinyl
 
-- P/N **1205720** — E190 Cardinal Red Model Designation. 33-9/16" × 11" (2.56 sq ft). 3M Controltac 180mC cut vinyl. **CUT VINYL BASELINE (Band A). FA Accepted. $35/ea at qty 20 ($13.67/sq ft).** Priced as Relationship Concession (AI consensus was $38–$42 — Rule 14 deviation). Tiers $45 / $40 / $35 / $30 / $26 / $22.
-- P/N **3010701** — LBL-ELLIOTT MED RD. 49.16" × 9.38" (3.202 sq ft). **Band A 3–5 sq ft data point (no override). $44/ea at qty 20 ($13.74/sq ft).** Tiers $57 / $50 / $44 / $42 / $40 / $39. Quoted.
-- P/N **3010704** — LBL-ELLIOTT LRG RED. 70-13/16" × 14-3/8" (7.069 sq ft). **Band B (Large-Format) founding data point. $78/ea at qty 20 ($11.03/sq ft).** Tiers $105 / $92 / $78 / $68 / $60 / $52. Quoted.
-- P/N **3010707** — ElliottEquip.com URL Wordmark, Cardinal Red. 34.887" × 4" (0.969 sq ft). **Band C (Sub-1 sq ft) founding anchor (worst-case Cardinal Red material; 3010708 Black and 3010709 White share the identical tier table). $20/ea at qty 20 ($20.64/sq ft).** Tiers $28 / $24 / $20 / $16.50 / $13.50 / $11.50. Quoted.
+- P/N **1205720** — E190 Cardinal Red Model Designation. 33-9/16" × 11" (2.56 sq ft). 3M Controltac 180mC cut vinyl. **CUT VINYL BASELINE (Band A). $35/ea at qty 20 ($13.67/sq ft).** Priced as Relationship Concession (AI consensus was $38–$42 — Rule 14 deviation). Tiers $45 / $40 / $35 / $30 / $26 / $22.
+- P/N **3010701** — LBL-ELLIOTT MED RD. 49.16" × 9.38" (3.202 sq ft). **Band A 3–5 sq ft data point (no override). $44/ea at qty 20 ($13.74/sq ft).** Tiers $57 / $50 / $44 / $42 / $40 / $39.
+- P/N **3010704** — LBL-ELLIOTT LRG RED. 70-13/16" × 14-3/8" (7.069 sq ft). **Band B (Large-Format) founding data point. $78/ea at qty 20 ($11.03/sq ft).** Tiers $105 / $92 / $78 / $68 / $60 / $52.
+- P/N **3010707** — ElliottEquip.com URL Wordmark, Cardinal Red. 34.887" × 4" (0.969 sq ft). **Band C (Sub-1 sq ft) founding anchor (worst-case Cardinal Red material; 3010708 Black and 3010709 White share the identical tier table). $20/ea at qty 20 ($20.64/sq ft).** Tiers $28 / $24 / $20 / $16.50 / $13.50 / $11.50.
 
 ### Current Pricing Bands to Embed (ALL SIX — every wave prompt embeds the bands relevant to the item's family and size class)
 

@@ -28,6 +28,20 @@ Idempotent: upserts on material_key (materials), part_number (items),
 band_key (bands), account_id (settings), (account_id, name) (combinations).
 Combination components are replaced atomically per combination.
 
+RESOLVED SCHEMA DRIFT — elliott_items.status / date_quoted (2026-08):
+items/*.md dropped `status`/`date_quoted` frontmatter entirely (quote-
+status tracking removed repo-wide) and this script stopped reading or
+writing either field. That temporarily left the live `elliott_items`
+table out of sync — `status` was a NOT NULL enum (elliott_item_status)
+with no default, so any upsert omitting it hard-failed the whole batch.
+Migration `drop_elliott_items_status_date_quoted` (applied to the
+`prolabel` project) dropped both columns and the now-unused
+`elliott_item_status` enum type — confirmed via `pg_depend` beforehand
+that nothing else (no other column/table, view, trigger, function, index,
+or RLS policy) referenced either the columns or the enum type. Live syncs
+against `elliott_items` are safe again; this note is kept only as a
+record of the drift and its resolution.
+
 AUTH / RLS APPROACH (documented per Phase 1.4):
   - The deployed frontend uses the `anon` key (constants at the top of
     frontend/index.html). RLS gives anon SELECT on all elliott_* tables,
@@ -341,8 +355,15 @@ def build_item_rows():
                                   if fm.get("lamination_passes") is not None else None),
             "cut_runs": (int(fm["cut_runs"])
                          if fm.get("cut_runs") is not None else None),
-            "status": fm.get("status", "Quoted"),
-            "date_quoted": fm.get("date_quoted") or None,
+            # `status`/`date_quoted` are gone from items/*.md frontmatter
+            # (quote-status tracking removed repo-wide, 2026-08) and are
+            # deliberately not read or written here. NOTE: the live
+            # elliott_items.status column is still a NOT NULL Postgres enum
+            # with no default — omitting it from this payload means the
+            # next live upsert (not just new rows; the whole batch) will
+            # fail its NOT NULL constraint until that column is migrated
+            # (dropped, given a default, or made nullable). See the module
+            # docstring / PROGRESS.md for the flagged schema-migration item.
             "override_type": fm.get("override_type", ""),
             "notes": "",
             "band_class": derive_band_class(fm),
