@@ -1,6 +1,6 @@
 {
-  "generated": "2026-08-17T17:07:01Z",
-  "material_count": 14,
+  "generated": "2026-08-18T15:08:56Z",
+  "material_count": 15,
   "materials": {
     "10mil-polycarbonate-overlaminate": {
       "frontmatter": {
@@ -286,6 +286,34 @@
         "notes": "Length-based material cost method used for nesting calculations. 24\" roll runs on Roland SG3-300. NOTE: A separate 24\" \u00d7 50yd White roll exists at materials/3m-180mc-white-24in-50yd.md for production volumes (P/N 3010709 uses that larger roll, not this 10yd roll). P/N 1257750 (added 2026-07-22) is filed against this 10yd roll per governance/STRUCTURE_RULES.md's higher-cost-scenario convention; the 50yd roll is documented in that item's file as a lower-cost operational alternative, not filed canonically. P/N ELLIOTT BOOM DECAL (added 2026-08-17) is also filed against this 10yd roll as its Config A (White, single-color) canonical material cost \u2014 this item is variable-BOM and also ships as Config B (Black + Cardinal Red); see items/ELLIOTT-BOOM-DECAL.md."
       }
     },
+    "3m-180mc-white-30in-50yd": {
+      "frontmatter": {
+        "material_id": "3m-180mc-white-30in-50yd",
+        "material_type": "cut_vinyl",
+        "manufacturer": "3M",
+        "product_name": "Controltac 180mC-10",
+        "product_code": "180mC-10",
+        "color_name": "White",
+        "color_code": "10",
+        "film_type": "Cast vinyl",
+        "film_thickness_mil": 2,
+        "adhesive_type": "Permanent pressure-sensitive",
+        "roll_width_in": 30,
+        "roll_length_yd": 50,
+        "cost_per_roll": 616.25,
+        "cost_per_linear_yd": 12.325,
+        "cost_per_sq_ft": 4.93,
+        "verified_date": "2026-08-18",
+        "distributor": "GRIMCO",
+        "compatible_tapes": [
+          "transferrite-582u-30in"
+        ],
+        "used_in_items": [
+          "3021615"
+        ],
+        "notes": "NEW MATERIAL FILE (2026-08-18) \u2014 first 30\" width White 3M 180mC roll on the account. Distinct from the existing 24\" (10yd and 50yd) and 48\" White rolls (materials/3m-180mc-white-24in.md, 3m-180mc-white-24in-50yd.md, 3m-180mc-white-48in.md) \u2014 do not conflate. Introduced for P/N 3021615, the account's first multi-piece nested-set item (5-piece boom-length marker kit), which consumes the FULL 30\" roll width per production repeat (not standard multi-across nesting) at a 7.5\" feed pitch. cost_per_sq_ft is a derived convenience value (cost_per_linear_yd / roll_width_ft = $12.325 / 2.5 ft = $4.93/sq ft) \u2014 NOT used in 3021615's actual costing, which is feed-pitch/full-width-based, not per-sq-ft. See items/3021615.md Nesting and Material Cost for the governing calculation. This roll/nesting model is item-specific \u2014 do not assume it applies to any future item without independent derivation."
+      }
+    },
     "3m-180mc-white-48in": {
       "frontmatter": {
         "material_id": "3m-180mc-white-48in",
@@ -461,9 +489,10 @@
         ],
         "used_in_items": [
           "3010704",
-          "3023921"
+          "3023921",
+          "3021615"
         ],
-        "notes": "30\" roll used for large-format cut vinyl items where 2 labels are applied side by side. For P/N 3010704: 2 \u00d7 14.375\" = 28.75\" across 30\" tape, 1.25\" waste strip. For P/N 3023921: 2 \u00d7 8.5\" = 17\" across 30\" tape, 13\" waste strip \u2014 paired with the 24\" Cardinal Red vinyl roll rather than the matching 24\" tape roll; directed by the 2026-07-16 session brief and Grimco-sourced, flagged for production-run confirmation (see items/3023921.md). See also transferrite-582u.md (24\" roll, used for smaller items)."
+        "notes": "30\" roll used for large-format cut vinyl items where 2 labels are applied side by side. For P/N 3010704: 2 \u00d7 14.375\" = 28.75\" across 30\" tape, 1.25\" waste strip. For P/N 3023921: 2 \u00d7 8.5\" = 17\" across 30\" tape, 13\" waste strip \u2014 paired with the 24\" Cardinal Red vinyl roll rather than the matching 24\" tape roll; directed by the 2026-07-16 session brief and Grimco-sourced, flagged for production-run confirmation (see items/3023921.md). For P/N 3021615 (verified 2026-08-18, first multi-piece nested-set item on the account): full 30\" width consumed per 7.5\" feed-pitch repeat, paired with the new 3m-180mc-white-30in-50yd.md vinyl roll \u2014 a structurally different, non-standard nesting model (not multi-across efficiency nesting); do not assume this model extends to any other item without independent derivation. See also transferrite-582u.md (24\" roll, used for smaller items)."
       }
     },
     "transferrite-582u": {
