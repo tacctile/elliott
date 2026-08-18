@@ -120,9 +120,9 @@ This methodology maintains the same margin profile (~87% at qty 20) as the Oraje
 
 ## Items
 
-| P/N | Description | Dimensions | Sq Ft | Price (qty 20, Var B) | Price (qty 20, Var A) | Per Label | Status |
-|-----|-------------|------------|-------|-----------------------|-----------------------|-----------|--------|
-| 3017557 | LBL-BASKET CONTROL BOX SINGLE AXIS | 17.75" × 8.9375" | 1.102 | $30.75 | $26.75 | $30.75 (Var B) | Quoted |
+| P/N | Description | Dimensions | Sq Ft | Price (qty 20, Var B) | Price (qty 20, Var A) | Per Label |
+|-----|-------------|------------|-------|-----------------------|-----------------------|-----------|
+| 3017557 | LBL-BASKET CONTROL BOX SINGLE AXIS | 17.75" × 8.9375" | 1.102 | $30.75 | $26.75 | $30.75 (Var B) |
 
 ---
 

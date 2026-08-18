@@ -8,27 +8,27 @@
 
 ## Items in This Category
 
-| P/N | Description | Dimensions | Sq Ft | Price (qty 20) | Status |
-|-----|-------------|------------|-------|-----------------|--------|
-| 3010736 | LBL-I50 MED WHT (closest-to-Band-C-boundary Band A item, 1.012 sq ft — full 4-wave/24-model validated small-format premium, $14.33/sq ft; verified material cost, second point in the small-format Band A pair with 3010722) | 19.18" × 7.6" | 1.012 | $14.50 | Quoted |
-| 1257750 | LBL-V63 MED WHT (**DIRECT PRICE REPLICATION of 3010736 — Owner Judgment, not independently validated**; $13.48/sq ft flags a full six-tier §32 chain-consistency violation against nearest larger neighbor 3010722, not corrected) | 20" × 7.75" | 1.076 | $14.50 | Quoted |
-| 3010722 | G50 - CARDINAL RED (new lower edge of Band A, 1.167 sq ft — full 4-wave validated small-format premium, $14.36/sq ft; color-parity set with 3010723/3010724) | 21" × 8" | 1.167 | $16.75 | Quoted |
-| 3010723 | G50 - BLACK (color parity with 3010722 — identical pricing, filed at the Cardinal Red-anchored material cost) | 21" × 8" | 1.167 | $16.75 | Quoted |
-| 3010724 | G50 - WHITE (color parity with 3010722 — identical pricing, filed at the Cardinal Red-anchored material cost) | 21" × 8" | 1.167 | $16.75 | Quoted |
-| 3010698 | LBL-ELLIOTT SML RED (founding data point, 1.5–2.5 sq ft Band A interior gap zone; SML member of the ELLIOTT S/M/L wordmark family) | 33.4375" × 6.8125" | 1.582 | $22 | Quoted |
-| 1205720 | E190 Cardinal Red | 33-9/16" × 11" | 2.56 | $35 | FA Accepted |
-| 1186310 | E160 Cardinal Red | 33-9/16" × 11" | 2.564 | $35 | Quoted |
-| 3017435 | ELLIOTT White | 43.91" × 8.38" | 2.56 | $35 | Quoted |
-| 3018378 | D115 Olympic Blue | 32.88" × 11.00" | 2.512 | $35 | Quoted |
-| 1146650 | 40142 Cardinal Red Model Designation (second Band A interior data point — between the cluster and 3010701) | 40.75" × 10.5" | 2.971 | $40.75 | Quoted |
-| 3010701 | LBL-ELLIOTT MED RD (medium-format wordmark — first Band A item beyond the 2.51–2.56 sq ft cluster) | 49.16" × 9.38" | 3.202 | $44 | Quoted |
-| 3010704 | LBL-ELLIOTT LRG RED (large-format wordmark) | 70-13/16" × 14-3/8" | 7.069 | $78 | Quoted |
-| 3010707 | ElliottEquip.com URL Wordmark, Cardinal Red | 34.887" × 4" | 0.969 | $20 | Quoted |
-| 3010708 | ElliottEquip.com URL Wordmark, Black | 34.887" × 4" | 0.969 | $20 | Quoted |
-| 3010709 | ElliottEquip.com URL Wordmark, White | 34.887" × 4" | 0.969 | $20 | Quoted |
-| 3023921 | LABEL D100i (full 4-wave/24-model validated, zero changes from calculator brief, $13.89/sq ft — inside the $13.65–$13.94/sq ft band; **flagged, not resolved:** §32 chain-consistency gap vs. nearest larger neighbor 3018378 at the 10-19 and 200+ tiers — see items/3023921.md) | 28.0625" × 8.5" | 1.656 | $23 | Quoted |
-| ELLIOTT BOOM DECAL | Elliott Boom Decal (**VARIABLE-BOM item** — 1-color White or 2-color Black+Red per order, price identical either way; direct dollar-tier-table match to 1186310/3018378/3017435, NOT scaled to this item's smaller 2.300 sq ft footprint; $15.22/sq ft is a documented above-profile-band exception — see items/ELLIOTT-BOOM-DECAL.md) | 33.1261" × 10" | 2.300 | $35 | Quoted |
-| 3021615 | LBL-BM LNGTH V60 (**FIRST MULTI-PIECE NESTED-SET item on the account** — one P/N covers a 5-piece boom-length marker kit "24"/"30"/"35"/"40"/"45", sold and priced as ONE unit, never split; each marker 6.5"×4.25"; priced via independent 4-wave AI validation using 3010736 as a cost-bridge anchor, not the Band A/B/C sq ft profile; $2.86/set verified material cost from a non-standard full-30"-roll-width nesting model — see items/3021615.md) | 6.5" × 4.25" per marker (5-piece kit) | 0.96 (kit, informational — not routed via sq ft) | $14.75 | Quoted |
+| P/N | Description | Dimensions | Sq Ft | Price (qty 20) |
+|-----|-------------|------------|-------|-----------------|
+| 3010736 | LBL-I50 MED WHT (closest-to-Band-C-boundary Band A item, 1.012 sq ft — full 4-wave/24-model validated small-format premium, $14.33/sq ft; verified material cost, second point in the small-format Band A pair with 3010722) | 19.18" × 7.6" | 1.012 | $14.50 |
+| 1257750 | LBL-V63 MED WHT (**DIRECT PRICE REPLICATION of 3010736 — Owner Judgment, not independently validated**; $13.48/sq ft flags a full six-tier §32 chain-consistency violation against nearest larger neighbor 3010722, not corrected) | 20" × 7.75" | 1.076 | $14.50 |
+| 3010722 | G50 - CARDINAL RED (new lower edge of Band A, 1.167 sq ft — full 4-wave validated small-format premium, $14.36/sq ft; color-parity set with 3010723/3010724) | 21" × 8" | 1.167 | $16.75 |
+| 3010723 | G50 - BLACK (color parity with 3010722 — identical pricing, filed at the Cardinal Red-anchored material cost) | 21" × 8" | 1.167 | $16.75 |
+| 3010724 | G50 - WHITE (color parity with 3010722 — identical pricing, filed at the Cardinal Red-anchored material cost) | 21" × 8" | 1.167 | $16.75 |
+| 3010698 | LBL-ELLIOTT SML RED (founding data point, 1.5–2.5 sq ft Band A interior gap zone; SML member of the ELLIOTT S/M/L wordmark family) | 33.4375" × 6.8125" | 1.582 | $22 |
+| 1205720 | E190 Cardinal Red | 33-9/16" × 11" | 2.56 | $35 |
+| 1186310 | E160 Cardinal Red | 33-9/16" × 11" | 2.564 | $35 |
+| 3017435 | ELLIOTT White | 43.91" × 8.38" | 2.56 | $35 |
+| 3018378 | D115 Olympic Blue | 32.88" × 11.00" | 2.512 | $35 |
+| 1146650 | 40142 Cardinal Red Model Designation (second Band A interior data point — between the cluster and 3010701) | 40.75" × 10.5" | 2.971 | $40.75 |
+| 3010701 | LBL-ELLIOTT MED RD (medium-format wordmark — first Band A item beyond the 2.51–2.56 sq ft cluster) | 49.16" × 9.38" | 3.202 | $44 |
+| 3010704 | LBL-ELLIOTT LRG RED (large-format wordmark) | 70-13/16" × 14-3/8" | 7.069 | $78 |
+| 3010707 | ElliottEquip.com URL Wordmark, Cardinal Red | 34.887" × 4" | 0.969 | $20 |
+| 3010708 | ElliottEquip.com URL Wordmark, Black | 34.887" × 4" | 0.969 | $20 |
+| 3010709 | ElliottEquip.com URL Wordmark, White | 34.887" × 4" | 0.969 | $20 |
+| 3023921 | LABEL D100i (full 4-wave/24-model validated, zero changes from calculator brief, $13.89/sq ft — inside the $13.65–$13.94/sq ft band; **flagged, not resolved:** §32 chain-consistency gap vs. nearest larger neighbor 3018378 at the 10-19 and 200+ tiers — see items/3023921.md) | 28.0625" × 8.5" | 1.656 | $23 |
+| ELLIOTT BOOM DECAL | Elliott Boom Decal (**VARIABLE-BOM item** — 1-color White or 2-color Black+Red per order, price identical either way; direct dollar-tier-table match to 1186310/3018378/3017435, NOT scaled to this item's smaller 2.300 sq ft footprint; $15.22/sq ft is a documented above-profile-band exception — see items/ELLIOTT-BOOM-DECAL.md) | 33.1261" × 10" | 2.300 | $35 |
+| 3021615 | LBL-BM LNGTH V60 (**FIRST MULTI-PIECE NESTED-SET item on the account** — one P/N covers a 5-piece boom-length marker kit "24"/"30"/"35"/"40"/"45", sold and priced as ONE unit, never split; each marker 6.5"×4.25"; priced via independent 4-wave AI validation using 3010736 as a cost-bridge anchor, not the Band A/B/C sq ft profile; $2.86/set verified material cost from a non-standard full-30"-roll-width nesting model — see items/3021615.md) | 6.5" × 4.25" per marker (5-piece kit) | 0.96 (kit, informational — not routed via sq ft) | $14.75 |
 
 ---
 

@@ -87,7 +87,6 @@ def main():
             price_200 = safe_float(item.get("price_200_plus"))
             material = safe_float(item.get("material_cost_per_unit"))
             per_label = safe_float(item.get("per_label_at_qty_20"))
-            status = item.get("status", "")
             item_type = item.get("item_type", "")
             lam_passes = safe_int(item.get("lamination_passes"))
 
@@ -99,7 +98,6 @@ def main():
             compression = (1 - price_200 / price_1_9) * 100 if price_1_9 > 0 else 0
 
             print(f"\n  P/N {pn} — {item_type}")
-            print(f"    Status: {status}")
             print(f"    Labels: {label_count} | Sq ft/label: {sq_ft:.3f} | Sq ft/unit: {sq_ft_kit:.3f}")
             print(f"    Material cost: ${material:.2f}")
             print(f"    Price @ qty 20: ${price_20:.2f} | Per label: ${per_label:.2f}")

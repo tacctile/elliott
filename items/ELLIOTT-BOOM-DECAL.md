@@ -26,8 +26,6 @@ downstream_items: "None yet."
 process: "Cut/Weed/Mask"
 lamination_passes: 0
 cut_runs: 1
-status: "Quoted"
-date_quoted: "2026-08-17"
 override_type: "Owner Judgment"
 notes: "VARIABLE-BOM ITEM — color composition (1-color White or 2-color Black+Red) is determined per-order by Elliott, not fixed by drawing. Frontmatter material_cost_per_unit ($6.68) reflects Config A (White, single color) — the first production run and the STRUCTURE_RULES-designated canonical basis. Config B (Black + Red, two color, $14.48/label) is documented in full below but is NOT filed as a second item or a second frontmatter cost — do not average the two configs. Price is identical regardless of configuration. First article: not specified/requested — TBD, flag for Sean follow-up. Non-standard P/N: no numeric Elliott drawing part number exists for this item; 'ELLIOTT BOOM DECAL' is Nick-assigned and filed as the literal, permanent P/N string."
 ---
@@ -93,7 +91,6 @@ ASSUMPTIONS: (1) No drawing revision on file. (2) Not model-specific — applies
 - **Dimensions:** 33.1261" W × 10" H (2.300 sq ft per label)
 - **Tolerances:** ±1/16" (assumed account default)
 - **DWG Date:** No drawing on file — Nick-provided spec, already quoted to Sean
-- **Status:** Quoted 2026-08-17
 
 ---
 

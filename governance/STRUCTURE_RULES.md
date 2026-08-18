@@ -43,8 +43,6 @@ downstream_items: "1278930 (1.5x), 1245130 (5/3 parity off 1278930)"
 process: "Print/Lam/Cut (1 pass)"         # Cut/Weed/Mask | Print/Lam/Cut (1 pass) | Print/Lam/Cut (2 pass)
 lamination_passes: 1                      # 0 for cut vinyl
 cut_runs: 1
-status: "FA Accepted"                     # Quoted | FA Ordered | FA Accepted | In Production | Active Reorder
-date_quoted: "2026-04-22"
 override_type: ""                         # Blank if no override. Otherwise one of the 6 types.
 notes: ""                                 # Anything that doesn't fit elsewhere
 ---
@@ -98,7 +96,7 @@ Every item file has these sections below the frontmatter:
 The completed extraction output from `governance/SPEC_EXTRACTION.md`. Stored as a permanent record. Items priced before the protocol existed have reconstructed extractions labeled as such.
 
 ### 2. Item Overview
-Part number, description, type, content description (what the label says/shows), dimensions with tolerances, DWG date and revision, status.
+Part number, description, type, content description (what the label says/shows), dimensions with tolerances, DWG date and revision.
 
 ### 3. Material Specification
 Exact material name, product code, color code. Film type, thickness, adhesive type. Laminate spec if applicable. Application tape if applicable. Roll sizes available with pricing.
@@ -167,7 +165,6 @@ New families added only when a genuinely different material system is introduced
 
 ## Rules for Updating Existing Items
 
-- **Status changes:** Update item frontmatter + Item Overview section + ARCHITECTURE.md simultaneously.
 - **Price changes:** Update all 6 tiers in frontmatter, update Pricing + Margin sections, check all downstream items.
 - **Material cost changes:** Update frontmatter material_cost + cost_version_date, recalculate margins, update category profile.
 - **Never delete pricing history.** If a price changes, note the old price and date in the item file.
