@@ -73,7 +73,12 @@ import build_materials  # noqa: E402
 now_iso = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
 
 # Canonical frontmatter field order (STRUCTURE_RULES.md schema) for any
-# DB-only item appended to data.json.
+# DB-only item appended to data.json. `status`/`date_quoted` are
+# deliberately absent — items/*.md no longer carries either field
+# (quote-status tracking removed repo-wide, 2026-08), so a DB-only item
+# should not have them reintroduced into data.json even though the live
+# elliott_items table still has both columns (see the schema-drift note
+# in scripts/migrate_to_supabase.py).
 ITEM_FIELD_ORDER = [
     "part_number", "description", "model", "item_type", "material_family",
     "label_count", "width_in", "height_in", "sq_ft_per_label", "sq_ft_per_kit",
@@ -81,7 +86,7 @@ ITEM_FIELD_ORDER = [
     "price_20_49", "price_50_99", "price_100_199", "price_200_plus",
     "first_article_price", "per_label_at_qty_20", "margin_at_qty_20",
     "pricing_logic", "benchmark_item", "downstream_items", "process",
-    "lamination_passes", "cut_runs", "status", "date_quoted",
+    "lamination_passes", "cut_runs",
     "override_type", "notes",
 ]
 
